@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Win64_arm64_Debug|x64'">
+    <DebuggerFlavor>WindowsRemoteDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Win64_arm64ec_Debug|x64'">
+    <DebuggerFlavor>WindowsRemoteDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_Editor|x64'">
+    <LocalDebuggerCommandArguments>"$(SolutionDir)Advanced_WhiteBoard.uproject" -skipcompile</LocalDebuggerCommandArguments>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Win64_arm64_Debug_Editor|x64'">
+    <RemoteDebuggerCommandArguments>"$(SolutionDir)Advanced_WhiteBoard.uproject" -skipcompile</RemoteDebuggerCommandArguments>
+    <DebuggerFlavor>WindowsRemoteDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Win64_arm64ec_Debug_Editor|x64'">
+    <RemoteDebuggerCommandArguments>"$(SolutionDir)Advanced_WhiteBoard.uproject" -skipcompile</RemoteDebuggerCommandArguments>
+    <DebuggerFlavor>WindowsRemoteDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame|x64'">
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Win64_arm64_DebugGame|x64'">
+    <DebuggerFlavor>WindowsRemoteDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Win64_arm64ec_DebugGame|x64'">
+    <DebuggerFlavor>WindowsRemoteDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugGame_Editor|x64'">
+    <LocalDebuggerCommandArguments>"$(SolutionDir)Advanced_WhiteBoard.uproject" -skipcompile</LocalDebuggerCommandArguments>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Win64_arm64_DebugGame_Editor|x64'">
+    <RemoteDebuggerCommandArguments>"$(SolutionDir)Advanced_WhiteBoard.uproject" -skipcompile</RemoteDebuggerCommandArguments>
+    <DebuggerFlavor>WindowsRemoteDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Win64_arm64ec_DebugGame_Editor|x64'">
+    <RemoteDebuggerCommandArguments>"$(SolutionDir)Advanced_WhiteBoard.uproject" -skipcompile</RemoteDebuggerCommandArguments>
+    <DebuggerFlavor>WindowsRemoteDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development|x64'">
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Win64_arm64_Development|x64'">
+    <DebuggerFlavor>WindowsRemoteDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Win64_arm64ec_Development|x64'">
+    <DebuggerFlavor>WindowsRemoteDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development_Editor|x64'">
+    <LocalDebuggerCommandArguments>"$(SolutionDir)Advanced_WhiteBoard.uproject" -skipcompile</LocalDebuggerCommandArguments>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Win64_arm64_Development_Editor|x64'">
+    <RemoteDebuggerCommandArguments>"$(SolutionDir)Advanced_WhiteBoard.uproject" -skipcompile</RemoteDebuggerCommandArguments>
+    <DebuggerFlavor>WindowsRemoteDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Win64_arm64ec_Development_Editor|x64'">
+    <RemoteDebuggerCommandArguments>"$(SolutionDir)Advanced_WhiteBoard.uproject" -skipcompile</RemoteDebuggerCommandArguments>
+    <DebuggerFlavor>WindowsRemoteDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Test|x64'">
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Win64_arm64_Test|x64'">
+    <DebuggerFlavor>WindowsRemoteDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Win64_arm64ec_Test|x64'">
+    <DebuggerFlavor>WindowsRemoteDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Shipping|x64'">
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Win64_arm64_Shipping|x64'">
+    <DebuggerFlavor>WindowsRemoteDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Win64_arm64ec_Shipping|x64'">
+    <DebuggerFlavor>WindowsRemoteDebugger</DebuggerFlavor>
+  </PropertyGroup>
+</Project>

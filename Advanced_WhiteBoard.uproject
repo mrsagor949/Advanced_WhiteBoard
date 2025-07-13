@@ -1,0 +1,22 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "{EE603150-48D0-7D6A-0E63-C3A6F048D305}",
+	"Category": "",
+	"Description": "",
+	"Modules": [
+		{
+			"Name": "Advanced_WhiteBoard",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "ModelingToolsEditorMode",
+			"Enabled": true,
+			"TargetAllowList": [
+				"Editor"
+			]
+		}
+	]
+}

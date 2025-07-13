@@ -1,0 +1,14 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "e:\\sparkelon-2025\\prototype\\2025\\advanced_whiteboard\\source\\advanced_whiteboard\\advanced_whiteboard.cpp",
+        "ProvidedModule": "",
+        "PCH": "d:\\sparkelon\\bonvr\\engine\\ue_5.5.4_source\\engine\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.h.pch",
+        "Includes": [
+            "e:\\sparkelon-2025\\prototype\\2025\\advanced_whiteboard\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\advanced_whiteboard\\definitions.advanced_whiteboard.h",
+            "e:\\sparkelon-2025\\prototype\\2025\\advanced_whiteboard\\source\\advanced_whiteboard\\advanced_whiteboard.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

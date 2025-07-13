@@ -1,0 +1,24 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "AdvancedDrawingBoard",
+	"Description": "Advanced Drawing Board",
+	"Category": "Other",
+	"CreatedBy": "Masud Raihan",
+	"CreatedByURL": "",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "AdvancedDrawingBoard",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	]
+}

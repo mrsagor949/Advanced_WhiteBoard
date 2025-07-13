@@ -1,0 +1,9 @@
+{
+	"SourceFiles": [
+		"E:\\SPARKELON-2025\\Prototype\\2025\\Advanced_WhiteBoard\\Source\\Advanced_WhiteBoard\\Advanced_WhiteBoard.Build.cs",
+		"E:\\SPARKELON-2025\\Prototype\\2025\\Advanced_WhiteBoard\\Plugins\\AdvancedDrawingBoard\\Source\\AdvancedDrawingBoard\\AdvancedDrawingBoard.Build.cs",
+		"E:\\SPARKELON-2025\\Prototype\\2025\\Advanced_WhiteBoard\\Source\\Advanced_WhiteBoard.Target.cs",
+		"E:\\SPARKELON-2025\\Prototype\\2025\\Advanced_WhiteBoard\\Source\\Advanced_WhiteBoardEditor.Target.cs"
+	],
+	"EngineVersion": "5.5.4"
+}

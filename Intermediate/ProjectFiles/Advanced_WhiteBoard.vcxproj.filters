@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="..\..\Advanced_WhiteBoard.uproject" />
+    <Filter Include="Source">
+      <UniqueIdentifier>{F31BBDD1-B3E8-3BCC-9652-680E16935819}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\Advanced_WhiteBoard.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\Source\Advanced_WhiteBoardEditor.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\.vsconfig" />
+    <Filter Include="Config">
+      <UniqueIdentifier>{FA535FFB-25E1-3D20-B416-52F9BE21E06E}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\DefaultEditor.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEngine.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultGame.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultInput.ini">
+      <Filter>Config</Filter>
+    </None>
+    <Filter Include="Plugins">
+      <UniqueIdentifier>{BB38096A-B391-30DC-A0D4-4F3EA6B44507}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Plugins\AdvancedDrawingBoard">
+      <UniqueIdentifier>{26E26506-D11F-305D-B755-EFE9FDB6F847}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Plugins\AdvancedDrawingBoard\Source">
+      <UniqueIdentifier>{9AC6E2EA-348B-3FBB-917A-DD1FF9A4B518}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard">
+      <UniqueIdentifier>{AD58B31B-1AC1-3FCB-9227-B5913B158047}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\AdvancedDrawingBoard.Build.cs">
+      <Filter>Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard</Filter>
+    </None>
+    <Filter Include="Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Private">
+      <UniqueIdentifier>{7594591E-E88E-3AF5-AEDA-5AC55BF92B16}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Private\AdvancedDrawingBoard.cpp">
+      <Filter>Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Private</Filter>
+    </ClCompile>
+    <Filter Include="Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Private\Actor">
+      <UniqueIdentifier>{97374AF7-1579-38B3-A873-18C0BF7F3C13}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Private\Actor\WhiteboardActor.cpp">
+      <Filter>Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Private\Actor</Filter>
+    </ClCompile>
+    <Filter Include="Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Private\Components">
+      <UniqueIdentifier>{7846FCBC-6921-3CC8-A502-20D999F3715D}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Private\Components\WhiteboardInteractionComponent.cpp">
+      <Filter>Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Private\Components</Filter>
+    </ClCompile>
+    <Filter Include="Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Private\UI">
+      <UniqueIdentifier>{CE23F2D5-E602-31E7-9996-41E42817ABF5}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Private\UI\WhiteboardUI.cpp">
+      <Filter>Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Private\UI</Filter>
+    </ClCompile>
+    <Filter Include="Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public">
+      <UniqueIdentifier>{B337FFAE-5936-38FD-9CA0-9D393BBDC5F6}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\AdvancedDrawingBoard.h">
+      <Filter>Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public</Filter>
+    </ClCompile>
+    <Filter Include="Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\Actor">
+      <UniqueIdentifier>{4CD582C2-5731-31ED-86EE-747AA4FE5F91}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\Actor\WhiteboardActor.h">
+      <Filter>Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\Actor</Filter>
+    </ClCompile>
+    <Filter Include="Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\Components">
+      <UniqueIdentifier>{A899AD21-3258-3CDC-976A-B9D076F9F6E5}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\Components\WhiteboardInteractionComponent.h">
+      <Filter>Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\Components</Filter>
+    </ClCompile>
+    <Filter Include="Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\UI">
+      <UniqueIdentifier>{E6A076D2-6222-3A93-BD9C-6B18177FB590}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\UI\WhiteboardUI.h">
+      <Filter>Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\UI</Filter>
+    </ClCompile>
+    <None Include="..\..\Plugins\AdvancedDrawingBoard\AdvancedDrawingBoard.uplugin">
+      <Filter>Plugins\AdvancedDrawingBoard</Filter>
+    </None>
+    <Filter Include="Plugins\AdvancedDrawingBoard\Resources">
+      <UniqueIdentifier>{7A7135A3-F50E-3D24-94ED-8DD68E85DDE8}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Plugins\AdvancedDrawingBoard\Resources\Icon128.png">
+      <Filter>Plugins\AdvancedDrawingBoard\Resources</Filter>
+    </None>
+    <Filter Include="Source\Advanced_WhiteBoard">
+      <UniqueIdentifier>{F61D91A5-7ABF-3E6E-9932-985E57355BEB}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\Advanced_WhiteBoard\Advanced_WhiteBoard.Build.cs">
+      <Filter>Source\Advanced_WhiteBoard</Filter>
+    </None>
+    <ClCompile Include="..\..\Source\Advanced_WhiteBoard\Advanced_WhiteBoard.cpp">
+      <Filter>Source\Advanced_WhiteBoard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Advanced_WhiteBoard\Advanced_WhiteBoard.h">
+      <Filter>Source\Advanced_WhiteBoard</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

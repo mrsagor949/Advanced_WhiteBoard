@@ -1,0 +1,14 @@
+{
+	"Targets": [
+		{
+			"Name": "Advanced_WhiteBoard",
+			"Path": "..\\Source\\Advanced_WhiteBoard.Target.cs",
+			"Type": "Game"
+		},
+		{
+			"Name": "Advanced_WhiteBoardEditor",
+			"Path": "..\\Source\\Advanced_WhiteBoardEditor.Target.cs",
+			"Type": "Editor"
+		}
+	]
+}
