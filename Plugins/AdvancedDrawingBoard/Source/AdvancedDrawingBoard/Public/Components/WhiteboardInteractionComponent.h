@@ -75,23 +75,7 @@ public:
 
     UFUNCTION(BlueprintCallable, Category = "Whiteboard")
     void SetBrushSize(float Size);
-
-    UFUNCTION(BlueprintCallable, Category = "Whiteboard")
-    void AddText(const FString& Text);
-
-    // NEW: Enhanced UI functions
-    UFUNCTION(BlueprintCallable, Category = "Whiteboard")
-    void SetFillShapes(bool bFill);
-
-    UFUNCTION(BlueprintCallable, Category = "Whiteboard")
-    void SetShapeFillColor(FLinearColor FillColor);
-
-    UFUNCTION(BlueprintCallable, Category = "Whiteboard")
-    void SetTextSize(float Size);
-
-    UFUNCTION(BlueprintCallable, Category = "Whiteboard")
-    void AddTextAtPosition(const FVector2D& CanvasPosition, const FString& Text);
-
+    
     UFUNCTION(BlueprintCallable, Category = "Whiteboard")
     void ClearWhiteboard();
 
@@ -118,6 +102,9 @@ private:
     bool GetMouseWorldPosition(FVector& OutWorldPosition, FVector2D& OutCanvasPosition);
     FVector2D WorldToCanvasPosition(const FVector& WorldPosition);
     FVector GetWhiteboardLocalPosition(const FVector& WorldPosition);
+    
+    // NEW: Helper to get current interacting whiteboard
+    AWhiteboardActor* GetCurrentWhiteboard();
 
     // Drawing state tracking
     FVector2D LastDrawingPosition;

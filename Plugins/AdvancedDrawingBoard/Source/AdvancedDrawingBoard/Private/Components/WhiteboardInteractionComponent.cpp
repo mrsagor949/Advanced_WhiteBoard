@@ -52,7 +52,7 @@ void UWhiteboardInteractionComponent::TickComponent(float DeltaTime, ELevelTick 
 
 void UWhiteboardInteractionComponent::TryToInteract()
 {
-    UE_LOG(LogTemp, Warning, TEXT("TryToInteract called - Role: %d"), OwnerPawn->GetLocalRole());
+    UE_LOG(LogTemp, Warning, TEXT("TryToInteract called - Role: %d"), OwnerPawn ? OwnerPawn->GetLocalRole() : 0);
     
     if (!TargetWhiteboard)
     {
@@ -74,25 +74,28 @@ void UWhiteboardInteractionComponent::TryToInteract()
         return;
     }
     
-    // Check if we can interact locally (distance and player limit)
-    if (!TargetWhiteboard->CanInteractLocally(OwnerPawn))
+    // Check if we can interact locally (client-side prediction)
+    if (!TargetWhiteboard->CanPlayerInteract(OwnerPawn))
     {
-        UE_LOG(LogTemp, Warning, TEXT("Cannot interact locally - either too far, player limit reached, or other restriction"));
+        UE_LOG(LogTemp, Warning, TEXT("Cannot interact - validation failed"));
         return;
     }
     
-    UE_LOG(LogTemp, Warning, TEXT("Attempting to start interaction with whiteboard (Current players: %d/%d)"), 
+    UE_LOG(LogTemp, Warning, TEXT("Requesting interaction with whiteboard (Current players: %d/%d)"), 
            TargetWhiteboard->GetInteractingPlayerCount(), TargetWhiteboard->MaxInteractingPlayers);
-    TargetWhiteboard->StartInteraction(OwnerPawn);
+    
+    // Use the new request system instead of direct StartInteraction
+    TargetWhiteboard->RequestInteraction(OwnerPawn);
 }
 
 void UWhiteboardInteractionComponent::StartDrawingInput()
 {
     UE_LOG(LogTemp, Warning, TEXT("StartDrawingInput called"));
     
-    if (!TargetWhiteboard)
+    AWhiteboardActor* CurrentWhiteboard = GetCurrentWhiteboard();
+    if (!CurrentWhiteboard)
     {
-        UE_LOG(LogTemp, Error, TEXT("No target whiteboard!"));
+        UE_LOG(LogTemp, Error, TEXT("No current whiteboard available for drawing!"));
         return;
     }
     
@@ -103,15 +106,12 @@ void UWhiteboardInteractionComponent::StartDrawingInput()
     }
     
     // Debug network state
-    TargetWhiteboard->DebugNetworkState();
+    CurrentWhiteboard->DebugNetworkState();
     
     // Check if we can draw using the multi-player method
-    if (!TargetWhiteboard->CanClientDraw())
+    if (!CurrentWhiteboard->CanClientDraw())
     {
         UE_LOG(LogTemp, Warning, TEXT("Cannot draw - player not in interacting list"));
-        UE_LOG(LogTemp, Warning, TEXT("Debug - InteractingPlayers: %d, IsPlayerInteracting: %s"),
-           TargetWhiteboard->GetInteractingPlayerCount(),
-           TargetWhiteboard->IsPlayerInteracting(OwnerPawn) ? TEXT("True") : TEXT("False"));
         return;
     }
     
@@ -126,13 +126,7 @@ void UWhiteboardInteractionComponent::StartDrawingInput()
         LastDrawingUpdateTime = GetWorld()->GetTimeSeconds();
         
         // Use the client-specific drawing function
-        TargetWhiteboard->ClientStartDrawing(CanvasPosition);
-        
-        // Enable continuous drawing if needed
-        if (bContinuousDrawing)
-        {
-            // Continuous drawing will be handled in Tick
-        }
+        CurrentWhiteboard->ClientStartDrawing(CanvasPosition);
     }
     else
     {
@@ -176,7 +170,7 @@ void UWhiteboardInteractionComponent::StopDrawingInput()
 
 void UWhiteboardInteractionComponent::EndInteraction()
 {
-    if (TargetWhiteboard && TargetWhiteboard->IsPlayerInteracting(OwnerPawn))
+    if (TargetWhiteboard && OwnerPawn && TargetWhiteboard->IsPlayerInteracting(OwnerPawn))
     {
         // Stop any ongoing drawing
         if (bIsDrawing)
@@ -184,7 +178,8 @@ void UWhiteboardInteractionComponent::EndInteraction()
             StopDrawingInput();
         }
         
-        TargetWhiteboard->EndInteractionForPlayer(OwnerPawn);
+        // Use the new request system
+        TargetWhiteboard->RequestEndInteraction(OwnerPawn);
     }
 }
 
@@ -256,37 +251,6 @@ void UWhiteboardInteractionComponent::SetBrushSize(float Size)
     {
         TargetWhiteboard->SetBrushSize(Size);
     }
-}
-
-void UWhiteboardInteractionComponent::AddText(const FString& Text)
-{
-    if (!TargetWhiteboard || !IsInRangeOfWhiteboard())
-    {
-        return;
-    }
-
-    FVector WorldPosition;
-    FVector2D CanvasPosition;
-    if (GetMouseWorldPosition(WorldPosition, CanvasPosition))
-    {
-        TargetWhiteboard->AddText(WorldPosition, Text);
-    }
-}
-
-void UWhiteboardInteractionComponent::SetFillShapes(bool bFill)
-{
-}
-
-void UWhiteboardInteractionComponent::SetShapeFillColor(FLinearColor FillColor)
-{
-}
-
-void UWhiteboardInteractionComponent::SetTextSize(float Size)
-{
-}
-
-void UWhiteboardInteractionComponent::AddTextAtPosition(const FVector2D& CanvasPosition, const FString& Text)
-{
 }
 
 void UWhiteboardInteractionComponent::ClearWhiteboard()
@@ -515,4 +479,23 @@ FVector UWhiteboardInteractionComponent::GetWhiteboardLocalPosition(const FVecto
     FVector LocalPosition = WhiteboardTransform.InverseTransformPosition(WorldPosition);
     
     return LocalPosition;
+}
+
+AWhiteboardActor* UWhiteboardInteractionComponent::GetCurrentWhiteboard()
+{
+    // First check if we have a target whiteboard
+    if (TargetWhiteboard && OwnerPawn && TargetWhiteboard->IsPlayerInteracting(OwnerPawn))
+    {
+        return TargetWhiteboard;
+    }
+    
+    // If not, try to find the nearest one
+    FindNearestWhiteboard();
+    
+    if (TargetWhiteboard && OwnerPawn && TargetWhiteboard->IsPlayerInteracting(OwnerPawn))
+    {
+        return TargetWhiteboard;
+    }
+    
+    return nullptr;
 }

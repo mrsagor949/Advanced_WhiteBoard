@@ -35,6 +35,22 @@ void UWhiteboardUI::SetBrushTexture(int32 TextureIndex)
 	}
 }
 
+void UWhiteboardUI::SetFigureTexture(int32 TextureIndex)
+{
+	if (TargetWhiteboard)
+	{
+		TargetWhiteboard->SetFigureTexture(TextureIndex);
+	}
+}
+
+void UWhiteboardUI::SetText(FString NewText)
+{
+	if (TargetWhiteboard)
+	{
+		TargetWhiteboard->SetTextString(NewText);
+	}
+}
+
 void UWhiteboardUI::ClearWhiteboard()
 {
 	if (TargetWhiteboard)

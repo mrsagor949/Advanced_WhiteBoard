@@ -1,0 +1,544 @@
+{
+	"ConfigurationsAndPlatforms": [
+		{
+			"Configuration": "Debug",
+			"Platform": "IOS",
+			"Target": "Client"
+		},
+		{
+			"Configuration": "Debug",
+			"Platform": "Mac",
+			"Target": "Client"
+		},
+		{
+			"Configuration": "Debug",
+			"Platform": "TVOS",
+			"Target": "Client"
+		},
+		{
+			"Configuration": "Debug",
+			"Platform": "Win64",
+			"Target": "Client"
+		},
+		{
+			"Configuration": "Debug",
+			"Platform": "Win64",
+			"Target": "Client"
+		},
+		{
+			"Configuration": "Debug",
+			"Platform": "Win64",
+			"Target": "Client"
+		},
+		{
+			"Configuration": "Debug",
+			"Platform": "IOS",
+			"Target": "Editor"
+		},
+		{
+			"Configuration": "Debug",
+			"Platform": "Mac",
+			"Target": "Editor"
+		},
+		{
+			"Configuration": "Debug",
+			"Platform": "TVOS",
+			"Target": "Editor"
+		},
+		{
+			"Configuration": "Debug",
+			"Platform": "Win64",
+			"Target": "Editor"
+		},
+		{
+			"Configuration": "Debug",
+			"Platform": "Win64",
+			"Target": "Editor"
+		},
+		{
+			"Configuration": "Debug",
+			"Platform": "Win64",
+			"Target": "Editor"
+		},
+		{
+			"Configuration": "Debug",
+			"Platform": "IOS",
+			"Target": "Server"
+		},
+		{
+			"Configuration": "Debug",
+			"Platform": "Mac",
+			"Target": "Server"
+		},
+		{
+			"Configuration": "Debug",
+			"Platform": "TVOS",
+			"Target": "Server"
+		},
+		{
+			"Configuration": "Debug",
+			"Platform": "Win64",
+			"Target": "Server"
+		},
+		{
+			"Configuration": "Debug",
+			"Platform": "Win64",
+			"Target": "Server"
+		},
+		{
+			"Configuration": "Debug",
+			"Platform": "Win64",
+			"Target": "Server"
+		},
+		{
+			"Configuration": "DebugGame",
+			"Platform": "IOS",
+			"Target": "Client"
+		},
+		{
+			"Configuration": "DebugGame",
+			"Platform": "Mac",
+			"Target": "Client"
+		},
+		{
+			"Configuration": "DebugGame",
+			"Platform": "TVOS",
+			"Target": "Client"
+		},
+		{
+			"Configuration": "DebugGame",
+			"Platform": "Win64",
+			"Target": "Client"
+		},
+		{
+			"Configuration": "DebugGame",
+			"Platform": "Win64",
+			"Target": "Client"
+		},
+		{
+			"Configuration": "DebugGame",
+			"Platform": "Win64",
+			"Target": "Client"
+		},
+		{
+			"Configuration": "DebugGame",
+			"Platform": "IOS",
+			"Target": "Editor"
+		},
+		{
+			"Configuration": "DebugGame",
+			"Platform": "Mac",
+			"Target": "Editor"
+		},
+		{
+			"Configuration": "DebugGame",
+			"Platform": "TVOS",
+			"Target": "Editor"
+		},
+		{
+			"Configuration": "DebugGame",
+			"Platform": "Win64",
+			"Target": "Editor"
+		},
+		{
+			"Configuration": "DebugGame",
+			"Platform": "Win64",
+			"Target": "Editor"
+		},
+		{
+			"Configuration": "DebugGame",
+			"Platform": "Win64",
+			"Target": "Editor"
+		},
+		{
+			"Configuration": "DebugGame",
+			"Platform": "IOS",
+			"Target": "Server"
+		},
+		{
+			"Configuration": "DebugGame",
+			"Platform": "Mac",
+			"Target": "Server"
+		},
+		{
+			"Configuration": "DebugGame",
+			"Platform": "TVOS",
+			"Target": "Server"
+		},
+		{
+			"Configuration": "DebugGame",
+			"Platform": "Win64",
+			"Target": "Server"
+		},
+		{
+			"Configuration": "DebugGame",
+			"Platform": "Win64",
+			"Target": "Server"
+		},
+		{
+			"Configuration": "DebugGame",
+			"Platform": "Win64",
+			"Target": "Server"
+		},
+		{
+			"Configuration": "DebugGame",
+			"Platform": "IOS",
+			"Target": "Game"
+		},
+		{
+			"Configuration": "DebugGame",
+			"Platform": "Mac",
+			"Target": "Game"
+		},
+		{
+			"Configuration": "DebugGame",
+			"Platform": "TVOS",
+			"Target": "Game"
+		},
+		{
+			"Configuration": "DebugGame",
+			"Platform": "Win64",
+			"Target": "Game"
+		},
+		{
+			"Configuration": "DebugGame",
+			"Platform": "Win64",
+			"Target": "Game"
+		},
+		{
+			"Configuration": "DebugGame",
+			"Platform": "Win64",
+			"Target": "Game"
+		},
+		{
+			"Configuration": "Debug",
+			"Platform": "IOS",
+			"Target": "Game"
+		},
+		{
+			"Configuration": "Debug",
+			"Platform": "Mac",
+			"Target": "Game"
+		},
+		{
+			"Configuration": "Debug",
+			"Platform": "TVOS",
+			"Target": "Game"
+		},
+		{
+			"Configuration": "Debug",
+			"Platform": "Win64",
+			"Target": "Game"
+		},
+		{
+			"Configuration": "Debug",
+			"Platform": "Win64",
+			"Target": "Game"
+		},
+		{
+			"Configuration": "Debug",
+			"Platform": "Win64",
+			"Target": "Game"
+		},
+		{
+			"Configuration": "Development",
+			"Platform": "IOS",
+			"Target": "Client"
+		},
+		{
+			"Configuration": "Development",
+			"Platform": "Mac",
+			"Target": "Client"
+		},
+		{
+			"Configuration": "Development",
+			"Platform": "TVOS",
+			"Target": "Client"
+		},
+		{
+			"Configuration": "Development",
+			"Platform": "Win64",
+			"Target": "Client"
+		},
+		{
+			"Configuration": "Development",
+			"Platform": "Win64",
+			"Target": "Client"
+		},
+		{
+			"Configuration": "Development",
+			"Platform": "Win64",
+			"Target": "Client"
+		},
+		{
+			"Configuration": "Development",
+			"Platform": "IOS",
+			"Target": "Editor"
+		},
+		{
+			"Configuration": "Development",
+			"Platform": "Mac",
+			"Target": "Editor"
+		},
+		{
+			"Configuration": "Development",
+			"Platform": "TVOS",
+			"Target": "Editor"
+		},
+		{
+			"Configuration": "Development",
+			"Platform": "Win64",
+			"Target": "Editor"
+		},
+		{
+			"Configuration": "Development",
+			"Platform": "Win64",
+			"Target": "Editor"
+		},
+		{
+			"Configuration": "Development",
+			"Platform": "Win64",
+			"Target": "Editor"
+		},
+		{
+			"Configuration": "Development",
+			"Platform": "IOS",
+			"Target": "Server"
+		},
+		{
+			"Configuration": "Development",
+			"Platform": "Mac",
+			"Target": "Server"
+		},
+		{
+			"Configuration": "Development",
+			"Platform": "TVOS",
+			"Target": "Server"
+		},
+		{
+			"Configuration": "Development",
+			"Platform": "Win64",
+			"Target": "Server"
+		},
+		{
+			"Configuration": "Development",
+			"Platform": "Win64",
+			"Target": "Server"
+		},
+		{
+			"Configuration": "Development",
+			"Platform": "Win64",
+			"Target": "Server"
+		},
+		{
+			"Configuration": "Development",
+			"Platform": "IOS",
+			"Target": "Game"
+		},
+		{
+			"Configuration": "Development",
+			"Platform": "Mac",
+			"Target": "Game"
+		},
+		{
+			"Configuration": "Development",
+			"Platform": "TVOS",
+			"Target": "Game"
+		},
+		{
+			"Configuration": "Development",
+			"Platform": "Win64",
+			"Target": "Game"
+		},
+		{
+			"Configuration": "Development",
+			"Platform": "Win64",
+			"Target": "Game"
+		},
+		{
+			"Configuration": "Development",
+			"Platform": "Win64",
+			"Target": "Game"
+		},
+		{
+			"Configuration": "Shipping",
+			"Platform": "IOS",
+			"Target": "Client"
+		},
+		{
+			"Configuration": "Shipping",
+			"Platform": "Mac",
+			"Target": "Client"
+		},
+		{
+			"Configuration": "Shipping",
+			"Platform": "TVOS",
+			"Target": "Client"
+		},
+		{
+			"Configuration": "Shipping",
+			"Platform": "Win64",
+			"Target": "Client"
+		},
+		{
+			"Configuration": "Shipping",
+			"Platform": "Win64",
+			"Target": "Client"
+		},
+		{
+			"Configuration": "Shipping",
+			"Platform": "Win64",
+			"Target": "Client"
+		},
+		{
+			"Configuration": "Shipping",
+			"Platform": "IOS",
+			"Target": "Server"
+		},
+		{
+			"Configuration": "Shipping",
+			"Platform": "Mac",
+			"Target": "Server"
+		},
+		{
+			"Configuration": "Shipping",
+			"Platform": "TVOS",
+			"Target": "Server"
+		},
+		{
+			"Configuration": "Shipping",
+			"Platform": "Win64",
+			"Target": "Server"
+		},
+		{
+			"Configuration": "Shipping",
+			"Platform": "Win64",
+			"Target": "Server"
+		},
+		{
+			"Configuration": "Shipping",
+			"Platform": "Win64",
+			"Target": "Server"
+		},
+		{
+			"Configuration": "Shipping",
+			"Platform": "IOS",
+			"Target": "Game"
+		},
+		{
+			"Configuration": "Shipping",
+			"Platform": "Mac",
+			"Target": "Game"
+		},
+		{
+			"Configuration": "Shipping",
+			"Platform": "TVOS",
+			"Target": "Game"
+		},
+		{
+			"Configuration": "Shipping",
+			"Platform": "Win64",
+			"Target": "Game"
+		},
+		{
+			"Configuration": "Shipping",
+			"Platform": "Win64",
+			"Target": "Game"
+		},
+		{
+			"Configuration": "Shipping",
+			"Platform": "Win64",
+			"Target": "Game"
+		},
+		{
+			"Configuration": "Test",
+			"Platform": "IOS",
+			"Target": "Client"
+		},
+		{
+			"Configuration": "Test",
+			"Platform": "Mac",
+			"Target": "Client"
+		},
+		{
+			"Configuration": "Test",
+			"Platform": "TVOS",
+			"Target": "Client"
+		},
+		{
+			"Configuration": "Test",
+			"Platform": "Win64",
+			"Target": "Client"
+		},
+		{
+			"Configuration": "Test",
+			"Platform": "Win64",
+			"Target": "Client"
+		},
+		{
+			"Configuration": "Test",
+			"Platform": "Win64",
+			"Target": "Client"
+		},
+		{
+			"Configuration": "Test",
+			"Platform": "IOS",
+			"Target": "Server"
+		},
+		{
+			"Configuration": "Test",
+			"Platform": "Mac",
+			"Target": "Server"
+		},
+		{
+			"Configuration": "Test",
+			"Platform": "TVOS",
+			"Target": "Server"
+		},
+		{
+			"Configuration": "Test",
+			"Platform": "Win64",
+			"Target": "Server"
+		},
+		{
+			"Configuration": "Test",
+			"Platform": "Win64",
+			"Target": "Server"
+		},
+		{
+			"Configuration": "Test",
+			"Platform": "Win64",
+			"Target": "Server"
+		},
+		{
+			"Configuration": "Test",
+			"Platform": "IOS",
+			"Target": "Game"
+		},
+		{
+			"Configuration": "Test",
+			"Platform": "Mac",
+			"Target": "Game"
+		},
+		{
+			"Configuration": "Test",
+			"Platform": "TVOS",
+			"Target": "Game"
+		},
+		{
+			"Configuration": "Test",
+			"Platform": "Win64",
+			"Target": "Game"
+		},
+		{
+			"Configuration": "Test",
+			"Platform": "Win64",
+			"Target": "Game"
+		},
+		{
+			"Configuration": "Test",
+			"Platform": "Win64",
+			"Target": "Game"
+		}
+	]
+}

@@ -214,7 +214,7 @@ struct Z_Construct_UFunction_UWhiteboardUI_OnToolChanged_Statics
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
 const UECodeGen_Private::FBytePropertyParams Z_Construct_UFunction_UWhiteboardUI_OnToolChanged_Statics::NewProp_NewTool_Underlying = { "UnderlyingType", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, nullptr, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FEnumPropertyParams Z_Construct_UFunction_UWhiteboardUI_OnToolChanged_Statics::NewProp_NewTool = { "NewTool", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardUI_eventOnToolChanged_Parms, NewTool), Z_Construct_UEnum_AdvancedDrawingBoard_EDrawingTool, METADATA_PARAMS(0, nullptr) }; // 1505869976
+const UECodeGen_Private::FEnumPropertyParams Z_Construct_UFunction_UWhiteboardUI_OnToolChanged_Statics::NewProp_NewTool = { "NewTool", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardUI_eventOnToolChanged_Parms, NewTool), Z_Construct_UEnum_AdvancedDrawingBoard_EDrawingTool, METADATA_PARAMS(0, nullptr) }; // 3667291816
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UWhiteboardUI_OnToolChanged_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UWhiteboardUI_OnToolChanged_Statics::NewProp_NewTool_Underlying,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UWhiteboardUI_OnToolChanged_Statics::NewProp_NewTool,
@@ -417,7 +417,7 @@ struct Z_Construct_UFunction_UWhiteboardUI_SetDrawingTool_Statics
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
 const UECodeGen_Private::FBytePropertyParams Z_Construct_UFunction_UWhiteboardUI_SetDrawingTool_Statics::NewProp_Tool_Underlying = { "UnderlyingType", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, nullptr, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FEnumPropertyParams Z_Construct_UFunction_UWhiteboardUI_SetDrawingTool_Statics::NewProp_Tool = { "Tool", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardUI_eventSetDrawingTool_Parms, Tool), Z_Construct_UEnum_AdvancedDrawingBoard_EDrawingTool, METADATA_PARAMS(0, nullptr) }; // 1505869976
+const UECodeGen_Private::FEnumPropertyParams Z_Construct_UFunction_UWhiteboardUI_SetDrawingTool_Statics::NewProp_Tool = { "Tool", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardUI_eventSetDrawingTool_Parms, Tool), Z_Construct_UEnum_AdvancedDrawingBoard_EDrawingTool, METADATA_PARAMS(0, nullptr) }; // 3667291816
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UWhiteboardUI_SetDrawingTool_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UWhiteboardUI_SetDrawingTool_Statics::NewProp_Tool_Underlying,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UWhiteboardUI_SetDrawingTool_Statics::NewProp_Tool,
@@ -443,6 +443,92 @@ DEFINE_FUNCTION(UWhiteboardUI::execSetDrawingTool)
 	P_NATIVE_END;
 }
 // End Class UWhiteboardUI Function SetDrawingTool
+
+// Begin Class UWhiteboardUI Function SetFigureTexture
+struct Z_Construct_UFunction_UWhiteboardUI_SetFigureTexture_Statics
+{
+	struct WhiteboardUI_eventSetFigureTexture_Parms
+	{
+		int32 TextureIndex;
+	};
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "Category", "Whiteboard" },
+		{ "ModuleRelativePath", "Public/UI/WhiteboardUI.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FIntPropertyParams NewProp_TextureIndex;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FIntPropertyParams Z_Construct_UFunction_UWhiteboardUI_SetFigureTexture_Statics::NewProp_TextureIndex = { "TextureIndex", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardUI_eventSetFigureTexture_Parms, TextureIndex), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UWhiteboardUI_SetFigureTexture_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UWhiteboardUI_SetFigureTexture_Statics::NewProp_TextureIndex,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UWhiteboardUI_SetFigureTexture_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UWhiteboardUI_SetFigureTexture_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UWhiteboardUI, nullptr, "SetFigureTexture", nullptr, nullptr, Z_Construct_UFunction_UWhiteboardUI_SetFigureTexture_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UWhiteboardUI_SetFigureTexture_Statics::PropPointers), sizeof(Z_Construct_UFunction_UWhiteboardUI_SetFigureTexture_Statics::WhiteboardUI_eventSetFigureTexture_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UWhiteboardUI_SetFigureTexture_Statics::Function_MetaDataParams), Z_Construct_UFunction_UWhiteboardUI_SetFigureTexture_Statics::Function_MetaDataParams) };
+static_assert(sizeof(Z_Construct_UFunction_UWhiteboardUI_SetFigureTexture_Statics::WhiteboardUI_eventSetFigureTexture_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_UWhiteboardUI_SetFigureTexture()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UWhiteboardUI_SetFigureTexture_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(UWhiteboardUI::execSetFigureTexture)
+{
+	P_GET_PROPERTY(FIntProperty,Z_Param_TextureIndex);
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	P_THIS->SetFigureTexture(Z_Param_TextureIndex);
+	P_NATIVE_END;
+}
+// End Class UWhiteboardUI Function SetFigureTexture
+
+// Begin Class UWhiteboardUI Function SetText
+struct Z_Construct_UFunction_UWhiteboardUI_SetText_Statics
+{
+	struct WhiteboardUI_eventSetText_Parms
+	{
+		FString NewText;
+	};
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "Category", "Whiteboard" },
+		{ "ModuleRelativePath", "Public/UI/WhiteboardUI.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FStrPropertyParams NewProp_NewText;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FStrPropertyParams Z_Construct_UFunction_UWhiteboardUI_SetText_Statics::NewProp_NewText = { "NewText", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardUI_eventSetText_Parms, NewText), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UWhiteboardUI_SetText_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UWhiteboardUI_SetText_Statics::NewProp_NewText,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UWhiteboardUI_SetText_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UWhiteboardUI_SetText_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UWhiteboardUI, nullptr, "SetText", nullptr, nullptr, Z_Construct_UFunction_UWhiteboardUI_SetText_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UWhiteboardUI_SetText_Statics::PropPointers), sizeof(Z_Construct_UFunction_UWhiteboardUI_SetText_Statics::WhiteboardUI_eventSetText_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UWhiteboardUI_SetText_Statics::Function_MetaDataParams), Z_Construct_UFunction_UWhiteboardUI_SetText_Statics::Function_MetaDataParams) };
+static_assert(sizeof(Z_Construct_UFunction_UWhiteboardUI_SetText_Statics::WhiteboardUI_eventSetText_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_UWhiteboardUI_SetText()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UWhiteboardUI_SetText_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(UWhiteboardUI::execSetText)
+{
+	P_GET_PROPERTY(FStrProperty,Z_Param_NewText);
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	P_THIS->SetText(Z_Param_NewText);
+	P_NATIVE_END;
+}
+// End Class UWhiteboardUI Function SetText
 
 // Begin Class UWhiteboardUI Function Undo
 struct Z_Construct_UFunction_UWhiteboardUI_Undo_Statics
@@ -488,6 +574,8 @@ void UWhiteboardUI::StaticRegisterNativesUWhiteboardUI()
 		{ "SetBrushTexture", &UWhiteboardUI::execSetBrushTexture },
 		{ "SetDrawingColor", &UWhiteboardUI::execSetDrawingColor },
 		{ "SetDrawingTool", &UWhiteboardUI::execSetDrawingTool },
+		{ "SetFigureTexture", &UWhiteboardUI::execSetFigureTexture },
+		{ "SetText", &UWhiteboardUI::execSetText },
 		{ "Undo", &UWhiteboardUI::execUndo },
 	};
 	FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
@@ -523,12 +611,14 @@ struct Z_Construct_UClass_UWhiteboardUI_Statics
 		{ &Z_Construct_UFunction_UWhiteboardUI_ClearWhiteboard, "ClearWhiteboard" }, // 4260004552
 		{ &Z_Construct_UFunction_UWhiteboardUI_ExportToPNG, "ExportToPNG" }, // 2813775823
 		{ &Z_Construct_UFunction_UWhiteboardUI_ExportToSVG, "ExportToSVG" }, // 1647900101
-		{ &Z_Construct_UFunction_UWhiteboardUI_OnToolChanged, "OnToolChanged" }, // 198955582
+		{ &Z_Construct_UFunction_UWhiteboardUI_OnToolChanged, "OnToolChanged" }, // 2609853752
 		{ &Z_Construct_UFunction_UWhiteboardUI_Redo, "Redo" }, // 2284434020
 		{ &Z_Construct_UFunction_UWhiteboardUI_SetBrushSize, "SetBrushSize" }, // 952893323
 		{ &Z_Construct_UFunction_UWhiteboardUI_SetBrushTexture, "SetBrushTexture" }, // 850417578
 		{ &Z_Construct_UFunction_UWhiteboardUI_SetDrawingColor, "SetDrawingColor" }, // 3878849303
-		{ &Z_Construct_UFunction_UWhiteboardUI_SetDrawingTool, "SetDrawingTool" }, // 915320871
+		{ &Z_Construct_UFunction_UWhiteboardUI_SetDrawingTool, "SetDrawingTool" }, // 2512525577
+		{ &Z_Construct_UFunction_UWhiteboardUI_SetFigureTexture, "SetFigureTexture" }, // 2245247652
+		{ &Z_Construct_UFunction_UWhiteboardUI_SetText, "SetText" }, // 845294252
 		{ &Z_Construct_UFunction_UWhiteboardUI_Undo, "Undo" }, // 2012774760
 	};
 	static_assert(UE_ARRAY_COUNT(FuncInfo) < 2048);
@@ -583,10 +673,10 @@ UWhiteboardUI::~UWhiteboardUI() {}
 struct Z_CompiledInDeferFile_FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_UI_WhiteboardUI_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UWhiteboardUI, UWhiteboardUI::StaticClass, TEXT("UWhiteboardUI"), &Z_Registration_Info_UClass_UWhiteboardUI, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UWhiteboardUI), 1616237287U) },
+		{ Z_Construct_UClass_UWhiteboardUI, UWhiteboardUI::StaticClass, TEXT("UWhiteboardUI"), &Z_Registration_Info_UClass_UWhiteboardUI, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UWhiteboardUI), 1602359926U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_UI_WhiteboardUI_h_3683459477(TEXT("/Script/AdvancedDrawingBoard"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_UI_WhiteboardUI_h_2666929945(TEXT("/Script/AdvancedDrawingBoard"),
 	Z_CompiledInDeferFile_FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_UI_WhiteboardUI_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_UI_WhiteboardUI_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

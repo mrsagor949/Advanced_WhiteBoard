@@ -30,6 +30,12 @@ public:
     
 	UFUNCTION(BlueprintCallable, Category = "Whiteboard")
 	void SetBrushTexture(int32 TextureIndex);
+
+	UFUNCTION(BlueprintCallable, Category = "Whiteboard")
+	void SetFigureTexture(int32 TextureIndex);
+
+	UFUNCTION(BlueprintCallable, Category = "Whiteboard")
+	void SetText(FString NewText);
     
 	UFUNCTION(BlueprintCallable, Category = "Whiteboard")
 	void ClearWhiteboard();

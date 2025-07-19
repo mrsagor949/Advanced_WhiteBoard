@@ -23,11 +23,6 @@ struct FLinearColor;
 	DECLARE_FUNCTION(execRedo); \
 	DECLARE_FUNCTION(execUndo); \
 	DECLARE_FUNCTION(execClearWhiteboard); \
-	DECLARE_FUNCTION(execAddTextAtPosition); \
-	DECLARE_FUNCTION(execSetTextSize); \
-	DECLARE_FUNCTION(execSetShapeFillColor); \
-	DECLARE_FUNCTION(execSetFillShapes); \
-	DECLARE_FUNCTION(execAddText); \
 	DECLARE_FUNCTION(execSetBrushSize); \
 	DECLARE_FUNCTION(execSetDrawingColor); \
 	DECLARE_FUNCTION(execSetDrawingTool); \

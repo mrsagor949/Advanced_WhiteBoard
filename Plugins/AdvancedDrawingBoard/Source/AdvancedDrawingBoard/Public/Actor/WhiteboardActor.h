@@ -7,9 +7,6 @@
 #include "Components/BoxComponent.h"
 #include "GameFramework/Actor.h"
 #include "Components/StaticMeshComponent.h"
-#include "Engine/Canvas.h"
-#include "Engine/TextureRenderTarget2D.h"
-#include "Net/UnrealNetwork.h"
 #include "WhiteboardActor.generated.h"
 
 class UCameraComponent;
@@ -25,7 +22,8 @@ enum class EDrawingTool : uint8
     Line        UMETA(DisplayName = "Line"),
     Rectangle   UMETA(DisplayName = "Rectangle"),
     Circle      UMETA(DisplayName = "Circle"),
-    Texture     UMETA(DisplayName = "Texture Brush")
+    Texture     UMETA(DisplayName = "Texture Brush"),
+    Figure     UMETA(DisplayName = "Figure Brush")
 };
 
 // Drawing Tools Struct
@@ -88,6 +86,9 @@ struct FStroke
 
     UPROPERTY()
     UTexture2D* BrushTexture = nullptr;
+
+    UPROPERTY()
+    UTexture2D* FigureTexture = nullptr;
 
     // NEW: Shape-specific properties
     UPROPERTY()
@@ -160,8 +161,14 @@ public:
     TArray<UTexture2D*> BrushTextures;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Replicated, Category = "Drawing")
-    int32 SelectedTextureIndex;
+    int32 SelectedBrushTextureIndex;
+    
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Drawing")
+    TArray<UTexture2D*> FigureTextures;
 
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Replicated, Category = "Drawing")
+    int32 SelectedFigureTextureIndex;
+    
     // Drawing history for undo/redo
     UPROPERTY(Replicated)
     TArray<FStroke> StrokeHistory;
@@ -171,6 +178,10 @@ public:
 
     UPROPERTY(Replicated)
     int32 NextStrokeID;
+
+    // NEW: Current text string for UI input
+    UPROPERTY(Replicated)
+    FString CurrentTextString;
 
     // Interaction - Multi-player support
     UPROPERTY(BlueprintReadOnly, Category = "Interaction")
@@ -194,6 +205,9 @@ public:
 
     UFUNCTION(BlueprintCallable, Category = "Whiteboard")
     void SetBrushTexture(int32 TextureIndex);
+
+    UFUNCTION(BlueprintCallable, Category = "Whiteboard")
+    void SetFigureTexture(int32 TextureIndex);
 
     UFUNCTION(BlueprintCallable, Category = "Whiteboard")
     bool IsPlayerInRange(APlayerController* PlayerController) const;
@@ -226,12 +240,23 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Whiteboard")
     void EndDrawing();
 
+    // NEW: Enhanced text input functions
     UFUNCTION(BlueprintCallable, Category = "Whiteboard")
-    void AddText(const FVector& WorldPosition, const FString& Text);
+    void SetTextString(const FString& NewTextString);
+
+    // Server RPC for text string
+    UFUNCTION(Server, Reliable)
+    void Server_SetTextString(const FString& NewTextString);
+    
+    UFUNCTION(BlueprintCallable, Category = "Whiteboard")
+    void AddText(const FVector2D& CanvasPosition, const FString& Text);
+
+    UFUNCTION(BlueprintCallable, Category = "Whiteboard")
+    void DrawFigure(const FVector2D& CanvasPosition, const int32 SelectedFigureIndex);
 
     // Server RPC functions for network replication
     UFUNCTION(Server, Reliable)
-    void Server_StartDrawing(const FVector2D& CanvasPosition, EDrawingTool Tool, FLinearColor Color, float Size, int32 TextureIndex);
+    void Server_StartDrawing(const FVector2D& CanvasPosition, EDrawingTool Tool, FLinearColor Color, float Size, int32 BrushTextureIndex,int32 FigureTextureIndex);
 
     UFUNCTION(Server, Reliable)
     void Server_ContinueDrawing(const FVector2D& CanvasPosition);
@@ -240,7 +265,10 @@ public:
     void Server_EndDrawing();
 
     UFUNCTION(Server, Reliable)
-    void Server_AddText(const FVector& CanvasPosition, const FString& Text, FLinearColor Color, float Size);
+    void Server_AddText(const FVector2D& CanvasPosition, const FString& Text, FLinearColor Color, float Size);
+
+    UFUNCTION(Server, Reliable)
+    void Server_DrawFigure(const FVector2D& CanvasPosition, int32 SelectedFigureIndex, FLinearColor Color, float Size);
 
     UFUNCTION(Server, Reliable)
     void Server_ClearWhiteboard();
@@ -263,9 +291,12 @@ public:
     UFUNCTION(Server, Reliable)
     void Server_SetBrushTexture(int32 TextureIndex);
 
+    UFUNCTION(Server, Reliable)
+    void Server_SetFigureTexture(int32 TextureIndex);
+
     // Multicast functions to update all clients
     UFUNCTION(NetMulticast, Reliable)
-    void Multicast_StartDrawing(const FVector2D& CanvasPosition, EDrawingTool Tool, FLinearColor Color, float Size, int32 TextureIndex, int32 StrokeID);
+    void Multicast_StartDrawing(const FVector2D& CanvasPosition, EDrawingTool Tool, FLinearColor Color, float Size, int32 BrushTextureIndex,int32 FigureTextureIndex, int32 StrokeID);
 
     UFUNCTION(NetMulticast, Reliable)
     void Multicast_ContinueDrawing(const FVector2D& CanvasPosition, int32 StrokeID);
@@ -289,7 +320,7 @@ public:
     UFUNCTION(NetMulticast, Reliable)
     void Multicast_UpdateShapePreview(const FVector2D& StartPos, const FVector2D& EndPos, EDrawingTool Tool, FLinearColor Color, float Size, int32 StrokeID);
 
-    // Functions
+    // FIXED: Interaction Functions - Updated for new networking approach
     UFUNCTION(BlueprintCallable, Category = "Whiteboard")
     void StartInteraction(APawn* Player);
 
@@ -299,12 +330,16 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Whiteboard")
     void EndInteractionForPlayer(APawn* Player);
 
-    // Server RPC for interaction
-    UFUNCTION(Server, Reliable)
-    void Server_StartInteraction(APawn* Player);
+    // NEW: Request functions that handle networking properly
+    UFUNCTION(BlueprintCallable, Category = "Whiteboard")
+    void RequestInteraction(APawn* Player);
 
-    UFUNCTION(Server, Reliable)
-    void Server_EndInteraction();
+    UFUNCTION(BlueprintCallable, Category = "Whiteboard")
+    void RequestEndInteraction(APawn* Player);
+
+    // NEW: Validation function for client-side prediction
+    UFUNCTION(BlueprintCallable, Category = "Whiteboard")
+    bool CanPlayerInteract(APawn* Player) const;
 
     // UI Management - Blueprint Events
     UFUNCTION(BlueprintImplementableEvent, Category = "UI Events")
@@ -363,10 +398,6 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Whiteboard")
     bool CanInteractLocally(APawn* Player) const;
 
-    // Function to handle ownership transfer
-    UFUNCTION(BlueprintCallable, Category = "Whiteboard")
-    void TransferOwnershipToPlayer(APawn* Player);
-
     // NEW: Helper functions for shape tools
     UFUNCTION(BlueprintCallable, Category = "Whiteboard")
     bool IsShapeTool(EDrawingTool Tool) const;
@@ -418,4 +449,5 @@ private:
 
     // Network helpers
     void SyncNewClient(APlayerController* NewClient);
+    
 };

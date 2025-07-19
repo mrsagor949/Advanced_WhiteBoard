@@ -936,6 +936,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\..\Advanced_WhiteBoard.uproject"/>
+    <None Include="..\..\Plugins\AdvancedDrawingBoard\Config\DefaultAdvancedDrawingBoard.ini" />
     <None Include="..\..\Source\Advanced_WhiteBoard.Target.cs"/>
     <None Include="..\..\Source\Advanced_WhiteBoardEditor.Target.cs"/>
     <None Include="..\..\.vsconfig"/>
@@ -956,6 +957,8 @@
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>$(ClCompile_ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
+    <ClCompile Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Private\Controller\AWhiteboard_Player_Controller.cpp" />
+    <ClCompile Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Private\UI\UI_ImportFile.cpp" />
     <ClCompile Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Private\UI\WhiteboardUI.cpp">
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>$(ClCompile_ForcedIncludeFiles)</ForcedIncludeFiles>
@@ -987,6 +990,10 @@
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories_1)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>$(ClCompile_ForcedIncludeFiles_1)</ForcedIncludeFiles>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\Controller\AWhiteboard_Player_Controller.h" />
+    <ClInclude Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\UI\UI_ImportFile.h" />
   </ItemGroup>
   <ItemDefinitionGroup>
   </ItemDefinitionGroup>

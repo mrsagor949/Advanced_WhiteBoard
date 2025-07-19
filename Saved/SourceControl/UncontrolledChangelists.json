@@ -24,6 +24,19 @@
 				"E:/SPARKELON-2025/Prototype/2025/Advanced_WhiteBoard/Plugins/AdvancedDrawingBoard/Content/UI/redo_icon.uasset",
 				"E:/SPARKELON-2025/Prototype/2025/Advanced_WhiteBoard/Plugins/AdvancedDrawingBoard/Content/UI/undo_icon.uasset",
 				"E:/SPARKELON-2025/Prototype/2025/Advanced_WhiteBoard/Plugins/AdvancedDrawingBoard/Content/UI/LineTools.uasset",
+				"E:/SPARKELON-2025/Prototype/2025/Advanced_WhiteBoard/Plugins/AdvancedDrawingBoard/Content/UI/TextTools.uasset",
+				"E:/SPARKELON-2025/Prototype/2025/Advanced_WhiteBoard/Content/AdvancedDrawSystem/Blueprints/UI_SingleCanvas.uasset",
+				"E:/SPARKELON-2025/Prototype/2025/Advanced_WhiteBoard/Content/AdvancedDrawSystem/Blueprints/SettingsModules/UI_TextSelector.uasset",
+				"E:/SPARKELON-2025/Prototype/2025/Advanced_WhiteBoard/Plugins/AdvancedDrawingBoard/Content/UI/Componets/UI_Import.uasset",
+				"E:/SPARKELON-2025/Prototype/2025/Advanced_WhiteBoard/Content/AdvancedDrawSystem/Blueprints/SettingsModules/UI_FileSettings.uasset",
+				"E:/SPARKELON-2025/Prototype/2025/Advanced_WhiteBoard/Content/AdvancedDrawSystem/Blueprints/Components/UI_MasksPreview.uasset",
+				"E:/SPARKELON-2025/Prototype/2025/Advanced_WhiteBoard/Plugins/AdvancedDrawingBoard/Content/UI/text_Tools.uasset",
+				"E:/SPARKELON-2025/Prototype/2025/Advanced_WhiteBoard/Plugins/AdvancedDrawingBoard/Content/UI/Shapes/Rose.uasset",
+				"E:/SPARKELON-2025/Prototype/2025/Advanced_WhiteBoard/Plugins/AdvancedDrawingBoard/Content/UI/Shapes/Talk_Bubble01.uasset",
+				"E:/SPARKELON-2025/Prototype/2025/Advanced_WhiteBoard/Plugins/AdvancedDrawingBoard/Content/UI/Shapes/talk_bubble02.uasset",
+				"E:/SPARKELON-2025/Prototype/2025/Advanced_WhiteBoard/Content/ThirdPerson/Blueprints/BP_ThirdPersonGameMode.uasset",
+				"E:/SPARKELON-2025/Prototype/2025/Advanced_WhiteBoard/Content/ThirdPerson/Blueprints/BP_WhiteBoard_PC.uasset",
+				"E:/SPARKELON-2025/Prototype/2025/Advanced_WhiteBoard/Plugins/AdvancedDrawingBoard/Content/UI/Componets/UI_FileSettings.uasset",
 				"E:/SPARKELON-2025/Prototype/2025/Advanced_WhiteBoard/Content/NewCanvasRenderTarget2D.uasset"
 			]
 		}

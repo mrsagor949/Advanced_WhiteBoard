@@ -31,6 +31,7 @@ public class AdvancedDrawingBoard : ModuleRules
 				"InputCore",
 				"UMG",
 				"Slate",
+				"HeadMountedDisplay",
 				"SlateCore",
 				"RenderCore",
 				"RHI",

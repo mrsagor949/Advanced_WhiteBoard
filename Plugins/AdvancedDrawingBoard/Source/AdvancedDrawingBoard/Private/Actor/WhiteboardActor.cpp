@@ -1,4 +1,4 @@
-﻿// Copyright Epic Games, Inc. All Rights Reserved.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Actor/WhiteboardActor.h"
 #include "Camera/CameraComponent.h"
@@ -11,14 +11,26 @@
 #include "GameFramework/PlayerController.h"
 #include "Misc/FileHelper.h"
 #include "Engine/Engine.h"
+#include "Controller/AWhiteboard_Player_Controller.h"
 
+// Sets default values
 AWhiteboardActor::AWhiteboardActor()
 {
-    PrimaryActorTick.bCanEverTick = true;
+ 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	PrimaryActorTick.bCanEverTick = true;
     bReplicates = true;
-    // FIXED: Remove bAlwaysRelevant to allow proper ownership
+    
+    // IMPORTANT: Set this to false to allow proper ownership transfer
     bAlwaysRelevant = false;
     
+    // Set net update frequency for better responsiveness
+    SetNetUpdateFrequency(10.0f);
+    SetMinNetUpdateFrequency(2.0f);
+    
+	// Replicate this actor
+	SetReplicates(true);
+    AActor::SetReplicateMovement(true);
+
     // Create root component
     RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
     
@@ -44,7 +56,8 @@ AWhiteboardActor::AWhiteboardActor()
     CurrentTool = EDrawingTool::Brush;
     CurrentColor = FLinearColor::Black;
     BrushSize = 5.0f;
-    SelectedTextureIndex = 0;
+    SelectedBrushTextureIndex = 0;
+    SelectedFigureTextureIndex = 0;
     
     // Initialize drawing state
     bIsDrawing = false;
@@ -56,9 +69,11 @@ AWhiteboardActor::AWhiteboardActor()
     NextStrokeID = 0;
 }
 
+// Called when the game starts or when spawned
 void AWhiteboardActor::BeginPlay()
 {
-    Super::BeginPlay();
+	Super::BeginPlay();
+    
 
     // Bind overlap events
     InteractionVolume->OnComponentBeginOverlap.AddDynamic(this, &AWhiteboardActor::OnTriggerBeginOverlap);
@@ -108,9 +123,11 @@ bool AWhiteboardActor::IsShapeTool(EDrawingTool Tool) const
     return Tool == EDrawingTool::Line || Tool == EDrawingTool::Rectangle || Tool == EDrawingTool::Circle;
 }
 
+// Called every frame
 void AWhiteboardActor::Tick(float DeltaTime)
 {
-    Super::Tick(DeltaTime);
+	Super::Tick(DeltaTime);
+
 }
 
 void AWhiteboardActor::OnConstruction(const FTransform& Transform)
@@ -127,14 +144,16 @@ void AWhiteboardActor::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
     DOREPLIFETIME(AWhiteboardActor, CurrentTool);
     DOREPLIFETIME(AWhiteboardActor, CurrentColor);
     DOREPLIFETIME(AWhiteboardActor, BrushSize);
-    DOREPLIFETIME(AWhiteboardActor, SelectedTextureIndex);
+    DOREPLIFETIME(AWhiteboardActor, SelectedBrushTextureIndex);
+    DOREPLIFETIME(AWhiteboardActor, SelectedFigureTextureIndex);
+    DOREPLIFETIME(AWhiteboardActor, CurrentTextString);
     
     // Replicate drawing history with RepNotify
     DOREPLIFETIME_CONDITION_NOTIFY(AWhiteboardActor, StrokeHistory, COND_None, REPNOTIFY_Always);
     DOREPLIFETIME(AWhiteboardActor, CurrentHistoryIndex);
     DOREPLIFETIME(AWhiteboardActor, NextStrokeID);
     
-    // Replicate interaction state - FIXED: Proper RepNotify setup
+    // Replicate interaction state
     DOREPLIFETIME(AWhiteboardActor, InteractingPawns);
     DOREPLIFETIME(AWhiteboardActor, MaxInteractingPlayers);
 }
@@ -148,22 +167,112 @@ void AWhiteboardActor::OnRep_StrokeHistory()
 void AWhiteboardActor::OnRep_InteractingPawns()
 {
     // Handle interaction state changes on clients
-    // This will be called when InteractingPawns array changes
     UE_LOG(LogTemp, Warning, TEXT("OnRep_InteractingPawns - %d players interacting"), InteractingPawns.Num());
 }
 
-// NEW: Transfer ownership to the interacting player
-void AWhiteboardActor::TransferOwnershipToPlayer(APawn* Player)
+
+
+
+
+
+
+// NEW: Request interaction through PlayerController
+void AWhiteboardActor::RequestInteraction(APawn* Player)
 {
-    if (HasAuthority() && Player)
+    UE_LOG(LogTemp, Warning, TEXT("RequestInteraction called - Player: %s, Role: %d"), 
+           Player ? *Player->GetName() : TEXT("None"), (int32)GetLocalRole());
+
+    if (!Player)
     {
-        APlayerController* PC = Cast<APlayerController>(Player->GetController());
-        if (PC)
+        UE_LOG(LogTemp, Error, TEXT("RequestInteraction failed - Invalid player"));
+        return;
+    }
+
+    // Get the player controller
+    APlayerController* PC = Cast<APlayerController>(Player->GetController());
+    if (!PC)
+    {
+        UE_LOG(LogTemp, Error, TEXT("RequestInteraction failed - No PlayerController"));
+        return;
+    }
+
+    // Call RPC through PlayerController (which has proper ownership)
+    if (HasAuthority())
+    {
+        // We're on the server, call directly
+        StartInteraction(Player);
+    }
+    else
+    {
+        // We're on client, call server RPC through PlayerController
+        if (AWhiteboardController* YourPC = Cast<AWhiteboardController>(PC))
         {
-            SetOwner(PC);
-            UE_LOG(LogTemp, Warning, TEXT("Transferred whiteboard ownership to player: %s"), *Player->GetName());
+            YourPC->Server_RequestWhiteboardInteraction(this, Player);
+        }
+        else
+        {
+            UE_LOG(LogTemp, Error, TEXT("PlayerController is not of type AYourPlayerController"));
         }
     }
+}
+
+// NEW: Request end interaction through PlayerController
+void AWhiteboardActor::RequestEndInteraction(APawn* Player)
+{
+    if (!Player)
+    {
+        UE_LOG(LogTemp, Error, TEXT("RequestEndInteraction failed - Invalid player"));
+        return;
+    }
+
+    APlayerController* PC = Cast<APlayerController>(Player->GetController());
+    if (!PC)
+    {
+        UE_LOG(LogTemp, Error, TEXT("RequestEndInteraction failed - No PlayerController"));
+        return;
+    }
+
+    if (HasAuthority())
+    {
+        EndInteractionForPlayer(Player);
+    }
+    else
+    {
+        if (AWhiteboardController* YourPC = Cast<AWhiteboardController>(PC))
+        {
+            YourPC->Server_EndWhiteboardInteraction(this, Player);
+        }
+    }
+}
+
+// NEW: Validation function for client-side prediction
+bool AWhiteboardActor::CanPlayerInteract(APawn* Player) const
+{
+    if (!Player) return false;
+    
+    // Check distance
+    float Distance = FVector::Distance(Player->GetActorLocation(), GetActorLocation());
+    if (Distance > InteractionDistance) 
+    {
+        UE_LOG(LogTemp, Log, TEXT("Player too far: %f > %f"), Distance, InteractionDistance);
+        return false;
+    }
+    
+    // Check if already interacting
+    if (InteractingPawns.Contains(Player)) 
+    {
+        UE_LOG(LogTemp, Log, TEXT("Player already interacting"));
+        return true; // Already interacting is OK
+    }
+    
+    // Check player limit
+    if (!CanAcceptMorePlayers()) 
+    {
+        UE_LOG(LogTemp, Log, TEXT("Cannot accept more players: %d/%d"), InteractingPawns.Num(), MaxInteractingPlayers);
+        return false;
+    }
+    
+    return true;
 }
 
 // Drawing Tool Functions
@@ -175,7 +284,13 @@ void AWhiteboardActor::SetCurrentTool(EDrawingTool NewTool)
     }
     else
     {
-        Server_SetCurrentTool(NewTool);
+        if (APlayerController* PC = GetWorld()->GetFirstPlayerController())
+        {
+            if (AWhiteboardController* YourPC = Cast<AWhiteboardController>(PC))
+            {
+                YourPC->Server_WhiteboardSetCurrentTool(this, NewTool);
+            }
+        }
     }
 }
 
@@ -187,7 +302,13 @@ void AWhiteboardActor::SetCurrentColor(FLinearColor NewColor)
     }
     else
     {
-        Server_SetCurrentColor(NewColor);
+        if (APlayerController* PC = GetWorld()->GetFirstPlayerController())
+        {
+            if (AWhiteboardController* YourPC = Cast<AWhiteboardController>(PC))
+            {
+                YourPC->Server_WhiteboardSetCurrentColor(this, NewColor);
+            }
+        }
     }
 }
 
@@ -199,7 +320,13 @@ void AWhiteboardActor::SetBrushSize(float NewSize)
     }
     else
     {
-        Server_SetBrushSize(NewSize);
+        if (APlayerController* PC = GetWorld()->GetFirstPlayerController())
+        {
+            if (AWhiteboardController* YourPC = Cast<AWhiteboardController>(PC))
+            {
+                YourPC->Server_WhiteboardSetBrushSize(this, NewSize);
+            }
+        }
     }
 }
 
@@ -209,12 +336,39 @@ void AWhiteboardActor::SetBrushTexture(int32 TextureIndex)
     {
         if (BrushTextures.IsValidIndex(TextureIndex))
         {
-            SelectedTextureIndex = TextureIndex;
+            SelectedBrushTextureIndex = TextureIndex;
         }
     }
     else
     {
-        Server_SetBrushTexture(TextureIndex);
+        if (APlayerController* PC = GetWorld()->GetFirstPlayerController())
+        {
+            if (AWhiteboardController* YourPC = Cast<AWhiteboardController>(PC))
+            {
+                YourPC->Server_WhiteboardSetBrushTexture(this, TextureIndex);
+            }
+        }
+    }
+}
+
+void AWhiteboardActor::SetFigureTexture(int32 TextureIndex)
+{
+    if (HasAuthority())
+    {
+        if (FigureTextures.IsValidIndex(TextureIndex))
+        {
+            SelectedFigureTextureIndex = TextureIndex;
+        }
+    }
+    else
+    {
+        if (APlayerController* PC = GetWorld()->GetFirstPlayerController())
+        {
+            if (AWhiteboardController* YourPC = Cast<AWhiteboardController>(PC))
+            {
+                YourPC->Server_WhiteboardSetFigureTexture(this, TextureIndex);
+            }
+        }
     }
 }
 
@@ -270,7 +424,13 @@ void AWhiteboardActor::ClearWhiteboard()
     }
     else
     {
-        Server_ClearWhiteboard();
+        if (APlayerController* PC = GetWorld()->GetFirstPlayerController())
+        {
+            if (AWhiteboardController* YourPC = Cast<AWhiteboardController>(PC))
+            {
+                YourPC->Server_WhiteboardClearWhiteboard(this);
+            }
+        }
     }
 }
 
@@ -289,7 +449,13 @@ void AWhiteboardActor::Undo()
     }
     else
     {
-        Server_Undo();
+        if (APlayerController* PC = GetWorld()->GetFirstPlayerController())
+        {
+            if (AWhiteboardController* YourPC = Cast<AWhiteboardController>(PC))
+            {
+                YourPC->Server_WhiteboardUndo(this);
+            }
+        }
     }
 }
 
@@ -308,7 +474,13 @@ void AWhiteboardActor::Redo()
     }
     else
     {
-        Server_Redo();
+        if (APlayerController* PC = GetWorld()->GetFirstPlayerController())
+        {
+            if (AWhiteboardController* YourPC = Cast<AWhiteboardController>(PC))
+            {
+                YourPC->Server_WhiteboardRedo(this);
+            }
+        }
     }
 }
 
@@ -351,19 +523,35 @@ void AWhiteboardActor::StartDrawing(const FVector2D& CanvasPosition)
         CurrentStroke.EndPosition = CanvasPosition;
         CurrentStroke.bIsComplete = false;
         
-        if (BrushTextures.IsValidIndex(SelectedTextureIndex))
+        if (BrushTextures.IsValidIndex(SelectedBrushTextureIndex))
         {
-            CurrentStroke.BrushTexture = BrushTextures[SelectedTextureIndex];
+            CurrentStroke.BrushTexture = BrushTextures[SelectedBrushTextureIndex];
+        }
+
+        if (FigureTextures.IsValidIndex(SelectedFigureTextureIndex))
+        {
+            CurrentStroke.FigureTexture = FigureTextures[SelectedFigureTextureIndex];
         }
         
         FDrawingPoint Point(CanvasPosition, 1.0f, CurrentColor, BrushSize, CurrentTool, CurrentStroke.StrokeID);
         CurrentStroke.Points.Add(Point);
-        
+
+        if (CurrentTool == EDrawingTool::Text)
+        {
+            AddText(CanvasPosition, CurrentTextString);
+            bIsDrawing = false; 
+            return;
+        }
+        else if (CurrentTool == EDrawingTool::Texture || CurrentTool == EDrawingTool::Figure)
+        {
+            DrawFigure(CanvasPosition, SelectedFigureTextureIndex);
+            bIsDrawing = false;
+            return;
+        }
         // Handle shape tools differently
-        if (IsShapeTool(CurrentTool))
+        else if (IsShapeTool(CurrentTool))
         {
             bIsDrawingShape = true;
-            // For shapes, we don't draw anything yet, just store the start position
         }
         else
         {
@@ -372,12 +560,18 @@ void AWhiteboardActor::StartDrawing(const FVector2D& CanvasPosition)
         }
         
         // Notify all clients to start drawing
-        Multicast_StartDrawing(CanvasPosition, CurrentTool, CurrentColor, BrushSize, SelectedTextureIndex, CurrentStroke.StrokeID);
+        Multicast_StartDrawing(CanvasPosition, CurrentTool, CurrentColor, BrushSize, SelectedBrushTextureIndex, SelectedFigureTextureIndex, CurrentStroke.StrokeID);
     }
     else
     {
-        UE_LOG(LogTemp, Warning, TEXT("Client StartDrawing - Sending RPC to server"));
-        Server_StartDrawing(CanvasPosition, CurrentTool, CurrentColor, BrushSize, SelectedTextureIndex);
+        UE_LOG(LogTemp, Warning, TEXT("Client StartDrawing - Sending RPC to server through PlayerController"));
+        if (APlayerController* PC = GetWorld()->GetFirstPlayerController())
+        {
+            if (AWhiteboardController* YourPC = Cast<AWhiteboardController>(PC))
+            {
+                YourPC->Server_WhiteboardStartDrawing(this, CanvasPosition, CurrentTool, CurrentColor, BrushSize, SelectedBrushTextureIndex, SelectedFigureTextureIndex);
+            }
+        }
     }
 }
 
@@ -425,7 +619,13 @@ void AWhiteboardActor::ContinueDrawing(const FVector2D& CanvasPosition)
     }
     else
     {
-        Server_ContinueDrawing(CanvasPosition);
+        if (APlayerController* PC = GetWorld()->GetFirstPlayerController())
+        {
+            if (AWhiteboardController* YourPC = Cast<AWhiteboardController>(PC))
+            {
+                YourPC->Server_WhiteboardContinueDrawing(this, CanvasPosition);
+            }
+        }
     }
 }
 
@@ -477,8 +677,37 @@ void AWhiteboardActor::EndDrawing()
     }
     else
     {
-        Server_EndDrawing();
+        if (APlayerController* PC = GetWorld()->GetFirstPlayerController())
+        {
+            if (AWhiteboardController* YourPC = Cast<AWhiteboardController>(PC))
+            {
+                YourPC->Server_WhiteboardEndDrawing(this);
+            }
+        }
     }
+}
+
+void AWhiteboardActor::SetTextString(const FString& NewTextString)
+{
+    if (HasAuthority())
+    {
+        CurrentTextString = NewTextString;
+    }
+    else
+    {
+        if (APlayerController* PC = GetWorld()->GetFirstPlayerController())
+        {
+            if (AWhiteboardController* YourPC = Cast<AWhiteboardController>(PC))
+            {
+                YourPC->Server_WhiteboardSetTextString(this, NewTextString);
+            }
+        }
+    }
+}
+
+void AWhiteboardActor::Server_SetTextString_Implementation(const FString& NewTextString)
+{
+    CurrentTextString = NewTextString;
 }
 
 // NEW: Shape preview functions
@@ -623,18 +852,190 @@ void AWhiteboardActor::DrawShape(const FStroke& Stroke)
     UpdateCanvasMaterial();
 }
 
-// NEW: Multicast function for shape preview
-void AWhiteboardActor::Multicast_UpdateShapePreview_Implementation(const FVector2D& StartPos, const FVector2D& EndPos, EDrawingTool Tool, FLinearColor Color, float Size, int32 StrokeID)
+void AWhiteboardActor::AddText(const FVector2D& CanvasPosition, const FString& Text)
 {
-    if (!HasAuthority())
+    if (Text.IsEmpty())
     {
-        ClearShapePreview();
-        DrawShapePreview(StartPos, EndPos, Tool, Color, Size);
+        return;
+    }
+    
+    if (HasAuthority())
+    {
+        // Create a new stroke for text
+        FStroke TextStroke;
+        TextStroke.StrokeID = NextStrokeID++;
+        TextStroke.Tool = EDrawingTool::Text;
+        TextStroke.Color = CurrentColor;
+        TextStroke.Size = BrushSize;
+        TextStroke.TextContent = Text;
+        
+        FDrawingPoint Point(CanvasPosition, 1.0f, CurrentColor, BrushSize, EDrawingTool::Text, TextStroke.StrokeID);
+        TextStroke.Points.Add(Point);
+        
+        // Draw text on canvas
+        DrawStroke(TextStroke);
+        
+        // Add to history
+        if (CurrentHistoryIndex < StrokeHistory.Num() - 1)
+        {
+            StrokeHistory.RemoveAt(CurrentHistoryIndex + 1, StrokeHistory.Num() - CurrentHistoryIndex - 1);
+        }
+        
+        StrokeHistory.Add(TextStroke);
+        CurrentHistoryIndex = StrokeHistory.Num() - 1;
+        
+        // Notify all clients
+        Multicast_UpdateDrawing(TextStroke);
+    }
+    else
+    {
+        // Send to server
+        if (APlayerController* PC = GetWorld()->GetFirstPlayerController())
+        {
+            if (AWhiteboardController* YourPC = Cast<AWhiteboardController>(PC))
+            {
+                YourPC->Server_WhiteboardAddText(this, CanvasPosition, Text, CurrentColor, BrushSize);
+            }
+        }
     }
 }
 
-// Modified multicast functions to handle shapes
-void AWhiteboardActor::Multicast_StartDrawing_Implementation(const FVector2D& CanvasPosition, EDrawingTool Tool, FLinearColor Color, float Size, int32 TextureIndex, int32 StrokeID)
+void AWhiteboardActor::DrawFigure(const FVector2D& CanvasPosition, const int32 SelectedFigureIndex)
+{
+    if (HasAuthority())
+    {
+        // Create a new stroke for figure
+        FStroke FigureStroke;
+        FigureStroke.StrokeID = NextStrokeID++;
+        FigureStroke.Tool = EDrawingTool::Figure;
+        FigureStroke.Color = CurrentColor;
+        FigureStroke.Size = BrushSize;
+        FigureStroke.FigureTexture = FigureTextures[SelectedFigureIndex];
+        
+        FDrawingPoint Point(CanvasPosition, 1.0f, CurrentColor, BrushSize, EDrawingTool::Figure, FigureStroke.StrokeID);
+        FigureStroke.Points.Add(Point);
+        
+        // Draw figure on canvas
+        DrawStroke(FigureStroke);
+        
+        // Add to history
+        if (CurrentHistoryIndex < StrokeHistory.Num() - 1)
+        {
+            StrokeHistory.RemoveAt(CurrentHistoryIndex + 1, StrokeHistory.Num() - CurrentHistoryIndex - 1);
+        }
+        
+        StrokeHistory.Add(FigureStroke);
+        CurrentHistoryIndex = StrokeHistory.Num() - 1;
+        
+        // Notify all clients
+        Multicast_UpdateDrawing(FigureStroke);
+    }
+    else
+    {
+        // Send to server
+        if (APlayerController* PC = GetWorld()->GetFirstPlayerController())
+        {
+            if (AWhiteboardController* YourPC = Cast<AWhiteboardController>(PC))
+            {
+                YourPC->Server_WhiteboardDrawFigure(this, CanvasPosition, SelectedFigureIndex, CurrentColor, BrushSize);
+            }
+        }
+    }
+}
+
+// Server RPC Implementations
+void AWhiteboardActor::Server_StartDrawing_Implementation(const FVector2D& CanvasPosition, EDrawingTool Tool, FLinearColor Color, float Size, int32 BrushTextureIndex, int32 FigureTextureIndex)
+{
+    // Update current drawing properties
+    CurrentTool = Tool;
+    CurrentColor = Color;
+    BrushSize = FMath::Clamp(Size, 1.0f, 100.0f);
+    
+    if (BrushTextures.IsValidIndex(BrushTextureIndex))
+    {
+        SelectedBrushTextureIndex = BrushTextureIndex;
+    }
+
+    if (FigureTextures.IsValidIndex(FigureTextureIndex))
+    {
+        SelectedFigureTextureIndex = FigureTextureIndex;
+    }
+    
+    StartDrawing(CanvasPosition);
+}
+
+void AWhiteboardActor::Server_ContinueDrawing_Implementation(const FVector2D& CanvasPosition)
+{
+    ContinueDrawing(CanvasPosition);
+}
+
+void AWhiteboardActor::Server_EndDrawing_Implementation()
+{
+    EndDrawing();
+}
+
+void AWhiteboardActor::Server_AddText_Implementation(const FVector2D& CanvasPosition, const FString& Text, FLinearColor Color, float Size)
+{
+    CurrentColor = Color;
+    BrushSize = FMath::Clamp(Size, 1.0f, 100.0f);
+    AddText(CanvasPosition, Text);
+}
+
+void AWhiteboardActor::Server_DrawFigure_Implementation(const FVector2D& CanvasPosition, int32 SelectedFigureIndex, FLinearColor Color, float Size)
+{
+    CurrentColor = Color;
+    BrushSize = FMath::Clamp(Size, 1.0f, 100.0f);
+    DrawFigure(CanvasPosition, SelectedFigureIndex);
+}
+
+void AWhiteboardActor::Server_ClearWhiteboard_Implementation()
+{
+    ClearWhiteboard();
+}
+
+void AWhiteboardActor::Server_Undo_Implementation()
+{
+    Undo();
+}
+
+void AWhiteboardActor::Server_Redo_Implementation()
+{
+    Redo();
+}
+
+void AWhiteboardActor::Server_SetCurrentTool_Implementation(EDrawingTool NewTool)
+{
+    CurrentTool = NewTool;
+}
+
+void AWhiteboardActor::Server_SetCurrentColor_Implementation(FLinearColor NewColor)
+{
+    CurrentColor = NewColor;
+}
+
+void AWhiteboardActor::Server_SetBrushSize_Implementation(float NewSize)
+{
+    BrushSize = FMath::Clamp(NewSize, 1.0f, 100.0f);
+}
+
+void AWhiteboardActor::Server_SetBrushTexture_Implementation(int32 TextureIndex)
+{
+    if (BrushTextures.IsValidIndex(TextureIndex))
+    {
+        SelectedBrushTextureIndex = TextureIndex;
+    }
+}
+
+void AWhiteboardActor::Server_SetFigureTexture_Implementation(int32 TextureIndex)
+{
+    if (FigureTextures.IsValidIndex(TextureIndex))
+    {
+        SelectedFigureTextureIndex = TextureIndex;
+    }
+}
+
+// Multicast RPC Implementations
+void AWhiteboardActor::Multicast_StartDrawing_Implementation(const FVector2D& CanvasPosition, EDrawingTool Tool, FLinearColor Color, float Size, int32 BrushTextureIndex, int32 FigureTextureIndex, int32 StrokeID)
 {
     if (GetLocalRole() != ROLE_Authority)
     {
@@ -650,9 +1051,14 @@ void AWhiteboardActor::Multicast_StartDrawing_Implementation(const FVector2D& Ca
         CurrentStroke.StartPosition = CanvasPosition;
         CurrentStroke.EndPosition = CanvasPosition;
         
-        if (BrushTextures.IsValidIndex(TextureIndex))
+        if (BrushTextures.IsValidIndex(BrushTextureIndex))
         {
-            CurrentStroke.BrushTexture = BrushTextures[TextureIndex];
+            CurrentStroke.BrushTexture = BrushTextures[BrushTextureIndex];
+        }
+
+        if (FigureTextures.IsValidIndex(FigureTextureIndex))
+        {
+            CurrentStroke.FigureTexture = FigureTextures[FigureTextureIndex];
         }
         
         FDrawingPoint Point(CanvasPosition, 1.0f, Color, Size, Tool, StrokeID);
@@ -727,141 +1133,6 @@ void AWhiteboardActor::Multicast_EndDrawing_Implementation(int32 StrokeID)
     }
 }
 
-void AWhiteboardActor::AddText(const FVector& WorldPosition, const FString& Text)
-{
-    if (Text.IsEmpty())
-    {
-        return;
-    }
-    
-    FVector2D CanvasPosition = WorldToCanvasPosition(WorldPosition);
-    
-    if (HasAuthority())
-    {
-        // Create a new stroke for text
-        FStroke TextStroke;
-        TextStroke.StrokeID = NextStrokeID++;
-        TextStroke.Tool = EDrawingTool::Text;
-        TextStroke.Color = CurrentColor;
-        TextStroke.Size = BrushSize;
-        TextStroke.TextContent = Text;
-        
-        FDrawingPoint Point(CanvasPosition, 1.0f, CurrentColor, BrushSize, EDrawingTool::Text, TextStroke.StrokeID);
-        TextStroke.Points.Add(Point);
-        
-        // Draw text on canvas
-        DrawStroke(TextStroke);
-        
-        // Add to history
-        if (CurrentHistoryIndex < StrokeHistory.Num() - 1)
-        {
-            StrokeHistory.RemoveAt(CurrentHistoryIndex + 1, StrokeHistory.Num() - CurrentHistoryIndex - 1);
-        }
-        
-        StrokeHistory.Add(TextStroke);
-        CurrentHistoryIndex = StrokeHistory.Num() - 1;
-        
-        // Notify all clients
-        Multicast_UpdateDrawing(TextStroke);
-    }
-    else
-    {
-        // Send to server
-        Server_AddText(WorldPosition, Text, CurrentColor, BrushSize);
-    }
-}
-
-// FIXED: Server RPC Implementations - Removed validation functions
-void AWhiteboardActor::Server_StartDrawing_Implementation(const FVector2D& CanvasPosition, EDrawingTool Tool, FLinearColor Color, float Size, int32 TextureIndex)
-{
-    // Update current drawing properties
-    CurrentTool = Tool;
-    CurrentColor = Color;
-    BrushSize = FMath::Clamp(Size, 1.0f, 100.0f);
-    if (BrushTextures.IsValidIndex(TextureIndex))
-    {
-        SelectedTextureIndex = TextureIndex;
-    }
-    
-    StartDrawing(CanvasPosition);
-}
-
-void AWhiteboardActor::Server_ContinueDrawing_Implementation(const FVector2D& CanvasPosition)
-{
-    ContinueDrawing(CanvasPosition);
-}
-
-void AWhiteboardActor::Server_EndDrawing_Implementation()
-{
-    EndDrawing();
-}
-
-void AWhiteboardActor::Server_AddText_Implementation(const FVector& WorldPosition, const FString& Text, FLinearColor Color, float Size)
-{
-    CurrentColor = Color;
-    BrushSize = FMath::Clamp(Size, 1.0f, 100.0f);
-    AddText(WorldPosition, Text);
-}
-
-void AWhiteboardActor::Server_ClearWhiteboard_Implementation()
-{
-    ClearWhiteboard();
-}
-
-void AWhiteboardActor::Server_Undo_Implementation()
-{
-    Undo();
-}
-
-void AWhiteboardActor::Server_Redo_Implementation()
-{
-    Redo();
-}
-
-void AWhiteboardActor::Server_SetCurrentTool_Implementation(EDrawingTool NewTool)
-{
-    CurrentTool = NewTool;
-}
-
-void AWhiteboardActor::Server_SetCurrentColor_Implementation(FLinearColor NewColor)
-{
-    CurrentColor = NewColor;
-}
-
-void AWhiteboardActor::Server_SetBrushSize_Implementation(float NewSize)
-{
-    BrushSize = FMath::Clamp(NewSize, 1.0f, 100.0f);
-}
-
-void AWhiteboardActor::Server_SetBrushTexture_Implementation(int32 TextureIndex)
-{
-    if (BrushTextures.IsValidIndex(TextureIndex))
-    {
-        SelectedTextureIndex = TextureIndex;
-    }
-}
-
-// FIXED: Server interaction implementation
-void AWhiteboardActor::Server_StartInteraction_Implementation(APawn* Player)
-{
-    UE_LOG(LogTemp, Warning, TEXT("Server_StartInteraction_Implementation - Player: %s"), 
-           Player ? *Player->GetName() : TEXT("None"));
-    
-    // Transfer ownership to the player first
-    TransferOwnershipToPlayer(Player);
-    
-    StartInteraction(Player);
-}
-
-void AWhiteboardActor::Server_EndInteraction_Implementation()
-{
-    EndInteraction();
-}
-
-// Multicast RPC Implementations
-
-// Modified multicast functions to handle shapes
-
 void AWhiteboardActor::Multicast_UpdateDrawing_Implementation(const FStroke& NewStroke)
 {
     if (!HasAuthority())
@@ -908,6 +1179,15 @@ void AWhiteboardActor::Multicast_SyncWhiteboardState_Implementation(const TArray
         StrokeHistory = History;
         CurrentHistoryIndex = HistoryIndex;
         RedrawCanvas();
+    }
+}
+
+void AWhiteboardActor::Multicast_UpdateShapePreview_Implementation(const FVector2D& StartPos, const FVector2D& EndPos, EDrawingTool Tool, FLinearColor Color, float Size, int32 StrokeID)
+{
+    if (!HasAuthority())
+    {
+        ClearShapePreview();
+        DrawShapePreview(StartPos, EndPos, Tool, Color, Size);
     }
 }
 
@@ -990,9 +1270,7 @@ void AWhiteboardActor::StartInteraction(APawn* Player)
     }
     else
     {
-        // Client - send to server
-        UE_LOG(LogTemp, Warning, TEXT("Client sending StartInteraction RPC"));
-        Server_StartInteraction(Player);
+        RequestInteraction(Player);
     }
 }
 
@@ -1039,10 +1317,7 @@ void AWhiteboardActor::EndInteractionForPlayer(APawn* Player)
         UE_LOG(LogTemp, Warning, TEXT("Player %s ended interaction (%d/%d players remaining)"), 
                *Player->GetName(), InteractingPawns.Num(), MaxInteractingPlayers);
     }
-    else
-    {
-        Server_EndInteraction();
-    }
+    // Remove the else block - clients should use RequestEndInteraction instead
 }
 
 bool AWhiteboardActor::IsPlayerInteracting(APawn* Player) const
@@ -1159,7 +1434,6 @@ void AWhiteboardActor::ClientStartDrawing(const FVector2D& CanvasPosition)
         
         // Draw immediately for client prediction
         DrawStroke(PredictedStroke);
-        //DrawStrokeBetweenPoints(Point, Point);
     }
     
     // Always send to server
@@ -1176,9 +1450,7 @@ void AWhiteboardActor::ClientContinueDrawing(const FVector2D& CanvasPosition)
         
         if (PredictedStroke.Points.Num() > 0)
         {
-            FDrawingPoint& PrevPoint = PredictedStroke.Points.Last();
             DrawStroke(PredictedStroke);
-           // DrawStrokeBetweenPoints(PrevPoint, Point);
         }
         
         PredictedStroke.Points.Add(Point);
@@ -1281,7 +1553,31 @@ void AWhiteboardActor::DrawStroke(const FStroke& Stroke)
                 UKismetRenderingLibrary::EndDrawCanvasToRenderTarget(GetWorld(), Context);
             }
             break;
-            
+        
+        case EDrawingTool::Figure:
+            if (Stroke.FigureTexture && Stroke.Points.Num() > 0)
+            {
+                UCanvas* Canvas = nullptr;
+                FVector2D CanvasSize;
+                FDrawToRenderTargetContext Context;
+                UKismetRenderingLibrary::BeginDrawCanvasToRenderTarget(GetWorld(), DrawingCanvas, Canvas, CanvasSize, Context);
+                    
+                if (Canvas)
+                {
+                    Canvas->K2_DrawTexture(
+                        Stroke.FigureTexture,
+                        Stroke.Points[0].Position - FVector2D(Stroke.Size / 2, Stroke.Size / 2),
+                        FVector2D(Stroke.Size * 5, Stroke.Size * 5),
+                        FVector2D::ZeroVector,
+                        FVector2D::UnitVector,
+                        Stroke.Color
+                    );
+                }
+                    
+                UKismetRenderingLibrary::EndDrawCanvasToRenderTarget(GetWorld(), Context);
+            }
+            break;
+                
         default:  // Brush, Pencil, Eraser, Texture
             if (Stroke.Points.Num() >= 1)
             {
@@ -1382,7 +1678,6 @@ void AWhiteboardActor::UpdateCanvasMaterial()
         }
     }
 }
-
 
 // Helper Functions
 UTexture2D* AWhiteboardActor::RenderTargetToTexture2D(UTextureRenderTarget2D* RenderTarget)

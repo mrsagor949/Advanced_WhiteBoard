@@ -1,0 +1,21 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "e:\\sparkelon-2025\\prototype\\2025\\advanced_whiteboard\\plugins\\advanceddrawingboard\\source\\advanceddrawingboard\\private\\controller\\awhiteboard_player_controller.cpp",
+        "ProvidedModule": "",
+        "PCH": "d:\\sparkelon\\bonvr\\engine\\ue_5.5.4_source\\engine\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.h.pch",
+        "Includes": [
+            "e:\\sparkelon-2025\\prototype\\2025\\advanced_whiteboard\\plugins\\advanceddrawingboard\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\advanceddrawingboard\\definitions.advanceddrawingboard.h",
+            "e:\\sparkelon-2025\\prototype\\2025\\advanced_whiteboard\\plugins\\advanceddrawingboard\\source\\advanceddrawingboard\\public\\controller\\awhiteboard_player_controller.h",
+            "e:\\sparkelon-2025\\prototype\\2025\\advanced_whiteboard\\plugins\\advanceddrawingboard\\source\\advanceddrawingboard\\public\\actor\\whiteboardactor.h",
+            "d:\\sparkelon\\bonvr\\engine\\ue_5.5.4_source\\engine\\source\\runtime\\engine\\classes\\components\\boxcomponent.h",
+            "d:\\sparkelon\\bonvr\\engine\\ue_5.5.4_source\\engine\\source\\runtime\\engine\\classes\\components\\shapecomponent.h",
+            "d:\\sparkelon\\bonvr\\engine\\ue_5.5.4_source\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\shapecomponent.generated.h",
+            "d:\\sparkelon\\bonvr\\engine\\ue_5.5.4_source\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\boxcomponent.generated.h",
+            "e:\\sparkelon-2025\\prototype\\2025\\advanced_whiteboard\\plugins\\advanceddrawingboard\\intermediate\\build\\win64\\unrealeditor\\inc\\advanceddrawingboard\\uht\\whiteboardactor.generated.h",
+            "e:\\sparkelon-2025\\prototype\\2025\\advanced_whiteboard\\plugins\\advanceddrawingboard\\intermediate\\build\\win64\\unrealeditor\\inc\\advanceddrawingboard\\uht\\awhiteboard_player_controller.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}
