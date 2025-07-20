@@ -50,7 +50,9 @@ struct FLinearColor;
 	DECLARE_FUNCTION(execServer_WhiteboardContinueDrawing); \
 	DECLARE_FUNCTION(execServer_WhiteboardStartDrawing); \
 	DECLARE_FUNCTION(execServer_EndWhiteboardInteraction); \
-	DECLARE_FUNCTION(execServer_RequestWhiteboardInteraction);
+	DECLARE_FUNCTION(execServer_RequestWhiteboardInteraction); \
+	DECLARE_FUNCTION(execRestoreGameInputMode); \
+	DECLARE_FUNCTION(execSetupWhiteboardInputMode);
 
 
 #define FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Controller_AWhiteboard_Player_Controller_h_15_CALLBACK_WRAPPERS

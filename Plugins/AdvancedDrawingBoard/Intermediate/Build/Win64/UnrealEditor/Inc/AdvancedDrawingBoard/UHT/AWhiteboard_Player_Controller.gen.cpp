@@ -21,6 +21,150 @@ ENGINE_API UClass* Z_Construct_UClass_APlayerController();
 UPackage* Z_Construct_UPackage__Script_AdvancedDrawingBoard();
 // End Cross Module References
 
+// Begin Class AWhiteboardController Function OnPlayerJoinedInteraction
+struct WhiteboardController_eventOnPlayerJoinedInteraction_Parms
+{
+	APawn* InteractingPlayer;
+	AWhiteboardActor* WhiteboardActor;
+};
+static const FName NAME_AWhiteboardController_OnPlayerJoinedInteraction = FName(TEXT("OnPlayerJoinedInteraction"));
+void AWhiteboardController::OnPlayerJoinedInteraction(APawn* InteractingPlayer, AWhiteboardActor* WhiteboardActor)
+{
+	WhiteboardController_eventOnPlayerJoinedInteraction_Parms Parms;
+	Parms.InteractingPlayer=InteractingPlayer;
+	Parms.WhiteboardActor=WhiteboardActor;
+	UFunction* Func = FindFunctionChecked(NAME_AWhiteboardController_OnPlayerJoinedInteraction);
+	ProcessEvent(Func,&Parms);
+}
+struct Z_Construct_UFunction_AWhiteboardController_OnPlayerJoinedInteraction_Statics
+{
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "Category", "UI Events" },
+		{ "ModuleRelativePath", "Public/Controller/AWhiteboard_Player_Controller.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_InteractingPlayer;
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_WhiteboardActor;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AWhiteboardController_OnPlayerJoinedInteraction_Statics::NewProp_InteractingPlayer = { "InteractingPlayer", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardController_eventOnPlayerJoinedInteraction_Parms, InteractingPlayer), Z_Construct_UClass_APawn_NoRegister, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AWhiteboardController_OnPlayerJoinedInteraction_Statics::NewProp_WhiteboardActor = { "WhiteboardActor", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardController_eventOnPlayerJoinedInteraction_Parms, WhiteboardActor), Z_Construct_UClass_AWhiteboardActor_NoRegister, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardController_OnPlayerJoinedInteraction_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardController_OnPlayerJoinedInteraction_Statics::NewProp_InteractingPlayer,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardController_OnPlayerJoinedInteraction_Statics::NewProp_WhiteboardActor,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardController_OnPlayerJoinedInteraction_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardController_OnPlayerJoinedInteraction_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardController, nullptr, "OnPlayerJoinedInteraction", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardController_OnPlayerJoinedInteraction_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardController_OnPlayerJoinedInteraction_Statics::PropPointers), sizeof(WhiteboardController_eventOnPlayerJoinedInteraction_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x08020800, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardController_OnPlayerJoinedInteraction_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardController_OnPlayerJoinedInteraction_Statics::Function_MetaDataParams) };
+static_assert(sizeof(WhiteboardController_eventOnPlayerJoinedInteraction_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_AWhiteboardController_OnPlayerJoinedInteraction()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AWhiteboardController_OnPlayerJoinedInteraction_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+// End Class AWhiteboardController Function OnPlayerJoinedInteraction
+
+// Begin Class AWhiteboardController Function OnPlayerLeftInteraction
+struct WhiteboardController_eventOnPlayerLeftInteraction_Parms
+{
+	APawn* InteractingPlayer;
+	AWhiteboardActor* WhiteboardActor;
+};
+static const FName NAME_AWhiteboardController_OnPlayerLeftInteraction = FName(TEXT("OnPlayerLeftInteraction"));
+void AWhiteboardController::OnPlayerLeftInteraction(APawn* InteractingPlayer, AWhiteboardActor* WhiteboardActor)
+{
+	WhiteboardController_eventOnPlayerLeftInteraction_Parms Parms;
+	Parms.InteractingPlayer=InteractingPlayer;
+	Parms.WhiteboardActor=WhiteboardActor;
+	UFunction* Func = FindFunctionChecked(NAME_AWhiteboardController_OnPlayerLeftInteraction);
+	ProcessEvent(Func,&Parms);
+}
+struct Z_Construct_UFunction_AWhiteboardController_OnPlayerLeftInteraction_Statics
+{
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "Category", "UI Events" },
+		{ "ModuleRelativePath", "Public/Controller/AWhiteboard_Player_Controller.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_InteractingPlayer;
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_WhiteboardActor;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AWhiteboardController_OnPlayerLeftInteraction_Statics::NewProp_InteractingPlayer = { "InteractingPlayer", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardController_eventOnPlayerLeftInteraction_Parms, InteractingPlayer), Z_Construct_UClass_APawn_NoRegister, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AWhiteboardController_OnPlayerLeftInteraction_Statics::NewProp_WhiteboardActor = { "WhiteboardActor", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardController_eventOnPlayerLeftInteraction_Parms, WhiteboardActor), Z_Construct_UClass_AWhiteboardActor_NoRegister, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardController_OnPlayerLeftInteraction_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardController_OnPlayerLeftInteraction_Statics::NewProp_InteractingPlayer,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardController_OnPlayerLeftInteraction_Statics::NewProp_WhiteboardActor,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardController_OnPlayerLeftInteraction_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardController_OnPlayerLeftInteraction_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardController, nullptr, "OnPlayerLeftInteraction", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardController_OnPlayerLeftInteraction_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardController_OnPlayerLeftInteraction_Statics::PropPointers), sizeof(WhiteboardController_eventOnPlayerLeftInteraction_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x08020800, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardController_OnPlayerLeftInteraction_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardController_OnPlayerLeftInteraction_Statics::Function_MetaDataParams) };
+static_assert(sizeof(WhiteboardController_eventOnPlayerLeftInteraction_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_AWhiteboardController_OnPlayerLeftInteraction()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AWhiteboardController_OnPlayerLeftInteraction_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+// End Class AWhiteboardController Function OnPlayerLeftInteraction
+
+// Begin Class AWhiteboardController Function RestoreGameInputMode
+struct Z_Construct_UFunction_AWhiteboardController_RestoreGameInputMode_Statics
+{
+	struct WhiteboardController_eventRestoreGameInputMode_Parms
+	{
+		APawn* InteractingPlayer;
+	};
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+#if !UE_BUILD_SHIPPING
+		{ "Comment", "// Input Remove\n" },
+#endif
+		{ "ModuleRelativePath", "Public/Controller/AWhiteboard_Player_Controller.h" },
+#if !UE_BUILD_SHIPPING
+		{ "ToolTip", "Input Remove" },
+#endif
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_InteractingPlayer;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AWhiteboardController_RestoreGameInputMode_Statics::NewProp_InteractingPlayer = { "InteractingPlayer", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardController_eventRestoreGameInputMode_Parms, InteractingPlayer), Z_Construct_UClass_APawn_NoRegister, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardController_RestoreGameInputMode_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardController_RestoreGameInputMode_Statics::NewProp_InteractingPlayer,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardController_RestoreGameInputMode_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardController_RestoreGameInputMode_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardController, nullptr, "RestoreGameInputMode", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardController_RestoreGameInputMode_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardController_RestoreGameInputMode_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardController_RestoreGameInputMode_Statics::WhiteboardController_eventRestoreGameInputMode_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardController_RestoreGameInputMode_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardController_RestoreGameInputMode_Statics::Function_MetaDataParams) };
+static_assert(sizeof(Z_Construct_UFunction_AWhiteboardController_RestoreGameInputMode_Statics::WhiteboardController_eventRestoreGameInputMode_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_AWhiteboardController_RestoreGameInputMode()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AWhiteboardController_RestoreGameInputMode_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(AWhiteboardController::execRestoreGameInputMode)
+{
+	P_GET_OBJECT(APawn,Z_Param_InteractingPlayer);
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	P_THIS->RestoreGameInputMode(Z_Param_InteractingPlayer);
+	P_NATIVE_END;
+}
+// End Class AWhiteboardController Function RestoreGameInputMode
+
 // Begin Class AWhiteboardController Function Server_EndWhiteboardInteraction
 struct WhiteboardController_eventServer_EndWhiteboardInteraction_Parms
 {
@@ -995,11 +1139,60 @@ DEFINE_FUNCTION(AWhiteboardController::execServer_WhiteboardUndo)
 }
 // End Class AWhiteboardController Function Server_WhiteboardUndo
 
+// Begin Class AWhiteboardController Function SetupWhiteboardInputMode
+struct Z_Construct_UFunction_AWhiteboardController_SetupWhiteboardInputMode_Statics
+{
+	struct WhiteboardController_eventSetupWhiteboardInputMode_Parms
+	{
+		APawn* InteractingPlayer;
+	};
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+#if !UE_BUILD_SHIPPING
+		{ "Comment", "// Input Setup\n" },
+#endif
+		{ "ModuleRelativePath", "Public/Controller/AWhiteboard_Player_Controller.h" },
+#if !UE_BUILD_SHIPPING
+		{ "ToolTip", "Input Setup" },
+#endif
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_InteractingPlayer;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AWhiteboardController_SetupWhiteboardInputMode_Statics::NewProp_InteractingPlayer = { "InteractingPlayer", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardController_eventSetupWhiteboardInputMode_Parms, InteractingPlayer), Z_Construct_UClass_APawn_NoRegister, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardController_SetupWhiteboardInputMode_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardController_SetupWhiteboardInputMode_Statics::NewProp_InteractingPlayer,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardController_SetupWhiteboardInputMode_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardController_SetupWhiteboardInputMode_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardController, nullptr, "SetupWhiteboardInputMode", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardController_SetupWhiteboardInputMode_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardController_SetupWhiteboardInputMode_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardController_SetupWhiteboardInputMode_Statics::WhiteboardController_eventSetupWhiteboardInputMode_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardController_SetupWhiteboardInputMode_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardController_SetupWhiteboardInputMode_Statics::Function_MetaDataParams) };
+static_assert(sizeof(Z_Construct_UFunction_AWhiteboardController_SetupWhiteboardInputMode_Statics::WhiteboardController_eventSetupWhiteboardInputMode_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_AWhiteboardController_SetupWhiteboardInputMode()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AWhiteboardController_SetupWhiteboardInputMode_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(AWhiteboardController::execSetupWhiteboardInputMode)
+{
+	P_GET_OBJECT(APawn,Z_Param_InteractingPlayer);
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	P_THIS->SetupWhiteboardInputMode(Z_Param_InteractingPlayer);
+	P_NATIVE_END;
+}
+// End Class AWhiteboardController Function SetupWhiteboardInputMode
+
 // Begin Class AWhiteboardController
 void AWhiteboardController::StaticRegisterNativesAWhiteboardController()
 {
 	UClass* Class = AWhiteboardController::StaticClass();
 	static const FNameNativePtrPair Funcs[] = {
+		{ "RestoreGameInputMode", &AWhiteboardController::execRestoreGameInputMode },
 		{ "Server_EndWhiteboardInteraction", &AWhiteboardController::execServer_EndWhiteboardInteraction },
 		{ "Server_RequestWhiteboardInteraction", &AWhiteboardController::execServer_RequestWhiteboardInteraction },
 		{ "Server_WhiteboardAddText", &AWhiteboardController::execServer_WhiteboardAddText },
@@ -1016,6 +1209,7 @@ void AWhiteboardController::StaticRegisterNativesAWhiteboardController()
 		{ "Server_WhiteboardSetTextString", &AWhiteboardController::execServer_WhiteboardSetTextString },
 		{ "Server_WhiteboardStartDrawing", &AWhiteboardController::execServer_WhiteboardStartDrawing },
 		{ "Server_WhiteboardUndo", &AWhiteboardController::execServer_WhiteboardUndo },
+		{ "SetupWhiteboardInputMode", &AWhiteboardController::execSetupWhiteboardInputMode },
 	};
 	FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
 }
@@ -1035,6 +1229,9 @@ struct Z_Construct_UClass_AWhiteboardController_Statics
 #endif // WITH_METADATA
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
+		{ &Z_Construct_UFunction_AWhiteboardController_OnPlayerJoinedInteraction, "OnPlayerJoinedInteraction" }, // 2617695899
+		{ &Z_Construct_UFunction_AWhiteboardController_OnPlayerLeftInteraction, "OnPlayerLeftInteraction" }, // 1507082661
+		{ &Z_Construct_UFunction_AWhiteboardController_RestoreGameInputMode, "RestoreGameInputMode" }, // 1501564563
 		{ &Z_Construct_UFunction_AWhiteboardController_Server_EndWhiteboardInteraction, "Server_EndWhiteboardInteraction" }, // 2050690649
 		{ &Z_Construct_UFunction_AWhiteboardController_Server_RequestWhiteboardInteraction, "Server_RequestWhiteboardInteraction" }, // 4047956246
 		{ &Z_Construct_UFunction_AWhiteboardController_Server_WhiteboardAddText, "Server_WhiteboardAddText" }, // 3514157277
@@ -1051,6 +1248,7 @@ struct Z_Construct_UClass_AWhiteboardController_Statics
 		{ &Z_Construct_UFunction_AWhiteboardController_Server_WhiteboardSetTextString, "Server_WhiteboardSetTextString" }, // 565031070
 		{ &Z_Construct_UFunction_AWhiteboardController_Server_WhiteboardStartDrawing, "Server_WhiteboardStartDrawing" }, // 3937235846
 		{ &Z_Construct_UFunction_AWhiteboardController_Server_WhiteboardUndo, "Server_WhiteboardUndo" }, // 691129044
+		{ &Z_Construct_UFunction_AWhiteboardController_SetupWhiteboardInputMode, "SetupWhiteboardInputMode" }, // 575476607
 	};
 	static_assert(UE_ARRAY_COUNT(FuncInfo) < 2048);
 	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
@@ -1099,10 +1297,10 @@ AWhiteboardController::~AWhiteboardController() {}
 struct Z_CompiledInDeferFile_FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Controller_AWhiteboard_Player_Controller_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_AWhiteboardController, AWhiteboardController::StaticClass, TEXT("AWhiteboardController"), &Z_Registration_Info_UClass_AWhiteboardController, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AWhiteboardController), 3436523818U) },
+		{ Z_Construct_UClass_AWhiteboardController, AWhiteboardController::StaticClass, TEXT("AWhiteboardController"), &Z_Registration_Info_UClass_AWhiteboardController, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AWhiteboardController), 2021190055U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Controller_AWhiteboard_Player_Controller_h_385590001(TEXT("/Script/AdvancedDrawingBoard"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Controller_AWhiteboard_Player_Controller_h_3174219557(TEXT("/Script/AdvancedDrawingBoard"),
 	Z_CompiledInDeferFile_FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Controller_AWhiteboard_Player_Controller_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Controller_AWhiteboard_Player_Controller_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

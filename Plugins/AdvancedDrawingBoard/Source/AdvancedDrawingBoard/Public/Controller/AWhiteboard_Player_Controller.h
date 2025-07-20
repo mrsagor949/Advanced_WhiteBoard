@@ -15,6 +15,21 @@ class ADVANCEDDRAWINGBOARD_API AWhiteboardController : public APlayerController
     GENERATED_BODY()
 
 public:
+
+    // Input Setup
+    UFUNCTION()
+    void SetupWhiteboardInputMode(APawn* InteractingPlayer);
+
+    // Input Remove
+    UFUNCTION()
+    void RestoreGameInputMode(APawn* InteractingPlayer);
+
+    UFUNCTION(BlueprintImplementableEvent, Category = "UI Events")
+    void OnPlayerJoinedInteraction(APawn* InteractingPlayer, AWhiteboardActor* WhiteboardActor);
+
+    UFUNCTION(BlueprintImplementableEvent, Category = "UI Events")
+    void OnPlayerLeftInteraction(APawn* InteractingPlayer,AWhiteboardActor* WhiteboardActor);
+    
     // Interaction RPCs
     UFUNCTION(Server, Reliable)
     void Server_RequestWhiteboardInteraction(AWhiteboardActor* Whiteboard, APawn* InteractingPlayer);

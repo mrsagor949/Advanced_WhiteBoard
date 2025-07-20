@@ -658,6 +658,112 @@ DEFINE_FUNCTION(AWhiteboardActor::execClearWhiteboard)
 }
 // End Class AWhiteboardActor Function ClearWhiteboard
 
+// Begin Class AWhiteboardActor Function Client_CleanupInteractionUI
+struct WhiteboardActor_eventClient_CleanupInteractionUI_Parms
+{
+	APawn* InteractingPlayer;
+};
+static const FName NAME_AWhiteboardActor_Client_CleanupInteractionUI = FName(TEXT("Client_CleanupInteractionUI"));
+void AWhiteboardActor::Client_CleanupInteractionUI(APawn* InteractingPlayer)
+{
+	WhiteboardActor_eventClient_CleanupInteractionUI_Parms Parms;
+	Parms.InteractingPlayer=InteractingPlayer;
+	UFunction* Func = FindFunctionChecked(NAME_AWhiteboardActor_Client_CleanupInteractionUI);
+	ProcessEvent(Func,&Parms);
+}
+struct Z_Construct_UFunction_AWhiteboardActor_Client_CleanupInteractionUI_Statics
+{
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_InteractingPlayer;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AWhiteboardActor_Client_CleanupInteractionUI_Statics::NewProp_InteractingPlayer = { "InteractingPlayer", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventClient_CleanupInteractionUI_Parms, InteractingPlayer), Z_Construct_UClass_APawn_NoRegister, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_Client_CleanupInteractionUI_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_Client_CleanupInteractionUI_Statics::NewProp_InteractingPlayer,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Client_CleanupInteractionUI_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Client_CleanupInteractionUI_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Client_CleanupInteractionUI", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_Client_CleanupInteractionUI_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Client_CleanupInteractionUI_Statics::PropPointers), sizeof(WhiteboardActor_eventClient_CleanupInteractionUI_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x01020CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Client_CleanupInteractionUI_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Client_CleanupInteractionUI_Statics::Function_MetaDataParams) };
+static_assert(sizeof(WhiteboardActor_eventClient_CleanupInteractionUI_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_AWhiteboardActor_Client_CleanupInteractionUI()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AWhiteboardActor_Client_CleanupInteractionUI_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(AWhiteboardActor::execClient_CleanupInteractionUI)
+{
+	P_GET_OBJECT(APawn,Z_Param_InteractingPlayer);
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	P_THIS->Client_CleanupInteractionUI_Implementation(Z_Param_InteractingPlayer);
+	P_NATIVE_END;
+}
+// End Class AWhiteboardActor Function Client_CleanupInteractionUI
+
+// Begin Class AWhiteboardActor Function Client_SetupInteractionUI
+struct WhiteboardActor_eventClient_SetupInteractionUI_Parms
+{
+	APawn* InteractingPlayer;
+};
+static const FName NAME_AWhiteboardActor_Client_SetupInteractionUI = FName(TEXT("Client_SetupInteractionUI"));
+void AWhiteboardActor::Client_SetupInteractionUI(APawn* InteractingPlayer)
+{
+	WhiteboardActor_eventClient_SetupInteractionUI_Parms Parms;
+	Parms.InteractingPlayer=InteractingPlayer;
+	UFunction* Func = FindFunctionChecked(NAME_AWhiteboardActor_Client_SetupInteractionUI);
+	ProcessEvent(Func,&Parms);
+}
+struct Z_Construct_UFunction_AWhiteboardActor_Client_SetupInteractionUI_Statics
+{
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+#if !UE_BUILD_SHIPPING
+		{ "Comment", "// NEW: Client RPC to handle UI and camera setup\n" },
+#endif
+		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
+#if !UE_BUILD_SHIPPING
+		{ "ToolTip", "NEW: Client RPC to handle UI and camera setup" },
+#endif
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_InteractingPlayer;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AWhiteboardActor_Client_SetupInteractionUI_Statics::NewProp_InteractingPlayer = { "InteractingPlayer", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventClient_SetupInteractionUI_Parms, InteractingPlayer), Z_Construct_UClass_APawn_NoRegister, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_Client_SetupInteractionUI_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_Client_SetupInteractionUI_Statics::NewProp_InteractingPlayer,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Client_SetupInteractionUI_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Client_SetupInteractionUI_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Client_SetupInteractionUI", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_Client_SetupInteractionUI_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Client_SetupInteractionUI_Statics::PropPointers), sizeof(WhiteboardActor_eventClient_SetupInteractionUI_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x01020CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Client_SetupInteractionUI_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Client_SetupInteractionUI_Statics::Function_MetaDataParams) };
+static_assert(sizeof(WhiteboardActor_eventClient_SetupInteractionUI_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_AWhiteboardActor_Client_SetupInteractionUI()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AWhiteboardActor_Client_SetupInteractionUI_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(AWhiteboardActor::execClient_SetupInteractionUI)
+{
+	P_GET_OBJECT(APawn,Z_Param_InteractingPlayer);
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	P_THIS->Client_SetupInteractionUI_Implementation(Z_Param_InteractingPlayer);
+	P_NATIVE_END;
+}
+// End Class AWhiteboardActor Function Client_SetupInteractionUI
+
 // Begin Class AWhiteboardActor Function Client_SyncWhiteboardState
 struct WhiteboardActor_eventClient_SyncWhiteboardState_Parms
 {
@@ -2083,92 +2189,6 @@ UFunction* Z_Construct_UFunction_AWhiteboardActor_OnPlayerExitedRange()
 	return ReturnFunction;
 }
 // End Class AWhiteboardActor Function OnPlayerExitedRange
-
-// Begin Class AWhiteboardActor Function OnPlayerJoinedInteraction
-struct WhiteboardActor_eventOnPlayerJoinedInteraction_Parms
-{
-	APawn* Player;
-};
-static const FName NAME_AWhiteboardActor_OnPlayerJoinedInteraction = FName(TEXT("OnPlayerJoinedInteraction"));
-void AWhiteboardActor::OnPlayerJoinedInteraction(APawn* Player)
-{
-	WhiteboardActor_eventOnPlayerJoinedInteraction_Parms Parms;
-	Parms.Player=Player;
-	UFunction* Func = FindFunctionChecked(NAME_AWhiteboardActor_OnPlayerJoinedInteraction);
-	ProcessEvent(Func,&Parms);
-}
-struct Z_Construct_UFunction_AWhiteboardActor_OnPlayerJoinedInteraction_Statics
-{
-#if WITH_METADATA
-	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "UI Events" },
-		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
-	};
-#endif // WITH_METADATA
-	static const UECodeGen_Private::FObjectPropertyParams NewProp_Player;
-	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-	static const UECodeGen_Private::FFunctionParams FuncParams;
-};
-const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AWhiteboardActor_OnPlayerJoinedInteraction_Statics::NewProp_Player = { "Player", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventOnPlayerJoinedInteraction_Parms, Player), Z_Construct_UClass_APawn_NoRegister, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_OnPlayerJoinedInteraction_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_OnPlayerJoinedInteraction_Statics::NewProp_Player,
-};
-static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_OnPlayerJoinedInteraction_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_OnPlayerJoinedInteraction_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "OnPlayerJoinedInteraction", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_OnPlayerJoinedInteraction_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_OnPlayerJoinedInteraction_Statics::PropPointers), sizeof(WhiteboardActor_eventOnPlayerJoinedInteraction_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x08020800, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_OnPlayerJoinedInteraction_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_OnPlayerJoinedInteraction_Statics::Function_MetaDataParams) };
-static_assert(sizeof(WhiteboardActor_eventOnPlayerJoinedInteraction_Parms) < MAX_uint16);
-UFunction* Z_Construct_UFunction_AWhiteboardActor_OnPlayerJoinedInteraction()
-{
-	static UFunction* ReturnFunction = nullptr;
-	if (!ReturnFunction)
-	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AWhiteboardActor_OnPlayerJoinedInteraction_Statics::FuncParams);
-	}
-	return ReturnFunction;
-}
-// End Class AWhiteboardActor Function OnPlayerJoinedInteraction
-
-// Begin Class AWhiteboardActor Function OnPlayerLeftInteraction
-struct WhiteboardActor_eventOnPlayerLeftInteraction_Parms
-{
-	APawn* Player;
-};
-static const FName NAME_AWhiteboardActor_OnPlayerLeftInteraction = FName(TEXT("OnPlayerLeftInteraction"));
-void AWhiteboardActor::OnPlayerLeftInteraction(APawn* Player)
-{
-	WhiteboardActor_eventOnPlayerLeftInteraction_Parms Parms;
-	Parms.Player=Player;
-	UFunction* Func = FindFunctionChecked(NAME_AWhiteboardActor_OnPlayerLeftInteraction);
-	ProcessEvent(Func,&Parms);
-}
-struct Z_Construct_UFunction_AWhiteboardActor_OnPlayerLeftInteraction_Statics
-{
-#if WITH_METADATA
-	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "UI Events" },
-		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
-	};
-#endif // WITH_METADATA
-	static const UECodeGen_Private::FObjectPropertyParams NewProp_Player;
-	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-	static const UECodeGen_Private::FFunctionParams FuncParams;
-};
-const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AWhiteboardActor_OnPlayerLeftInteraction_Statics::NewProp_Player = { "Player", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventOnPlayerLeftInteraction_Parms, Player), Z_Construct_UClass_APawn_NoRegister, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_OnPlayerLeftInteraction_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_OnPlayerLeftInteraction_Statics::NewProp_Player,
-};
-static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_OnPlayerLeftInteraction_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_OnPlayerLeftInteraction_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "OnPlayerLeftInteraction", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_OnPlayerLeftInteraction_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_OnPlayerLeftInteraction_Statics::PropPointers), sizeof(WhiteboardActor_eventOnPlayerLeftInteraction_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x08020800, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_OnPlayerLeftInteraction_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_OnPlayerLeftInteraction_Statics::Function_MetaDataParams) };
-static_assert(sizeof(WhiteboardActor_eventOnPlayerLeftInteraction_Parms) < MAX_uint16);
-UFunction* Z_Construct_UFunction_AWhiteboardActor_OnPlayerLeftInteraction()
-{
-	static UFunction* ReturnFunction = nullptr;
-	if (!ReturnFunction)
-	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AWhiteboardActor_OnPlayerLeftInteraction_Statics::FuncParams);
-	}
-	return ReturnFunction;
-}
-// End Class AWhiteboardActor Function OnPlayerLeftInteraction
 
 // Begin Class AWhiteboardActor Function OnRep_InteractingPawns
 struct Z_Construct_UFunction_AWhiteboardActor_OnRep_InteractingPawns_Statics
@@ -3753,6 +3773,8 @@ void AWhiteboardActor::StaticRegisterNativesAWhiteboardActor()
 		{ "CanInteractLocally", &AWhiteboardActor::execCanInteractLocally },
 		{ "CanPlayerInteract", &AWhiteboardActor::execCanPlayerInteract },
 		{ "ClearWhiteboard", &AWhiteboardActor::execClearWhiteboard },
+		{ "Client_CleanupInteractionUI", &AWhiteboardActor::execClient_CleanupInteractionUI },
+		{ "Client_SetupInteractionUI", &AWhiteboardActor::execClient_SetupInteractionUI },
 		{ "Client_SyncWhiteboardState", &AWhiteboardActor::execClient_SyncWhiteboardState },
 		{ "ClientContinueDrawing", &AWhiteboardActor::execClientContinueDrawing },
 		{ "ClientEndDrawing", &AWhiteboardActor::execClientEndDrawing },
@@ -4003,6 +4025,8 @@ struct Z_Construct_UClass_AWhiteboardActor_Statics
 		{ &Z_Construct_UFunction_AWhiteboardActor_CanInteractLocally, "CanInteractLocally" }, // 4149064317
 		{ &Z_Construct_UFunction_AWhiteboardActor_CanPlayerInteract, "CanPlayerInteract" }, // 2609876535
 		{ &Z_Construct_UFunction_AWhiteboardActor_ClearWhiteboard, "ClearWhiteboard" }, // 3223349268
+		{ &Z_Construct_UFunction_AWhiteboardActor_Client_CleanupInteractionUI, "Client_CleanupInteractionUI" }, // 2415371470
+		{ &Z_Construct_UFunction_AWhiteboardActor_Client_SetupInteractionUI, "Client_SetupInteractionUI" }, // 2280494868
 		{ &Z_Construct_UFunction_AWhiteboardActor_Client_SyncWhiteboardState, "Client_SyncWhiteboardState" }, // 3051563572
 		{ &Z_Construct_UFunction_AWhiteboardActor_ClientContinueDrawing, "ClientContinueDrawing" }, // 802646881
 		{ &Z_Construct_UFunction_AWhiteboardActor_ClientEndDrawing, "ClientEndDrawing" }, // 1730428785
@@ -4031,8 +4055,6 @@ struct Z_Construct_UClass_AWhiteboardActor_Statics
 		{ &Z_Construct_UFunction_AWhiteboardActor_OnInteractionStarted, "OnInteractionStarted" }, // 732854466
 		{ &Z_Construct_UFunction_AWhiteboardActor_OnPlayerEnteredRange, "OnPlayerEnteredRange" }, // 662559367
 		{ &Z_Construct_UFunction_AWhiteboardActor_OnPlayerExitedRange, "OnPlayerExitedRange" }, // 3224335839
-		{ &Z_Construct_UFunction_AWhiteboardActor_OnPlayerJoinedInteraction, "OnPlayerJoinedInteraction" }, // 3373533141
-		{ &Z_Construct_UFunction_AWhiteboardActor_OnPlayerLeftInteraction, "OnPlayerLeftInteraction" }, // 552303359
 		{ &Z_Construct_UFunction_AWhiteboardActor_OnRep_InteractingPawns, "OnRep_InteractingPawns" }, // 2186847437
 		{ &Z_Construct_UFunction_AWhiteboardActor_OnRep_StrokeHistory, "OnRep_StrokeHistory" }, // 2823244760
 		{ &Z_Construct_UFunction_AWhiteboardActor_OnTriggerBeginOverlap, "OnTriggerBeginOverlap" }, // 668000641
@@ -4211,10 +4233,10 @@ struct Z_CompiledInDeferFile_FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoar
 		{ FStroke::StaticStruct, Z_Construct_UScriptStruct_FStroke_Statics::NewStructOps, TEXT("Stroke"), &Z_Registration_Info_UScriptStruct_Stroke, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FStroke), 2697397385U) },
 	};
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_AWhiteboardActor, AWhiteboardActor::StaticClass, TEXT("AWhiteboardActor"), &Z_Registration_Info_UClass_AWhiteboardActor, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AWhiteboardActor), 457085931U) },
+		{ Z_Construct_UClass_AWhiteboardActor, AWhiteboardActor::StaticClass, TEXT("AWhiteboardActor"), &Z_Registration_Info_UClass_AWhiteboardActor, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AWhiteboardActor), 2567589982U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h_1372115915(TEXT("/Script/AdvancedDrawingBoard"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h_839568400(TEXT("/Script/AdvancedDrawingBoard"),
 	Z_CompiledInDeferFile_FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h_Statics::ClassInfo),
 	Z_CompiledInDeferFile_FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h_Statics::ScriptStructInfo),
 	Z_CompiledInDeferFile_FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h_Statics::EnumInfo));

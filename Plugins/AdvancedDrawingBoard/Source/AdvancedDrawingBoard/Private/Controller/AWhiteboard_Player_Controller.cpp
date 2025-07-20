@@ -187,3 +187,49 @@ void AWhiteboardController::Server_WhiteboardSetTextString_Implementation(AWhite
     }
     Whiteboard->Server_SetTextString_Implementation(NewTextString);
 }
+
+void AWhiteboardController::SetupWhiteboardInputMode(APawn* InteractingPlayer)
+{
+    // Set input mode for whiteboard interaction
+    FInputModeGameAndUI InputMode;
+    InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+    InputMode.SetHideCursorDuringCapture(false);
+    SetInputMode(InputMode);
+
+    FViewTargetTransitionParams Param;
+    Param.BlendFunction = VTBlend_Cubic;
+    Param.BlendTime = 1.5f;
+    Param.BlendExp = 2.0f;
+    Param.bLockOutgoing = true;
+            
+    SetViewTarget(this, Param);
+    
+    bShowMouseCursor = true;
+    bEnableClickEvents = true;
+    bEnableMouseOverEvents = true;
+
+    InteractingPlayer->DisableInput(this);
+    
+    UE_LOG(LogTemp, Warning, TEXT("Whiteboard input mode set - Cursor: %s"), 
+           bShowMouseCursor ? TEXT("Visible") : TEXT("Hidden"));
+    
+}
+
+void AWhiteboardController::RestoreGameInputMode(APawn* InteractingPlayer)
+{
+    // Restore normal game input mode
+    FInputModeGameOnly InputMode;
+    SetInputMode(InputMode);
+
+    // Switch back to player camera
+    SetViewTarget(InteractingPlayer);
+    bShowMouseCursor = false;
+    bEnableClickEvents = false;
+    bEnableMouseOverEvents = false;
+
+    // Re-enable player movement
+    InteractingPlayer->EnableInput(this);
+    
+    UE_LOG(LogTemp, Warning, TEXT("Game input mode restored"));
+   
+}

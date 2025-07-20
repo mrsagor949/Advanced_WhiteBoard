@@ -37,6 +37,8 @@ template<> ADVANCEDDRAWINGBOARD_API UScriptStruct* StaticStruct<struct FDrawingP
 template<> ADVANCEDDRAWINGBOARD_API UScriptStruct* StaticStruct<struct FStroke>();
 
 #define FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h_107_RPC_WRAPPERS_NO_PURE_DECLS \
+	virtual void Client_CleanupInteractionUI_Implementation(APawn* InteractingPlayer); \
+	virtual void Client_SetupInteractionUI_Implementation(APawn* InteractingPlayer); \
 	virtual void Client_SyncWhiteboardState_Implementation(TArray<FStroke> const& History, int32 HistoryIndex); \
 	virtual void Multicast_UpdateShapePreview_Implementation(FVector2D const& StartPos, FVector2D const& EndPos, EDrawingTool Tool, FLinearColor Color, float Size, int32 StrokeID); \
 	virtual void Multicast_SyncWhiteboardState_Implementation(TArray<FStroke> const& History, int32 HistoryIndex); \
@@ -69,6 +71,8 @@ template<> ADVANCEDDRAWINGBOARD_API UScriptStruct* StaticStruct<struct FStroke>(
 	DECLARE_FUNCTION(execDebugNetworkState); \
 	DECLARE_FUNCTION(execClientEndDrawing); \
 	DECLARE_FUNCTION(execClientContinueDrawing); \
+	DECLARE_FUNCTION(execClient_CleanupInteractionUI); \
+	DECLARE_FUNCTION(execClient_SetupInteractionUI); \
 	DECLARE_FUNCTION(execClientStartDrawing); \
 	DECLARE_FUNCTION(execCanClientDraw); \
 	DECLARE_FUNCTION(execClient_SyncWhiteboardState); \

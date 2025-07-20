@@ -189,7 +189,7 @@ void AWhiteboardActor::RequestInteraction(APawn* Player)
     }
 
     // Get the player controller
-    APlayerController* PC = Cast<APlayerController>(Player->GetController());
+    AWhiteboardController* PC = Cast<AWhiteboardController>(Player->GetController());
     if (!PC)
     {
         UE_LOG(LogTemp, Error, TEXT("RequestInteraction failed - No PlayerController"));
@@ -225,7 +225,7 @@ void AWhiteboardActor::RequestEndInteraction(APawn* Player)
         return;
     }
 
-    APlayerController* PC = Cast<APlayerController>(Player->GetController());
+    AWhiteboardController* PC = Cast<AWhiteboardController>(Player->GetController());
     if (!PC)
     {
         UE_LOG(LogTemp, Error, TEXT("RequestEndInteraction failed - No PlayerController"));
@@ -1241,36 +1241,19 @@ void AWhiteboardActor::StartInteraction(APawn* Player)
         // Add player to interacting list
         InteractingPawns.Add(Player);
         bCanInteract = true;
-
-        // Switch to whiteboard camera
-        APlayerController* PC = Cast<APlayerController>(Player->GetController());
-        if (PC)
-        {
-            FViewTargetTransitionParams Param;
-            Param.BlendFunction = VTBlend_Cubic;
-            Param.BlendTime = 1.5f;
-            Param.BlendExp = 2.0f;
-            Param.bLockOutgoing = true;
+        
+        
+        Client_SetupInteractionUI(Player);
             
-            PC->SetViewTarget(this, Param);
-            PC->bShowMouseCursor = true;
-            PC->bEnableClickEvents = true;
-            PC->bEnableMouseOverEvents = true;
+        // Sync whiteboard state to the interacting client
+        Client_SyncWhiteboardState(StrokeHistory, CurrentHistoryIndex);
             
-            // Sync whiteboard state to the interacting client
-            Client_SyncWhiteboardState(StrokeHistory, CurrentHistoryIndex);
-            
-            UE_LOG(LogTemp, Warning, TEXT("Successfully started interaction for player: %s (%d/%d players)"), 
-                   *Player->GetName(), InteractingPawns.Num(), MaxInteractingPlayers);
-        }
+        UE_LOG(LogTemp, Warning, TEXT("Successfully started interaction for player: %s (%d/%d players)"), 
+        *Player->GetName(), InteractingPawns.Num(), MaxInteractingPlayers);
+        
 
         // Call Blueprint events
         OnInteractionStarted(Player);
-        OnPlayerJoinedInteraction(Player);
-    }
-    else
-    {
-        RequestInteraction(Player);
     }
 }
 
@@ -1295,16 +1278,11 @@ void AWhiteboardActor::EndInteractionForPlayer(APawn* Player)
             return;
         }
 
-        if (APlayerController* PC = Cast<APlayerController>(Player->GetController()))
+        if (AWhiteboardController* PC = Cast<AWhiteboardController>(Player->GetController()))
         {
-            // Switch back to player camera
-            PC->SetViewTarget(Player);
-            PC->bShowMouseCursor = false;
-            PC->bEnableClickEvents = false;
-            PC->bEnableMouseOverEvents = false;
+                
+            PC->RestoreGameInputMode(Player);
             
-            // Re-enable player movement
-            Player->EnableInput(PC);
         }
 
         // Remove player from interacting list
@@ -1312,7 +1290,6 @@ void AWhiteboardActor::EndInteractionForPlayer(APawn* Player)
 
         // Call Blueprint events
         OnInteractionEnded(Player);
-        OnPlayerLeftInteraction(Player);
         
         UE_LOG(LogTemp, Warning, TEXT("Player %s ended interaction (%d/%d players remaining)"), 
                *Player->GetName(), InteractingPawns.Num(), MaxInteractingPlayers);
@@ -1438,6 +1415,77 @@ void AWhiteboardActor::ClientStartDrawing(const FVector2D& CanvasPosition)
     
     // Always send to server
     StartDrawing(CanvasPosition);
+}
+
+
+void AWhiteboardActor::Client_SetupInteractionUI_Implementation(APawn* InteractingPlayer)
+{
+    UE_LOG(LogTemp, Warning, TEXT("Client_SetupInteractionUI called for player: %s"), 
+          InteractingPlayer ? *InteractingPlayer->GetName() : TEXT("None"));
+    
+    // Only apply to the local player
+    AWhiteboardController* YourPC = Cast<AWhiteboardController>(InteractingPlayer->GetController());
+    
+    if (!YourPC || YourPC->GetPawn() != InteractingPlayer)
+    {
+        UE_LOG(LogTemp, Warning, TEXT("Client_SetupInteractionUI - Not local player, ignoring"));
+        return;
+    }
+    
+    if (YourPC)
+    {
+        // Switch to whiteboard camera
+        FViewTargetTransitionParams Param;
+        Param.BlendFunction = VTBlend_Cubic;
+        Param.BlendTime = 1.5f;
+        Param.BlendExp = 2.0f;
+        Param.bLockOutgoing = true;
+    
+        YourPC->SetViewTarget(this, Param);
+        YourPC->bShowMouseCursor = true;
+        YourPC->bEnableClickEvents = true;
+        YourPC->bEnableMouseOverEvents = true;
+        YourPC->OnPlayerJoinedInteraction(InteractingPlayer,this);
+
+        // Disable player movement input
+        if (InteractingPlayer)
+        {
+            InteractingPlayer->DisableInput(YourPC);
+        }
+    }
+}
+
+void AWhiteboardActor::Client_CleanupInteractionUI_Implementation(APawn* InteractingPlayer)
+{
+    UE_LOG(LogTemp, Warning, TEXT("Client_CleanupInteractionUI called for player: %s"), 
+          InteractingPlayer ? *InteractingPlayer->GetName() : TEXT("None"));
+
+    // Only apply to the local player
+    APlayerController* LocalPC = GetWorld()->GetFirstPlayerController();
+    if (!LocalPC || LocalPC->GetPawn() != InteractingPlayer)
+    {
+        UE_LOG(LogTemp, Warning, TEXT("Client_CleanupInteractionUI - Not local player, ignoring"));
+        return;
+    }
+
+    if (AWhiteboardController* YourPC = Cast<AWhiteboardController>(LocalPC))
+    {
+        // Switch back to player camera
+        YourPC->SetViewTarget(InteractingPlayer);
+        YourPC->bShowMouseCursor = false;
+        YourPC->bEnableClickEvents = false;
+        YourPC->bEnableMouseOverEvents = false;
+        YourPC->OnPlayerLeftInteraction(InteractingPlayer,this);
+    }
+    
+    // Re-enable player movement
+    if (InteractingPlayer)
+    {
+        InteractingPlayer->EnableInput(LocalPC);
+    }
+    
+    UE_LOG(LogTemp, Warning, TEXT("Client UI cleanup complete - Mouse cursor: %s"), 
+           LocalPC->bShowMouseCursor ? TEXT("True") : TEXT("False"));
 }
 
 void AWhiteboardActor::ClientContinueDrawing(const FVector2D& CanvasPosition)

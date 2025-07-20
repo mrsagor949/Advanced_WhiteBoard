@@ -347,13 +347,7 @@ public:
 
     UFUNCTION(BlueprintImplementableEvent, Category = "UI Events")
     void OnInteractionEnded(APawn* Player);
-
-    UFUNCTION(BlueprintImplementableEvent, Category = "UI Events")
-    void OnPlayerJoinedInteraction(APawn* Player);
-
-    UFUNCTION(BlueprintImplementableEvent, Category = "UI Events")
-    void OnPlayerLeftInteraction(APawn* Player);
-
+    
     UFUNCTION(BlueprintImplementableEvent, Category = "UI Events")
     void OnPlayerEnteredRange(APawn* Player);
 
@@ -383,6 +377,13 @@ public:
 
     UFUNCTION(BlueprintCallable, Category = "Whiteboard") 
     void ClientStartDrawing(const FVector2D& CanvasPosition);
+
+    // NEW: Client RPC to handle UI and camera setup
+    UFUNCTION(Client,Reliable)
+    void Client_SetupInteractionUI(APawn* InteractingPlayer);
+
+    UFUNCTION(Client, Reliable)
+    void Client_CleanupInteractionUI(APawn* InteractingPlayer);
 
     UFUNCTION(BlueprintCallable, Category = "Whiteboard")
     void ClientContinueDrawing(const FVector2D& CanvasPosition);
