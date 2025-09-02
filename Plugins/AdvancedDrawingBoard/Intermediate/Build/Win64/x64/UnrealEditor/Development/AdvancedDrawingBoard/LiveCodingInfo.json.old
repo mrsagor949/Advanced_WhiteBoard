@@ -4,6 +4,7 @@
 		"Module.AdvancedDrawingBoard.cpp.obj": [
 			"UI_ImportFile.gen.cpp.obj",
 			"WhiteboardInteractionComponent.gen.cpp.obj",
+			"WhiteboardUI.gen.cpp.obj",
 			"PerModuleInline.gen.cpp.obj",
 			"AdvancedDrawingBoard.cpp.obj",
 			"WhiteboardInteractionComponent.cpp.obj",
@@ -12,7 +13,6 @@
 			"AdvancedDrawingBoard.init.gen.cpp.obj",
 			"AWhiteboard_Player_Controller.gen.cpp.obj",
 			"WhiteboardActor.gen.cpp.obj",
-			"WhiteboardUI.gen.cpp.obj",
 			"WhiteboardActor.cpp.obj",
 			"AWhiteboard_Player_Controller.cpp.obj"
 		]

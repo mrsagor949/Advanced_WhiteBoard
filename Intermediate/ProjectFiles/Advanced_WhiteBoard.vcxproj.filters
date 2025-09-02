@@ -12,6 +12,9 @@
       <Filter>Source</Filter>
     </None>
     <None Include="..\..\.vsconfig" />
+    <None Include="..\..\Ball.png" />
+    <None Include="..\..\ballvalve.png" />
+    <None Include="..\..\Socket.png" />
     <Filter Include="Config">
       <UniqueIdentifier>{FA535FFB-25E1-3D20-B416-52F9BE21E06E}</UniqueIdentifier>
     </Filter>
@@ -60,9 +63,18 @@
     <ClCompile Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Private\Components\WhiteboardInteractionComponent.cpp">
       <Filter>Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Private\Components</Filter>
     </ClCompile>
+    <Filter Include="Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Private\Controller">
+      <UniqueIdentifier>{9D14B730-139D-34B0-A62A-5BF6666ECA6A}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Private\Controller\AWhiteboard_Player_Controller.cpp">
+      <Filter>Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Private\Controller</Filter>
+    </ClCompile>
     <Filter Include="Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Private\UI">
       <UniqueIdentifier>{CE23F2D5-E602-31E7-9996-41E42817ABF5}</UniqueIdentifier>
     </Filter>
+    <ClCompile Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Private\UI\UI_ImportFile.cpp">
+      <Filter>Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Private\UI</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Private\UI\WhiteboardUI.cpp">
       <Filter>Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Private\UI</Filter>
     </ClCompile>
@@ -84,14 +96,29 @@
     <ClCompile Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\Components\WhiteboardInteractionComponent.h">
       <Filter>Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\Components</Filter>
     </ClCompile>
+    <Filter Include="Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\Controller">
+      <UniqueIdentifier>{D93B966A-13C3-3A38-8CC7-11A2A9D7FA27}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\Controller\AWhiteboard_Player_Controller.h">
+      <Filter>Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\Controller</Filter>
+    </ClCompile>
     <Filter Include="Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\UI">
       <UniqueIdentifier>{E6A076D2-6222-3A93-BD9C-6B18177FB590}</UniqueIdentifier>
     </Filter>
+    <ClCompile Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\UI\UI_ImportFile.h">
+      <Filter>Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\UI</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\UI\WhiteboardUI.h">
       <Filter>Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\UI</Filter>
     </ClCompile>
     <None Include="..\..\Plugins\AdvancedDrawingBoard\AdvancedDrawingBoard.uplugin">
       <Filter>Plugins\AdvancedDrawingBoard</Filter>
+    </None>
+    <Filter Include="Plugins\AdvancedDrawingBoard\Config">
+      <UniqueIdentifier>{747738BB-9F7F-3A99-A4ED-C380248B7F23}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Plugins\AdvancedDrawingBoard\Config\DefaultAdvancedDrawingBoard.ini">
+      <Filter>Plugins\AdvancedDrawingBoard\Config</Filter>
     </None>
     <Filter Include="Plugins\AdvancedDrawingBoard\Resources">
       <UniqueIdentifier>{7A7135A3-F50E-3D24-94ED-8DD68E85DDE8}</UniqueIdentifier>

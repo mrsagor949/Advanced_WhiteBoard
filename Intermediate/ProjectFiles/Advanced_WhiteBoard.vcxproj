@@ -936,10 +936,12 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\..\Advanced_WhiteBoard.uproject"/>
-    <None Include="..\..\Plugins\AdvancedDrawingBoard\Config\DefaultAdvancedDrawingBoard.ini" />
     <None Include="..\..\Source\Advanced_WhiteBoard.Target.cs"/>
     <None Include="..\..\Source\Advanced_WhiteBoardEditor.Target.cs"/>
     <None Include="..\..\.vsconfig"/>
+    <None Include="..\..\Ball.png"/>
+    <None Include="..\..\ballvalve.png"/>
+    <None Include="..\..\Socket.png"/>
     <None Include="..\..\Config\DefaultEditor.ini"/>
     <None Include="..\..\Config\DefaultEngine.ini"/>
     <None Include="..\..\Config\DefaultGame.ini"/>
@@ -957,8 +959,14 @@
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>$(ClCompile_ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
-    <ClCompile Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Private\Controller\AWhiteboard_Player_Controller.cpp" />
-    <ClCompile Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Private\UI\UI_ImportFile.cpp" />
+    <ClCompile Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Private\Controller\AWhiteboard_Player_Controller.cpp">
+      <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>$(ClCompile_ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Private\UI\UI_ImportFile.cpp">
+      <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>$(ClCompile_ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
     <ClCompile Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Private\UI\WhiteboardUI.cpp">
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>$(ClCompile_ForcedIncludeFiles)</ForcedIncludeFiles>
@@ -975,11 +983,20 @@
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>$(ClCompile_ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
+    <ClCompile Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\Controller\AWhiteboard_Player_Controller.h">
+      <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>$(ClCompile_ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\UI\UI_ImportFile.h">
+      <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>$(ClCompile_ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
     <ClCompile Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\UI\WhiteboardUI.h">
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>$(ClCompile_ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
     <None Include="..\..\Plugins\AdvancedDrawingBoard\AdvancedDrawingBoard.uplugin"/>
+    <None Include="..\..\Plugins\AdvancedDrawingBoard\Config\DefaultAdvancedDrawingBoard.ini"/>
     <None Include="..\..\Plugins\AdvancedDrawingBoard\Resources\Icon128.png"/>
     <None Include="..\..\Source\Advanced_WhiteBoard\Advanced_WhiteBoard.Build.cs"/>
     <ClCompile Include="..\..\Source\Advanced_WhiteBoard\Advanced_WhiteBoard.cpp">
@@ -990,10 +1007,6 @@
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories_1)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>$(ClCompile_ForcedIncludeFiles_1)</ForcedIncludeFiles>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\Controller\AWhiteboard_Player_Controller.h" />
-    <ClInclude Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\UI\UI_ImportFile.h" />
   </ItemGroup>
   <ItemDefinitionGroup>
   </ItemDefinitionGroup>
