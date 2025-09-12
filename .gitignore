@@ -29,7 +29,7 @@ Binaries/
 DerivedDataCache/
 WindowsNoEditor/
 .vs/
-Plugins/
+
 
 # JetBrains IDE
 .idea/

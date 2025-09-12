@@ -938,6 +938,7 @@
     <None Include="..\..\Advanced_WhiteBoard.uproject"/>
     <None Include="..\..\Source\Advanced_WhiteBoard.Target.cs"/>
     <None Include="..\..\Source\Advanced_WhiteBoardEditor.Target.cs"/>
+    <None Include="..\..\.gitignore"/>
     <None Include="..\..\.vsconfig"/>
     <None Include="..\..\Ball.png"/>
     <None Include="..\..\ballvalve.png"/>
@@ -1007,6 +1008,9 @@
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories_1)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>$(ClCompile_ForcedIncludeFiles_1)</ForcedIncludeFiles>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\Library\Whiteboard_Types.h" />
   </ItemGroup>
   <ItemDefinitionGroup>
   </ItemDefinitionGroup>

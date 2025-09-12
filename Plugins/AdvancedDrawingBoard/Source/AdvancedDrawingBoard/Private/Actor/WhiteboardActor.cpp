@@ -12,6 +12,7 @@
 #include "Misc/FileHelper.h"
 #include "Engine/Engine.h"
 #include "Controller/AWhiteboard_Player_Controller.h"
+#include "Library/Whiteboard_Types.h"
 
 // Sets default values
 AWhiteboardActor::AWhiteboardActor()
@@ -64,12 +65,20 @@ AWhiteboardActor::AWhiteboardActor()
     bIsDrawingShape = false;
     bCanInteract = false;
     InteractingPawns.Empty();
-    
+
+    // Initialize History ID
     CurrentHistoryIndex = -1;
     NextStrokeID = 0;
 }
 
-// Called when the game starts or when spawned
+// On Construction Script Set The Interaction Box Extent
+void AWhiteboardActor::OnConstruction(const FTransform& Transform)
+{
+    Super::OnConstruction(Transform);
+    InteractionVolume->SetBoxExtent(FVector(InteractionDistance, InteractionDistance, InteractionDistance));
+}
+
+// A Whiteboard Actor Begin Play
 void AWhiteboardActor::BeginPlay()
 {
 	Super::BeginPlay();
@@ -79,10 +88,14 @@ void AWhiteboardActor::BeginPlay()
     InteractionVolume->OnComponentBeginOverlap.AddDynamic(this, &AWhiteboardActor::OnTriggerBeginOverlap);
     InteractionVolume->OnComponentEndOverlap.AddDynamic(this, &AWhiteboardActor::OnTriggerEndOverlap);
 
+    // Initialize The Whiteboard
     InitializeWhiteboard();
+
+    // Create New Preview Canvas
     CreatePreviewCanvas();
 }
 
+// Initialize The Whiteboard
 void AWhiteboardActor::InitializeWhiteboard()
 {
     // Create render target if it doesn't exist
@@ -98,8 +111,7 @@ void AWhiteboardActor::InitializeWhiteboard()
     // Create dynamic material instance and set the render target
     if (WhiteboardMesh->GetStaticMesh())
     {
-        UMaterialInterface* Material = WhiteboardMesh->GetMaterial(InitMaterialIndex);
-        if (Material)
+        if (UMaterialInterface* Material = WhiteboardMesh->GetMaterial(InitMaterialIndex))
         {
             UMaterialInstanceDynamic* DynamicMaterial = UMaterialInstanceDynamic::Create(Material, this);
             DynamicMaterial->SetTextureParameterValue(TEXT("DrawingTexture"), DrawingCanvas);
@@ -108,6 +120,8 @@ void AWhiteboardActor::InitializeWhiteboard()
     }
 }
 
+
+// Create Preview Canvas
 void AWhiteboardActor::CreatePreviewCanvas()
 {
     if (!PreviewCanvas)
@@ -118,23 +132,14 @@ void AWhiteboardActor::CreatePreviewCanvas()
     UKismetRenderingLibrary::ClearRenderTarget2D(GetWorld(), PreviewCanvas, FLinearColor::Transparent);
 }
 
-bool AWhiteboardActor::IsShapeTool(EDrawingTool Tool) const
+
+// Check Is selected Tools Is a Line, Rectangle or Circle
+bool AWhiteboardActor::IsShapeTool(const EDrawingTool Tool)
 {
     return Tool == EDrawingTool::Line || Tool == EDrawingTool::Rectangle || Tool == EDrawingTool::Circle;
 }
 
-// Called every frame
-void AWhiteboardActor::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
 
-}
-
-void AWhiteboardActor::OnConstruction(const FTransform& Transform)
-{
-    Super::OnConstruction(Transform);
-    InteractionVolume->SetBoxExtent(FVector(InteractionDistance, InteractionDistance, InteractionDistance));
-}
 
 void AWhiteboardActor::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
@@ -171,31 +176,21 @@ void AWhiteboardActor::OnRep_InteractingPawns()
 }
 
 
-
-
-
-
-
 // NEW: Request interaction through PlayerController
 void AWhiteboardActor::RequestInteraction(APawn* Player)
 {
-    UE_LOG(LogTemp, Warning, TEXT("RequestInteraction called - Player: %s, Role: %d"), 
-           Player ? *Player->GetName() : TEXT("None"), (int32)GetLocalRole());
-
     if (!Player)
     {
-        UE_LOG(LogTemp, Error, TEXT("RequestInteraction failed - Invalid player"));
         return;
     }
-
+    
     // Get the player controller
     AWhiteboardController* PC = Cast<AWhiteboardController>(Player->GetController());
     if (!PC)
     {
-        UE_LOG(LogTemp, Error, TEXT("RequestInteraction failed - No PlayerController"));
         return;
     }
-
+    
     // Call RPC through PlayerController (which has proper ownership)
     if (HasAuthority())
     {
@@ -209,10 +204,7 @@ void AWhiteboardActor::RequestInteraction(APawn* Player)
         {
             YourPC->Server_RequestWhiteboardInteraction(this, Player);
         }
-        else
-        {
-            UE_LOG(LogTemp, Error, TEXT("PlayerController is not of type AYourPlayerController"));
-        }
+       
     }
 }
 
@@ -221,14 +213,12 @@ void AWhiteboardActor::RequestEndInteraction(APawn* Player)
 {
     if (!Player)
     {
-        UE_LOG(LogTemp, Error, TEXT("RequestEndInteraction failed - Invalid player"));
         return;
     }
 
     AWhiteboardController* PC = Cast<AWhiteboardController>(Player->GetController());
     if (!PC)
     {
-        UE_LOG(LogTemp, Error, TEXT("RequestEndInteraction failed - No PlayerController"));
         return;
     }
 
@@ -261,7 +251,6 @@ bool AWhiteboardActor::CanPlayerInteract(APawn* Player) const
     // Check if already interacting
     if (InteractingPawns.Contains(Player)) 
     {
-        UE_LOG(LogTemp, Log, TEXT("Player already interacting"));
         return true; // Already interacting is OK
     }
     
@@ -273,6 +262,21 @@ bool AWhiteboardActor::CanPlayerInteract(APawn* Player) const
     }
     
     return true;
+}
+
+UStaticMeshComponent* AWhiteboardActor::GetWhiteboardMesh() const
+{
+    return  WhiteboardMesh;
+}
+
+int32 AWhiteboardActor::GetCanvasWidth() const
+{
+    return CanvasWidth;
+}
+
+int32 AWhiteboardActor::GetCanvasHeight() const
+{
+    return  CanvasHeight;
 }
 
 // Drawing Tool Functions
@@ -389,27 +393,6 @@ bool AWhiteboardActor::IsPlayerInRange(APlayerController* PlayerController) cons
     return Distance <= InteractionDistance;
 }
 
-FVector2D AWhiteboardActor::WorldToCanvasPosition(const FVector& WorldPosition) const
-{
-    // Convert world position to local space
-    FVector LocalPosition = WhiteboardMesh->GetComponentTransform().InverseTransformPosition(WorldPosition);
-    
-    // Map local position to UV coordinates (0-1 range)
-    float U = (LocalPosition.Y + WhiteboardWidth * 0.5f) / WhiteboardWidth;
-    float V = (-LocalPosition.Z + WhiteboardHeight * 0.5f) / WhiteboardHeight;
-    
-    // Clamp UV coordinates
-    U = FMath::Clamp(U, 0.0f, 1.0f);
-    V = FMath::Clamp(V, 0.0f, 1.0f);
-    
-    // Map UV coordinates to canvas pixels
-    FVector2D CanvasPosition;
-    CanvasPosition.X = U * CanvasWidth;
-    CanvasPosition.Y = V * CanvasHeight;
-    
-    return CanvasPosition;
-}
-
 void AWhiteboardActor::ClearWhiteboard()
 {
     if (HasAuthority())
@@ -504,6 +487,7 @@ void AWhiteboardActor::ExportToSVG(const FString& FilePath)
 // Drawing Functions - FIXED for shape tools
 void AWhiteboardActor::StartDrawing(const FVector2D& CanvasPosition)
 {
+    
     if (GetLocalRole() == ROLE_Authority)
     {
         if (bIsDrawing)
@@ -564,7 +548,6 @@ void AWhiteboardActor::StartDrawing(const FVector2D& CanvasPosition)
     }
     else
     {
-        UE_LOG(LogTemp, Warning, TEXT("Client StartDrawing - Sending RPC to server through PlayerController"));
         if (APlayerController* PC = GetWorld()->GetFirstPlayerController())
         {
             if (AWhiteboardController* YourPC = Cast<AWhiteboardController>(PC))
@@ -574,6 +557,8 @@ void AWhiteboardActor::StartDrawing(const FVector2D& CanvasPosition)
         }
     }
 }
+
+
 
 void AWhiteboardActor::ContinueDrawing(const FVector2D& CanvasPosition)
 {
@@ -687,6 +672,7 @@ void AWhiteboardActor::EndDrawing()
     }
 }
 
+
 void AWhiteboardActor::SetTextString(const FString& NewTextString)
 {
     if (HasAuthority())
@@ -705,10 +691,12 @@ void AWhiteboardActor::SetTextString(const FString& NewTextString)
     }
 }
 
+
 void AWhiteboardActor::Server_SetTextString_Implementation(const FString& NewTextString)
 {
     CurrentTextString = NewTextString;
 }
+
 
 // NEW: Shape preview functions
 void AWhiteboardActor::DrawShapePreview(const FVector2D& StartPos, const FVector2D& EndPos, EDrawingTool Tool, FLinearColor Color, float Size)
@@ -776,6 +764,7 @@ void AWhiteboardActor::DrawShapePreview(const FVector2D& StartPos, const FVector
     // Composite preview onto main canvas temporarily
     UpdateCanvasMaterial();
 }
+
 
 void AWhiteboardActor::ClearShapePreview()
 {
@@ -943,6 +932,7 @@ void AWhiteboardActor::DrawFigure(const FVector2D& CanvasPosition, const int32 S
     }
 }
 
+
 // Server RPC Implementations
 void AWhiteboardActor::Server_StartDrawing_Implementation(const FVector2D& CanvasPosition, EDrawingTool Tool, FLinearColor Color, float Size, int32 BrushTextureIndex, int32 FigureTextureIndex)
 {
@@ -1067,7 +1057,6 @@ void AWhiteboardActor::Multicast_StartDrawing_Implementation(const FVector2D& Ca
         if (IsShapeTool(Tool))
         {
             bIsDrawingShape = true;
-            // Don't draw anything yet for shapes
         }
         else
         {
@@ -1193,39 +1182,33 @@ void AWhiteboardActor::Multicast_UpdateShapePreview_Implementation(const FVector
 
 void AWhiteboardActor::Client_SyncWhiteboardState_Implementation(const TArray<FStroke>& History, int32 HistoryIndex)
 {
-    StrokeHistory = History;
-    CurrentHistoryIndex = HistoryIndex;
-    RedrawCanvas();
+    SyncWhiteboardState(History,HistoryIndex);
 }
+
 
 // Interaction Functions
 void AWhiteboardActor::StartInteraction(APawn* Player)
 {
-    UE_LOG(LogTemp, Warning, TEXT("StartInteraction called - Player: %s, Role: %d, HasAuthority: %s"), 
-           Player ? *Player->GetName() : TEXT("None"), 
-           (int32)GetLocalRole(),
-           HasAuthority() ? TEXT("True") : TEXT("False"));
+    //CALL THIS START INTERACTION FROM PLAYER CONTROLLER SERVER
     
+    // OLD METHOD
+    /*
     if (GetLocalRole() == ROLE_Authority)
     {
         if (!Player) 
         {
-            UE_LOG(LogTemp, Error, TEXT("StartInteraction failed - Invalid player"));
             return;
         }
 
         // Check if player is already interacting
         if (InteractingPawns.Contains(Player))
         {
-            UE_LOG(LogTemp, Warning, TEXT("Player %s is already interacting"), *Player->GetName());
             return;
         }
 
         // Check if we can accept more players
         if (!CanAcceptMorePlayers())
         {
-            UE_LOG(LogTemp, Warning, TEXT("Cannot accept more players - limit reached (%d/%d)"), 
-                   InteractingPawns.Num(), MaxInteractingPlayers);
             return;
         }
 
@@ -1233,28 +1216,69 @@ void AWhiteboardActor::StartInteraction(APawn* Player)
         float Distance = FVector::Distance(Player->GetActorLocation(), GetActorLocation());
         if (Distance > InteractionDistance)
         {
-            UE_LOG(LogTemp, Error, TEXT("StartInteraction failed - Player too far: %f > %f"), 
-                   Distance, InteractionDistance);
             return;
         }
 
         // Add player to interacting list
         InteractingPawns.Add(Player);
         bCanInteract = true;
-        
-        
-        Client_SetupInteractionUI(Player);
+
+        if (Player->IsLocallyControlled())
+        {
+            SetupInteractionUI(Player);
+        }
+        else
+        {
+            Client_SetupInteractionUI(Player);
+        }
             
-        // Sync whiteboard state to the interacting client
-        Client_SyncWhiteboardState(StrokeHistory, CurrentHistoryIndex);
+        // Similarly for sync state: create a DoSyncWhiteboardState function
+        if (Player->IsLocallyControlled())
+        {
+            SyncWhiteboardState(StrokeHistory, CurrentHistoryIndex);
+        }
+        else
+        {
+            Client_SyncWhiteboardState(StrokeHistory, CurrentHistoryIndex);
+        }
+        
             
         UE_LOG(LogTemp, Warning, TEXT("Successfully started interaction for player: %s (%d/%d players)"), 
         *Player->GetName(), InteractingPawns.Num(), MaxInteractingPlayers);
-        
-
-        // Call Blueprint events
-        OnInteractionStarted(Player);
     }
+    */
+
+    if (!HasAuthority() || !Player)
+    {
+        return;
+    }
+
+    if (!CanPlayerInteract(Player))
+    {
+        UE_LOG(LogTemp, Warning, TEXT("Player cannot interact with whiteboard"));
+        return;
+    }
+
+    InteractingPawns.AddUnique(Player);
+    
+    UE_LOG(LogTemp, Warning, TEXT("Player %s started interacting with whiteboard"), *Player->GetName());
+
+    // Setup UI for the interacting player
+    if (APlayerController* PC = Cast<APlayerController>(Player->GetController()))
+    {
+        Client_SetupInteractionUI(Player);
+        
+        if (AWhiteboardController* WPC = Cast<AWhiteboardController>(PC))
+        {
+            WPC->SetupWhiteboardInputMode(Player);
+        }
+    }
+
+    // Sync current state to new client
+    SyncNewClient(Cast<APlayerController>(Player->GetController()));
+    
+    // Call Blueprint events
+    OnInteractionStarted(Player);
 }
 
 void AWhiteboardActor::EndInteraction()
@@ -1271,30 +1295,37 @@ void AWhiteboardActor::EndInteraction()
 
 void AWhiteboardActor::EndInteractionForPlayer(APawn* Player)
 {
-    if (HasAuthority())
+    
+    if (!HasAuthority() || !Player)
     {
-        if (!Player || !InteractingPawns.Contains(Player))
-        {
-            return;
-        }
-
-        if (AWhiteboardController* PC = Cast<AWhiteboardController>(Player->GetController()))
-        {
-                
-            PC->RestoreGameInputMode(Player);
-            
-        }
-
-        // Remove player from interacting list
-        InteractingPawns.Remove(Player);
-
-        // Call Blueprint events
-        OnInteractionEnded(Player);
-        
-        UE_LOG(LogTemp, Warning, TEXT("Player %s ended interaction (%d/%d players remaining)"), 
-               *Player->GetName(), InteractingPawns.Num(), MaxInteractingPlayers);
+        return;
     }
-    // Remove the else block - clients should use RequestEndInteraction instead
+
+    if (InteractingPawns.Contains(Player))
+    {
+        InteractingPawns.Remove(Player);
+        
+        UE_LOG(LogTemp, Warning, TEXT("Player %s ended interaction with whiteboard"), *Player->GetName());
+
+        APlayerController* PC = Cast<APlayerController>(Player->GetController());
+        if (PC)
+        {
+            if (AWhiteboardController* WPC = Cast<AWhiteboardController>(PC))
+            {
+               WPC->Client_CleanupInteractionUI(Player);
+                WPC->RestoreGameInputMode(Player);
+            }
+            else
+            {
+                Client_CleanupInteractionUI(Player);
+            }
+        }
+
+        //Multicast_OnInteractionEnded(Player);
+        
+        OnInteractionEnded(Player);
+    }
+   
 }
 
 bool AWhiteboardActor::IsPlayerInteracting(APawn* Player) const
@@ -1318,6 +1349,13 @@ void AWhiteboardActor::RemoveInteractingPlayer(APawn* Player)
     {
         EndInteractionForPlayer(Player);
     }
+}
+
+void AWhiteboardActor::SyncWhiteboardState(const TArray<FStroke>& History, int32 HistoryIndex)
+{
+    StrokeHistory = History;
+    CurrentHistoryIndex = HistoryIndex;
+    RedrawCanvas();
 }
 
 // Event Handlers
@@ -1417,75 +1455,52 @@ void AWhiteboardActor::ClientStartDrawing(const FVector2D& CanvasPosition)
     StartDrawing(CanvasPosition);
 }
 
-
-void AWhiteboardActor::Client_SetupInteractionUI_Implementation(APawn* InteractingPlayer)
+void AWhiteboardActor::SetupInteractionUI(APawn* InteractingPlayer)
 {
-    UE_LOG(LogTemp, Warning, TEXT("Client_SetupInteractionUI called for player: %s"), 
-          InteractingPlayer ? *InteractingPlayer->GetName() : TEXT("None"));
-    
     // Only apply to the local player
     AWhiteboardController* YourPC = Cast<AWhiteboardController>(InteractingPlayer->GetController());
     
     if (!YourPC || YourPC->GetPawn() != InteractingPlayer)
     {
-        UE_LOG(LogTemp, Warning, TEXT("Client_SetupInteractionUI - Not local player, ignoring"));
         return;
     }
     
     if (YourPC)
     {
-        // Switch to whiteboard camera
-        FViewTargetTransitionParams Param;
-        Param.BlendFunction = VTBlend_Cubic;
-        Param.BlendTime = 1.5f;
-        Param.BlendExp = 2.0f;
-        Param.bLockOutgoing = true;
-    
-        YourPC->SetViewTarget(this, Param);
-        YourPC->bShowMouseCursor = true;
-        YourPC->bEnableClickEvents = true;
-        YourPC->bEnableMouseOverEvents = true;
         YourPC->OnPlayerJoinedInteraction(InteractingPlayer,this);
-
-        // Disable player movement input
-        if (InteractingPlayer)
-        {
-            InteractingPlayer->DisableInput(YourPC);
-        }
+        
     }
 }
 
-void AWhiteboardActor::Client_CleanupInteractionUI_Implementation(APawn* InteractingPlayer)
-{
-    UE_LOG(LogTemp, Warning, TEXT("Client_CleanupInteractionUI called for player: %s"), 
-          InteractingPlayer ? *InteractingPlayer->GetName() : TEXT("None"));
 
+void AWhiteboardActor::CleanupInteractionUI(APawn* InteractingPlayer)
+{
+    
     // Only apply to the local player
     APlayerController* LocalPC = GetWorld()->GetFirstPlayerController();
     if (!LocalPC || LocalPC->GetPawn() != InteractingPlayer)
     {
-        UE_LOG(LogTemp, Warning, TEXT("Client_CleanupInteractionUI - Not local player, ignoring"));
         return;
     }
 
     if (AWhiteboardController* YourPC = Cast<AWhiteboardController>(LocalPC))
     {
-        // Switch back to player camera
-        YourPC->SetViewTarget(InteractingPlayer);
-        YourPC->bShowMouseCursor = false;
-        YourPC->bEnableClickEvents = false;
-        YourPC->bEnableMouseOverEvents = false;
         YourPC->OnPlayerLeftInteraction(InteractingPlayer,this);
     }
     
-    // Re-enable player movement
-    if (InteractingPlayer)
-    {
-        InteractingPlayer->EnableInput(LocalPC);
-    }
-    
-    UE_LOG(LogTemp, Warning, TEXT("Client UI cleanup complete - Mouse cursor: %s"), 
-           LocalPC->bShowMouseCursor ? TEXT("True") : TEXT("False"));
+}
+
+
+
+void AWhiteboardActor::Client_SetupInteractionUI_Implementation(APawn* InteractingPlayer)
+{
+    SetupInteractionUI(InteractingPlayer);
+}
+
+
+void AWhiteboardActor::Client_CleanupInteractionUI_Implementation(APawn* InteractingPlayer)
+{
+    CleanupInteractionUI(InteractingPlayer);
 }
 
 void AWhiteboardActor::ClientContinueDrawing(const FVector2D& CanvasPosition)
@@ -1558,6 +1573,35 @@ bool AWhiteboardActor::CanInteractLocally(APawn* Player) const
            InteractingPawns.Num(), MaxInteractingPlayers);
     
     return bInRange && bCanAcceptPlayer;
+}
+
+FVector2D AWhiteboardActor::WorldToCanvasPosition(const FVector& WorldPosition) const
+{
+    if (!WhiteboardMesh)
+    {
+        return FVector2D::ZeroVector;
+    }
+
+    // Get mesh bounds
+    FBoxSphereBounds MeshBounds = WhiteboardMesh->GetStaticMesh()->GetBounds();
+    FVector MeshExtent = MeshBounds.BoxExtent;
+    
+    // Transform world position to local whiteboard space
+    FVector LocalPosition = GetTransform().InverseTransformPosition(WorldPosition);
+    
+    // Calculate normalized coordinates
+    float U = (LocalPosition.Y + MeshExtent.Y) / (2.0f * MeshExtent.Y);
+    float V = (LocalPosition.Z + MeshExtent.Z) / (2.0f * MeshExtent.Z);
+    
+    // Flip V coordinate to match standard UV mapping (0 at bottom, 1 at top)
+    V = 1.0f - V;
+    
+    // Clamp to ensure within bounds
+    U = FMath::Clamp(U, 0.0f, 1.0f);
+    V = FMath::Clamp(V, 0.0f, 1.0f);
+    
+    // Convert to canvas pixel coordinates
+    return FVector2D(U * CanvasWidth, V * CanvasHeight);
 }
 
 // Drawing Implementation Functions
@@ -1909,4 +1953,9 @@ void AWhiteboardActor::SyncNewClient(APlayerController* NewClient)
     {
         Client_SyncWhiteboardState(StrokeHistory, CurrentHistoryIndex);
     }
+}
+
+UCameraComponent* AWhiteboardActor::GetWhiteboardCamera() const
+{
+    return WhiteboardCamera;
 }

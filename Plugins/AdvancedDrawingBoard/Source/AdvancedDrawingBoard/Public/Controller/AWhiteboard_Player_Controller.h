@@ -29,6 +29,9 @@ public:
 
     UFUNCTION(BlueprintImplementableEvent, Category = "UI Events")
     void OnPlayerLeftInteraction(APawn* InteractingPlayer,AWhiteboardActor* WhiteboardActor);
+
+    UFUNCTION(Client, Reliable)
+    void Client_CleanupInteractionUI(APawn* InteractingPlayer);
     
     // Interaction RPCs
     UFUNCTION(Server, Reliable)
@@ -65,7 +68,7 @@ public:
     UFUNCTION(Server, Reliable)
     void Server_WhiteboardSetCurrentTool(AWhiteboardActor* Whiteboard, EDrawingTool NewTool);
 
-    UFUNCTION(Server, Reliable)
+    UFUNCTION(Server, Reliable) 
     void Server_WhiteboardSetCurrentColor(AWhiteboardActor* Whiteboard, FLinearColor NewColor);
 
     UFUNCTION(Server, Reliable)
@@ -79,4 +82,11 @@ public:
 
     UFUNCTION(Server, Reliable)
     void Server_WhiteboardSetTextString(AWhiteboardActor* Whiteboard, const FString& NewTextString);
+
+private:
+    // Helper function to validate whiteboard interaction
+    bool ValidateWhiteboardInteraction(AWhiteboardActor* Whiteboard, APawn* InteractingPlayer) const;
+
+    UPROPERTY()
+    class UInputComponent* OriginalInputComponent;
 };

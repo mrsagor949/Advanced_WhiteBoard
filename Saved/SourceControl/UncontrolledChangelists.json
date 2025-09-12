@@ -5,7 +5,15 @@
 			"guid": "00000000000000000000000000000000",
 			"description": "Default Uncontrolled Changelist",
 			"files": [
-				"E:/SPARKELON-2025/Prototype/2025/Advanced_WhiteBoard/Content/MAP/DEMO.umap"
+				"E:/SPARKELON-2025/Prototype/2025/Advanced_WhiteBoard/Content/MAP/DEMO.umap",
+				"E:/SPARKELON-2025/Prototype/2025/Advanced_WhiteBoard/Content/ThirdPerson/Blueprints/BP_ThirdPersonGameMode.uasset",
+				"E:/SPARKELON-2025/Prototype/2025/Advanced_WhiteBoard/Content/ThirdPerson/Blueprints/BP_ThirdPersonCharacter.uasset",
+				"E:/SPARKELON-2025/Prototype/2025/Advanced_WhiteBoard/Plugins/AdvancedDrawingBoard/Content/Blueprint/BP_WhiteBoard.uasset",
+				"E:/SPARKELON-2025/Prototype/2025/Advanced_WhiteBoard/Plugins/AdvancedDrawingBoard/Content/UI/WBP_WhiteBoard.uasset",
+				"E:/SPARKELON-2025/Prototype/2025/Advanced_WhiteBoard/Content/ThirdPerson/Blueprints/BP_Controller.uasset",
+				"E:/SPARKELON-2025/Prototype/2025/Advanced_WhiteBoard/Content/ThirdPerson/Blueprints/BP_Player_Controller.uasset",
+				"E:/SPARKELON-2025/Prototype/2025/Advanced_WhiteBoard/Content/ThirdPerson/Blueprints/NewBlueprint.uasset",
+				"E:/SPARKELON-2025/Prototype/2025/Advanced_WhiteBoard/Content/ThirdPerson/Blueprints/BP_WhiteBoard_PC.uasset"
 			]
 		}
 	]

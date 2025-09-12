@@ -17,13 +17,13 @@ void EmptyLinkFunctionForGeneratedCodeAdvancedDrawingBoard_init() {}
 				nullptr,
 				0,
 				PKG_CompiledIn | 0x00000000,
-				0x9667C610,
-				0x52CCC585,
+				0xCFA7ADA4,
+				0x090D6D3E,
 				METADATA_PARAMS(0, nullptr)
 			};
 			UECodeGen_Private::ConstructUPackage(Z_Registration_Info_UPackage__Script_AdvancedDrawingBoard.OuterSingleton, PackageParams);
 		}
 		return Z_Registration_Info_UPackage__Script_AdvancedDrawingBoard.OuterSingleton;
 	}
-	static FRegisterCompiledInInfo Z_CompiledInDeferPackage_UPackage__Script_AdvancedDrawingBoard(Z_Construct_UPackage__Script_AdvancedDrawingBoard, TEXT("/Script/AdvancedDrawingBoard"), Z_Registration_Info_UPackage__Script_AdvancedDrawingBoard, CONSTRUCT_RELOAD_VERSION_INFO(FPackageReloadVersionInfo, 0x9667C610, 0x52CCC585));
+	static FRegisterCompiledInInfo Z_CompiledInDeferPackage_UPackage__Script_AdvancedDrawingBoard(Z_Construct_UPackage__Script_AdvancedDrawingBoard, TEXT("/Script/AdvancedDrawingBoard"), Z_Registration_Info_UPackage__Script_AdvancedDrawingBoard, CONSTRUCT_RELOAD_VERSION_INFO(FPackageReloadVersionInfo, 0xCFA7ADA4, 0x090D6D3E));
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

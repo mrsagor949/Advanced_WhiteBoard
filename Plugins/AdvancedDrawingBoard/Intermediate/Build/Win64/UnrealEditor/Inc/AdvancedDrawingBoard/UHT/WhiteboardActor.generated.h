@@ -12,7 +12,9 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 class AActor;
 class APawn;
 class APlayerController;
+class UCameraComponent;
 class UPrimitiveComponent;
+class UStaticMeshComponent;
 enum class EDrawingTool : uint8;
 struct FHitResult;
 struct FLinearColor;
@@ -22,21 +24,7 @@ struct FStroke;
 #endif
 #define ADVANCEDDRAWINGBOARD_WhiteboardActor_generated_h
 
-#define FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h_33_GENERATED_BODY \
-	friend struct Z_Construct_UScriptStruct_FDrawingPoint_Statics; \
-	ADVANCEDDRAWINGBOARD_API static class UScriptStruct* StaticStruct();
-
-
-template<> ADVANCEDDRAWINGBOARD_API UScriptStruct* StaticStruct<struct FDrawingPoint>();
-
-#define FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h_67_GENERATED_BODY \
-	friend struct Z_Construct_UScriptStruct_FStroke_Statics; \
-	ADVANCEDDRAWINGBOARD_API static class UScriptStruct* StaticStruct();
-
-
-template<> ADVANCEDDRAWINGBOARD_API UScriptStruct* StaticStruct<struct FStroke>();
-
-#define FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h_107_RPC_WRAPPERS_NO_PURE_DECLS \
+#define FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h_18_RPC_WRAPPERS_NO_PURE_DECLS \
 	virtual void Client_CleanupInteractionUI_Implementation(APawn* InteractingPlayer); \
 	virtual void Client_SetupInteractionUI_Implementation(APawn* InteractingPlayer); \
 	virtual void Client_SyncWhiteboardState_Implementation(TArray<FStroke> const& History, int32 HistoryIndex); \
@@ -57,25 +45,30 @@ template<> ADVANCEDDRAWINGBOARD_API UScriptStruct* StaticStruct<struct FStroke>(
 	virtual void Server_Undo_Implementation(); \
 	virtual void Server_ClearWhiteboard_Implementation(); \
 	virtual void Server_DrawFigure_Implementation(FVector2D const& CanvasPosition, int32 SelectedFigureIndex, FLinearColor Color, float Size); \
+	virtual void Server_SetTextString_Implementation(const FString& NewTextString); \
 	virtual void Server_AddText_Implementation(FVector2D const& CanvasPosition, const FString& Text, FLinearColor Color, float Size); \
 	virtual void Server_EndDrawing_Implementation(); \
 	virtual void Server_ContinueDrawing_Implementation(FVector2D const& CanvasPosition); \
 	virtual void Server_StartDrawing_Implementation(FVector2D const& CanvasPosition, EDrawingTool Tool, FLinearColor Color, float Size, int32 BrushTextureIndex, int32 FigureTextureIndex); \
-	virtual void Server_SetTextString_Implementation(const FString& NewTextString); \
 	DECLARE_FUNCTION(execOnRep_InteractingPawns); \
 	DECLARE_FUNCTION(execOnRep_StrokeHistory); \
 	DECLARE_FUNCTION(execOnTriggerEndOverlap); \
 	DECLARE_FUNCTION(execOnTriggerBeginOverlap); \
+	DECLARE_FUNCTION(execGetWhiteboardCamera); \
 	DECLARE_FUNCTION(execIsShapeTool); \
+	DECLARE_FUNCTION(execWorldToCanvasPosition); \
 	DECLARE_FUNCTION(execCanInteractLocally); \
 	DECLARE_FUNCTION(execDebugNetworkState); \
 	DECLARE_FUNCTION(execClientEndDrawing); \
 	DECLARE_FUNCTION(execClientContinueDrawing); \
 	DECLARE_FUNCTION(execClient_CleanupInteractionUI); \
+	DECLARE_FUNCTION(execCleanupInteractionUI); \
 	DECLARE_FUNCTION(execClient_SetupInteractionUI); \
+	DECLARE_FUNCTION(execSetupInteractionUI); \
 	DECLARE_FUNCTION(execClientStartDrawing); \
 	DECLARE_FUNCTION(execCanClientDraw); \
 	DECLARE_FUNCTION(execClient_SyncWhiteboardState); \
+	DECLARE_FUNCTION(execSyncWhiteboardState); \
 	DECLARE_FUNCTION(execRemoveInteractingPlayer); \
 	DECLARE_FUNCTION(execCanAcceptMorePlayers); \
 	DECLARE_FUNCTION(execGetInteractingPlayerCount); \
@@ -103,13 +96,13 @@ template<> ADVANCEDDRAWINGBOARD_API UScriptStruct* StaticStruct<struct FStroke>(
 	DECLARE_FUNCTION(execServer_Undo); \
 	DECLARE_FUNCTION(execServer_ClearWhiteboard); \
 	DECLARE_FUNCTION(execServer_DrawFigure); \
+	DECLARE_FUNCTION(execServer_SetTextString); \
 	DECLARE_FUNCTION(execServer_AddText); \
 	DECLARE_FUNCTION(execServer_EndDrawing); \
 	DECLARE_FUNCTION(execServer_ContinueDrawing); \
 	DECLARE_FUNCTION(execServer_StartDrawing); \
 	DECLARE_FUNCTION(execDrawFigure); \
 	DECLARE_FUNCTION(execAddText); \
-	DECLARE_FUNCTION(execServer_SetTextString); \
 	DECLARE_FUNCTION(execSetTextString); \
 	DECLARE_FUNCTION(execEndDrawing); \
 	DECLARE_FUNCTION(execContinueDrawing); \
@@ -119,17 +112,19 @@ template<> ADVANCEDDRAWINGBOARD_API UScriptStruct* StaticStruct<struct FStroke>(
 	DECLARE_FUNCTION(execRedo); \
 	DECLARE_FUNCTION(execUndo); \
 	DECLARE_FUNCTION(execClearWhiteboard); \
-	DECLARE_FUNCTION(execWorldToCanvasPosition); \
 	DECLARE_FUNCTION(execIsPlayerInRange); \
 	DECLARE_FUNCTION(execSetFigureTexture); \
 	DECLARE_FUNCTION(execSetBrushTexture); \
 	DECLARE_FUNCTION(execSetBrushSize); \
 	DECLARE_FUNCTION(execSetCurrentColor); \
-	DECLARE_FUNCTION(execSetCurrentTool);
+	DECLARE_FUNCTION(execSetCurrentTool); \
+	DECLARE_FUNCTION(execGetCanvasHeight); \
+	DECLARE_FUNCTION(execGetCanvasWidth); \
+	DECLARE_FUNCTION(execGetWhiteboardMesh);
 
 
-#define FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h_107_CALLBACK_WRAPPERS
-#define FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h_107_INCLASS_NO_PURE_DECLS \
+#define FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h_18_CALLBACK_WRAPPERS
+#define FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h_18_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesAWhiteboardActor(); \
 	friend struct Z_Construct_UClass_AWhiteboardActor_Statics; \
@@ -154,7 +149,7 @@ public: \
 	NO_API virtual void ValidateGeneratedRepEnums(const TArray<struct FRepRecord>& ClassReps) const override;
 
 
-#define FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h_107_ENHANCED_CONSTRUCTORS \
+#define FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h_18_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	AWhiteboardActor(AWhiteboardActor&&); \
@@ -166,14 +161,14 @@ public: \
 	NO_API virtual ~AWhiteboardActor();
 
 
-#define FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h_104_PROLOG
-#define FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h_107_GENERATED_BODY \
+#define FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h_15_PROLOG
+#define FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h_18_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h_107_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h_107_CALLBACK_WRAPPERS \
-	FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h_107_INCLASS_NO_PURE_DECLS \
-	FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h_107_ENHANCED_CONSTRUCTORS \
+	FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h_18_RPC_WRAPPERS_NO_PURE_DECLS \
+	FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h_18_CALLBACK_WRAPPERS \
+	FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h_18_INCLASS_NO_PURE_DECLS \
+	FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h_18_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
@@ -183,20 +178,5 @@ template<> ADVANCEDDRAWINGBOARD_API UClass* StaticClass<class AWhiteboardActor>(
 #undef CURRENT_FILE_ID
 #define CURRENT_FILE_ID FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h
 
-
-#define FOREACH_ENUM_EDRAWINGTOOL(op) \
-	op(EDrawingTool::Brush) \
-	op(EDrawingTool::Pencil) \
-	op(EDrawingTool::Eraser) \
-	op(EDrawingTool::Text) \
-	op(EDrawingTool::Line) \
-	op(EDrawingTool::Rectangle) \
-	op(EDrawingTool::Circle) \
-	op(EDrawingTool::Texture) \
-	op(EDrawingTool::Figure) 
-
-enum class EDrawingTool : uint8;
-template<> struct TIsUEnumClass<EDrawingTool> { enum { Value = true }; };
-template<> ADVANCEDDRAWINGBOARD_API UEnum* StaticEnum<EDrawingTool>();
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

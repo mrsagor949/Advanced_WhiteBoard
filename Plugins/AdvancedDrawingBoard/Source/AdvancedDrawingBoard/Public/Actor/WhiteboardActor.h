@@ -7,99 +7,10 @@
 #include "Components/BoxComponent.h"
 #include "GameFramework/Actor.h"
 #include "Components/StaticMeshComponent.h"
+#include "Library/Whiteboard_Types.h"
 #include "WhiteboardActor.generated.h"
 
 class UCameraComponent;
-
-// Drawing Tools Name Enums
-UENUM(BlueprintType)
-enum class EDrawingTool : uint8
-{
-    Brush       UMETA(DisplayName = "Brush"),
-    Pencil      UMETA(DisplayName = "Pencil"),
-    Eraser      UMETA(DisplayName = "Eraser"),
-    Text        UMETA(DisplayName = "Text"),
-    Line        UMETA(DisplayName = "Line"),
-    Rectangle   UMETA(DisplayName = "Rectangle"),
-    Circle      UMETA(DisplayName = "Circle"),
-    Texture     UMETA(DisplayName = "Texture Brush"),
-    Figure     UMETA(DisplayName = "Figure Brush")
-};
-
-// Drawing Tools Struct
-USTRUCT(BlueprintType)
-struct FDrawingPoint
-{
-    GENERATED_BODY()
-
-    UPROPERTY()
-    FVector2D Position;
-
-    UPROPERTY()
-    float Pressure = 1.0f;
-
-    UPROPERTY()
-    FLinearColor Color = FLinearColor::Black;
-
-    UPROPERTY()
-    float Size = 5.0f;
-
-    UPROPERTY()
-    EDrawingTool Tool = EDrawingTool::Brush;
-
-    UPROPERTY()
-    int32 StrokeID = 0;
-
-    FDrawingPoint(): Position()
-    {
-    }
-
-    FDrawingPoint(const FVector2D& InPosition, float InPressure = 1.0f, const FLinearColor& InColor = FLinearColor::Black, 
-                  float InSize = 5.0f, EDrawingTool InTool = EDrawingTool::Brush, int32 InStrokeID = 0)
-        : Position(InPosition), Pressure(InPressure), Color(InColor), Size(InSize), Tool(InTool), StrokeID(InStrokeID)
-    {}
-};
-
-//Drawing Tools Point Struct
-USTRUCT(BlueprintType)
-struct FStroke
-{
-    GENERATED_BODY()
-
-    UPROPERTY()
-    TArray<FDrawingPoint> Points;
-
-    UPROPERTY()
-    int32 StrokeID = 0;
-
-    UPROPERTY()
-    EDrawingTool Tool = EDrawingTool::Brush;
-
-    UPROPERTY()
-    FLinearColor Color = FLinearColor::Black;
-
-    UPROPERTY()
-    float Size = 5.0f;
-
-    UPROPERTY()
-    FString TextContent;
-
-    UPROPERTY()
-    UTexture2D* BrushTexture = nullptr;
-
-    UPROPERTY()
-    UTexture2D* FigureTexture = nullptr;
-
-    // NEW: Shape-specific properties
-    UPROPERTY()
-    FVector2D StartPosition = FVector2D::ZeroVector;
-
-    UPROPERTY()
-    FVector2D EndPosition = FVector2D::ZeroVector;
-
-    UPROPERTY()
-    bool bIsComplete = false;
-};
 
 UCLASS()
 class ADVANCEDDRAWINGBOARD_API AWhiteboardActor : public AActor
@@ -108,10 +19,8 @@ class ADVANCEDDRAWINGBOARD_API AWhiteboardActor : public AActor
     
 public:    
     AWhiteboardActor();
-
-    virtual void BeginPlay() override;
-    virtual void Tick(float DeltaTime) override;
     virtual void OnConstruction(const FTransform& Transform) override;
+    virtual void BeginPlay() override;
     virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
     // Components
@@ -123,7 +32,7 @@ public:
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
     UCameraComponent* WhiteboardCamera;
-
+    
     // Whiteboard properties
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Whiteboard")
     UTextureRenderTarget2D* DrawingCanvas;
@@ -193,6 +102,18 @@ public:
     UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_InteractingPawns, Category = "Interaction")
     TArray<class APawn*> InteractingPawns;
 
+    // Get Whiteboard Mesh
+    UFUNCTION(BlueprintPure, Category = "Whiteboard")
+    UStaticMeshComponent* GetWhiteboardMesh() const;
+
+    // Get Canvas Width
+    UFUNCTION(BlueprintPure, Category = "Whiteboard")
+    int32 GetCanvasWidth() const;
+
+    // Get Canvas Height
+    UFUNCTION(BlueprintPure, Category = "Whiteboard")
+    int32 GetCanvasHeight() const;
+    
     // Blueprint callable functions
     UFUNCTION(BlueprintCallable, Category = "Whiteboard")
     void SetCurrentTool(EDrawingTool NewTool);
@@ -211,10 +132,7 @@ public:
 
     UFUNCTION(BlueprintCallable, Category = "Whiteboard")
     bool IsPlayerInRange(APlayerController* PlayerController) const;
-
-    UFUNCTION(BlueprintCallable, Category = "Whiteboard")
-    FVector2D WorldToCanvasPosition(const FVector& WorldPosition) const;
-
+    
     UFUNCTION(BlueprintCallable, Category = "Whiteboard")
     void ClearWhiteboard();
 
@@ -243,10 +161,6 @@ public:
     // NEW: Enhanced text input functions
     UFUNCTION(BlueprintCallable, Category = "Whiteboard")
     void SetTextString(const FString& NewTextString);
-
-    // Server RPC for text string
-    UFUNCTION(Server, Reliable)
-    void Server_SetTextString(const FString& NewTextString);
     
     UFUNCTION(BlueprintCallable, Category = "Whiteboard")
     void AddText(const FVector2D& CanvasPosition, const FString& Text);
@@ -266,6 +180,11 @@ public:
 
     UFUNCTION(Server, Reliable)
     void Server_AddText(const FVector2D& CanvasPosition, const FString& Text, FLinearColor Color, float Size);
+
+    // Server RPC for text string
+    UFUNCTION(Server, Reliable)
+    void Server_SetTextString(const FString& NewTextString);
+    
 
     UFUNCTION(Server, Reliable)
     void Server_DrawFigure(const FVector2D& CanvasPosition, int32 SelectedFigureIndex, FLinearColor Color, float Size);
@@ -367,6 +286,9 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Whiteboard")
     void RemoveInteractingPlayer(APawn* Player);
 
+    UFUNCTION()
+    void SyncWhiteboardState(const TArray<FStroke>& History, int32 HistoryIndex);
+    
     // Client RPC to sync state for new clients
     UFUNCTION(Client, Reliable)
     void Client_SyncWhiteboardState(const TArray<FStroke>& History, int32 HistoryIndex);
@@ -378,10 +300,16 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Whiteboard") 
     void ClientStartDrawing(const FVector2D& CanvasPosition);
 
+    UFUNCTION()
+    void SetupInteractionUI(APawn* InteractingPlayer);
+    
     // NEW: Client RPC to handle UI and camera setup
     UFUNCTION(Client,Reliable)
     void Client_SetupInteractionUI(APawn* InteractingPlayer);
 
+    UFUNCTION()
+    void CleanupInteractionUI(APawn* InteractingPlayer);
+    
     UFUNCTION(Client, Reliable)
     void Client_CleanupInteractionUI(APawn* InteractingPlayer);
 
@@ -399,9 +327,16 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Whiteboard")
     bool CanInteractLocally(APawn* Player) const;
 
+    
+    UFUNCTION(BlueprintCallable, Category = "Whiteboard")
+    FVector2D WorldToCanvasPosition(const FVector& WorldPosition) const;
+    
     // NEW: Helper functions for shape tools
     UFUNCTION(BlueprintCallable, Category = "Whiteboard")
-    bool IsShapeTool(EDrawingTool Tool) const;
+    static bool IsShapeTool(EDrawingTool Tool);
+
+    UFUNCTION(BlueprintCallable, Category = "Whiteboard")
+    UCameraComponent* GetWhiteboardCamera() const;
 
 protected:
     UFUNCTION()

@@ -2,26 +2,19 @@
 
 #include "Controller/AWhiteboard_Player_Controller.h"
 
+#include "EngineUtils.h"
 #include "Actor/WhiteboardActor.h"
+#include "Camera/CameraComponent.h"
 #include "GameFramework/Pawn.h"
 #include "Engine/Engine.h"
+#include "GameFramework/PawnMovementComponent.h"
 
-// Interaction RPC Implementations
+// Server Start Interaction Function
 void AWhiteboardController::Server_RequestWhiteboardInteraction_Implementation(AWhiteboardActor* Whiteboard, APawn* InteractingPlayer)
 {
-    UE_LOG(LogTemp, Warning, TEXT("Server_RequestWhiteboardInteraction called for player: %s"), 
-           InteractingPlayer ? *InteractingPlayer->GetName() : TEXT("None"));
     
-    if (!Whiteboard || !InteractingPlayer)
+    if (!ValidateWhiteboardInteraction(Whiteboard, InteractingPlayer))
     {
-        UE_LOG(LogTemp, Error, TEXT("Invalid whiteboard or player in RPC"));
-        return;
-    }
-
-    // Validate that this player controller owns the requesting pawn
-    if (GetPawn() != InteractingPlayer)
-    {
-        UE_LOG(LogTemp, Error, TEXT("Player controller doesn't own the requesting pawn"));
         return;
     }
 
@@ -29,27 +22,21 @@ void AWhiteboardController::Server_RequestWhiteboardInteraction_Implementation(A
     Whiteboard->StartInteraction(InteractingPlayer);
 }
 
+// Server End Interaction Function
 void AWhiteboardController::Server_EndWhiteboardInteraction_Implementation(AWhiteboardActor* Whiteboard, APawn* InteractingPlayer)
 {
-    UE_LOG(LogTemp, Warning, TEXT("Server_EndWhiteboardInteraction called for player: %s"), 
-           InteractingPlayer ? *InteractingPlayer->GetName() : TEXT("None"));
+     
+
+    if (!ValidateWhiteboardInteraction(Whiteboard, InteractingPlayer))
+    {
+        return;
+    }
     
-    if (!Whiteboard || !InteractingPlayer)
-    {
-        UE_LOG(LogTemp, Error, TEXT("Invalid whiteboard or player in RPC"));
-        return;
-    }
-
-    // Validate that this player controller owns the requesting pawn
-    if (GetPawn() != InteractingPlayer)
-    {
-        UE_LOG(LogTemp, Error, TEXT("Player controller doesn't own the requesting pawn"));
-        return;
-    }
-
     // Call the whiteboard end interaction directly (server-side)
     Whiteboard->EndInteractionForPlayer(InteractingPlayer);
+    
 }
+
 
 // Drawing RPC Implementations - Route to Whiteboard
 void AWhiteboardController::Server_WhiteboardStartDrawing_Implementation(AWhiteboardActor* Whiteboard, const FVector2D& CanvasPosition, EDrawingTool Tool, FLinearColor Color, float Size, int32 BrushTextureIndex, int32 FigureTextureIndex)
@@ -67,6 +54,7 @@ void AWhiteboardController::Server_WhiteboardStartDrawing_Implementation(AWhiteb
         return;
     }
 
+    UE_LOG(LogTemp, Warning, TEXT("START SERVER DRAWING"));
     // Call the whiteboard function directly (we're on server now)
     Whiteboard->Server_StartDrawing_Implementation(CanvasPosition, Tool, Color, Size, BrushTextureIndex, FigureTextureIndex);
 }
@@ -195,41 +183,110 @@ void AWhiteboardController::SetupWhiteboardInputMode(APawn* InteractingPlayer)
     InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
     InputMode.SetHideCursorDuringCapture(false);
     SetInputMode(InputMode);
-
-    FViewTargetTransitionParams Param;
-    Param.BlendFunction = VTBlend_Cubic;
-    Param.BlendTime = 1.5f;
-    Param.BlendExp = 2.0f;
-    Param.bLockOutgoing = true;
-            
-    SetViewTarget(this, Param);
+    
+    AWhiteboardActor* WhiteboardActor = nullptr;
+    for (TActorIterator<AWhiteboardActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+    {
+        AWhiteboardActor* CurrentWhiteboard = *ActorItr;
+        if (CurrentWhiteboard && CurrentWhiteboard->IsPlayerInteracting(InteractingPlayer))
+        {
+            WhiteboardActor = CurrentWhiteboard;
+            break;
+        }
+    }
+    
+    if (WhiteboardActor && WhiteboardActor->GetWhiteboardCamera())
+    {
+        // Smooth camera transition to whiteboard camera
+        FViewTargetTransitionParams Param;
+        Param.BlendFunction = VTBlend_Cubic;
+        Param.BlendTime = 1.5f;
+        Param.BlendExp = 2.0f;
+        Param.bLockOutgoing = true;
+        
+        SetViewTarget(WhiteboardActor->GetWhiteboardCamera()->GetOwner(), Param);
+        UE_LOG(LogTemp, Warning, TEXT("Set view target to whiteboard camera"));
+    }
+    else
+    {
+        UE_LOG(LogTemp, Error, TEXT("Could not find whiteboard camera for interaction"));
+    }
+    
     
     bShowMouseCursor = true;
     bEnableClickEvents = true;
     bEnableMouseOverEvents = true;
+    
+    OriginalInputComponent = InteractingPlayer->InputComponent;
 
-    InteractingPlayer->DisableInput(this);
+    // Only disable movement input, not all input
+    if (UPawnMovementComponent* MovementComp = InteractingPlayer->GetMovementComponent())
+    {
+        MovementComp->SetActive(false);
+    }
     
     UE_LOG(LogTemp, Warning, TEXT("Whiteboard input mode set - Cursor: %s"), 
            bShowMouseCursor ? TEXT("Visible") : TEXT("Hidden"));
     
 }
 
+// Restore Game Input Mode
 void AWhiteboardController::RestoreGameInputMode(APawn* InteractingPlayer)
 {
+    AWhiteboardActor* WhiteboardActor = nullptr;
+    for (TActorIterator<AWhiteboardActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+    {
+        AWhiteboardActor* CurrentWhiteboard = *ActorItr;
+        if (CurrentWhiteboard)
+        {
+            WhiteboardActor = CurrentWhiteboard;
+            break;
+        }
+    }
+
     // Restore normal game input mode
     FInputModeGameOnly InputMode;
     SetInputMode(InputMode);
 
     // Switch back to player camera
-    SetViewTarget(InteractingPlayer);
+    if (InteractingPlayer)
+    {
+        SetViewTarget(InteractingPlayer);
+        
+        if (UPawnMovementComponent* MovementComp = InteractingPlayer->GetMovementComponent())
+        {
+            MovementComp->SetActive(true);
+        }
+        
+    }
+    
     bShowMouseCursor = false;
     bEnableClickEvents = false;
     bEnableMouseOverEvents = false;
-
-    // Re-enable player movement
-    InteractingPlayer->EnableInput(this);
     
-    UE_LOG(LogTemp, Warning, TEXT("Game input mode restored"));
-   
+    OriginalInputComponent = nullptr;
+    
+    OnPlayerLeftInteraction(InteractingPlayer, WhiteboardActor);
+}
+
+void AWhiteboardController::Client_CleanupInteractionUI_Implementation(APawn* InteractingPlayer)
+{
+    // Restore game input mode on the client
+    RestoreGameInputMode(InteractingPlayer);
+}
+
+bool AWhiteboardController::ValidateWhiteboardInteraction(AWhiteboardActor* Whiteboard, APawn* InteractingPlayer) const
+{
+    if (!Whiteboard || !InteractingPlayer)
+    {
+        return false;
+    }
+
+    // Validate that this player controller owns the requesting pawn
+    if (GetPawn() != InteractingPlayer)
+    {
+        return false;
+    }
+
+    return true;
 }

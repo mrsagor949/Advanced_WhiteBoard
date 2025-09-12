@@ -214,7 +214,7 @@ struct Z_Construct_UFunction_UWhiteboardUI_OnToolChanged_Statics
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
 const UECodeGen_Private::FBytePropertyParams Z_Construct_UFunction_UWhiteboardUI_OnToolChanged_Statics::NewProp_NewTool_Underlying = { "UnderlyingType", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, nullptr, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FEnumPropertyParams Z_Construct_UFunction_UWhiteboardUI_OnToolChanged_Statics::NewProp_NewTool = { "NewTool", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardUI_eventOnToolChanged_Parms, NewTool), Z_Construct_UEnum_AdvancedDrawingBoard_EDrawingTool, METADATA_PARAMS(0, nullptr) }; // 3667291816
+const UECodeGen_Private::FEnumPropertyParams Z_Construct_UFunction_UWhiteboardUI_OnToolChanged_Statics::NewProp_NewTool = { "NewTool", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardUI_eventOnToolChanged_Parms, NewTool), Z_Construct_UEnum_AdvancedDrawingBoard_EDrawingTool, METADATA_PARAMS(0, nullptr) }; // 3146191471
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UWhiteboardUI_OnToolChanged_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UWhiteboardUI_OnToolChanged_Statics::NewProp_NewTool_Underlying,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UWhiteboardUI_OnToolChanged_Statics::NewProp_NewTool,
@@ -417,7 +417,7 @@ struct Z_Construct_UFunction_UWhiteboardUI_SetDrawingTool_Statics
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
 const UECodeGen_Private::FBytePropertyParams Z_Construct_UFunction_UWhiteboardUI_SetDrawingTool_Statics::NewProp_Tool_Underlying = { "UnderlyingType", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, nullptr, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FEnumPropertyParams Z_Construct_UFunction_UWhiteboardUI_SetDrawingTool_Statics::NewProp_Tool = { "Tool", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardUI_eventSetDrawingTool_Parms, Tool), Z_Construct_UEnum_AdvancedDrawingBoard_EDrawingTool, METADATA_PARAMS(0, nullptr) }; // 3667291816
+const UECodeGen_Private::FEnumPropertyParams Z_Construct_UFunction_UWhiteboardUI_SetDrawingTool_Statics::NewProp_Tool = { "Tool", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardUI_eventSetDrawingTool_Parms, Tool), Z_Construct_UEnum_AdvancedDrawingBoard_EDrawingTool, METADATA_PARAMS(0, nullptr) }; // 3146191471
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UWhiteboardUI_SetDrawingTool_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UWhiteboardUI_SetDrawingTool_Statics::NewProp_Tool_Underlying,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UWhiteboardUI_SetDrawingTool_Statics::NewProp_Tool,
@@ -611,12 +611,12 @@ struct Z_Construct_UClass_UWhiteboardUI_Statics
 		{ &Z_Construct_UFunction_UWhiteboardUI_ClearWhiteboard, "ClearWhiteboard" }, // 4260004552
 		{ &Z_Construct_UFunction_UWhiteboardUI_ExportToPNG, "ExportToPNG" }, // 2813775823
 		{ &Z_Construct_UFunction_UWhiteboardUI_ExportToSVG, "ExportToSVG" }, // 1647900101
-		{ &Z_Construct_UFunction_UWhiteboardUI_OnToolChanged, "OnToolChanged" }, // 2609853752
+		{ &Z_Construct_UFunction_UWhiteboardUI_OnToolChanged, "OnToolChanged" }, // 643959748
 		{ &Z_Construct_UFunction_UWhiteboardUI_Redo, "Redo" }, // 2284434020
 		{ &Z_Construct_UFunction_UWhiteboardUI_SetBrushSize, "SetBrushSize" }, // 952893323
 		{ &Z_Construct_UFunction_UWhiteboardUI_SetBrushTexture, "SetBrushTexture" }, // 850417578
 		{ &Z_Construct_UFunction_UWhiteboardUI_SetDrawingColor, "SetDrawingColor" }, // 3878849303
-		{ &Z_Construct_UFunction_UWhiteboardUI_SetDrawingTool, "SetDrawingTool" }, // 2512525577
+		{ &Z_Construct_UFunction_UWhiteboardUI_SetDrawingTool, "SetDrawingTool" }, // 2453677908
 		{ &Z_Construct_UFunction_UWhiteboardUI_SetFigureTexture, "SetFigureTexture" }, // 2245247652
 		{ &Z_Construct_UFunction_UWhiteboardUI_SetText, "SetText" }, // 845294252
 		{ &Z_Construct_UFunction_UWhiteboardUI_Undo, "Undo" }, // 2012774760
@@ -673,10 +673,10 @@ UWhiteboardUI::~UWhiteboardUI() {}
 struct Z_CompiledInDeferFile_FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_UI_WhiteboardUI_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UWhiteboardUI, UWhiteboardUI::StaticClass, TEXT("UWhiteboardUI"), &Z_Registration_Info_UClass_UWhiteboardUI, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UWhiteboardUI), 1602359926U) },
+		{ Z_Construct_UClass_UWhiteboardUI, UWhiteboardUI::StaticClass, TEXT("UWhiteboardUI"), &Z_Registration_Info_UClass_UWhiteboardUI, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UWhiteboardUI), 3983347771U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_UI_WhiteboardUI_h_2666929945(TEXT("/Script/AdvancedDrawingBoard"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_UI_WhiteboardUI_h_4227666512(TEXT("/Script/AdvancedDrawingBoard"),
 	Z_CompiledInDeferFile_FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_UI_WhiteboardUI_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_UI_WhiteboardUI_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

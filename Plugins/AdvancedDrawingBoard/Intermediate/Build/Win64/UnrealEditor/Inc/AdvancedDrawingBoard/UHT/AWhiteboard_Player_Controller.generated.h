@@ -35,6 +35,7 @@ struct FLinearColor;
 	virtual void Server_WhiteboardStartDrawing_Implementation(AWhiteboardActor* Whiteboard, FVector2D const& CanvasPosition, EDrawingTool Tool, FLinearColor Color, float Size, int32 BrushTextureIndex, int32 FigureTextureIndex); \
 	virtual void Server_EndWhiteboardInteraction_Implementation(AWhiteboardActor* Whiteboard, APawn* InteractingPlayer); \
 	virtual void Server_RequestWhiteboardInteraction_Implementation(AWhiteboardActor* Whiteboard, APawn* InteractingPlayer); \
+	virtual void Client_CleanupInteractionUI_Implementation(APawn* InteractingPlayer); \
 	DECLARE_FUNCTION(execServer_WhiteboardSetTextString); \
 	DECLARE_FUNCTION(execServer_WhiteboardSetFigureTexture); \
 	DECLARE_FUNCTION(execServer_WhiteboardSetBrushTexture); \
@@ -51,6 +52,7 @@ struct FLinearColor;
 	DECLARE_FUNCTION(execServer_WhiteboardStartDrawing); \
 	DECLARE_FUNCTION(execServer_EndWhiteboardInteraction); \
 	DECLARE_FUNCTION(execServer_RequestWhiteboardInteraction); \
+	DECLARE_FUNCTION(execClient_CleanupInteractionUI); \
 	DECLARE_FUNCTION(execRestoreGameInputMode); \
 	DECLARE_FUNCTION(execSetupWhiteboardInputMode);
 

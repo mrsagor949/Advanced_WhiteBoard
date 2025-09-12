@@ -11,6 +11,7 @@
     <None Include="..\..\Source\Advanced_WhiteBoardEditor.Target.cs">
       <Filter>Source</Filter>
     </None>
+    <None Include="..\..\.gitignore" />
     <None Include="..\..\.vsconfig" />
     <None Include="..\..\Ball.png" />
     <None Include="..\..\ballvalve.png" />
@@ -101,6 +102,12 @@
     </Filter>
     <ClCompile Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\Controller\AWhiteboard_Player_Controller.h">
       <Filter>Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\Controller</Filter>
+    </ClCompile>
+    <Filter Include="Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\Library">
+      <UniqueIdentifier>{D74E8570-6D26-3D4E-A1A1-A19805B6750F}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\Library\WhiteboardTypes.h">
+      <Filter>Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\Library</Filter>
     </ClCompile>
     <Filter Include="Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\UI">
       <UniqueIdentifier>{E6A076D2-6222-3A93-BD9C-6B18177FB590}</UniqueIdentifier>

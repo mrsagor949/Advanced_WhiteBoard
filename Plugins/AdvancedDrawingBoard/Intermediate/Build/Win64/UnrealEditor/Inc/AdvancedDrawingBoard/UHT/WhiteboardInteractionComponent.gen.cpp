@@ -449,7 +449,7 @@ struct Z_Construct_UFunction_UWhiteboardInteractionComponent_SetDrawingTool_Stat
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
 const UECodeGen_Private::FBytePropertyParams Z_Construct_UFunction_UWhiteboardInteractionComponent_SetDrawingTool_Statics::NewProp_Tool_Underlying = { "UnderlyingType", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, nullptr, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FEnumPropertyParams Z_Construct_UFunction_UWhiteboardInteractionComponent_SetDrawingTool_Statics::NewProp_Tool = { "Tool", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardInteractionComponent_eventSetDrawingTool_Parms, Tool), Z_Construct_UEnum_AdvancedDrawingBoard_EDrawingTool, METADATA_PARAMS(0, nullptr) }; // 3667291816
+const UECodeGen_Private::FEnumPropertyParams Z_Construct_UFunction_UWhiteboardInteractionComponent_SetDrawingTool_Statics::NewProp_Tool = { "Tool", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardInteractionComponent_eventSetDrawingTool_Parms, Tool), Z_Construct_UEnum_AdvancedDrawingBoard_EDrawingTool, METADATA_PARAMS(0, nullptr) }; // 3146191471
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UWhiteboardInteractionComponent_SetDrawingTool_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UWhiteboardInteractionComponent_SetDrawingTool_Statics::NewProp_Tool_Underlying,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UWhiteboardInteractionComponent_SetDrawingTool_Statics::NewProp_Tool,
@@ -475,36 +475,6 @@ DEFINE_FUNCTION(UWhiteboardInteractionComponent::execSetDrawingTool)
 	P_NATIVE_END;
 }
 // End Class UWhiteboardInteractionComponent Function SetDrawingTool
-
-// Begin Class UWhiteboardInteractionComponent Function StartDrawing
-struct Z_Construct_UFunction_UWhiteboardInteractionComponent_StartDrawing_Statics
-{
-#if WITH_METADATA
-	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "Whiteboard" },
-		{ "ModuleRelativePath", "Public/Components/WhiteboardInteractionComponent.h" },
-	};
-#endif // WITH_METADATA
-	static const UECodeGen_Private::FFunctionParams FuncParams;
-};
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UWhiteboardInteractionComponent_StartDrawing_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UWhiteboardInteractionComponent, nullptr, "StartDrawing", nullptr, nullptr, nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UWhiteboardInteractionComponent_StartDrawing_Statics::Function_MetaDataParams), Z_Construct_UFunction_UWhiteboardInteractionComponent_StartDrawing_Statics::Function_MetaDataParams) };
-UFunction* Z_Construct_UFunction_UWhiteboardInteractionComponent_StartDrawing()
-{
-	static UFunction* ReturnFunction = nullptr;
-	if (!ReturnFunction)
-	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UWhiteboardInteractionComponent_StartDrawing_Statics::FuncParams);
-	}
-	return ReturnFunction;
-}
-DEFINE_FUNCTION(UWhiteboardInteractionComponent::execStartDrawing)
-{
-	P_FINISH;
-	P_NATIVE_BEGIN;
-	P_THIS->StartDrawing();
-	P_NATIVE_END;
-}
-// End Class UWhiteboardInteractionComponent Function StartDrawing
 
 // Begin Class UWhiteboardInteractionComponent Function StartDrawingInput
 struct Z_Construct_UFunction_UWhiteboardInteractionComponent_StartDrawingInput_Statics
@@ -535,36 +505,6 @@ DEFINE_FUNCTION(UWhiteboardInteractionComponent::execStartDrawingInput)
 	P_NATIVE_END;
 }
 // End Class UWhiteboardInteractionComponent Function StartDrawingInput
-
-// Begin Class UWhiteboardInteractionComponent Function StopDrawing
-struct Z_Construct_UFunction_UWhiteboardInteractionComponent_StopDrawing_Statics
-{
-#if WITH_METADATA
-	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "Whiteboard" },
-		{ "ModuleRelativePath", "Public/Components/WhiteboardInteractionComponent.h" },
-	};
-#endif // WITH_METADATA
-	static const UECodeGen_Private::FFunctionParams FuncParams;
-};
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UWhiteboardInteractionComponent_StopDrawing_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UWhiteboardInteractionComponent, nullptr, "StopDrawing", nullptr, nullptr, nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UWhiteboardInteractionComponent_StopDrawing_Statics::Function_MetaDataParams), Z_Construct_UFunction_UWhiteboardInteractionComponent_StopDrawing_Statics::Function_MetaDataParams) };
-UFunction* Z_Construct_UFunction_UWhiteboardInteractionComponent_StopDrawing()
-{
-	static UFunction* ReturnFunction = nullptr;
-	if (!ReturnFunction)
-	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UWhiteboardInteractionComponent_StopDrawing_Statics::FuncParams);
-	}
-	return ReturnFunction;
-}
-DEFINE_FUNCTION(UWhiteboardInteractionComponent::execStopDrawing)
-{
-	P_FINISH;
-	P_NATIVE_BEGIN;
-	P_THIS->StopDrawing();
-	P_NATIVE_END;
-}
-// End Class UWhiteboardInteractionComponent Function StopDrawing
 
 // Begin Class UWhiteboardInteractionComponent Function StopDrawingInput
 struct Z_Construct_UFunction_UWhiteboardInteractionComponent_StopDrawingInput_Statics
@@ -678,9 +618,7 @@ void UWhiteboardInteractionComponent::StaticRegisterNativesUWhiteboardInteractio
 		{ "SetBrushSize", &UWhiteboardInteractionComponent::execSetBrushSize },
 		{ "SetDrawingColor", &UWhiteboardInteractionComponent::execSetDrawingColor },
 		{ "SetDrawingTool", &UWhiteboardInteractionComponent::execSetDrawingTool },
-		{ "StartDrawing", &UWhiteboardInteractionComponent::execStartDrawing },
 		{ "StartDrawingInput", &UWhiteboardInteractionComponent::execStartDrawingInput },
-		{ "StopDrawing", &UWhiteboardInteractionComponent::execStopDrawing },
 		{ "StopDrawingInput", &UWhiteboardInteractionComponent::execStopDrawingInput },
 		{ "TryToInteract", &UWhiteboardInteractionComponent::execTryToInteract },
 		{ "Undo", &UWhiteboardInteractionComponent::execUndo },
@@ -778,10 +716,8 @@ struct Z_Construct_UClass_UWhiteboardInteractionComponent_Statics
 		{ &Z_Construct_UFunction_UWhiteboardInteractionComponent_Redo, "Redo" }, // 1460775434
 		{ &Z_Construct_UFunction_UWhiteboardInteractionComponent_SetBrushSize, "SetBrushSize" }, // 3432146211
 		{ &Z_Construct_UFunction_UWhiteboardInteractionComponent_SetDrawingColor, "SetDrawingColor" }, // 1068952987
-		{ &Z_Construct_UFunction_UWhiteboardInteractionComponent_SetDrawingTool, "SetDrawingTool" }, // 2946361440
-		{ &Z_Construct_UFunction_UWhiteboardInteractionComponent_StartDrawing, "StartDrawing" }, // 3810015378
+		{ &Z_Construct_UFunction_UWhiteboardInteractionComponent_SetDrawingTool, "SetDrawingTool" }, // 3373670601
 		{ &Z_Construct_UFunction_UWhiteboardInteractionComponent_StartDrawingInput, "StartDrawingInput" }, // 2118732953
-		{ &Z_Construct_UFunction_UWhiteboardInteractionComponent_StopDrawing, "StopDrawing" }, // 944808617
 		{ &Z_Construct_UFunction_UWhiteboardInteractionComponent_StopDrawingInput, "StopDrawingInput" }, // 2685752581
 		{ &Z_Construct_UFunction_UWhiteboardInteractionComponent_TryToInteract, "TryToInteract" }, // 4226182902
 		{ &Z_Construct_UFunction_UWhiteboardInteractionComponent_Undo, "Undo" }, // 1950969617
@@ -859,10 +795,10 @@ UWhiteboardInteractionComponent::~UWhiteboardInteractionComponent() {}
 struct Z_CompiledInDeferFile_FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Components_WhiteboardInteractionComponent_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UWhiteboardInteractionComponent, UWhiteboardInteractionComponent::StaticClass, TEXT("UWhiteboardInteractionComponent"), &Z_Registration_Info_UClass_UWhiteboardInteractionComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UWhiteboardInteractionComponent), 1738776544U) },
+		{ Z_Construct_UClass_UWhiteboardInteractionComponent, UWhiteboardInteractionComponent::StaticClass, TEXT("UWhiteboardInteractionComponent"), &Z_Registration_Info_UClass_UWhiteboardInteractionComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UWhiteboardInteractionComponent), 2157334299U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Components_WhiteboardInteractionComponent_h_1549409503(TEXT("/Script/AdvancedDrawingBoard"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Components_WhiteboardInteractionComponent_h_1588248928(TEXT("/Script/AdvancedDrawingBoard"),
 	Z_CompiledInDeferFile_FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Components_WhiteboardInteractionComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Components_WhiteboardInteractionComponent_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

@@ -6,9 +6,11 @@
 #include "GameFramework/PlayerController.h"
 #include "Engine/World.h"
 #include "DrawDebugHelpers.h"
+#include "Blueprint/WidgetLayoutLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "Engine/Engine.h"
 
+// Set Default Value
 UWhiteboardInteractionComponent::UWhiteboardInteractionComponent()
 {
     PrimaryComponentTick.bCanEverTick = true;
@@ -17,6 +19,7 @@ UWhiteboardInteractionComponent::UWhiteboardInteractionComponent()
     LastDrawingUpdateTime = 0.0f;
 }
 
+// Begin Play
 void UWhiteboardInteractionComponent::BeginPlay()
 {
     Super::BeginPlay();
@@ -28,6 +31,7 @@ void UWhiteboardInteractionComponent::BeginPlay()
     }
 }
 
+// Tick Component
 void UWhiteboardInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
     Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
@@ -41,79 +45,75 @@ void UWhiteboardInteractionComponent::TickComponent(float DeltaTime, ELevelTick 
     // Handle continuous drawing
     if (bIsDrawing && bContinuousDrawing && TargetWhiteboard)
     {
-        float CurrentTime = GetWorld()->GetTimeSeconds();
-        if (CurrentTime - LastDrawingUpdateTime >= DrawingUpdateInterval)
+        if (const float CurrentTime = GetWorld()->GetTimeSeconds(); CurrentTime - LastDrawingUpdateTime >= DrawingUpdateInterval)
         {
-            ContinueDrawing();
             LastDrawingUpdateTime = CurrentTime;
         }
     }
 }
 
+
+// Try to Interact If player Is Interaction the Call the End Interaction
 void UWhiteboardInteractionComponent::TryToInteract()
 {
-    UE_LOG(LogTemp, Warning, TEXT("TryToInteract called - Role: %d"), OwnerPawn ? OwnerPawn->GetLocalRole() : 0);
-    
     if (!TargetWhiteboard)
     {
-        UE_LOG(LogTemp, Error, TEXT("No target whiteboard found!"));
         FindNearestWhiteboard();
         return;
     }
+
     
     if (!OwnerPawn)
     {
-        UE_LOG(LogTemp, Error, TEXT("No owner pawn!"));
         return;
     }
     
-    // Check if player is already interacting
-    if (TargetWhiteboard->IsPlayerInteracting(OwnerPawn))
+    if(TargetWhiteboard->IsPlayerInteracting(OwnerPawn))
     {
-        UE_LOG(LogTemp, Warning, TEXT("Player is already interacting with whiteboard"));
-        return;
+            // Stop any ongoing drawing
+            if (bIsDrawing)
+            {
+                StopDrawingInput();
+            }
+
+       
+            // Use PlayerController RPC
+            if (AWhiteboardController* PC = GetWhiteboardPlayerController())
+            {
+               PC->Server_EndWhiteboardInteraction(TargetWhiteboard, OwnerPawn);
+            }
+          
     }
-    
+    else
+    {
+        
+        
     // Check if we can interact locally (client-side prediction)
     if (!TargetWhiteboard->CanPlayerInteract(OwnerPawn))
     {
-        UE_LOG(LogTemp, Warning, TEXT("Cannot interact - validation failed"));
         return;
     }
+
     
-    UE_LOG(LogTemp, Warning, TEXT("Requesting interaction with whiteboard (Current players: %d/%d)"), 
-           TargetWhiteboard->GetInteractingPlayerCount(), TargetWhiteboard->MaxInteractingPlayers);
-    
-    // Use the new request system instead of direct StartInteraction
-    TargetWhiteboard->RequestInteraction(OwnerPawn);
+    // Use PlayerController RPC for proper ownership validation
+    if (AWhiteboardController* PC = GetWhiteboardPlayerController())
+    {
+        PC->Server_RequestWhiteboardInteraction(TargetWhiteboard, OwnerPawn);
+    }
+    }
 }
 
+
+// Start Drawing Input
 void UWhiteboardInteractionComponent::StartDrawingInput()
 {
-    UE_LOG(LogTemp, Warning, TEXT("StartDrawingInput called"));
+    UE_LOG(LogTemp, Warning, TEXT("Starting drawing"));
     
-    AWhiteboardActor* CurrentWhiteboard = GetCurrentWhiteboard();
-    if (!CurrentWhiteboard)
+    if (!TargetWhiteboard || !IsInRangeOfWhiteboard())
     {
-        UE_LOG(LogTemp, Error, TEXT("No current whiteboard available for drawing!"));
         return;
     }
     
-    if (!OwnerPawn)
-    {
-        UE_LOG(LogTemp, Error, TEXT("No owner pawn!"));
-        return;
-    }
-    
-    // Debug network state
-    CurrentWhiteboard->DebugNetworkState();
-    
-    // Check if we can draw using the multi-player method
-    if (!CurrentWhiteboard->CanClientDraw())
-    {
-        UE_LOG(LogTemp, Warning, TEXT("Cannot draw - player not in interacting list"));
-        return;
-    }
     
     FVector2D CanvasPosition;
     if (GetCurrentDrawingPosition(CanvasPosition))
@@ -126,14 +126,12 @@ void UWhiteboardInteractionComponent::StartDrawingInput()
         LastDrawingUpdateTime = GetWorld()->GetTimeSeconds();
         
         // Use the client-specific drawing function
-        CurrentWhiteboard->ClientStartDrawing(CanvasPosition);
+        TargetWhiteboard->ClientStartDrawing(CanvasPosition);
     }
-    else
-    {
-        UE_LOG(LogTemp, Error, TEXT("Could not get drawing position"));
-    }
+    
 }
 
+// Continue Drawing
 void UWhiteboardInteractionComponent::ContinueDrawing()
 {
     if (!bIsDrawing || !TargetWhiteboard)
@@ -154,6 +152,7 @@ void UWhiteboardInteractionComponent::ContinueDrawing()
     }
 }
 
+// Stop Drawing Input
 void UWhiteboardInteractionComponent::StopDrawingInput()
 {
     UE_LOG(LogTemp, Warning, TEXT("StopDrawingInput called"));
@@ -167,6 +166,7 @@ void UWhiteboardInteractionComponent::StopDrawingInput()
         TargetWhiteboard->ClientEndDrawing();
     }
 }
+
 
 void UWhiteboardInteractionComponent::EndInteraction()
 {
@@ -190,43 +190,10 @@ bool UWhiteboardInteractionComponent::IsInRangeOfWhiteboard()
         return false;
     }
 
-    float Distance = FVector::Distance(OwnerPawn->GetActorLocation(), TargetWhiteboard->GetActorLocation());
-    bool bInRange = Distance <= InteractionDistance;
-    
-    UE_LOG(LogTemp, Log, TEXT("IsInRangeOfWhiteboard - Distance: %f, InRange: %s"), 
-           Distance, bInRange ? TEXT("True") : TEXT("False"));
+    const float Distance = FVector::Distance(OwnerPawn->GetActorLocation(), TargetWhiteboard->GetActorLocation());
+    const bool bInRange = Distance <= InteractionDistance;
     
     return bInRange;
-}
-
-void UWhiteboardInteractionComponent::StartDrawing()
-{
-    if (!TargetWhiteboard || !IsInRangeOfWhiteboard())
-    {
-        return;
-    }
-
-    FVector2D CanvasPosition;
-    if (GetCurrentDrawingPosition(CanvasPosition))
-    {
-        bIsDrawing = true;
-        bHasValidLastPosition = true;
-        LastDrawingPosition = CanvasPosition;
-        
-        TargetWhiteboard->StartDrawing(CanvasPosition);
-    }
-}
-
-void UWhiteboardInteractionComponent::StopDrawing()
-{
-    if (!TargetWhiteboard || !bIsDrawing)
-    {
-        return;
-    }
-
-    bIsDrawing = false;
-    bHasValidLastPosition = false;
-    TargetWhiteboard->EndDrawing();
 }
 
 void UWhiteboardInteractionComponent::SetDrawingTool(EDrawingTool Tool)
@@ -296,9 +263,10 @@ void UWhiteboardInteractionComponent::ExportToSVG(const FString& FilePath)
 bool UWhiteboardInteractionComponent::GetCurrentDrawingPosition(FVector2D& OutCanvasPosition)
 {
     FVector WorldPosition;
-    return GetMouseWorldPosition(WorldPosition, OutCanvasPosition);
+    return GetMouseWorldPositionDPIAware(WorldPosition, OutCanvasPosition);
 }
 
+// Find The Nearest Whiteboard
 void UWhiteboardInteractionComponent::FindNearestWhiteboard()
 {
     TArray<AActor*> FoundWhiteboards;
@@ -319,10 +287,9 @@ void UWhiteboardInteractionComponent::FindNearestWhiteboard()
 
     for (AActor* Actor : FoundWhiteboards)
     {
-        AWhiteboardActor* Whiteboard = Cast<AWhiteboardActor>(Actor);
-        if (Whiteboard)
+        if (AWhiteboardActor* Whiteboard = Cast<AWhiteboardActor>(Actor))
         {
-            float Distance = FVector::Distance(OwnerPawn->GetActorLocation(), Whiteboard->GetActorLocation());
+            const float Distance = FVector::Distance(OwnerPawn->GetActorLocation(), Whiteboard->GetActorLocation());
             if (Distance < ClosestDistance && Distance <= InteractionDistance)
             {
                 ClosestDistance = Distance;
@@ -337,14 +304,15 @@ void UWhiteboardInteractionComponent::FindNearestWhiteboard()
     }
 }
 
-FVector UWhiteboardInteractionComponent::GetDrawingPosition()
+
+FVector UWhiteboardInteractionComponent::GetDrawingPosition() const
 {
     if (!OwnerPawn)
     {
         return FVector::ZeroVector;
     }
 
-    APlayerController* PlayerController = Cast<APlayerController>(OwnerPawn->GetController());
+    const APlayerController* PlayerController = Cast<APlayerController>(OwnerPawn->GetController());
     if (!PlayerController)
     {
         return FVector::ZeroVector;
@@ -377,95 +345,47 @@ bool UWhiteboardInteractionComponent::GetMouseWorldPosition(FVector& OutWorldPos
 { 
     if (!TargetWhiteboard || !OwnerPawn) 
     {
-        UE_LOG(LogTemp, Error, TEXT("GetMouseWorldPosition - Missing whiteboard or pawn"));
         return false;
     }
     
     APlayerController* PC = Cast<APlayerController>(OwnerPawn->GetController());
     if (!PC) 
     {
-        UE_LOG(LogTemp, Error, TEXT("GetMouseWorldPosition - No player controller"));
         return false;
     }
 
     // Get mouse position
     float MouseX, MouseY;
-    PC->GetMousePosition(MouseX, MouseY);
+    if (!PC->GetMousePosition(MouseX, MouseY))
+    {
+        return false;
+    }
 
     // Convert mouse position to world ray
     FVector WorldLocation, WorldDirection;
     if (!PC->DeprojectScreenPositionToWorld(MouseX, MouseY, WorldLocation, WorldDirection))
     {
-        UE_LOG(LogTemp, Error, TEXT("GetMouseWorldPosition - Failed to deproject screen position"));
         return false;
     }
 
-    // Perform line trace to hit the whiteboard
-    FHitResult HitResult;
-    FVector TraceStart = WorldLocation;
-    FVector TraceEnd = WorldLocation + (WorldDirection * 10000.0f);
-
-    FCollisionQueryParams QueryParams;
-    QueryParams.AddIgnoredActor(OwnerPawn);
-    QueryParams.bTraceComplex = true;
-
-    // Draw debug line to see the trace
-   // DrawDebugLine(GetWorld(), TraceStart, TraceEnd, FColor::Green, false, 0.1f, 0, 1.0f);
-
-    if (GetWorld()->LineTraceSingleByChannel(HitResult, TraceStart, TraceEnd, ECC_Visibility, QueryParams))
+    // Calculate the plane of the whiteboard
+    FVector WhiteboardLocation = TargetWhiteboard->GetActorLocation();
+    FVector WhiteboardNormal = TargetWhiteboard->GetActorForwardVector() * -1.0f; // Face normal
+    
+    // Calculate intersection with whiteboard plane
+    FVector IntersectionPoint;
+    if (!FMath::SegmentPlaneIntersection(WorldLocation, WorldLocation + WorldDirection * 10000.0f, 
+                                        FPlane(WhiteboardLocation, WhiteboardNormal), IntersectionPoint))
     {
-        // Draw debug sphere at hit location
-       // DrawDebugSphere(GetWorld(), HitResult.Location, 5.0f, 12, FColor::Red, false, 0.1f, 0, 1.0f);
-        
-        // Check if we hit our whiteboard
-        if (HitResult.GetActor() == TargetWhiteboard)
-        {
-            OutWorldPosition = HitResult.Location;
-            OutCanvasPosition = WorldToCanvasPosition(OutWorldPosition);
-            
-            UE_LOG(LogTemp, Log, TEXT("Hit whiteboard at world pos: %s, canvas pos: %s"), 
-                   *OutWorldPosition.ToString(), *OutCanvasPosition.ToString());
-            return true;
-        }
-        else
-        {
-            UE_LOG(LogTemp, Warning, TEXT("Hit actor: %s (not whiteboard)"), 
-                   HitResult.GetActor() ? *HitResult.GetActor()->GetName() : TEXT("None"));
-        }
-    }
-    else
-    {
-        UE_LOG(LogTemp, Warning, TEXT("No hit result from line trace"));
+        return false;
     }
 
-    return false;
+    OutWorldPosition = IntersectionPoint;
+    OutCanvasPosition =TargetWhiteboard->WorldToCanvasPosition(IntersectionPoint);
+    
+    return true;
 }
 
-FVector2D UWhiteboardInteractionComponent::WorldToCanvasPosition(const FVector& WorldPosition)
-{
-    if (!TargetWhiteboard) 
-    {
-        return FVector2D::ZeroVector;
-    }
-    
-    // Convert world position to local position relative to whiteboard
-    FVector LocalPosition = GetWhiteboardLocalPosition(WorldPosition);
-    
-    // Convert local position to UV coordinates (0-1 range)
-    float U = (LocalPosition.Y + TargetWhiteboard->WhiteboardWidth * 0.5f) / TargetWhiteboard->WhiteboardWidth;
-    float V = (-LocalPosition.Z + TargetWhiteboard->WhiteboardHeight * 0.5f) / TargetWhiteboard->WhiteboardHeight;
-    
-    // Clamp UV coordinates
-    U = FMath::Clamp(U, 0.0f, 1.0f);
-    V = FMath::Clamp(V, 0.0f, 1.0f);
-    
-    // Convert UV to canvas pixel coordinates
-    FVector2D CanvasPosition;
-    CanvasPosition.X = U * TargetWhiteboard->CanvasWidth;
-    CanvasPosition.Y = V * TargetWhiteboard->CanvasHeight;
-    
-    return CanvasPosition;
-}
 
 FVector UWhiteboardInteractionComponent::GetWhiteboardLocalPosition(const FVector& WorldPosition)
 {
@@ -481,6 +401,93 @@ FVector UWhiteboardInteractionComponent::GetWhiteboardLocalPosition(const FVecto
     return LocalPosition;
 }
 
+bool UWhiteboardInteractionComponent::GetMouseWorldPositionDPIAware(FVector& OutWorldPosition, FVector2D& OutCanvasPosition)
+{
+    if (!TargetWhiteboard || !OwnerPawn) 
+    {
+        return false;
+    }
+    
+    APlayerController* PC = Cast<APlayerController>(OwnerPawn->GetController());
+    if (!PC) 
+    {
+        return false;
+    }
+
+    // Get mouse position
+    float MouseX, MouseY;
+    if (!PC->GetMousePosition(MouseX, MouseY))
+    {
+        return false;
+    }
+    
+    // Get viewport size and DPI scale
+    FVector2D ViewportSize = FVector2D(1, 1);
+    if (GEngine && GEngine->GameViewport)
+    {
+        GEngine->GameViewport->GetViewportSize(ViewportSize);
+    }
+    
+    // Normalize mouse coordinates to viewport
+    FVector2D NormalizedMousePosition(
+        MouseX / ViewportSize.X,
+        MouseY / ViewportSize.Y
+    );
+    
+    // Convert to world space
+    FVector WorldLocation, WorldDirection;
+    if (!PC->DeprojectScreenPositionToWorld(
+        MouseX, 
+        MouseY, 
+        WorldLocation, 
+        WorldDirection
+    ))
+    {
+        return false;
+    }
+
+    // Calculate whiteboard plane intersection
+    FVector WhiteboardLocation = TargetWhiteboard->GetActorLocation();
+    FVector WhiteboardNormal = TargetWhiteboard->GetActorForwardVector();
+    
+    // Create plane with normal pointing in the direction the whiteboard is facing
+    FPlane WhiteboardPlane(WhiteboardLocation, WhiteboardNormal);
+    
+    // Find intersection point
+    FVector IntersectionPoint = FMath::LinePlaneIntersection(
+        WorldLocation, 
+        WorldLocation + WorldDirection * 10000.0f, 
+        WhiteboardPlane
+    );
+
+    // Convert to local space of the whiteboard
+    FVector LocalIntersection = TargetWhiteboard->GetActorTransform().InverseTransformPosition(IntersectionPoint);
+    
+    // Check if we have a mesh to get bounds from
+    if (TargetWhiteboard->GetWhiteboardMesh())
+    {
+        FBoxSphereBounds MeshBounds = TargetWhiteboard->GetWhiteboardMesh()->GetStaticMesh()->GetBounds();
+        FVector MeshExtent = MeshBounds.BoxExtent;
+        
+        // Check if intersection point is within whiteboard mesh bounds
+        bool bIsWithinBounds = 
+            FMath::Abs(LocalIntersection.Y) <= MeshExtent.Y &&
+            FMath::Abs(LocalIntersection.Z) <= MeshExtent.Z;
+        
+        if (!bIsWithinBounds)
+        {
+            return false; // Outside bounds, don't draw
+        }
+    }
+
+    OutWorldPosition = IntersectionPoint;
+    OutCanvasPosition = TargetWhiteboard->WorldToCanvasPosition(IntersectionPoint);
+    
+    return true;
+}
+
+
+// Get The Current Whiteboard
 AWhiteboardActor* UWhiteboardInteractionComponent::GetCurrentWhiteboard()
 {
     // First check if we have a target whiteboard
@@ -498,4 +505,15 @@ AWhiteboardActor* UWhiteboardInteractionComponent::GetCurrentWhiteboard()
     }
     
     return nullptr;
+}
+
+// Get The Whiteboard Controller From Player Pawn
+AWhiteboardController* UWhiteboardInteractionComponent::GetWhiteboardPlayerController() const
+{
+    if (!OwnerPawn)
+    {
+        return nullptr;
+    }
+    
+    return Cast<AWhiteboardController>(OwnerPawn->GetController());
 }

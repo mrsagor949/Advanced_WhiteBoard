@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Actor/WhiteboardActor.h"
 #include "Components/ActorComponent.h"
+#include "Controller/AWhiteboard_Player_Controller.h"
 #include "WhiteboardInteractionComponent.generated.h"
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
@@ -20,7 +21,7 @@ public:
 
     // Whiteboard reference
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Whiteboard")
-    AWhiteboardActor* TargetWhiteboard;
+    AWhiteboardActor* TargetWhiteboard = nullptr;
 
     // Interaction properties
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Whiteboard")
@@ -35,7 +36,7 @@ public:
     
     // Owner reference
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interaction")
-    APawn* OwnerPawn;
+    APawn* OwnerPawn = nullptr;
 
     // Input handling
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
@@ -44,6 +45,7 @@ public:
     // Blueprint callable functions for interaction
     UFUNCTION(BlueprintCallable, Category = "Interaction")
     void TryToInteract();
+    
 
     UFUNCTION(BlueprintCallable, Category = "Drawing")
     void StartDrawingInput();
@@ -57,16 +59,10 @@ public:
     // Blueprint callable functions for whiteboard operations
     UFUNCTION(BlueprintCallable, Category = "Whiteboard")
     bool IsInRangeOfWhiteboard();
-
-    UFUNCTION(BlueprintCallable, Category = "Whiteboard")
-    void StartDrawing();
-
+    
     UFUNCTION(BlueprintCallable, Category = "Whiteboard")
     void ContinueDrawing();
-
-    UFUNCTION(BlueprintCallable, Category = "Whiteboard")
-    void StopDrawing();
-
+    
     UFUNCTION(BlueprintCallable, Category = "Whiteboard")
     void SetDrawingTool(EDrawingTool Tool);
 
@@ -98,16 +94,22 @@ public:
 private:
     // Helper functions
     void FindNearestWhiteboard();
-    FVector GetDrawingPosition();
+    FVector GetDrawingPosition() const;
     bool GetMouseWorldPosition(FVector& OutWorldPosition, FVector2D& OutCanvasPosition);
-    FVector2D WorldToCanvasPosition(const FVector& WorldPosition);
     FVector GetWhiteboardLocalPosition(const FVector& WorldPosition);
+
+    // Get Mouse World Position DPI Aware
+    bool GetMouseWorldPositionDPIAware(FVector& OutWorldPosition, FVector2D& OutCanvasPosition);
     
     // NEW: Helper to get current interacting whiteboard
     AWhiteboardActor* GetCurrentWhiteboard();
 
+    // Get Player Controller
+    AWhiteboardController* GetWhiteboardPlayerController() const;
+    
+    
     // Drawing state tracking
-    FVector2D LastDrawingPosition;
+    FVector2D LastDrawingPosition = FVector2d::ZeroVector;
     bool bHasValidLastPosition;
     float DrawingUpdateInterval;
     float LastDrawingUpdateTime;
