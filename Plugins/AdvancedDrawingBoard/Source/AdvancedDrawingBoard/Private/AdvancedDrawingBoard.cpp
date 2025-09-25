@@ -1,6 +1,7 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "AdvancedDrawingBoard.h"
+#include "Whiteboard_Defines.h"
 
 #define LOCTEXT_NAMESPACE "FAdvancedDrawingBoardModule"
 
@@ -18,3 +19,6 @@ void FAdvancedDrawingBoardModule::ShutdownModule()
 #undef LOCTEXT_NAMESPACE
 	
 IMPLEMENT_MODULE(FAdvancedDrawingBoardModule, AdvancedDrawingBoard)
+
+DEFINE_LOG_CATEGORY(LogWDS);
+

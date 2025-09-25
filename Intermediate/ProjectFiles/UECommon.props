@@ -15,15 +15,15 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <PropertyGroup>
-    <BuildBatchScript>D:\SPARKELON\BonVR\Engine\UE_5.5.4_Source\Engine\Build\BatchFiles\Build.bat</BuildBatchScript>
-    <RebuildBatchScript>D:\SPARKELON\BonVR\Engine\UE_5.5.4_Source\Engine\Build\BatchFiles\Rebuild.bat</RebuildBatchScript>
-    <CleanBatchScript>D:\SPARKELON\BonVR\Engine\UE_5.5.4_Source\Engine\Build\BatchFiles\Clean.bat</CleanBatchScript>
+    <BuildBatchScript>E:\Engine\UE_5.6\Engine\Build\BatchFiles\Build.bat</BuildBatchScript>
+    <RebuildBatchScript>E:\Engine\UE_5.6\Engine\Build\BatchFiles\Rebuild.bat</RebuildBatchScript>
+    <CleanBatchScript>E:\Engine\UE_5.6\Engine\Build\BatchFiles\Clean.bat</CleanBatchScript>
     <NMakeBuildCommandLine>echo The selected platform/configuration is not valid for this target.</NMakeBuildCommandLine>
     <NMakeReBuildCommandLine>echo The selected platform/configuration is not valid for this target.</NMakeReBuildCommandLine>
     <NMakeCleanCommandLine>echo The selected platform/configuration is not valid for this target.</NMakeCleanCommandLine>
     <NMakeOutput>Invalid Output</NMakeOutput>
-    <OutDir>D:\SPARKELON\BonVR\Engine\UE_5.5.4_Source\Engine\Intermediate\Build\Unused\</OutDir>
-    <IntDir>D:\SPARKELON\BonVR\Engine\UE_5.5.4_Source\Engine\Intermediate\Build\Unused\</IntDir>
+    <OutDir>E:\Engine\UE_5.6\Engine\Intermediate\Build\Unused\</OutDir>
+    <IntDir>E:\Engine\UE_5.6\Engine\Intermediate\Build\Unused\</IntDir>
     <IncludePath />
     <ReferencePath />
     <LibraryPath />

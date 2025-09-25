@@ -6,7 +6,6 @@
 #include "GameFramework/PlayerController.h"
 #include "Engine/World.h"
 #include "DrawDebugHelpers.h"
-#include "Blueprint/WidgetLayoutLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "Engine/Engine.h"
 
@@ -15,8 +14,6 @@ UWhiteboardInteractionComponent::UWhiteboardInteractionComponent()
 {
     PrimaryComponentTick.bCanEverTick = true;
     bHasValidLastPosition = false;
-    DrawingUpdateInterval = 0.016f; // ~60 FPS
-    LastDrawingUpdateTime = 0.0f;
 }
 
 // Begin Play
@@ -40,15 +37,6 @@ void UWhiteboardInteractionComponent::TickComponent(float DeltaTime, ELevelTick 
     if (bAutoDetectWhiteboard && !TargetWhiteboard)
     {
         FindNearestWhiteboard();
-    }
-    
-    // Handle continuous drawing
-    if (bIsDrawing && bContinuousDrawing && TargetWhiteboard)
-    {
-        if (const float CurrentTime = GetWorld()->GetTimeSeconds(); CurrentTime - LastDrawingUpdateTime >= DrawingUpdateInterval)
-        {
-            LastDrawingUpdateTime = CurrentTime;
-        }
     }
 }
 
@@ -123,10 +111,9 @@ void UWhiteboardInteractionComponent::StartDrawingInput()
         bIsDrawing = true;
         bHasValidLastPosition = true;
         LastDrawingPosition = CanvasPosition;
-        LastDrawingUpdateTime = GetWorld()->GetTimeSeconds();
-        
         // Use the client-specific drawing function
-        TargetWhiteboard->ClientStartDrawing(CanvasPosition);
+        
+        TargetWhiteboard->StartDrawing(OwnerPawn, CanvasPosition);
     }
     
 }
@@ -145,7 +132,7 @@ void UWhiteboardInteractionComponent::ContinueDrawing()
         // Only continue drawing if the position has changed significantly
         if (!bHasValidLastPosition || FVector2D::Distance(LastDrawingPosition, CanvasPosition) > 2.0f)
         {
-            TargetWhiteboard->ClientContinueDrawing(CanvasPosition);
+            TargetWhiteboard->ContinueDrawing(CanvasPosition);
             LastDrawingPosition = CanvasPosition;
             bHasValidLastPosition = true;
         }
@@ -163,7 +150,7 @@ void UWhiteboardInteractionComponent::StopDrawingInput()
         bHasValidLastPosition = false;
         
         // Use the client-specific drawing function
-        TargetWhiteboard->ClientEndDrawing();
+        TargetWhiteboard->EndDrawing();
     }
 }
 
@@ -196,6 +183,7 @@ bool UWhiteboardInteractionComponent::IsInRangeOfWhiteboard()
     return bInRange;
 }
 
+/*
 void UWhiteboardInteractionComponent::SetDrawingTool(EDrawingTool Tool)
 {
     if (TargetWhiteboard)
@@ -219,7 +207,7 @@ void UWhiteboardInteractionComponent::SetBrushSize(float Size)
         TargetWhiteboard->SetBrushSize(Size);
     }
 }
-
+*/
 void UWhiteboardInteractionComponent::ClearWhiteboard()
 {
     if (TargetWhiteboard && IsInRangeOfWhiteboard())

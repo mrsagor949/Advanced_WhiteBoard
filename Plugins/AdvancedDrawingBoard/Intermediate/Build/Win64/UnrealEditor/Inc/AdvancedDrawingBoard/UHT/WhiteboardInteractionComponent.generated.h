@@ -5,27 +5,25 @@
 ===========================================================================*/
 
 // IWYU pragma: private, include "Components/WhiteboardInteractionComponent.h"
-#include "UObject/ObjectMacros.h"
-#include "UObject/ScriptMacros.h"
 
-PRAGMA_DISABLE_DEPRECATION_WARNINGS
-enum class EDrawingTool : uint8;
-struct FLinearColor;
 #ifdef ADVANCEDDRAWINGBOARD_WhiteboardInteractionComponent_generated_h
 #error "WhiteboardInteractionComponent.generated.h already included, missing '#pragma once' in WhiteboardInteractionComponent.h"
 #endif
 #define ADVANCEDDRAWINGBOARD_WhiteboardInteractionComponent_generated_h
 
-#define FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Components_WhiteboardInteractionComponent_h_14_RPC_WRAPPERS_NO_PURE_DECLS \
+#include "UObject/ObjectMacros.h"
+#include "UObject/ScriptMacros.h"
+
+PRAGMA_DISABLE_DEPRECATION_WARNINGS
+
+// ********** Begin Class UWhiteboardInteractionComponent ******************************************
+#define FID_SPARKELON_2025_Prototype_2025_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Components_WhiteboardInteractionComponent_h_14_RPC_WRAPPERS_NO_PURE_DECLS \
 	DECLARE_FUNCTION(execGetCurrentDrawingPosition); \
 	DECLARE_FUNCTION(execExportToSVG); \
 	DECLARE_FUNCTION(execExportToPNG); \
 	DECLARE_FUNCTION(execRedo); \
 	DECLARE_FUNCTION(execUndo); \
 	DECLARE_FUNCTION(execClearWhiteboard); \
-	DECLARE_FUNCTION(execSetBrushSize); \
-	DECLARE_FUNCTION(execSetDrawingColor); \
-	DECLARE_FUNCTION(execSetDrawingTool); \
 	DECLARE_FUNCTION(execContinueDrawing); \
 	DECLARE_FUNCTION(execIsInRangeOfWhiteboard); \
 	DECLARE_FUNCTION(execEndInteraction); \
@@ -34,42 +32,45 @@ struct FLinearColor;
 	DECLARE_FUNCTION(execTryToInteract);
 
 
-#define FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Components_WhiteboardInteractionComponent_h_14_INCLASS_NO_PURE_DECLS \
+ADVANCEDDRAWINGBOARD_API UClass* Z_Construct_UClass_UWhiteboardInteractionComponent_NoRegister();
+
+#define FID_SPARKELON_2025_Prototype_2025_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Components_WhiteboardInteractionComponent_h_14_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUWhiteboardInteractionComponent(); \
 	friend struct Z_Construct_UClass_UWhiteboardInteractionComponent_Statics; \
+	static UClass* GetPrivateStaticClass(); \
+	friend ADVANCEDDRAWINGBOARD_API UClass* Z_Construct_UClass_UWhiteboardInteractionComponent_NoRegister(); \
 public: \
-	DECLARE_CLASS(UWhiteboardInteractionComponent, UActorComponent, COMPILED_IN_FLAGS(0 | CLASS_Config), CASTCLASS_None, TEXT("/Script/AdvancedDrawingBoard"), NO_API) \
+	DECLARE_CLASS2(UWhiteboardInteractionComponent, UActorComponent, COMPILED_IN_FLAGS(0 | CLASS_Config), CASTCLASS_None, TEXT("/Script/AdvancedDrawingBoard"), Z_Construct_UClass_UWhiteboardInteractionComponent_NoRegister) \
 	DECLARE_SERIALIZER(UWhiteboardInteractionComponent)
 
 
-#define FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Components_WhiteboardInteractionComponent_h_14_ENHANCED_CONSTRUCTORS \
-private: \
-	/** Private move- and copy-constructors, should never be used */ \
-	UWhiteboardInteractionComponent(UWhiteboardInteractionComponent&&); \
-	UWhiteboardInteractionComponent(const UWhiteboardInteractionComponent&); \
-public: \
+#define FID_SPARKELON_2025_Prototype_2025_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Components_WhiteboardInteractionComponent_h_14_ENHANCED_CONSTRUCTORS \
+	/** Deleted move- and copy-constructors, should never be used */ \
+	UWhiteboardInteractionComponent(UWhiteboardInteractionComponent&&) = delete; \
+	UWhiteboardInteractionComponent(const UWhiteboardInteractionComponent&) = delete; \
 	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, UWhiteboardInteractionComponent); \
 	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UWhiteboardInteractionComponent); \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(UWhiteboardInteractionComponent) \
 	NO_API virtual ~UWhiteboardInteractionComponent();
 
 
-#define FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Components_WhiteboardInteractionComponent_h_11_PROLOG
-#define FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Components_WhiteboardInteractionComponent_h_14_GENERATED_BODY \
+#define FID_SPARKELON_2025_Prototype_2025_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Components_WhiteboardInteractionComponent_h_11_PROLOG
+#define FID_SPARKELON_2025_Prototype_2025_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Components_WhiteboardInteractionComponent_h_14_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Components_WhiteboardInteractionComponent_h_14_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Components_WhiteboardInteractionComponent_h_14_INCLASS_NO_PURE_DECLS \
-	FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Components_WhiteboardInteractionComponent_h_14_ENHANCED_CONSTRUCTORS \
+	FID_SPARKELON_2025_Prototype_2025_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Components_WhiteboardInteractionComponent_h_14_RPC_WRAPPERS_NO_PURE_DECLS \
+	FID_SPARKELON_2025_Prototype_2025_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Components_WhiteboardInteractionComponent_h_14_INCLASS_NO_PURE_DECLS \
+	FID_SPARKELON_2025_Prototype_2025_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Components_WhiteboardInteractionComponent_h_14_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-template<> ADVANCEDDRAWINGBOARD_API UClass* StaticClass<class UWhiteboardInteractionComponent>();
+class UWhiteboardInteractionComponent;
+
+// ********** End Class UWhiteboardInteractionComponent ********************************************
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Components_WhiteboardInteractionComponent_h
-
+#define CURRENT_FILE_ID FID_SPARKELON_2025_Prototype_2025_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Components_WhiteboardInteractionComponent_h
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

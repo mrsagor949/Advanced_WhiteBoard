@@ -1,4 +1,7 @@
-﻿// Add this to your PlayerController implementation file
+﻿// Developer : Masud Raihan Sagor
+// What'sApp Number : +8801964998545
+// Email : www.mrsagor2021@gmail.com
+// Copyright Sparkelon @2025, Inc. All Rights Reserved.
 
 #include "Controller/AWhiteboard_Player_Controller.h"
 
@@ -39,7 +42,7 @@ void AWhiteboardController::Server_EndWhiteboardInteraction_Implementation(AWhit
 
 
 // Drawing RPC Implementations - Route to Whiteboard
-void AWhiteboardController::Server_WhiteboardStartDrawing_Implementation(AWhiteboardActor* Whiteboard, const FVector2D& CanvasPosition, EDrawingTool Tool, FLinearColor Color, float Size, int32 BrushTextureIndex, int32 FigureTextureIndex)
+void AWhiteboardController::Server_WhiteboardStartDrawing_Implementation(AWhiteboardActor* Whiteboard,APawn* DrawingPawn,const FVector2D& CanvasPosition)
 {
     if (!Whiteboard)
     {
@@ -56,7 +59,7 @@ void AWhiteboardController::Server_WhiteboardStartDrawing_Implementation(AWhiteb
 
     UE_LOG(LogTemp, Warning, TEXT("START SERVER DRAWING"));
     // Call the whiteboard function directly (we're on server now)
-    Whiteboard->Server_StartDrawing_Implementation(CanvasPosition, Tool, Color, Size, BrushTextureIndex, FigureTextureIndex);
+    Whiteboard->Server_StartDrawing_Implementation(DrawingPawn,CanvasPosition);
 }
 
 void AWhiteboardController::Server_WhiteboardContinueDrawing_Implementation(AWhiteboardActor* Whiteboard, const FVector2D& CanvasPosition)
@@ -122,59 +125,6 @@ void AWhiteboardController::Server_WhiteboardRedo_Implementation(AWhiteboardActo
     Whiteboard->Server_Redo_Implementation();
 }
 
-void AWhiteboardController::Server_WhiteboardSetCurrentTool_Implementation(AWhiteboardActor* Whiteboard, EDrawingTool NewTool)
-{
-    if (!Whiteboard || !Whiteboard->IsPlayerInteracting(GetPawn()))
-    {
-        return;
-    }
-    Whiteboard->Server_SetCurrentTool_Implementation(NewTool);
-}
-
-void AWhiteboardController::Server_WhiteboardSetCurrentColor_Implementation(AWhiteboardActor* Whiteboard, FLinearColor NewColor)
-{
-    if (!Whiteboard || !Whiteboard->IsPlayerInteracting(GetPawn()))
-    {
-        return;
-    }
-    Whiteboard->Server_SetCurrentColor_Implementation(NewColor);
-}
-
-void AWhiteboardController::Server_WhiteboardSetBrushSize_Implementation(AWhiteboardActor* Whiteboard, float NewSize)
-{
-    if (!Whiteboard || !Whiteboard->IsPlayerInteracting(GetPawn()))
-    {
-        return;
-    }
-    Whiteboard->Server_SetBrushSize_Implementation(NewSize);
-}
-
-void AWhiteboardController::Server_WhiteboardSetBrushTexture_Implementation(AWhiteboardActor* Whiteboard, int32 TextureIndex)
-{
-    if (!Whiteboard || !Whiteboard->IsPlayerInteracting(GetPawn()))
-    {
-        return;
-    }
-    Whiteboard->Server_SetBrushTexture_Implementation(TextureIndex);
-}
-
-void AWhiteboardController::Server_WhiteboardSetFigureTexture_Implementation(AWhiteboardActor* Whiteboard, int32 TextureIndex)
-{
-    if (!Whiteboard || !Whiteboard->IsPlayerInteracting(GetPawn()))
-    {
-        return;
-    }
-    Whiteboard->Server_SetFigureTexture_Implementation(TextureIndex);
-}
-
-void AWhiteboardController::Server_WhiteboardSetTextString_Implementation(AWhiteboardActor* Whiteboard, const FString& NewTextString)
-{
-    if (!Whiteboard || !Whiteboard->IsPlayerInteracting(GetPawn()))
-    {
-        return;
-    }
-    Whiteboard->Server_SetTextString_Implementation(NewTextString);
-}
 
 void AWhiteboardController::SetupWhiteboardInputMode(APawn* InteractingPlayer)
 {

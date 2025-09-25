@@ -5,16 +5,19 @@
 ===========================================================================*/
 
 #include "UObject/GeneratedCppIncludes.h"
-#include "AdvancedDrawingBoard/Public/Actor/WhiteboardActor.h"
-#include "AdvancedDrawingBoard/Public/Library/Whiteboard_Types.h"
-#include "Runtime/Engine/Classes/Engine/HitResult.h"
+#include "Actor/WhiteboardActor.h"
+#include "Engine/HitResult.h"
+#include "Library/Whiteboard_Types.h"
+
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
+
 void EmptyLinkFunctionForGeneratedCodeWhiteboardActor() {}
 
-// Begin Cross Module References
+// ********** Begin Cross Module References ********************************************************
 ADVANCEDDRAWINGBOARD_API UClass* Z_Construct_UClass_AWhiteboardActor();
 ADVANCEDDRAWINGBOARD_API UClass* Z_Construct_UClass_AWhiteboardActor_NoRegister();
 ADVANCEDDRAWINGBOARD_API UEnum* Z_Construct_UEnum_AdvancedDrawingBoard_EDrawingTool();
+ADVANCEDDRAWINGBOARD_API UScriptStruct* Z_Construct_UScriptStruct_FPlayerDrawingState();
 ADVANCEDDRAWINGBOARD_API UScriptStruct* Z_Construct_UScriptStruct_FStroke();
 COREUOBJECT_API UScriptStruct* Z_Construct_UScriptStruct_FLinearColor();
 COREUOBJECT_API UScriptStruct* Z_Construct_UScriptStruct_FVector();
@@ -31,9 +34,9 @@ ENGINE_API UClass* Z_Construct_UClass_UTexture2D_NoRegister();
 ENGINE_API UClass* Z_Construct_UClass_UTextureRenderTarget2D_NoRegister();
 ENGINE_API UScriptStruct* Z_Construct_UScriptStruct_FHitResult();
 UPackage* Z_Construct_UPackage__Script_AdvancedDrawingBoard();
-// End Cross Module References
+// ********** End Cross Module References **********************************************************
 
-// Begin Class AWhiteboardActor Function AddText
+// ********** Begin Class AWhiteboardActor Function AddText ****************************************
 struct Z_Construct_UFunction_AWhiteboardActor_AddText_Statics
 {
 	struct WhiteboardActor_eventAddText_Parms
@@ -65,7 +68,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_AddText_Statics::NewProp_Text,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_AddText_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_AddText_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "AddText", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_AddText_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_AddText_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_AddText_Statics::WhiteboardActor_eventAddText_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04C20401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_AddText_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_AddText_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_AddText_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "AddText", Z_Construct_UFunction_AWhiteboardActor_AddText_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_AddText_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_AddText_Statics::WhiteboardActor_eventAddText_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04C20401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_AddText_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_AddText_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_AddText_Statics::WhiteboardActor_eventAddText_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_AddText()
 {
@@ -85,9 +88,9 @@ DEFINE_FUNCTION(AWhiteboardActor::execAddText)
 	P_THIS->AddText(Z_Param_Out_CanvasPosition,Z_Param_Text);
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function AddText
+// ********** End Class AWhiteboardActor Function AddText ******************************************
 
-// Begin Class AWhiteboardActor Function CanAcceptMorePlayers
+// ********** Begin Class AWhiteboardActor Function CanAcceptMorePlayers ***************************
 struct Z_Construct_UFunction_AWhiteboardActor_CanAcceptMorePlayers_Statics
 {
 	struct WhiteboardActor_eventCanAcceptMorePlayers_Parms
@@ -114,7 +117,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_CanAcceptMorePlayers_Statics::NewProp_ReturnValue,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_CanAcceptMorePlayers_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_CanAcceptMorePlayers_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "CanAcceptMorePlayers", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_CanAcceptMorePlayers_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_CanAcceptMorePlayers_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_CanAcceptMorePlayers_Statics::WhiteboardActor_eventCanAcceptMorePlayers_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x54020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_CanAcceptMorePlayers_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_CanAcceptMorePlayers_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_CanAcceptMorePlayers_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "CanAcceptMorePlayers", Z_Construct_UFunction_AWhiteboardActor_CanAcceptMorePlayers_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_CanAcceptMorePlayers_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_CanAcceptMorePlayers_Statics::WhiteboardActor_eventCanAcceptMorePlayers_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x54020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_CanAcceptMorePlayers_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_CanAcceptMorePlayers_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_CanAcceptMorePlayers_Statics::WhiteboardActor_eventCanAcceptMorePlayers_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_CanAcceptMorePlayers()
 {
@@ -132,9 +135,9 @@ DEFINE_FUNCTION(AWhiteboardActor::execCanAcceptMorePlayers)
 	*(bool*)Z_Param__Result=P_THIS->CanAcceptMorePlayers();
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function CanAcceptMorePlayers
+// ********** End Class AWhiteboardActor Function CanAcceptMorePlayers *****************************
 
-// Begin Class AWhiteboardActor Function CanClientDraw
+// ********** Begin Class AWhiteboardActor Function CanClientDraw **********************************
 struct Z_Construct_UFunction_AWhiteboardActor_CanClientDraw_Statics
 {
 	struct WhiteboardActor_eventCanClientDraw_Parms
@@ -167,7 +170,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_CanClientDraw_Statics::NewProp_ReturnValue,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_CanClientDraw_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_CanClientDraw_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "CanClientDraw", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_CanClientDraw_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_CanClientDraw_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_CanClientDraw_Statics::WhiteboardActor_eventCanClientDraw_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x54020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_CanClientDraw_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_CanClientDraw_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_CanClientDraw_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "CanClientDraw", Z_Construct_UFunction_AWhiteboardActor_CanClientDraw_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_CanClientDraw_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_CanClientDraw_Statics::WhiteboardActor_eventCanClientDraw_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x54020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_CanClientDraw_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_CanClientDraw_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_CanClientDraw_Statics::WhiteboardActor_eventCanClientDraw_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_CanClientDraw()
 {
@@ -185,9 +188,9 @@ DEFINE_FUNCTION(AWhiteboardActor::execCanClientDraw)
 	*(bool*)Z_Param__Result=P_THIS->CanClientDraw();
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function CanClientDraw
+// ********** End Class AWhiteboardActor Function CanClientDraw ************************************
 
-// Begin Class AWhiteboardActor Function CanInteractLocally
+// ********** Begin Class AWhiteboardActor Function CanInteractLocally *****************************
 struct Z_Construct_UFunction_AWhiteboardActor_CanInteractLocally_Statics
 {
 	struct WhiteboardActor_eventCanInteractLocally_Parms
@@ -224,7 +227,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_CanInteractLocally_Statics::NewProp_ReturnValue,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_CanInteractLocally_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_CanInteractLocally_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "CanInteractLocally", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_CanInteractLocally_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_CanInteractLocally_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_CanInteractLocally_Statics::WhiteboardActor_eventCanInteractLocally_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x54020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_CanInteractLocally_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_CanInteractLocally_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_CanInteractLocally_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "CanInteractLocally", Z_Construct_UFunction_AWhiteboardActor_CanInteractLocally_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_CanInteractLocally_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_CanInteractLocally_Statics::WhiteboardActor_eventCanInteractLocally_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x54020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_CanInteractLocally_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_CanInteractLocally_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_CanInteractLocally_Statics::WhiteboardActor_eventCanInteractLocally_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_CanInteractLocally()
 {
@@ -243,9 +246,9 @@ DEFINE_FUNCTION(AWhiteboardActor::execCanInteractLocally)
 	*(bool*)Z_Param__Result=P_THIS->CanInteractLocally(Z_Param_Player);
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function CanInteractLocally
+// ********** End Class AWhiteboardActor Function CanInteractLocally *******************************
 
-// Begin Class AWhiteboardActor Function CanPlayerInteract
+// ********** Begin Class AWhiteboardActor Function CanPlayerInteract ******************************
 struct Z_Construct_UFunction_AWhiteboardActor_CanPlayerInteract_Statics
 {
 	struct WhiteboardActor_eventCanPlayerInteract_Parms
@@ -282,7 +285,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_CanPlayerInteract_Statics::NewProp_ReturnValue,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_CanPlayerInteract_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_CanPlayerInteract_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "CanPlayerInteract", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_CanPlayerInteract_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_CanPlayerInteract_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_CanPlayerInteract_Statics::WhiteboardActor_eventCanPlayerInteract_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x54020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_CanPlayerInteract_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_CanPlayerInteract_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_CanPlayerInteract_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "CanPlayerInteract", Z_Construct_UFunction_AWhiteboardActor_CanPlayerInteract_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_CanPlayerInteract_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_CanPlayerInteract_Statics::WhiteboardActor_eventCanPlayerInteract_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x54020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_CanPlayerInteract_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_CanPlayerInteract_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_CanPlayerInteract_Statics::WhiteboardActor_eventCanPlayerInteract_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_CanPlayerInteract()
 {
@@ -301,9 +304,9 @@ DEFINE_FUNCTION(AWhiteboardActor::execCanPlayerInteract)
 	*(bool*)Z_Param__Result=P_THIS->CanPlayerInteract(Z_Param_Player);
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function CanPlayerInteract
+// ********** End Class AWhiteboardActor Function CanPlayerInteract ********************************
 
-// Begin Class AWhiteboardActor Function CleanupInteractionUI
+// ********** Begin Class AWhiteboardActor Function CleanupInteractionUI ***************************
 struct Z_Construct_UFunction_AWhiteboardActor_CleanupInteractionUI_Statics
 {
 	struct WhiteboardActor_eventCleanupInteractionUI_Parms
@@ -324,7 +327,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_CleanupInteractionUI_Statics::NewProp_InteractingPlayer,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_CleanupInteractionUI_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_CleanupInteractionUI_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "CleanupInteractionUI", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_CleanupInteractionUI_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_CleanupInteractionUI_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_CleanupInteractionUI_Statics::WhiteboardActor_eventCleanupInteractionUI_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_CleanupInteractionUI_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_CleanupInteractionUI_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_CleanupInteractionUI_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "CleanupInteractionUI", Z_Construct_UFunction_AWhiteboardActor_CleanupInteractionUI_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_CleanupInteractionUI_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_CleanupInteractionUI_Statics::WhiteboardActor_eventCleanupInteractionUI_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_CleanupInteractionUI_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_CleanupInteractionUI_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_CleanupInteractionUI_Statics::WhiteboardActor_eventCleanupInteractionUI_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_CleanupInteractionUI()
 {
@@ -343,20 +346,26 @@ DEFINE_FUNCTION(AWhiteboardActor::execCleanupInteractionUI)
 	P_THIS->CleanupInteractionUI(Z_Param_InteractingPlayer);
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function CleanupInteractionUI
+// ********** End Class AWhiteboardActor Function CleanupInteractionUI *****************************
 
-// Begin Class AWhiteboardActor Function ClearWhiteboard
+// ********** Begin Class AWhiteboardActor Function ClearWhiteboard ********************************
 struct Z_Construct_UFunction_AWhiteboardActor_ClearWhiteboard_Statics
 {
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "Whiteboard" },
+		{ "Category", "Whiteboard|Drawing Tools" },
+#if !UE_BUILD_SHIPPING
+		{ "Comment", "/*\n    // Blueprint callable functions\n    UFUNCTION(BlueprintCallable, Category = \"Whiteboard|Drawing Tools\")\n    void SetCurrentTool(EDrawingTool NewTool);\n\n    UFUNCTION(BlueprintCallable, Server, Reliable,Category = \"Whiteboard|Drawing Tools\")\n    void Server_SetCurrentTool(EDrawingTool NewTool);\n    \n    UFUNCTION(BlueprintCallable, Category = \"Whiteboard|Drawing Tools\")\n    void SetCurrentColor(FLinearColor NewColor);\n    \n    UFUNCTION(BlueprintCallable, Server, Reliable,Category = \"Whiteboard|Drawing Tools\")\n    void Server_SetCurrentColor(FLinearColor NewColor);\n    \n    UFUNCTION(BlueprintCallable, Category = \"Whiteboard|Drawing Tools\")\n    void SetBrushSize(float NewSize);\n\n    UFUNCTION(BlueprintCallable, Server, Reliable,Category = \"Whiteboard|Drawing Tools\")\n    void Server_SetBrushSize(float NewSize);\n    \n    UFUNCTION(BlueprintCallable, Category = \"Whiteboard|Drawing Tools\")\n    void SetBrushTexture(int32 TextureIndex);\n\n    UFUNCTION(BlueprintCallable, Server, Reliable,Category = \"Whiteboard|Drawing Tools\")\n    void Server_SetBrushTexture(int32 TextureIndex);\n    \n    UFUNCTION(BlueprintCallable, Category = \"Whiteboard|Drawing Tools\")\n    void SetFigureTexture(int32 TextureIndex);\n\n    UFUNCTION(BlueprintCallable, Server, Reliable,Category = \"Whiteboard|Drawing Tools\")\n    void Server_SetFigureTexture(int32 TextureIndex);\n    \n    // NEW: Enhanced text input functions\n    UFUNCTION(BlueprintCallable, Category = \"Whiteboard|Drawing Tools\")\n    void SetTextString(const FString& NewTextString);\n\n    UFUNCTION(BlueprintCallable, Server, Reliable,Category = \"Whiteboard|Drawing Tools\")\n    void Server_SetTextString(const FString& NewTextString);\n\n    */" },
+#endif
 		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
+#if !UE_BUILD_SHIPPING
+		{ "ToolTip", "// Blueprint callable functions\nUFUNCTION(BlueprintCallable, Category = \"Whiteboard|Drawing Tools\")\nvoid SetCurrentTool(EDrawingTool NewTool);\n\nUFUNCTION(BlueprintCallable, Server, Reliable,Category = \"Whiteboard|Drawing Tools\")\nvoid Server_SetCurrentTool(EDrawingTool NewTool);\n\nUFUNCTION(BlueprintCallable, Category = \"Whiteboard|Drawing Tools\")\nvoid SetCurrentColor(FLinearColor NewColor);\n\nUFUNCTION(BlueprintCallable, Server, Reliable,Category = \"Whiteboard|Drawing Tools\")\nvoid Server_SetCurrentColor(FLinearColor NewColor);\n\nUFUNCTION(BlueprintCallable, Category = \"Whiteboard|Drawing Tools\")\nvoid SetBrushSize(float NewSize);\n\nUFUNCTION(BlueprintCallable, Server, Reliable,Category = \"Whiteboard|Drawing Tools\")\nvoid Server_SetBrushSize(float NewSize);\n\nUFUNCTION(BlueprintCallable, Category = \"Whiteboard|Drawing Tools\")\nvoid SetBrushTexture(int32 TextureIndex);\n\nUFUNCTION(BlueprintCallable, Server, Reliable,Category = \"Whiteboard|Drawing Tools\")\nvoid Server_SetBrushTexture(int32 TextureIndex);\n\nUFUNCTION(BlueprintCallable, Category = \"Whiteboard|Drawing Tools\")\nvoid SetFigureTexture(int32 TextureIndex);\n\nUFUNCTION(BlueprintCallable, Server, Reliable,Category = \"Whiteboard|Drawing Tools\")\nvoid Server_SetFigureTexture(int32 TextureIndex);\n\n// NEW: Enhanced text input functions\nUFUNCTION(BlueprintCallable, Category = \"Whiteboard|Drawing Tools\")\nvoid SetTextString(const FString& NewTextString);\n\nUFUNCTION(BlueprintCallable, Server, Reliable,Category = \"Whiteboard|Drawing Tools\")\nvoid Server_SetTextString(const FString& NewTextString);" },
+#endif
 	};
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_ClearWhiteboard_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "ClearWhiteboard", nullptr, nullptr, nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_ClearWhiteboard_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_ClearWhiteboard_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_ClearWhiteboard_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "ClearWhiteboard", nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_ClearWhiteboard_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_ClearWhiteboard_Statics::Function_MetaDataParams)},  };
 UFunction* Z_Construct_UFunction_AWhiteboardActor_ClearWhiteboard()
 {
 	static UFunction* ReturnFunction = nullptr;
@@ -373,14 +382,14 @@ DEFINE_FUNCTION(AWhiteboardActor::execClearWhiteboard)
 	P_THIS->ClearWhiteboard();
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function ClearWhiteboard
+// ********** End Class AWhiteboardActor Function ClearWhiteboard **********************************
 
-// Begin Class AWhiteboardActor Function Client_CleanupInteractionUI
+// ********** Begin Class AWhiteboardActor Function Client_CleanupInteractionUI ********************
 struct WhiteboardActor_eventClient_CleanupInteractionUI_Parms
 {
 	APawn* InteractingPlayer;
 };
-static const FName NAME_AWhiteboardActor_Client_CleanupInteractionUI = FName(TEXT("Client_CleanupInteractionUI"));
+static FName NAME_AWhiteboardActor_Client_CleanupInteractionUI = FName(TEXT("Client_CleanupInteractionUI"));
 void AWhiteboardActor::Client_CleanupInteractionUI(APawn* InteractingPlayer)
 {
 	WhiteboardActor_eventClient_CleanupInteractionUI_Parms Parms;
@@ -404,7 +413,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_Client_CleanupInteractionUI_Statics::NewProp_InteractingPlayer,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Client_CleanupInteractionUI_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Client_CleanupInteractionUI_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Client_CleanupInteractionUI", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_Client_CleanupInteractionUI_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Client_CleanupInteractionUI_Statics::PropPointers), sizeof(WhiteboardActor_eventClient_CleanupInteractionUI_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x01020CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Client_CleanupInteractionUI_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Client_CleanupInteractionUI_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Client_CleanupInteractionUI_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Client_CleanupInteractionUI", Z_Construct_UFunction_AWhiteboardActor_Client_CleanupInteractionUI_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Client_CleanupInteractionUI_Statics::PropPointers), sizeof(WhiteboardActor_eventClient_CleanupInteractionUI_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x01020CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Client_CleanupInteractionUI_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Client_CleanupInteractionUI_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(WhiteboardActor_eventClient_CleanupInteractionUI_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_Client_CleanupInteractionUI()
 {
@@ -423,14 +432,14 @@ DEFINE_FUNCTION(AWhiteboardActor::execClient_CleanupInteractionUI)
 	P_THIS->Client_CleanupInteractionUI_Implementation(Z_Param_InteractingPlayer);
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function Client_CleanupInteractionUI
+// ********** End Class AWhiteboardActor Function Client_CleanupInteractionUI **********************
 
-// Begin Class AWhiteboardActor Function Client_SetupInteractionUI
+// ********** Begin Class AWhiteboardActor Function Client_SetupInteractionUI **********************
 struct WhiteboardActor_eventClient_SetupInteractionUI_Parms
 {
 	APawn* InteractingPlayer;
 };
-static const FName NAME_AWhiteboardActor_Client_SetupInteractionUI = FName(TEXT("Client_SetupInteractionUI"));
+static FName NAME_AWhiteboardActor_Client_SetupInteractionUI = FName(TEXT("Client_SetupInteractionUI"));
 void AWhiteboardActor::Client_SetupInteractionUI(APawn* InteractingPlayer)
 {
 	WhiteboardActor_eventClient_SetupInteractionUI_Parms Parms;
@@ -460,7 +469,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_Client_SetupInteractionUI_Statics::NewProp_InteractingPlayer,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Client_SetupInteractionUI_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Client_SetupInteractionUI_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Client_SetupInteractionUI", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_Client_SetupInteractionUI_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Client_SetupInteractionUI_Statics::PropPointers), sizeof(WhiteboardActor_eventClient_SetupInteractionUI_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x01020CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Client_SetupInteractionUI_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Client_SetupInteractionUI_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Client_SetupInteractionUI_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Client_SetupInteractionUI", Z_Construct_UFunction_AWhiteboardActor_Client_SetupInteractionUI_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Client_SetupInteractionUI_Statics::PropPointers), sizeof(WhiteboardActor_eventClient_SetupInteractionUI_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x01020CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Client_SetupInteractionUI_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Client_SetupInteractionUI_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(WhiteboardActor_eventClient_SetupInteractionUI_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_Client_SetupInteractionUI()
 {
@@ -479,15 +488,15 @@ DEFINE_FUNCTION(AWhiteboardActor::execClient_SetupInteractionUI)
 	P_THIS->Client_SetupInteractionUI_Implementation(Z_Param_InteractingPlayer);
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function Client_SetupInteractionUI
+// ********** End Class AWhiteboardActor Function Client_SetupInteractionUI ************************
 
-// Begin Class AWhiteboardActor Function Client_SyncWhiteboardState
+// ********** Begin Class AWhiteboardActor Function Client_SyncWhiteboardState *********************
 struct WhiteboardActor_eventClient_SyncWhiteboardState_Parms
 {
 	TArray<FStroke> History;
 	int32 HistoryIndex;
 };
-static const FName NAME_AWhiteboardActor_Client_SyncWhiteboardState = FName(TEXT("Client_SyncWhiteboardState"));
+static FName NAME_AWhiteboardActor_Client_SyncWhiteboardState = FName(TEXT("Client_SyncWhiteboardState"));
 void AWhiteboardActor::Client_SyncWhiteboardState(TArray<FStroke> const& History, int32 HistoryIndex)
 {
 	WhiteboardActor_eventClient_SyncWhiteboardState_Parms Parms;
@@ -518,8 +527,8 @@ struct Z_Construct_UFunction_AWhiteboardActor_Client_SyncWhiteboardState_Statics
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_AWhiteboardActor_Client_SyncWhiteboardState_Statics::NewProp_History_Inner = { "History", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UScriptStruct_FStroke, METADATA_PARAMS(0, nullptr) }; // 3888955549
-const UECodeGen_Private::FArrayPropertyParams Z_Construct_UFunction_AWhiteboardActor_Client_SyncWhiteboardState_Statics::NewProp_History = { "History", nullptr, (EPropertyFlags)0x0010000008000082, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventClient_SyncWhiteboardState_Parms, History), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_History_MetaData), NewProp_History_MetaData) }; // 3888955549
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_AWhiteboardActor_Client_SyncWhiteboardState_Statics::NewProp_History_Inner = { "History", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UScriptStruct_FStroke, METADATA_PARAMS(0, nullptr) }; // 1512218923
+const UECodeGen_Private::FArrayPropertyParams Z_Construct_UFunction_AWhiteboardActor_Client_SyncWhiteboardState_Statics::NewProp_History = { "History", nullptr, (EPropertyFlags)0x0010000008000082, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventClient_SyncWhiteboardState_Parms, History), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_History_MetaData), NewProp_History_MetaData) }; // 1512218923
 const UECodeGen_Private::FIntPropertyParams Z_Construct_UFunction_AWhiteboardActor_Client_SyncWhiteboardState_Statics::NewProp_HistoryIndex = { "HistoryIndex", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventClient_SyncWhiteboardState_Parms, HistoryIndex), METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_Client_SyncWhiteboardState_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_Client_SyncWhiteboardState_Statics::NewProp_History_Inner,
@@ -527,7 +536,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_Client_SyncWhiteboardState_Statics::NewProp_HistoryIndex,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Client_SyncWhiteboardState_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Client_SyncWhiteboardState_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Client_SyncWhiteboardState", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_Client_SyncWhiteboardState_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Client_SyncWhiteboardState_Statics::PropPointers), sizeof(WhiteboardActor_eventClient_SyncWhiteboardState_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x01020CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Client_SyncWhiteboardState_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Client_SyncWhiteboardState_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Client_SyncWhiteboardState_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Client_SyncWhiteboardState", Z_Construct_UFunction_AWhiteboardActor_Client_SyncWhiteboardState_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Client_SyncWhiteboardState_Statics::PropPointers), sizeof(WhiteboardActor_eventClient_SyncWhiteboardState_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x01020CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Client_SyncWhiteboardState_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Client_SyncWhiteboardState_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(WhiteboardActor_eventClient_SyncWhiteboardState_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_Client_SyncWhiteboardState()
 {
@@ -547,85 +556,9 @@ DEFINE_FUNCTION(AWhiteboardActor::execClient_SyncWhiteboardState)
 	P_THIS->Client_SyncWhiteboardState_Implementation(Z_Param_History,Z_Param_HistoryIndex);
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function Client_SyncWhiteboardState
+// ********** End Class AWhiteboardActor Function Client_SyncWhiteboardState ***********************
 
-// Begin Class AWhiteboardActor Function ClientContinueDrawing
-struct Z_Construct_UFunction_AWhiteboardActor_ClientContinueDrawing_Statics
-{
-	struct WhiteboardActor_eventClientContinueDrawing_Parms
-	{
-		FVector2D CanvasPosition;
-	};
-#if WITH_METADATA
-	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "Whiteboard" },
-		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
-	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_CanvasPosition_MetaData[] = {
-		{ "NativeConst", "" },
-	};
-#endif // WITH_METADATA
-	static const UECodeGen_Private::FStructPropertyParams NewProp_CanvasPosition;
-	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-	static const UECodeGen_Private::FFunctionParams FuncParams;
-};
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_AWhiteboardActor_ClientContinueDrawing_Statics::NewProp_CanvasPosition = { "CanvasPosition", nullptr, (EPropertyFlags)0x0010000008000182, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventClientContinueDrawing_Parms, CanvasPosition), Z_Construct_UScriptStruct_FVector2D, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CanvasPosition_MetaData), NewProp_CanvasPosition_MetaData) };
-const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_ClientContinueDrawing_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_ClientContinueDrawing_Statics::NewProp_CanvasPosition,
-};
-static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_ClientContinueDrawing_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_ClientContinueDrawing_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "ClientContinueDrawing", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_ClientContinueDrawing_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_ClientContinueDrawing_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_ClientContinueDrawing_Statics::WhiteboardActor_eventClientContinueDrawing_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04C20401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_ClientContinueDrawing_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_ClientContinueDrawing_Statics::Function_MetaDataParams) };
-static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_ClientContinueDrawing_Statics::WhiteboardActor_eventClientContinueDrawing_Parms) < MAX_uint16);
-UFunction* Z_Construct_UFunction_AWhiteboardActor_ClientContinueDrawing()
-{
-	static UFunction* ReturnFunction = nullptr;
-	if (!ReturnFunction)
-	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AWhiteboardActor_ClientContinueDrawing_Statics::FuncParams);
-	}
-	return ReturnFunction;
-}
-DEFINE_FUNCTION(AWhiteboardActor::execClientContinueDrawing)
-{
-	P_GET_STRUCT_REF(FVector2D,Z_Param_Out_CanvasPosition);
-	P_FINISH;
-	P_NATIVE_BEGIN;
-	P_THIS->ClientContinueDrawing(Z_Param_Out_CanvasPosition);
-	P_NATIVE_END;
-}
-// End Class AWhiteboardActor Function ClientContinueDrawing
-
-// Begin Class AWhiteboardActor Function ClientEndDrawing
-struct Z_Construct_UFunction_AWhiteboardActor_ClientEndDrawing_Statics
-{
-#if WITH_METADATA
-	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "Whiteboard" },
-		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
-	};
-#endif // WITH_METADATA
-	static const UECodeGen_Private::FFunctionParams FuncParams;
-};
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_ClientEndDrawing_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "ClientEndDrawing", nullptr, nullptr, nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_ClientEndDrawing_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_ClientEndDrawing_Statics::Function_MetaDataParams) };
-UFunction* Z_Construct_UFunction_AWhiteboardActor_ClientEndDrawing()
-{
-	static UFunction* ReturnFunction = nullptr;
-	if (!ReturnFunction)
-	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AWhiteboardActor_ClientEndDrawing_Statics::FuncParams);
-	}
-	return ReturnFunction;
-}
-DEFINE_FUNCTION(AWhiteboardActor::execClientEndDrawing)
-{
-	P_FINISH;
-	P_NATIVE_BEGIN;
-	P_THIS->ClientEndDrawing();
-	P_NATIVE_END;
-}
-// End Class AWhiteboardActor Function ClientEndDrawing
-
-// Begin Class AWhiteboardActor Function ClientStartDrawing
+// ********** Begin Class AWhiteboardActor Function ClientStartDrawing *****************************
 struct Z_Construct_UFunction_AWhiteboardActor_ClientStartDrawing_Statics
 {
 	struct WhiteboardActor_eventClientStartDrawing_Parms
@@ -650,7 +583,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_ClientStartDrawing_Statics::NewProp_CanvasPosition,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_ClientStartDrawing_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_ClientStartDrawing_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "ClientStartDrawing", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_ClientStartDrawing_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_ClientStartDrawing_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_ClientStartDrawing_Statics::WhiteboardActor_eventClientStartDrawing_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04C20401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_ClientStartDrawing_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_ClientStartDrawing_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_ClientStartDrawing_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "ClientStartDrawing", Z_Construct_UFunction_AWhiteboardActor_ClientStartDrawing_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_ClientStartDrawing_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_ClientStartDrawing_Statics::WhiteboardActor_eventClientStartDrawing_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04C20401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_ClientStartDrawing_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_ClientStartDrawing_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_ClientStartDrawing_Statics::WhiteboardActor_eventClientStartDrawing_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_ClientStartDrawing()
 {
@@ -669,9 +602,9 @@ DEFINE_FUNCTION(AWhiteboardActor::execClientStartDrawing)
 	P_THIS->ClientStartDrawing(Z_Param_Out_CanvasPosition);
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function ClientStartDrawing
+// ********** End Class AWhiteboardActor Function ClientStartDrawing *******************************
 
-// Begin Class AWhiteboardActor Function ContinueDrawing
+// ********** Begin Class AWhiteboardActor Function ContinueDrawing ********************************
 struct Z_Construct_UFunction_AWhiteboardActor_ContinueDrawing_Statics
 {
 	struct WhiteboardActor_eventContinueDrawing_Parms
@@ -696,7 +629,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_ContinueDrawing_Statics::NewProp_CanvasPosition,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_ContinueDrawing_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_ContinueDrawing_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "ContinueDrawing", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_ContinueDrawing_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_ContinueDrawing_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_ContinueDrawing_Statics::WhiteboardActor_eventContinueDrawing_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04C20401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_ContinueDrawing_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_ContinueDrawing_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_ContinueDrawing_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "ContinueDrawing", Z_Construct_UFunction_AWhiteboardActor_ContinueDrawing_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_ContinueDrawing_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_ContinueDrawing_Statics::WhiteboardActor_eventContinueDrawing_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04C20401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_ContinueDrawing_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_ContinueDrawing_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_ContinueDrawing_Statics::WhiteboardActor_eventContinueDrawing_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_ContinueDrawing()
 {
@@ -715,9 +648,9 @@ DEFINE_FUNCTION(AWhiteboardActor::execContinueDrawing)
 	P_THIS->ContinueDrawing(Z_Param_Out_CanvasPosition);
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function ContinueDrawing
+// ********** End Class AWhiteboardActor Function ContinueDrawing **********************************
 
-// Begin Class AWhiteboardActor Function DebugNetworkState
+// ********** Begin Class AWhiteboardActor Function DebugNetworkState ******************************
 struct Z_Construct_UFunction_AWhiteboardActor_DebugNetworkState_Statics
 {
 #if WITH_METADATA
@@ -734,7 +667,7 @@ struct Z_Construct_UFunction_AWhiteboardActor_DebugNetworkState_Statics
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_DebugNetworkState_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "DebugNetworkState", nullptr, nullptr, nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_DebugNetworkState_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_DebugNetworkState_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_DebugNetworkState_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "DebugNetworkState", nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_DebugNetworkState_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_DebugNetworkState_Statics::Function_MetaDataParams)},  };
 UFunction* Z_Construct_UFunction_AWhiteboardActor_DebugNetworkState()
 {
 	static UFunction* ReturnFunction = nullptr;
@@ -751,9 +684,9 @@ DEFINE_FUNCTION(AWhiteboardActor::execDebugNetworkState)
 	P_THIS->DebugNetworkState();
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function DebugNetworkState
+// ********** End Class AWhiteboardActor Function DebugNetworkState ********************************
 
-// Begin Class AWhiteboardActor Function DrawFigure
+// ********** Begin Class AWhiteboardActor Function DrawFigure *************************************
 struct Z_Construct_UFunction_AWhiteboardActor_DrawFigure_Statics
 {
 	struct WhiteboardActor_eventDrawFigure_Parms
@@ -785,7 +718,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_DrawFigure_Statics::NewProp_SelectedFigureIndex,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_DrawFigure_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_DrawFigure_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "DrawFigure", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_DrawFigure_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_DrawFigure_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_DrawFigure_Statics::WhiteboardActor_eventDrawFigure_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04C20401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_DrawFigure_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_DrawFigure_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_DrawFigure_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "DrawFigure", Z_Construct_UFunction_AWhiteboardActor_DrawFigure_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_DrawFigure_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_DrawFigure_Statics::WhiteboardActor_eventDrawFigure_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04C20401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_DrawFigure_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_DrawFigure_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_DrawFigure_Statics::WhiteboardActor_eventDrawFigure_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_DrawFigure()
 {
@@ -805,9 +738,9 @@ DEFINE_FUNCTION(AWhiteboardActor::execDrawFigure)
 	P_THIS->DrawFigure(Z_Param_Out_CanvasPosition,Z_Param_SelectedFigureIndex);
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function DrawFigure
+// ********** End Class AWhiteboardActor Function DrawFigure ***************************************
 
-// Begin Class AWhiteboardActor Function EndDrawing
+// ********** Begin Class AWhiteboardActor Function EndDrawing *************************************
 struct Z_Construct_UFunction_AWhiteboardActor_EndDrawing_Statics
 {
 #if WITH_METADATA
@@ -818,7 +751,7 @@ struct Z_Construct_UFunction_AWhiteboardActor_EndDrawing_Statics
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_EndDrawing_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "EndDrawing", nullptr, nullptr, nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_EndDrawing_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_EndDrawing_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_EndDrawing_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "EndDrawing", nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_EndDrawing_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_EndDrawing_Statics::Function_MetaDataParams)},  };
 UFunction* Z_Construct_UFunction_AWhiteboardActor_EndDrawing()
 {
 	static UFunction* ReturnFunction = nullptr;
@@ -835,9 +768,9 @@ DEFINE_FUNCTION(AWhiteboardActor::execEndDrawing)
 	P_THIS->EndDrawing();
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function EndDrawing
+// ********** End Class AWhiteboardActor Function EndDrawing ***************************************
 
-// Begin Class AWhiteboardActor Function EndInteraction
+// ********** Begin Class AWhiteboardActor Function EndInteraction *********************************
 struct Z_Construct_UFunction_AWhiteboardActor_EndInteraction_Statics
 {
 #if WITH_METADATA
@@ -848,7 +781,7 @@ struct Z_Construct_UFunction_AWhiteboardActor_EndInteraction_Statics
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_EndInteraction_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "EndInteraction", nullptr, nullptr, nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_EndInteraction_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_EndInteraction_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_EndInteraction_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "EndInteraction", nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_EndInteraction_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_EndInteraction_Statics::Function_MetaDataParams)},  };
 UFunction* Z_Construct_UFunction_AWhiteboardActor_EndInteraction()
 {
 	static UFunction* ReturnFunction = nullptr;
@@ -865,9 +798,9 @@ DEFINE_FUNCTION(AWhiteboardActor::execEndInteraction)
 	P_THIS->EndInteraction();
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function EndInteraction
+// ********** End Class AWhiteboardActor Function EndInteraction ***********************************
 
-// Begin Class AWhiteboardActor Function EndInteractionForPlayer
+// ********** Begin Class AWhiteboardActor Function EndInteractionForPlayer ************************
 struct Z_Construct_UFunction_AWhiteboardActor_EndInteractionForPlayer_Statics
 {
 	struct WhiteboardActor_eventEndInteractionForPlayer_Parms
@@ -889,7 +822,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_EndInteractionForPlayer_Statics::NewProp_Player,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_EndInteractionForPlayer_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_EndInteractionForPlayer_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "EndInteractionForPlayer", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_EndInteractionForPlayer_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_EndInteractionForPlayer_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_EndInteractionForPlayer_Statics::WhiteboardActor_eventEndInteractionForPlayer_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_EndInteractionForPlayer_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_EndInteractionForPlayer_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_EndInteractionForPlayer_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "EndInteractionForPlayer", Z_Construct_UFunction_AWhiteboardActor_EndInteractionForPlayer_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_EndInteractionForPlayer_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_EndInteractionForPlayer_Statics::WhiteboardActor_eventEndInteractionForPlayer_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_EndInteractionForPlayer_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_EndInteractionForPlayer_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_EndInteractionForPlayer_Statics::WhiteboardActor_eventEndInteractionForPlayer_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_EndInteractionForPlayer()
 {
@@ -908,9 +841,9 @@ DEFINE_FUNCTION(AWhiteboardActor::execEndInteractionForPlayer)
 	P_THIS->EndInteractionForPlayer(Z_Param_Player);
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function EndInteractionForPlayer
+// ********** End Class AWhiteboardActor Function EndInteractionForPlayer **************************
 
-// Begin Class AWhiteboardActor Function ExportToPNG
+// ********** Begin Class AWhiteboardActor Function ExportToPNG ************************************
 struct Z_Construct_UFunction_AWhiteboardActor_ExportToPNG_Statics
 {
 	struct WhiteboardActor_eventExportToPNG_Parms
@@ -919,7 +852,7 @@ struct Z_Construct_UFunction_AWhiteboardActor_ExportToPNG_Statics
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "Whiteboard" },
+		{ "Category", "Whiteboard|Drawing Tools" },
 		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_FilePath_MetaData[] = {
@@ -935,7 +868,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_ExportToPNG_Statics::NewProp_FilePath,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_ExportToPNG_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_ExportToPNG_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "ExportToPNG", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_ExportToPNG_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_ExportToPNG_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_ExportToPNG_Statics::WhiteboardActor_eventExportToPNG_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_ExportToPNG_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_ExportToPNG_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_ExportToPNG_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "ExportToPNG", Z_Construct_UFunction_AWhiteboardActor_ExportToPNG_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_ExportToPNG_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_ExportToPNG_Statics::WhiteboardActor_eventExportToPNG_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_ExportToPNG_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_ExportToPNG_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_ExportToPNG_Statics::WhiteboardActor_eventExportToPNG_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_ExportToPNG()
 {
@@ -954,9 +887,9 @@ DEFINE_FUNCTION(AWhiteboardActor::execExportToPNG)
 	P_THIS->ExportToPNG(Z_Param_FilePath);
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function ExportToPNG
+// ********** End Class AWhiteboardActor Function ExportToPNG **************************************
 
-// Begin Class AWhiteboardActor Function ExportToSVG
+// ********** Begin Class AWhiteboardActor Function ExportToSVG ************************************
 struct Z_Construct_UFunction_AWhiteboardActor_ExportToSVG_Statics
 {
 	struct WhiteboardActor_eventExportToSVG_Parms
@@ -965,7 +898,7 @@ struct Z_Construct_UFunction_AWhiteboardActor_ExportToSVG_Statics
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "Whiteboard" },
+		{ "Category", "Whiteboard|Drawing Tools" },
 		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_FilePath_MetaData[] = {
@@ -981,7 +914,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_ExportToSVG_Statics::NewProp_FilePath,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_ExportToSVG_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_ExportToSVG_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "ExportToSVG", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_ExportToSVG_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_ExportToSVG_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_ExportToSVG_Statics::WhiteboardActor_eventExportToSVG_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_ExportToSVG_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_ExportToSVG_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_ExportToSVG_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "ExportToSVG", Z_Construct_UFunction_AWhiteboardActor_ExportToSVG_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_ExportToSVG_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_ExportToSVG_Statics::WhiteboardActor_eventExportToSVG_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_ExportToSVG_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_ExportToSVG_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_ExportToSVG_Statics::WhiteboardActor_eventExportToSVG_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_ExportToSVG()
 {
@@ -1000,9 +933,56 @@ DEFINE_FUNCTION(AWhiteboardActor::execExportToSVG)
 	P_THIS->ExportToSVG(Z_Param_FilePath);
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function ExportToSVG
+// ********** End Class AWhiteboardActor Function ExportToSVG **************************************
 
-// Begin Class AWhiteboardActor Function GetCanvasHeight
+// ********** Begin Class AWhiteboardActor Function GetBrushSize ***********************************
+struct Z_Construct_UFunction_AWhiteboardActor_GetBrushSize_Statics
+{
+	struct WhiteboardActor_eventGetBrushSize_Parms
+	{
+		APawn* Player;
+		float ReturnValue;
+	};
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "Category", "Whiteboard|Drawing Tools" },
+		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_Player;
+	static const UECodeGen_Private::FFloatPropertyParams NewProp_ReturnValue;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AWhiteboardActor_GetBrushSize_Statics::NewProp_Player = { "Player", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventGetBrushSize_Parms, Player), Z_Construct_UClass_APawn_NoRegister, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_AWhiteboardActor_GetBrushSize_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventGetBrushSize_Parms, ReturnValue), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_GetBrushSize_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_GetBrushSize_Statics::NewProp_Player,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_GetBrushSize_Statics::NewProp_ReturnValue,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetBrushSize_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_GetBrushSize_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "GetBrushSize", Z_Construct_UFunction_AWhiteboardActor_GetBrushSize_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetBrushSize_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_GetBrushSize_Statics::WhiteboardActor_eventGetBrushSize_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x54020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetBrushSize_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_GetBrushSize_Statics::Function_MetaDataParams)},  };
+static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_GetBrushSize_Statics::WhiteboardActor_eventGetBrushSize_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_AWhiteboardActor_GetBrushSize()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AWhiteboardActor_GetBrushSize_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(AWhiteboardActor::execGetBrushSize)
+{
+	P_GET_OBJECT(APawn,Z_Param_Player);
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	*(float*)Z_Param__Result=P_THIS->GetBrushSize(Z_Param_Player);
+	P_NATIVE_END;
+}
+// ********** End Class AWhiteboardActor Function GetBrushSize *************************************
+
+// ********** Begin Class AWhiteboardActor Function GetCanvasHeight ********************************
 struct Z_Construct_UFunction_AWhiteboardActor_GetCanvasHeight_Statics
 {
 	struct WhiteboardActor_eventGetCanvasHeight_Parms
@@ -1011,7 +991,7 @@ struct Z_Construct_UFunction_AWhiteboardActor_GetCanvasHeight_Statics
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "Whiteboard" },
+		{ "Category", "Whiteboard|Properties" },
 #if !UE_BUILD_SHIPPING
 		{ "Comment", "// Get Canvas Height\n" },
 #endif
@@ -1030,7 +1010,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_GetCanvasHeight_Statics::NewProp_ReturnValue,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetCanvasHeight_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_GetCanvasHeight_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "GetCanvasHeight", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_GetCanvasHeight_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetCanvasHeight_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_GetCanvasHeight_Statics::WhiteboardActor_eventGetCanvasHeight_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x54020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetCanvasHeight_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_GetCanvasHeight_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_GetCanvasHeight_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "GetCanvasHeight", Z_Construct_UFunction_AWhiteboardActor_GetCanvasHeight_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetCanvasHeight_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_GetCanvasHeight_Statics::WhiteboardActor_eventGetCanvasHeight_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x54020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetCanvasHeight_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_GetCanvasHeight_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_GetCanvasHeight_Statics::WhiteboardActor_eventGetCanvasHeight_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_GetCanvasHeight()
 {
@@ -1048,9 +1028,9 @@ DEFINE_FUNCTION(AWhiteboardActor::execGetCanvasHeight)
 	*(int32*)Z_Param__Result=P_THIS->GetCanvasHeight();
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function GetCanvasHeight
+// ********** End Class AWhiteboardActor Function GetCanvasHeight **********************************
 
-// Begin Class AWhiteboardActor Function GetCanvasWidth
+// ********** Begin Class AWhiteboardActor Function GetCanvasWidth *********************************
 struct Z_Construct_UFunction_AWhiteboardActor_GetCanvasWidth_Statics
 {
 	struct WhiteboardActor_eventGetCanvasWidth_Parms
@@ -1059,7 +1039,7 @@ struct Z_Construct_UFunction_AWhiteboardActor_GetCanvasWidth_Statics
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "Whiteboard" },
+		{ "Category", "Whiteboard|Properties" },
 #if !UE_BUILD_SHIPPING
 		{ "Comment", "// Get Canvas Width\n" },
 #endif
@@ -1078,7 +1058,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_GetCanvasWidth_Statics::NewProp_ReturnValue,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetCanvasWidth_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_GetCanvasWidth_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "GetCanvasWidth", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_GetCanvasWidth_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetCanvasWidth_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_GetCanvasWidth_Statics::WhiteboardActor_eventGetCanvasWidth_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x54020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetCanvasWidth_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_GetCanvasWidth_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_GetCanvasWidth_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "GetCanvasWidth", Z_Construct_UFunction_AWhiteboardActor_GetCanvasWidth_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetCanvasWidth_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_GetCanvasWidth_Statics::WhiteboardActor_eventGetCanvasWidth_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x54020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetCanvasWidth_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_GetCanvasWidth_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_GetCanvasWidth_Statics::WhiteboardActor_eventGetCanvasWidth_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_GetCanvasWidth()
 {
@@ -1096,9 +1076,159 @@ DEFINE_FUNCTION(AWhiteboardActor::execGetCanvasWidth)
 	*(int32*)Z_Param__Result=P_THIS->GetCanvasWidth();
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function GetCanvasWidth
+// ********** End Class AWhiteboardActor Function GetCanvasWidth ***********************************
 
-// Begin Class AWhiteboardActor Function GetInteractingPlayerCount
+// ********** Begin Class AWhiteboardActor Function GetCurrentColor ********************************
+struct Z_Construct_UFunction_AWhiteboardActor_GetCurrentColor_Statics
+{
+	struct WhiteboardActor_eventGetCurrentColor_Parms
+	{
+		APawn* Player;
+		FLinearColor ReturnValue;
+	};
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "Category", "Whiteboard|Drawing Tools" },
+		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_Player;
+	static const UECodeGen_Private::FStructPropertyParams NewProp_ReturnValue;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AWhiteboardActor_GetCurrentColor_Statics::NewProp_Player = { "Player", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventGetCurrentColor_Parms, Player), Z_Construct_UClass_APawn_NoRegister, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_AWhiteboardActor_GetCurrentColor_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventGetCurrentColor_Parms, ReturnValue), Z_Construct_UScriptStruct_FLinearColor, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_GetCurrentColor_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_GetCurrentColor_Statics::NewProp_Player,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_GetCurrentColor_Statics::NewProp_ReturnValue,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetCurrentColor_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_GetCurrentColor_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "GetCurrentColor", Z_Construct_UFunction_AWhiteboardActor_GetCurrentColor_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetCurrentColor_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_GetCurrentColor_Statics::WhiteboardActor_eventGetCurrentColor_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x54820401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetCurrentColor_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_GetCurrentColor_Statics::Function_MetaDataParams)},  };
+static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_GetCurrentColor_Statics::WhiteboardActor_eventGetCurrentColor_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_AWhiteboardActor_GetCurrentColor()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AWhiteboardActor_GetCurrentColor_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(AWhiteboardActor::execGetCurrentColor)
+{
+	P_GET_OBJECT(APawn,Z_Param_Player);
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	*(FLinearColor*)Z_Param__Result=P_THIS->GetCurrentColor(Z_Param_Player);
+	P_NATIVE_END;
+}
+// ********** End Class AWhiteboardActor Function GetCurrentColor **********************************
+
+// ********** Begin Class AWhiteboardActor Function GetCurrentTextString ***************************
+struct Z_Construct_UFunction_AWhiteboardActor_GetCurrentTextString_Statics
+{
+	struct WhiteboardActor_eventGetCurrentTextString_Parms
+	{
+		APawn* Player;
+		FString ReturnValue;
+	};
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "Category", "Whiteboard|Drawing Tools" },
+		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_Player;
+	static const UECodeGen_Private::FStrPropertyParams NewProp_ReturnValue;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AWhiteboardActor_GetCurrentTextString_Statics::NewProp_Player = { "Player", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventGetCurrentTextString_Parms, Player), Z_Construct_UClass_APawn_NoRegister, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FStrPropertyParams Z_Construct_UFunction_AWhiteboardActor_GetCurrentTextString_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventGetCurrentTextString_Parms, ReturnValue), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_GetCurrentTextString_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_GetCurrentTextString_Statics::NewProp_Player,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_GetCurrentTextString_Statics::NewProp_ReturnValue,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetCurrentTextString_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_GetCurrentTextString_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "GetCurrentTextString", Z_Construct_UFunction_AWhiteboardActor_GetCurrentTextString_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetCurrentTextString_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_GetCurrentTextString_Statics::WhiteboardActor_eventGetCurrentTextString_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x54020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetCurrentTextString_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_GetCurrentTextString_Statics::Function_MetaDataParams)},  };
+static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_GetCurrentTextString_Statics::WhiteboardActor_eventGetCurrentTextString_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_AWhiteboardActor_GetCurrentTextString()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AWhiteboardActor_GetCurrentTextString_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(AWhiteboardActor::execGetCurrentTextString)
+{
+	P_GET_OBJECT(APawn,Z_Param_Player);
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	*(FString*)Z_Param__Result=P_THIS->GetCurrentTextString(Z_Param_Player);
+	P_NATIVE_END;
+}
+// ********** End Class AWhiteboardActor Function GetCurrentTextString *****************************
+
+// ********** Begin Class AWhiteboardActor Function GetCurrentTool *********************************
+struct Z_Construct_UFunction_AWhiteboardActor_GetCurrentTool_Statics
+{
+	struct WhiteboardActor_eventGetCurrentTool_Parms
+	{
+		APawn* Player;
+		EDrawingTool ReturnValue;
+	};
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "Category", "Whiteboard|Drawing Tools" },
+#if !UE_BUILD_SHIPPING
+		{ "Comment", "// Update tool getters to be player-specific\n" },
+#endif
+		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
+#if !UE_BUILD_SHIPPING
+		{ "ToolTip", "Update tool getters to be player-specific" },
+#endif
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_Player;
+	static const UECodeGen_Private::FBytePropertyParams NewProp_ReturnValue_Underlying;
+	static const UECodeGen_Private::FEnumPropertyParams NewProp_ReturnValue;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AWhiteboardActor_GetCurrentTool_Statics::NewProp_Player = { "Player", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventGetCurrentTool_Parms, Player), Z_Construct_UClass_APawn_NoRegister, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FBytePropertyParams Z_Construct_UFunction_AWhiteboardActor_GetCurrentTool_Statics::NewProp_ReturnValue_Underlying = { "UnderlyingType", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, nullptr, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FEnumPropertyParams Z_Construct_UFunction_AWhiteboardActor_GetCurrentTool_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventGetCurrentTool_Parms, ReturnValue), Z_Construct_UEnum_AdvancedDrawingBoard_EDrawingTool, METADATA_PARAMS(0, nullptr) }; // 3146191471
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_GetCurrentTool_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_GetCurrentTool_Statics::NewProp_Player,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_GetCurrentTool_Statics::NewProp_ReturnValue_Underlying,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_GetCurrentTool_Statics::NewProp_ReturnValue,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetCurrentTool_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_GetCurrentTool_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "GetCurrentTool", Z_Construct_UFunction_AWhiteboardActor_GetCurrentTool_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetCurrentTool_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_GetCurrentTool_Statics::WhiteboardActor_eventGetCurrentTool_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x54020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetCurrentTool_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_GetCurrentTool_Statics::Function_MetaDataParams)},  };
+static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_GetCurrentTool_Statics::WhiteboardActor_eventGetCurrentTool_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_AWhiteboardActor_GetCurrentTool()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AWhiteboardActor_GetCurrentTool_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(AWhiteboardActor::execGetCurrentTool)
+{
+	P_GET_OBJECT(APawn,Z_Param_Player);
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	*(EDrawingTool*)Z_Param__Result=P_THIS->GetCurrentTool(Z_Param_Player);
+	P_NATIVE_END;
+}
+// ********** End Class AWhiteboardActor Function GetCurrentTool ***********************************
+
+// ********** Begin Class AWhiteboardActor Function GetInteractingPlayerCount **********************
 struct Z_Construct_UFunction_AWhiteboardActor_GetInteractingPlayerCount_Statics
 {
 	struct WhiteboardActor_eventGetInteractingPlayerCount_Parms
@@ -1120,7 +1250,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_GetInteractingPlayerCount_Statics::NewProp_ReturnValue,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetInteractingPlayerCount_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_GetInteractingPlayerCount_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "GetInteractingPlayerCount", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_GetInteractingPlayerCount_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetInteractingPlayerCount_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_GetInteractingPlayerCount_Statics::WhiteboardActor_eventGetInteractingPlayerCount_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x54020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetInteractingPlayerCount_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_GetInteractingPlayerCount_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_GetInteractingPlayerCount_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "GetInteractingPlayerCount", Z_Construct_UFunction_AWhiteboardActor_GetInteractingPlayerCount_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetInteractingPlayerCount_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_GetInteractingPlayerCount_Statics::WhiteboardActor_eventGetInteractingPlayerCount_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x54020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetInteractingPlayerCount_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_GetInteractingPlayerCount_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_GetInteractingPlayerCount_Statics::WhiteboardActor_eventGetInteractingPlayerCount_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_GetInteractingPlayerCount()
 {
@@ -1138,9 +1268,156 @@ DEFINE_FUNCTION(AWhiteboardActor::execGetInteractingPlayerCount)
 	*(int32*)Z_Param__Result=P_THIS->GetInteractingPlayerCount();
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function GetInteractingPlayerCount
+// ********** End Class AWhiteboardActor Function GetInteractingPlayerCount ************************
 
-// Begin Class AWhiteboardActor Function GetWhiteboardCamera
+// ********** Begin Class AWhiteboardActor Function GetPlayerDrawingState **************************
+struct Z_Construct_UFunction_AWhiteboardActor_GetPlayerDrawingState_Statics
+{
+	struct WhiteboardActor_eventGetPlayerDrawingState_Parms
+	{
+		APawn* Player;
+		FPlayerDrawingState ReturnValue;
+	};
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "Category", "Whiteboard|Drawing Tools" },
+#if !UE_BUILD_SHIPPING
+		{ "Comment", "// Add helper functions\n" },
+#endif
+		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
+#if !UE_BUILD_SHIPPING
+		{ "ToolTip", "Add helper functions" },
+#endif
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_Player;
+	static const UECodeGen_Private::FStructPropertyParams NewProp_ReturnValue;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AWhiteboardActor_GetPlayerDrawingState_Statics::NewProp_Player = { "Player", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventGetPlayerDrawingState_Parms, Player), Z_Construct_UClass_APawn_NoRegister, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_AWhiteboardActor_GetPlayerDrawingState_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventGetPlayerDrawingState_Parms, ReturnValue), Z_Construct_UScriptStruct_FPlayerDrawingState, METADATA_PARAMS(0, nullptr) }; // 2209676374
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_GetPlayerDrawingState_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_GetPlayerDrawingState_Statics::NewProp_Player,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_GetPlayerDrawingState_Statics::NewProp_ReturnValue,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetPlayerDrawingState_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_GetPlayerDrawingState_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "GetPlayerDrawingState", Z_Construct_UFunction_AWhiteboardActor_GetPlayerDrawingState_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetPlayerDrawingState_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_GetPlayerDrawingState_Statics::WhiteboardActor_eventGetPlayerDrawingState_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x54020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetPlayerDrawingState_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_GetPlayerDrawingState_Statics::Function_MetaDataParams)},  };
+static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_GetPlayerDrawingState_Statics::WhiteboardActor_eventGetPlayerDrawingState_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_AWhiteboardActor_GetPlayerDrawingState()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AWhiteboardActor_GetPlayerDrawingState_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(AWhiteboardActor::execGetPlayerDrawingState)
+{
+	P_GET_OBJECT(APawn,Z_Param_Player);
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	*(FPlayerDrawingState*)Z_Param__Result=P_THIS->GetPlayerDrawingState(Z_Param_Player);
+	P_NATIVE_END;
+}
+// ********** End Class AWhiteboardActor Function GetPlayerDrawingState ****************************
+
+// ********** Begin Class AWhiteboardActor Function GetSelectedBrushTextureIndex *******************
+struct Z_Construct_UFunction_AWhiteboardActor_GetSelectedBrushTextureIndex_Statics
+{
+	struct WhiteboardActor_eventGetSelectedBrushTextureIndex_Parms
+	{
+		APawn* Player;
+		int32 ReturnValue;
+	};
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "Category", "Whiteboard|Drawing Tools" },
+		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_Player;
+	static const UECodeGen_Private::FIntPropertyParams NewProp_ReturnValue;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AWhiteboardActor_GetSelectedBrushTextureIndex_Statics::NewProp_Player = { "Player", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventGetSelectedBrushTextureIndex_Parms, Player), Z_Construct_UClass_APawn_NoRegister, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FIntPropertyParams Z_Construct_UFunction_AWhiteboardActor_GetSelectedBrushTextureIndex_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventGetSelectedBrushTextureIndex_Parms, ReturnValue), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_GetSelectedBrushTextureIndex_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_GetSelectedBrushTextureIndex_Statics::NewProp_Player,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_GetSelectedBrushTextureIndex_Statics::NewProp_ReturnValue,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetSelectedBrushTextureIndex_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_GetSelectedBrushTextureIndex_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "GetSelectedBrushTextureIndex", Z_Construct_UFunction_AWhiteboardActor_GetSelectedBrushTextureIndex_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetSelectedBrushTextureIndex_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_GetSelectedBrushTextureIndex_Statics::WhiteboardActor_eventGetSelectedBrushTextureIndex_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x54020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetSelectedBrushTextureIndex_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_GetSelectedBrushTextureIndex_Statics::Function_MetaDataParams)},  };
+static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_GetSelectedBrushTextureIndex_Statics::WhiteboardActor_eventGetSelectedBrushTextureIndex_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_AWhiteboardActor_GetSelectedBrushTextureIndex()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AWhiteboardActor_GetSelectedBrushTextureIndex_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(AWhiteboardActor::execGetSelectedBrushTextureIndex)
+{
+	P_GET_OBJECT(APawn,Z_Param_Player);
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	*(int32*)Z_Param__Result=P_THIS->GetSelectedBrushTextureIndex(Z_Param_Player);
+	P_NATIVE_END;
+}
+// ********** End Class AWhiteboardActor Function GetSelectedBrushTextureIndex *********************
+
+// ********** Begin Class AWhiteboardActor Function GetSelectedFigureTextureIndex ******************
+struct Z_Construct_UFunction_AWhiteboardActor_GetSelectedFigureTextureIndex_Statics
+{
+	struct WhiteboardActor_eventGetSelectedFigureTextureIndex_Parms
+	{
+		APawn* Player;
+		int32 ReturnValue;
+	};
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "Category", "Whiteboard|Drawing Tools" },
+		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_Player;
+	static const UECodeGen_Private::FIntPropertyParams NewProp_ReturnValue;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AWhiteboardActor_GetSelectedFigureTextureIndex_Statics::NewProp_Player = { "Player", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventGetSelectedFigureTextureIndex_Parms, Player), Z_Construct_UClass_APawn_NoRegister, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FIntPropertyParams Z_Construct_UFunction_AWhiteboardActor_GetSelectedFigureTextureIndex_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventGetSelectedFigureTextureIndex_Parms, ReturnValue), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_GetSelectedFigureTextureIndex_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_GetSelectedFigureTextureIndex_Statics::NewProp_Player,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_GetSelectedFigureTextureIndex_Statics::NewProp_ReturnValue,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetSelectedFigureTextureIndex_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_GetSelectedFigureTextureIndex_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "GetSelectedFigureTextureIndex", Z_Construct_UFunction_AWhiteboardActor_GetSelectedFigureTextureIndex_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetSelectedFigureTextureIndex_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_GetSelectedFigureTextureIndex_Statics::WhiteboardActor_eventGetSelectedFigureTextureIndex_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x54020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetSelectedFigureTextureIndex_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_GetSelectedFigureTextureIndex_Statics::Function_MetaDataParams)},  };
+static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_GetSelectedFigureTextureIndex_Statics::WhiteboardActor_eventGetSelectedFigureTextureIndex_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_AWhiteboardActor_GetSelectedFigureTextureIndex()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AWhiteboardActor_GetSelectedFigureTextureIndex_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(AWhiteboardActor::execGetSelectedFigureTextureIndex)
+{
+	P_GET_OBJECT(APawn,Z_Param_Player);
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	*(int32*)Z_Param__Result=P_THIS->GetSelectedFigureTextureIndex(Z_Param_Player);
+	P_NATIVE_END;
+}
+// ********** End Class AWhiteboardActor Function GetSelectedFigureTextureIndex ********************
+
+// ********** Begin Class AWhiteboardActor Function GetWhiteboardCamera ****************************
 struct Z_Construct_UFunction_AWhiteboardActor_GetWhiteboardCamera_Statics
 {
 	struct WhiteboardActor_eventGetWhiteboardCamera_Parms
@@ -1165,7 +1442,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_GetWhiteboardCamera_Statics::NewProp_ReturnValue,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetWhiteboardCamera_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_GetWhiteboardCamera_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "GetWhiteboardCamera", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_GetWhiteboardCamera_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetWhiteboardCamera_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_GetWhiteboardCamera_Statics::WhiteboardActor_eventGetWhiteboardCamera_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x54020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetWhiteboardCamera_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_GetWhiteboardCamera_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_GetWhiteboardCamera_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "GetWhiteboardCamera", Z_Construct_UFunction_AWhiteboardActor_GetWhiteboardCamera_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetWhiteboardCamera_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_GetWhiteboardCamera_Statics::WhiteboardActor_eventGetWhiteboardCamera_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x54020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetWhiteboardCamera_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_GetWhiteboardCamera_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_GetWhiteboardCamera_Statics::WhiteboardActor_eventGetWhiteboardCamera_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_GetWhiteboardCamera()
 {
@@ -1183,9 +1460,9 @@ DEFINE_FUNCTION(AWhiteboardActor::execGetWhiteboardCamera)
 	*(UCameraComponent**)Z_Param__Result=P_THIS->GetWhiteboardCamera();
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function GetWhiteboardCamera
+// ********** End Class AWhiteboardActor Function GetWhiteboardCamera ******************************
 
-// Begin Class AWhiteboardActor Function GetWhiteboardMesh
+// ********** Begin Class AWhiteboardActor Function GetWhiteboardMesh ******************************
 struct Z_Construct_UFunction_AWhiteboardActor_GetWhiteboardMesh_Statics
 {
 	struct WhiteboardActor_eventGetWhiteboardMesh_Parms
@@ -1194,13 +1471,13 @@ struct Z_Construct_UFunction_AWhiteboardActor_GetWhiteboardMesh_Statics
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "Whiteboard" },
+		{ "Category", "Whiteboard|Properties" },
 #if !UE_BUILD_SHIPPING
-		{ "Comment", "// Get Whiteboard Mesh\n" },
+		{ "Comment", "///////////////////////////// WHITEBOARD UTILITIES////////////////////\n// Get Whiteboard Mesh\n" },
 #endif
 		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
 #if !UE_BUILD_SHIPPING
-		{ "ToolTip", "Get Whiteboard Mesh" },
+		{ "ToolTip", "WHITEBOARD UTILITIES\nGet Whiteboard Mesh" },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_ReturnValue_MetaData[] = {
@@ -1216,7 +1493,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_GetWhiteboardMesh_Statics::NewProp_ReturnValue,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetWhiteboardMesh_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_GetWhiteboardMesh_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "GetWhiteboardMesh", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_GetWhiteboardMesh_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetWhiteboardMesh_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_GetWhiteboardMesh_Statics::WhiteboardActor_eventGetWhiteboardMesh_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x54020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetWhiteboardMesh_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_GetWhiteboardMesh_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_GetWhiteboardMesh_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "GetWhiteboardMesh", Z_Construct_UFunction_AWhiteboardActor_GetWhiteboardMesh_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetWhiteboardMesh_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_GetWhiteboardMesh_Statics::WhiteboardActor_eventGetWhiteboardMesh_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x54020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetWhiteboardMesh_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_GetWhiteboardMesh_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_GetWhiteboardMesh_Statics::WhiteboardActor_eventGetWhiteboardMesh_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_GetWhiteboardMesh()
 {
@@ -1234,9 +1511,9 @@ DEFINE_FUNCTION(AWhiteboardActor::execGetWhiteboardMesh)
 	*(UStaticMeshComponent**)Z_Param__Result=P_THIS->GetWhiteboardMesh();
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function GetWhiteboardMesh
+// ********** End Class AWhiteboardActor Function GetWhiteboardMesh ********************************
 
-// Begin Class AWhiteboardActor Function IsPlayerInRange
+// ********** Begin Class AWhiteboardActor Function IsPlayerInRange ********************************
 struct Z_Construct_UFunction_AWhiteboardActor_IsPlayerInRange_Statics
 {
 	struct WhiteboardActor_eventIsPlayerInRange_Parms
@@ -1267,7 +1544,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_IsPlayerInRange_Statics::NewProp_ReturnValue,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_IsPlayerInRange_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_IsPlayerInRange_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "IsPlayerInRange", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_IsPlayerInRange_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_IsPlayerInRange_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_IsPlayerInRange_Statics::WhiteboardActor_eventIsPlayerInRange_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x54020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_IsPlayerInRange_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_IsPlayerInRange_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_IsPlayerInRange_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "IsPlayerInRange", Z_Construct_UFunction_AWhiteboardActor_IsPlayerInRange_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_IsPlayerInRange_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_IsPlayerInRange_Statics::WhiteboardActor_eventIsPlayerInRange_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x54020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_IsPlayerInRange_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_IsPlayerInRange_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_IsPlayerInRange_Statics::WhiteboardActor_eventIsPlayerInRange_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_IsPlayerInRange()
 {
@@ -1286,9 +1563,9 @@ DEFINE_FUNCTION(AWhiteboardActor::execIsPlayerInRange)
 	*(bool*)Z_Param__Result=P_THIS->IsPlayerInRange(Z_Param_PlayerController);
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function IsPlayerInRange
+// ********** End Class AWhiteboardActor Function IsPlayerInRange **********************************
 
-// Begin Class AWhiteboardActor Function IsPlayerInteracting
+// ********** Begin Class AWhiteboardActor Function IsPlayerInteracting ****************************
 struct Z_Construct_UFunction_AWhiteboardActor_IsPlayerInteracting_Statics
 {
 	struct WhiteboardActor_eventIsPlayerInteracting_Parms
@@ -1325,7 +1602,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_IsPlayerInteracting_Statics::NewProp_ReturnValue,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_IsPlayerInteracting_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_IsPlayerInteracting_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "IsPlayerInteracting", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_IsPlayerInteracting_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_IsPlayerInteracting_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_IsPlayerInteracting_Statics::WhiteboardActor_eventIsPlayerInteracting_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x54020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_IsPlayerInteracting_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_IsPlayerInteracting_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_IsPlayerInteracting_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "IsPlayerInteracting", Z_Construct_UFunction_AWhiteboardActor_IsPlayerInteracting_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_IsPlayerInteracting_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_IsPlayerInteracting_Statics::WhiteboardActor_eventIsPlayerInteracting_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x54020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_IsPlayerInteracting_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_IsPlayerInteracting_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_IsPlayerInteracting_Statics::WhiteboardActor_eventIsPlayerInteracting_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_IsPlayerInteracting()
 {
@@ -1344,9 +1621,9 @@ DEFINE_FUNCTION(AWhiteboardActor::execIsPlayerInteracting)
 	*(bool*)Z_Param__Result=P_THIS->IsPlayerInteracting(Z_Param_Player);
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function IsPlayerInteracting
+// ********** End Class AWhiteboardActor Function IsPlayerInteracting ******************************
 
-// Begin Class AWhiteboardActor Function IsShapeTool
+// ********** Begin Class AWhiteboardActor Function IsShapeTool ************************************
 struct Z_Construct_UFunction_AWhiteboardActor_IsShapeTool_Statics
 {
 	struct WhiteboardActor_eventIsShapeTool_Parms
@@ -1386,7 +1663,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_IsShapeTool_Statics::NewProp_ReturnValue,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_IsShapeTool_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_IsShapeTool_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "IsShapeTool", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_IsShapeTool_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_IsShapeTool_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_IsShapeTool_Statics::WhiteboardActor_eventIsShapeTool_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04022401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_IsShapeTool_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_IsShapeTool_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_IsShapeTool_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "IsShapeTool", Z_Construct_UFunction_AWhiteboardActor_IsShapeTool_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_IsShapeTool_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_IsShapeTool_Statics::WhiteboardActor_eventIsShapeTool_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04022401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_IsShapeTool_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_IsShapeTool_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_IsShapeTool_Statics::WhiteboardActor_eventIsShapeTool_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_IsShapeTool()
 {
@@ -1405,10 +1682,10 @@ DEFINE_FUNCTION(AWhiteboardActor::execIsShapeTool)
 	*(bool*)Z_Param__Result=AWhiteboardActor::IsShapeTool(EDrawingTool(Z_Param_Tool));
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function IsShapeTool
+// ********** End Class AWhiteboardActor Function IsShapeTool **************************************
 
-// Begin Class AWhiteboardActor Function Multicast_ClearWhiteboard
-static const FName NAME_AWhiteboardActor_Multicast_ClearWhiteboard = FName(TEXT("Multicast_ClearWhiteboard"));
+// ********** Begin Class AWhiteboardActor Function Multicast_ClearWhiteboard **********************
+static FName NAME_AWhiteboardActor_Multicast_ClearWhiteboard = FName(TEXT("Multicast_ClearWhiteboard"));
 void AWhiteboardActor::Multicast_ClearWhiteboard()
 {
 	UFunction* Func = FindFunctionChecked(NAME_AWhiteboardActor_Multicast_ClearWhiteboard);
@@ -1423,7 +1700,7 @@ struct Z_Construct_UFunction_AWhiteboardActor_Multicast_ClearWhiteboard_Statics
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Multicast_ClearWhiteboard_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Multicast_ClearWhiteboard", nullptr, nullptr, nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00024CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Multicast_ClearWhiteboard_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Multicast_ClearWhiteboard_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Multicast_ClearWhiteboard_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Multicast_ClearWhiteboard", nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00024CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Multicast_ClearWhiteboard_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Multicast_ClearWhiteboard_Statics::Function_MetaDataParams)},  };
 UFunction* Z_Construct_UFunction_AWhiteboardActor_Multicast_ClearWhiteboard()
 {
 	static UFunction* ReturnFunction = nullptr;
@@ -1440,15 +1717,15 @@ DEFINE_FUNCTION(AWhiteboardActor::execMulticast_ClearWhiteboard)
 	P_THIS->Multicast_ClearWhiteboard_Implementation();
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function Multicast_ClearWhiteboard
+// ********** End Class AWhiteboardActor Function Multicast_ClearWhiteboard ************************
 
-// Begin Class AWhiteboardActor Function Multicast_ContinueDrawing
+// ********** Begin Class AWhiteboardActor Function Multicast_ContinueDrawing **********************
 struct WhiteboardActor_eventMulticast_ContinueDrawing_Parms
 {
 	FVector2D CanvasPosition;
 	int32 StrokeID;
 };
-static const FName NAME_AWhiteboardActor_Multicast_ContinueDrawing = FName(TEXT("Multicast_ContinueDrawing"));
+static FName NAME_AWhiteboardActor_Multicast_ContinueDrawing = FName(TEXT("Multicast_ContinueDrawing"));
 void AWhiteboardActor::Multicast_ContinueDrawing(FVector2D const& CanvasPosition, int32 StrokeID)
 {
 	WhiteboardActor_eventMulticast_ContinueDrawing_Parms Parms;
@@ -1479,7 +1756,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_Multicast_ContinueDrawing_Statics::NewProp_StrokeID,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Multicast_ContinueDrawing_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Multicast_ContinueDrawing_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Multicast_ContinueDrawing", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_Multicast_ContinueDrawing_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Multicast_ContinueDrawing_Statics::PropPointers), sizeof(WhiteboardActor_eventMulticast_ContinueDrawing_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00824CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Multicast_ContinueDrawing_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Multicast_ContinueDrawing_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Multicast_ContinueDrawing_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Multicast_ContinueDrawing", Z_Construct_UFunction_AWhiteboardActor_Multicast_ContinueDrawing_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Multicast_ContinueDrawing_Statics::PropPointers), sizeof(WhiteboardActor_eventMulticast_ContinueDrawing_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00824CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Multicast_ContinueDrawing_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Multicast_ContinueDrawing_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(WhiteboardActor_eventMulticast_ContinueDrawing_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_Multicast_ContinueDrawing()
 {
@@ -1499,14 +1776,14 @@ DEFINE_FUNCTION(AWhiteboardActor::execMulticast_ContinueDrawing)
 	P_THIS->Multicast_ContinueDrawing_Implementation(Z_Param_CanvasPosition,Z_Param_StrokeID);
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function Multicast_ContinueDrawing
+// ********** End Class AWhiteboardActor Function Multicast_ContinueDrawing ************************
 
-// Begin Class AWhiteboardActor Function Multicast_EndDrawing
+// ********** Begin Class AWhiteboardActor Function Multicast_EndDrawing ***************************
 struct WhiteboardActor_eventMulticast_EndDrawing_Parms
 {
 	int32 StrokeID;
 };
-static const FName NAME_AWhiteboardActor_Multicast_EndDrawing = FName(TEXT("Multicast_EndDrawing"));
+static FName NAME_AWhiteboardActor_Multicast_EndDrawing = FName(TEXT("Multicast_EndDrawing"));
 void AWhiteboardActor::Multicast_EndDrawing(int32 StrokeID)
 {
 	WhiteboardActor_eventMulticast_EndDrawing_Parms Parms;
@@ -1530,7 +1807,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_Multicast_EndDrawing_Statics::NewProp_StrokeID,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Multicast_EndDrawing_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Multicast_EndDrawing_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Multicast_EndDrawing", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_Multicast_EndDrawing_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Multicast_EndDrawing_Statics::PropPointers), sizeof(WhiteboardActor_eventMulticast_EndDrawing_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00024CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Multicast_EndDrawing_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Multicast_EndDrawing_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Multicast_EndDrawing_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Multicast_EndDrawing", Z_Construct_UFunction_AWhiteboardActor_Multicast_EndDrawing_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Multicast_EndDrawing_Statics::PropPointers), sizeof(WhiteboardActor_eventMulticast_EndDrawing_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00024CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Multicast_EndDrawing_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Multicast_EndDrawing_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(WhiteboardActor_eventMulticast_EndDrawing_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_Multicast_EndDrawing()
 {
@@ -1549,29 +1826,21 @@ DEFINE_FUNCTION(AWhiteboardActor::execMulticast_EndDrawing)
 	P_THIS->Multicast_EndDrawing_Implementation(Z_Param_StrokeID);
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function Multicast_EndDrawing
+// ********** End Class AWhiteboardActor Function Multicast_EndDrawing *****************************
 
-// Begin Class AWhiteboardActor Function Multicast_StartDrawing
+// ********** Begin Class AWhiteboardActor Function Multicast_StartDrawing *************************
 struct WhiteboardActor_eventMulticast_StartDrawing_Parms
 {
+	APawn* DrawingPlayer;
 	FVector2D CanvasPosition;
-	EDrawingTool Tool;
-	FLinearColor Color;
-	float Size;
-	int32 BrushTextureIndex;
-	int32 FigureTextureIndex;
 	int32 StrokeID;
 };
-static const FName NAME_AWhiteboardActor_Multicast_StartDrawing = FName(TEXT("Multicast_StartDrawing"));
-void AWhiteboardActor::Multicast_StartDrawing(FVector2D const& CanvasPosition, EDrawingTool Tool, FLinearColor Color, float Size, int32 BrushTextureIndex, int32 FigureTextureIndex, int32 StrokeID)
+static FName NAME_AWhiteboardActor_Multicast_StartDrawing = FName(TEXT("Multicast_StartDrawing"));
+void AWhiteboardActor::Multicast_StartDrawing(APawn* DrawingPlayer, FVector2D const& CanvasPosition, int32 StrokeID)
 {
 	WhiteboardActor_eventMulticast_StartDrawing_Parms Parms;
+	Parms.DrawingPlayer=DrawingPlayer;
 	Parms.CanvasPosition=CanvasPosition;
-	Parms.Tool=Tool;
-	Parms.Color=Color;
-	Parms.Size=Size;
-	Parms.BrushTextureIndex=BrushTextureIndex;
-	Parms.FigureTextureIndex=FigureTextureIndex;
 	Parms.StrokeID=StrokeID;
 	UFunction* Func = FindFunctionChecked(NAME_AWhiteboardActor_Multicast_StartDrawing);
 	ProcessEvent(Func,&Parms);
@@ -1592,37 +1861,22 @@ struct Z_Construct_UFunction_AWhiteboardActor_Multicast_StartDrawing_Statics
 		{ "NativeConst", "" },
 	};
 #endif // WITH_METADATA
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_DrawingPlayer;
 	static const UECodeGen_Private::FStructPropertyParams NewProp_CanvasPosition;
-	static const UECodeGen_Private::FBytePropertyParams NewProp_Tool_Underlying;
-	static const UECodeGen_Private::FEnumPropertyParams NewProp_Tool;
-	static const UECodeGen_Private::FStructPropertyParams NewProp_Color;
-	static const UECodeGen_Private::FFloatPropertyParams NewProp_Size;
-	static const UECodeGen_Private::FIntPropertyParams NewProp_BrushTextureIndex;
-	static const UECodeGen_Private::FIntPropertyParams NewProp_FigureTextureIndex;
 	static const UECodeGen_Private::FIntPropertyParams NewProp_StrokeID;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AWhiteboardActor_Multicast_StartDrawing_Statics::NewProp_DrawingPlayer = { "DrawingPlayer", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventMulticast_StartDrawing_Parms, DrawingPlayer), Z_Construct_UClass_APawn_NoRegister, METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_AWhiteboardActor_Multicast_StartDrawing_Statics::NewProp_CanvasPosition = { "CanvasPosition", nullptr, (EPropertyFlags)0x0010000008000082, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventMulticast_StartDrawing_Parms, CanvasPosition), Z_Construct_UScriptStruct_FVector2D, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CanvasPosition_MetaData), NewProp_CanvasPosition_MetaData) };
-const UECodeGen_Private::FBytePropertyParams Z_Construct_UFunction_AWhiteboardActor_Multicast_StartDrawing_Statics::NewProp_Tool_Underlying = { "UnderlyingType", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, nullptr, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FEnumPropertyParams Z_Construct_UFunction_AWhiteboardActor_Multicast_StartDrawing_Statics::NewProp_Tool = { "Tool", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventMulticast_StartDrawing_Parms, Tool), Z_Construct_UEnum_AdvancedDrawingBoard_EDrawingTool, METADATA_PARAMS(0, nullptr) }; // 3146191471
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_AWhiteboardActor_Multicast_StartDrawing_Statics::NewProp_Color = { "Color", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventMulticast_StartDrawing_Parms, Color), Z_Construct_UScriptStruct_FLinearColor, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_AWhiteboardActor_Multicast_StartDrawing_Statics::NewProp_Size = { "Size", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventMulticast_StartDrawing_Parms, Size), METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FIntPropertyParams Z_Construct_UFunction_AWhiteboardActor_Multicast_StartDrawing_Statics::NewProp_BrushTextureIndex = { "BrushTextureIndex", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventMulticast_StartDrawing_Parms, BrushTextureIndex), METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FIntPropertyParams Z_Construct_UFunction_AWhiteboardActor_Multicast_StartDrawing_Statics::NewProp_FigureTextureIndex = { "FigureTextureIndex", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventMulticast_StartDrawing_Parms, FigureTextureIndex), METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FIntPropertyParams Z_Construct_UFunction_AWhiteboardActor_Multicast_StartDrawing_Statics::NewProp_StrokeID = { "StrokeID", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventMulticast_StartDrawing_Parms, StrokeID), METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_Multicast_StartDrawing_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_Multicast_StartDrawing_Statics::NewProp_DrawingPlayer,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_Multicast_StartDrawing_Statics::NewProp_CanvasPosition,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_Multicast_StartDrawing_Statics::NewProp_Tool_Underlying,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_Multicast_StartDrawing_Statics::NewProp_Tool,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_Multicast_StartDrawing_Statics::NewProp_Color,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_Multicast_StartDrawing_Statics::NewProp_Size,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_Multicast_StartDrawing_Statics::NewProp_BrushTextureIndex,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_Multicast_StartDrawing_Statics::NewProp_FigureTextureIndex,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_Multicast_StartDrawing_Statics::NewProp_StrokeID,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Multicast_StartDrawing_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Multicast_StartDrawing_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Multicast_StartDrawing", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_Multicast_StartDrawing_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Multicast_StartDrawing_Statics::PropPointers), sizeof(WhiteboardActor_eventMulticast_StartDrawing_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00824CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Multicast_StartDrawing_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Multicast_StartDrawing_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Multicast_StartDrawing_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Multicast_StartDrawing", Z_Construct_UFunction_AWhiteboardActor_Multicast_StartDrawing_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Multicast_StartDrawing_Statics::PropPointers), sizeof(WhiteboardActor_eventMulticast_StartDrawing_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00824CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Multicast_StartDrawing_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Multicast_StartDrawing_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(WhiteboardActor_eventMulticast_StartDrawing_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_Multicast_StartDrawing()
 {
@@ -1635,27 +1889,23 @@ UFunction* Z_Construct_UFunction_AWhiteboardActor_Multicast_StartDrawing()
 }
 DEFINE_FUNCTION(AWhiteboardActor::execMulticast_StartDrawing)
 {
+	P_GET_OBJECT(APawn,Z_Param_DrawingPlayer);
 	P_GET_STRUCT(FVector2D,Z_Param_CanvasPosition);
-	P_GET_ENUM(EDrawingTool,Z_Param_Tool);
-	P_GET_STRUCT(FLinearColor,Z_Param_Color);
-	P_GET_PROPERTY(FFloatProperty,Z_Param_Size);
-	P_GET_PROPERTY(FIntProperty,Z_Param_BrushTextureIndex);
-	P_GET_PROPERTY(FIntProperty,Z_Param_FigureTextureIndex);
 	P_GET_PROPERTY(FIntProperty,Z_Param_StrokeID);
 	P_FINISH;
 	P_NATIVE_BEGIN;
-	P_THIS->Multicast_StartDrawing_Implementation(Z_Param_CanvasPosition,EDrawingTool(Z_Param_Tool),Z_Param_Color,Z_Param_Size,Z_Param_BrushTextureIndex,Z_Param_FigureTextureIndex,Z_Param_StrokeID);
+	P_THIS->Multicast_StartDrawing_Implementation(Z_Param_DrawingPlayer,Z_Param_CanvasPosition,Z_Param_StrokeID);
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function Multicast_StartDrawing
+// ********** End Class AWhiteboardActor Function Multicast_StartDrawing ***************************
 
-// Begin Class AWhiteboardActor Function Multicast_SyncWhiteboardState
+// ********** Begin Class AWhiteboardActor Function Multicast_SyncWhiteboardState ******************
 struct WhiteboardActor_eventMulticast_SyncWhiteboardState_Parms
 {
 	TArray<FStroke> History;
 	int32 HistoryIndex;
 };
-static const FName NAME_AWhiteboardActor_Multicast_SyncWhiteboardState = FName(TEXT("Multicast_SyncWhiteboardState"));
+static FName NAME_AWhiteboardActor_Multicast_SyncWhiteboardState = FName(TEXT("Multicast_SyncWhiteboardState"));
 void AWhiteboardActor::Multicast_SyncWhiteboardState(TArray<FStroke> const& History, int32 HistoryIndex)
 {
 	WhiteboardActor_eventMulticast_SyncWhiteboardState_Parms Parms;
@@ -1680,8 +1930,8 @@ struct Z_Construct_UFunction_AWhiteboardActor_Multicast_SyncWhiteboardState_Stat
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_AWhiteboardActor_Multicast_SyncWhiteboardState_Statics::NewProp_History_Inner = { "History", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UScriptStruct_FStroke, METADATA_PARAMS(0, nullptr) }; // 3888955549
-const UECodeGen_Private::FArrayPropertyParams Z_Construct_UFunction_AWhiteboardActor_Multicast_SyncWhiteboardState_Statics::NewProp_History = { "History", nullptr, (EPropertyFlags)0x0010000008000082, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventMulticast_SyncWhiteboardState_Parms, History), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_History_MetaData), NewProp_History_MetaData) }; // 3888955549
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_AWhiteboardActor_Multicast_SyncWhiteboardState_Statics::NewProp_History_Inner = { "History", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UScriptStruct_FStroke, METADATA_PARAMS(0, nullptr) }; // 1512218923
+const UECodeGen_Private::FArrayPropertyParams Z_Construct_UFunction_AWhiteboardActor_Multicast_SyncWhiteboardState_Statics::NewProp_History = { "History", nullptr, (EPropertyFlags)0x0010000008000082, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventMulticast_SyncWhiteboardState_Parms, History), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_History_MetaData), NewProp_History_MetaData) }; // 1512218923
 const UECodeGen_Private::FIntPropertyParams Z_Construct_UFunction_AWhiteboardActor_Multicast_SyncWhiteboardState_Statics::NewProp_HistoryIndex = { "HistoryIndex", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventMulticast_SyncWhiteboardState_Parms, HistoryIndex), METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_Multicast_SyncWhiteboardState_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_Multicast_SyncWhiteboardState_Statics::NewProp_History_Inner,
@@ -1689,7 +1939,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_Multicast_SyncWhiteboardState_Statics::NewProp_HistoryIndex,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Multicast_SyncWhiteboardState_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Multicast_SyncWhiteboardState_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Multicast_SyncWhiteboardState", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_Multicast_SyncWhiteboardState_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Multicast_SyncWhiteboardState_Statics::PropPointers), sizeof(WhiteboardActor_eventMulticast_SyncWhiteboardState_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00024CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Multicast_SyncWhiteboardState_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Multicast_SyncWhiteboardState_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Multicast_SyncWhiteboardState_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Multicast_SyncWhiteboardState", Z_Construct_UFunction_AWhiteboardActor_Multicast_SyncWhiteboardState_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Multicast_SyncWhiteboardState_Statics::PropPointers), sizeof(WhiteboardActor_eventMulticast_SyncWhiteboardState_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00024CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Multicast_SyncWhiteboardState_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Multicast_SyncWhiteboardState_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(WhiteboardActor_eventMulticast_SyncWhiteboardState_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_Multicast_SyncWhiteboardState()
 {
@@ -1709,14 +1959,14 @@ DEFINE_FUNCTION(AWhiteboardActor::execMulticast_SyncWhiteboardState)
 	P_THIS->Multicast_SyncWhiteboardState_Implementation(Z_Param_History,Z_Param_HistoryIndex);
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function Multicast_SyncWhiteboardState
+// ********** End Class AWhiteboardActor Function Multicast_SyncWhiteboardState ********************
 
-// Begin Class AWhiteboardActor Function Multicast_UpdateDrawing
+// ********** Begin Class AWhiteboardActor Function Multicast_UpdateDrawing ************************
 struct WhiteboardActor_eventMulticast_UpdateDrawing_Parms
 {
 	FStroke NewStroke;
 };
-static const FName NAME_AWhiteboardActor_Multicast_UpdateDrawing = FName(TEXT("Multicast_UpdateDrawing"));
+static FName NAME_AWhiteboardActor_Multicast_UpdateDrawing = FName(TEXT("Multicast_UpdateDrawing"));
 void AWhiteboardActor::Multicast_UpdateDrawing(FStroke const& NewStroke)
 {
 	WhiteboardActor_eventMulticast_UpdateDrawing_Parms Parms;
@@ -1738,12 +1988,12 @@ struct Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateDrawing_Statics
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateDrawing_Statics::NewProp_NewStroke = { "NewStroke", nullptr, (EPropertyFlags)0x0010000008000082, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventMulticast_UpdateDrawing_Parms, NewStroke), Z_Construct_UScriptStruct_FStroke, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_NewStroke_MetaData), NewProp_NewStroke_MetaData) }; // 3888955549
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateDrawing_Statics::NewProp_NewStroke = { "NewStroke", nullptr, (EPropertyFlags)0x0010000008000082, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventMulticast_UpdateDrawing_Parms, NewStroke), Z_Construct_UScriptStruct_FStroke, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_NewStroke_MetaData), NewProp_NewStroke_MetaData) }; // 1512218923
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateDrawing_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateDrawing_Statics::NewProp_NewStroke,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateDrawing_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateDrawing_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Multicast_UpdateDrawing", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateDrawing_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateDrawing_Statics::PropPointers), sizeof(WhiteboardActor_eventMulticast_UpdateDrawing_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00024CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateDrawing_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateDrawing_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateDrawing_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Multicast_UpdateDrawing", Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateDrawing_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateDrawing_Statics::PropPointers), sizeof(WhiteboardActor_eventMulticast_UpdateDrawing_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00024CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateDrawing_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateDrawing_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(WhiteboardActor_eventMulticast_UpdateDrawing_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateDrawing()
 {
@@ -1762,15 +2012,15 @@ DEFINE_FUNCTION(AWhiteboardActor::execMulticast_UpdateDrawing)
 	P_THIS->Multicast_UpdateDrawing_Implementation(Z_Param_NewStroke);
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function Multicast_UpdateDrawing
+// ********** End Class AWhiteboardActor Function Multicast_UpdateDrawing **************************
 
-// Begin Class AWhiteboardActor Function Multicast_UpdateHistory
+// ********** Begin Class AWhiteboardActor Function Multicast_UpdateHistory ************************
 struct WhiteboardActor_eventMulticast_UpdateHistory_Parms
 {
 	TArray<FStroke> NewHistory;
 	int32 NewHistoryIndex;
 };
-static const FName NAME_AWhiteboardActor_Multicast_UpdateHistory = FName(TEXT("Multicast_UpdateHistory"));
+static FName NAME_AWhiteboardActor_Multicast_UpdateHistory = FName(TEXT("Multicast_UpdateHistory"));
 void AWhiteboardActor::Multicast_UpdateHistory(TArray<FStroke> const& NewHistory, int32 NewHistoryIndex)
 {
 	WhiteboardActor_eventMulticast_UpdateHistory_Parms Parms;
@@ -1795,8 +2045,8 @@ struct Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateHistory_Statics
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateHistory_Statics::NewProp_NewHistory_Inner = { "NewHistory", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UScriptStruct_FStroke, METADATA_PARAMS(0, nullptr) }; // 3888955549
-const UECodeGen_Private::FArrayPropertyParams Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateHistory_Statics::NewProp_NewHistory = { "NewHistory", nullptr, (EPropertyFlags)0x0010000008000082, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventMulticast_UpdateHistory_Parms, NewHistory), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_NewHistory_MetaData), NewProp_NewHistory_MetaData) }; // 3888955549
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateHistory_Statics::NewProp_NewHistory_Inner = { "NewHistory", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UScriptStruct_FStroke, METADATA_PARAMS(0, nullptr) }; // 1512218923
+const UECodeGen_Private::FArrayPropertyParams Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateHistory_Statics::NewProp_NewHistory = { "NewHistory", nullptr, (EPropertyFlags)0x0010000008000082, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventMulticast_UpdateHistory_Parms, NewHistory), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_NewHistory_MetaData), NewProp_NewHistory_MetaData) }; // 1512218923
 const UECodeGen_Private::FIntPropertyParams Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateHistory_Statics::NewProp_NewHistoryIndex = { "NewHistoryIndex", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventMulticast_UpdateHistory_Parms, NewHistoryIndex), METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateHistory_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateHistory_Statics::NewProp_NewHistory_Inner,
@@ -1804,7 +2054,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateHistory_Statics::NewProp_NewHistoryIndex,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateHistory_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateHistory_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Multicast_UpdateHistory", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateHistory_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateHistory_Statics::PropPointers), sizeof(WhiteboardActor_eventMulticast_UpdateHistory_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00024CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateHistory_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateHistory_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateHistory_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Multicast_UpdateHistory", Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateHistory_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateHistory_Statics::PropPointers), sizeof(WhiteboardActor_eventMulticast_UpdateHistory_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00024CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateHistory_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateHistory_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(WhiteboardActor_eventMulticast_UpdateHistory_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateHistory()
 {
@@ -1824,9 +2074,9 @@ DEFINE_FUNCTION(AWhiteboardActor::execMulticast_UpdateHistory)
 	P_THIS->Multicast_UpdateHistory_Implementation(Z_Param_NewHistory,Z_Param_NewHistoryIndex);
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function Multicast_UpdateHistory
+// ********** End Class AWhiteboardActor Function Multicast_UpdateHistory **************************
 
-// Begin Class AWhiteboardActor Function Multicast_UpdateShapePreview
+// ********** Begin Class AWhiteboardActor Function Multicast_UpdateShapePreview *******************
 struct WhiteboardActor_eventMulticast_UpdateShapePreview_Parms
 {
 	FVector2D StartPos;
@@ -1836,7 +2086,7 @@ struct WhiteboardActor_eventMulticast_UpdateShapePreview_Parms
 	float Size;
 	int32 StrokeID;
 };
-static const FName NAME_AWhiteboardActor_Multicast_UpdateShapePreview = FName(TEXT("Multicast_UpdateShapePreview"));
+static FName NAME_AWhiteboardActor_Multicast_UpdateShapePreview = FName(TEXT("Multicast_UpdateShapePreview"));
 void AWhiteboardActor::Multicast_UpdateShapePreview(FVector2D const& StartPos, FVector2D const& EndPos, EDrawingTool Tool, FLinearColor Color, float Size, int32 StrokeID)
 {
 	WhiteboardActor_eventMulticast_UpdateShapePreview_Parms Parms;
@@ -1895,7 +2145,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateShapePreview_Statics::NewProp_StrokeID,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateShapePreview_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateShapePreview_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Multicast_UpdateShapePreview", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateShapePreview_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateShapePreview_Statics::PropPointers), sizeof(WhiteboardActor_eventMulticast_UpdateShapePreview_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00824CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateShapePreview_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateShapePreview_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateShapePreview_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Multicast_UpdateShapePreview", Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateShapePreview_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateShapePreview_Statics::PropPointers), sizeof(WhiteboardActor_eventMulticast_UpdateShapePreview_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00824CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateShapePreview_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateShapePreview_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(WhiteboardActor_eventMulticast_UpdateShapePreview_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateShapePreview()
 {
@@ -1919,14 +2169,14 @@ DEFINE_FUNCTION(AWhiteboardActor::execMulticast_UpdateShapePreview)
 	P_THIS->Multicast_UpdateShapePreview_Implementation(Z_Param_StartPos,Z_Param_EndPos,EDrawingTool(Z_Param_Tool),Z_Param_Color,Z_Param_Size,Z_Param_StrokeID);
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function Multicast_UpdateShapePreview
+// ********** End Class AWhiteboardActor Function Multicast_UpdateShapePreview *********************
 
-// Begin Class AWhiteboardActor Function OnInteractionEnded
+// ********** Begin Class AWhiteboardActor Function OnInteractionEnded *****************************
 struct WhiteboardActor_eventOnInteractionEnded_Parms
 {
 	APawn* Player;
 };
-static const FName NAME_AWhiteboardActor_OnInteractionEnded = FName(TEXT("OnInteractionEnded"));
+static FName NAME_AWhiteboardActor_OnInteractionEnded = FName(TEXT("OnInteractionEnded"));
 void AWhiteboardActor::OnInteractionEnded(APawn* Player)
 {
 	WhiteboardActor_eventOnInteractionEnded_Parms Parms;
@@ -1951,7 +2201,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_OnInteractionEnded_Statics::NewProp_Player,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_OnInteractionEnded_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_OnInteractionEnded_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "OnInteractionEnded", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_OnInteractionEnded_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_OnInteractionEnded_Statics::PropPointers), sizeof(WhiteboardActor_eventOnInteractionEnded_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x08020800, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_OnInteractionEnded_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_OnInteractionEnded_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_OnInteractionEnded_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "OnInteractionEnded", Z_Construct_UFunction_AWhiteboardActor_OnInteractionEnded_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_OnInteractionEnded_Statics::PropPointers), sizeof(WhiteboardActor_eventOnInteractionEnded_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x08020800, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_OnInteractionEnded_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_OnInteractionEnded_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(WhiteboardActor_eventOnInteractionEnded_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_OnInteractionEnded()
 {
@@ -1962,14 +2212,14 @@ UFunction* Z_Construct_UFunction_AWhiteboardActor_OnInteractionEnded()
 	}
 	return ReturnFunction;
 }
-// End Class AWhiteboardActor Function OnInteractionEnded
+// ********** End Class AWhiteboardActor Function OnInteractionEnded *******************************
 
-// Begin Class AWhiteboardActor Function OnInteractionStarted
+// ********** Begin Class AWhiteboardActor Function OnInteractionStarted ***************************
 struct WhiteboardActor_eventOnInteractionStarted_Parms
 {
 	APawn* Player;
 };
-static const FName NAME_AWhiteboardActor_OnInteractionStarted = FName(TEXT("OnInteractionStarted"));
+static FName NAME_AWhiteboardActor_OnInteractionStarted = FName(TEXT("OnInteractionStarted"));
 void AWhiteboardActor::OnInteractionStarted(APawn* Player)
 {
 	WhiteboardActor_eventOnInteractionStarted_Parms Parms;
@@ -2000,7 +2250,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_OnInteractionStarted_Statics::NewProp_Player,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_OnInteractionStarted_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_OnInteractionStarted_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "OnInteractionStarted", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_OnInteractionStarted_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_OnInteractionStarted_Statics::PropPointers), sizeof(WhiteboardActor_eventOnInteractionStarted_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x08020800, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_OnInteractionStarted_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_OnInteractionStarted_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_OnInteractionStarted_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "OnInteractionStarted", Z_Construct_UFunction_AWhiteboardActor_OnInteractionStarted_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_OnInteractionStarted_Statics::PropPointers), sizeof(WhiteboardActor_eventOnInteractionStarted_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x08020800, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_OnInteractionStarted_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_OnInteractionStarted_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(WhiteboardActor_eventOnInteractionStarted_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_OnInteractionStarted()
 {
@@ -2011,14 +2261,14 @@ UFunction* Z_Construct_UFunction_AWhiteboardActor_OnInteractionStarted()
 	}
 	return ReturnFunction;
 }
-// End Class AWhiteboardActor Function OnInteractionStarted
+// ********** End Class AWhiteboardActor Function OnInteractionStarted *****************************
 
-// Begin Class AWhiteboardActor Function OnPlayerEnteredRange
+// ********** Begin Class AWhiteboardActor Function OnPlayerEnteredRange ***************************
 struct WhiteboardActor_eventOnPlayerEnteredRange_Parms
 {
 	APawn* Player;
 };
-static const FName NAME_AWhiteboardActor_OnPlayerEnteredRange = FName(TEXT("OnPlayerEnteredRange"));
+static FName NAME_AWhiteboardActor_OnPlayerEnteredRange = FName(TEXT("OnPlayerEnteredRange"));
 void AWhiteboardActor::OnPlayerEnteredRange(APawn* Player)
 {
 	WhiteboardActor_eventOnPlayerEnteredRange_Parms Parms;
@@ -2043,7 +2293,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_OnPlayerEnteredRange_Statics::NewProp_Player,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_OnPlayerEnteredRange_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_OnPlayerEnteredRange_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "OnPlayerEnteredRange", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_OnPlayerEnteredRange_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_OnPlayerEnteredRange_Statics::PropPointers), sizeof(WhiteboardActor_eventOnPlayerEnteredRange_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x08020800, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_OnPlayerEnteredRange_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_OnPlayerEnteredRange_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_OnPlayerEnteredRange_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "OnPlayerEnteredRange", Z_Construct_UFunction_AWhiteboardActor_OnPlayerEnteredRange_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_OnPlayerEnteredRange_Statics::PropPointers), sizeof(WhiteboardActor_eventOnPlayerEnteredRange_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x08020800, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_OnPlayerEnteredRange_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_OnPlayerEnteredRange_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(WhiteboardActor_eventOnPlayerEnteredRange_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_OnPlayerEnteredRange()
 {
@@ -2054,14 +2304,14 @@ UFunction* Z_Construct_UFunction_AWhiteboardActor_OnPlayerEnteredRange()
 	}
 	return ReturnFunction;
 }
-// End Class AWhiteboardActor Function OnPlayerEnteredRange
+// ********** End Class AWhiteboardActor Function OnPlayerEnteredRange *****************************
 
-// Begin Class AWhiteboardActor Function OnPlayerExitedRange
+// ********** Begin Class AWhiteboardActor Function OnPlayerExitedRange ****************************
 struct WhiteboardActor_eventOnPlayerExitedRange_Parms
 {
 	APawn* Player;
 };
-static const FName NAME_AWhiteboardActor_OnPlayerExitedRange = FName(TEXT("OnPlayerExitedRange"));
+static FName NAME_AWhiteboardActor_OnPlayerExitedRange = FName(TEXT("OnPlayerExitedRange"));
 void AWhiteboardActor::OnPlayerExitedRange(APawn* Player)
 {
 	WhiteboardActor_eventOnPlayerExitedRange_Parms Parms;
@@ -2086,7 +2336,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_OnPlayerExitedRange_Statics::NewProp_Player,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_OnPlayerExitedRange_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_OnPlayerExitedRange_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "OnPlayerExitedRange", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_OnPlayerExitedRange_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_OnPlayerExitedRange_Statics::PropPointers), sizeof(WhiteboardActor_eventOnPlayerExitedRange_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x08020800, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_OnPlayerExitedRange_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_OnPlayerExitedRange_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_OnPlayerExitedRange_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "OnPlayerExitedRange", Z_Construct_UFunction_AWhiteboardActor_OnPlayerExitedRange_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_OnPlayerExitedRange_Statics::PropPointers), sizeof(WhiteboardActor_eventOnPlayerExitedRange_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x08020800, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_OnPlayerExitedRange_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_OnPlayerExitedRange_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(WhiteboardActor_eventOnPlayerExitedRange_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_OnPlayerExitedRange()
 {
@@ -2097,9 +2347,9 @@ UFunction* Z_Construct_UFunction_AWhiteboardActor_OnPlayerExitedRange()
 	}
 	return ReturnFunction;
 }
-// End Class AWhiteboardActor Function OnPlayerExitedRange
+// ********** End Class AWhiteboardActor Function OnPlayerExitedRange ******************************
 
-// Begin Class AWhiteboardActor Function OnRep_InteractingPawns
+// ********** Begin Class AWhiteboardActor Function OnRep_InteractingPawns *************************
 struct Z_Construct_UFunction_AWhiteboardActor_OnRep_InteractingPawns_Statics
 {
 #if WITH_METADATA
@@ -2109,7 +2359,7 @@ struct Z_Construct_UFunction_AWhiteboardActor_OnRep_InteractingPawns_Statics
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_OnRep_InteractingPawns_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "OnRep_InteractingPawns", nullptr, nullptr, nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00080401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_OnRep_InteractingPawns_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_OnRep_InteractingPawns_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_OnRep_InteractingPawns_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "OnRep_InteractingPawns", nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x40080401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_OnRep_InteractingPawns_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_OnRep_InteractingPawns_Statics::Function_MetaDataParams)},  };
 UFunction* Z_Construct_UFunction_AWhiteboardActor_OnRep_InteractingPawns()
 {
 	static UFunction* ReturnFunction = nullptr;
@@ -2126,9 +2376,9 @@ DEFINE_FUNCTION(AWhiteboardActor::execOnRep_InteractingPawns)
 	P_THIS->OnRep_InteractingPawns();
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function OnRep_InteractingPawns
+// ********** End Class AWhiteboardActor Function OnRep_InteractingPawns ***************************
 
-// Begin Class AWhiteboardActor Function OnRep_StrokeHistory
+// ********** Begin Class AWhiteboardActor Function OnRep_StrokeHistory ****************************
 struct Z_Construct_UFunction_AWhiteboardActor_OnRep_StrokeHistory_Statics
 {
 #if WITH_METADATA
@@ -2144,7 +2394,7 @@ struct Z_Construct_UFunction_AWhiteboardActor_OnRep_StrokeHistory_Statics
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_OnRep_StrokeHistory_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "OnRep_StrokeHistory", nullptr, nullptr, nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00080401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_OnRep_StrokeHistory_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_OnRep_StrokeHistory_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_OnRep_StrokeHistory_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "OnRep_StrokeHistory", nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00080401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_OnRep_StrokeHistory_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_OnRep_StrokeHistory_Statics::Function_MetaDataParams)},  };
 UFunction* Z_Construct_UFunction_AWhiteboardActor_OnRep_StrokeHistory()
 {
 	static UFunction* ReturnFunction = nullptr;
@@ -2161,9 +2411,9 @@ DEFINE_FUNCTION(AWhiteboardActor::execOnRep_StrokeHistory)
 	P_THIS->OnRep_StrokeHistory();
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function OnRep_StrokeHistory
+// ********** End Class AWhiteboardActor Function OnRep_StrokeHistory ******************************
 
-// Begin Class AWhiteboardActor Function OnTriggerBeginOverlap
+// ********** Begin Class AWhiteboardActor Function OnTriggerBeginOverlap **************************
 struct Z_Construct_UFunction_AWhiteboardActor_OnTriggerBeginOverlap_Statics
 {
 	struct WhiteboardActor_eventOnTriggerBeginOverlap_Parms
@@ -2208,7 +2458,7 @@ void Z_Construct_UFunction_AWhiteboardActor_OnTriggerBeginOverlap_Statics::NewPr
 	((WhiteboardActor_eventOnTriggerBeginOverlap_Parms*)Obj)->bFromSweep = 1;
 }
 const UECodeGen_Private::FBoolPropertyParams Z_Construct_UFunction_AWhiteboardActor_OnTriggerBeginOverlap_Statics::NewProp_bFromSweep = { "bFromSweep", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, sizeof(bool), sizeof(WhiteboardActor_eventOnTriggerBeginOverlap_Parms), &Z_Construct_UFunction_AWhiteboardActor_OnTriggerBeginOverlap_Statics::NewProp_bFromSweep_SetBit, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_AWhiteboardActor_OnTriggerBeginOverlap_Statics::NewProp_SweepResult = { "SweepResult", nullptr, (EPropertyFlags)0x0010008008000182, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventOnTriggerBeginOverlap_Parms, SweepResult), Z_Construct_UScriptStruct_FHitResult, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_SweepResult_MetaData), NewProp_SweepResult_MetaData) }; // 4100991306
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_AWhiteboardActor_OnTriggerBeginOverlap_Statics::NewProp_SweepResult = { "SweepResult", nullptr, (EPropertyFlags)0x0010008008000182, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventOnTriggerBeginOverlap_Parms, SweepResult), Z_Construct_UScriptStruct_FHitResult, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_SweepResult_MetaData), NewProp_SweepResult_MetaData) }; // 267591329
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_OnTriggerBeginOverlap_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_OnTriggerBeginOverlap_Statics::NewProp_OverlappedComponent,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_OnTriggerBeginOverlap_Statics::NewProp_OtherActor,
@@ -2218,7 +2468,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_OnTriggerBeginOverlap_Statics::NewProp_SweepResult,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_OnTriggerBeginOverlap_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_OnTriggerBeginOverlap_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "OnTriggerBeginOverlap", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_OnTriggerBeginOverlap_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_OnTriggerBeginOverlap_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_OnTriggerBeginOverlap_Statics::WhiteboardActor_eventOnTriggerBeginOverlap_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00480401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_OnTriggerBeginOverlap_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_OnTriggerBeginOverlap_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_OnTriggerBeginOverlap_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "OnTriggerBeginOverlap", Z_Construct_UFunction_AWhiteboardActor_OnTriggerBeginOverlap_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_OnTriggerBeginOverlap_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_OnTriggerBeginOverlap_Statics::WhiteboardActor_eventOnTriggerBeginOverlap_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00480401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_OnTriggerBeginOverlap_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_OnTriggerBeginOverlap_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_OnTriggerBeginOverlap_Statics::WhiteboardActor_eventOnTriggerBeginOverlap_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_OnTriggerBeginOverlap()
 {
@@ -2242,9 +2492,9 @@ DEFINE_FUNCTION(AWhiteboardActor::execOnTriggerBeginOverlap)
 	P_THIS->OnTriggerBeginOverlap(Z_Param_OverlappedComponent,Z_Param_OtherActor,Z_Param_OtherComp,Z_Param_OtherBodyIndex,Z_Param_bFromSweep,Z_Param_Out_SweepResult);
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function OnTriggerBeginOverlap
+// ********** End Class AWhiteboardActor Function OnTriggerBeginOverlap ****************************
 
-// Begin Class AWhiteboardActor Function OnTriggerEndOverlap
+// ********** Begin Class AWhiteboardActor Function OnTriggerEndOverlap ****************************
 struct Z_Construct_UFunction_AWhiteboardActor_OnTriggerEndOverlap_Statics
 {
 	struct WhiteboardActor_eventOnTriggerEndOverlap_Parms
@@ -2283,7 +2533,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_OnTriggerEndOverlap_Statics::NewProp_OtherBodyIndex,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_OnTriggerEndOverlap_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_OnTriggerEndOverlap_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "OnTriggerEndOverlap", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_OnTriggerEndOverlap_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_OnTriggerEndOverlap_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_OnTriggerEndOverlap_Statics::WhiteboardActor_eventOnTriggerEndOverlap_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00080401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_OnTriggerEndOverlap_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_OnTriggerEndOverlap_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_OnTriggerEndOverlap_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "OnTriggerEndOverlap", Z_Construct_UFunction_AWhiteboardActor_OnTriggerEndOverlap_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_OnTriggerEndOverlap_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_OnTriggerEndOverlap_Statics::WhiteboardActor_eventOnTriggerEndOverlap_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00080401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_OnTriggerEndOverlap_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_OnTriggerEndOverlap_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_OnTriggerEndOverlap_Statics::WhiteboardActor_eventOnTriggerEndOverlap_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_OnTriggerEndOverlap()
 {
@@ -2305,20 +2555,20 @@ DEFINE_FUNCTION(AWhiteboardActor::execOnTriggerEndOverlap)
 	P_THIS->OnTriggerEndOverlap(Z_Param_OverlappedComponent,Z_Param_OtherActor,Z_Param_OtherComp,Z_Param_OtherBodyIndex);
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function OnTriggerEndOverlap
+// ********** End Class AWhiteboardActor Function OnTriggerEndOverlap ******************************
 
-// Begin Class AWhiteboardActor Function Redo
+// ********** Begin Class AWhiteboardActor Function Redo *******************************************
 struct Z_Construct_UFunction_AWhiteboardActor_Redo_Statics
 {
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "Whiteboard" },
+		{ "Category", "Whiteboard|Drawing Tools" },
 		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
 	};
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Redo_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Redo", nullptr, nullptr, nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Redo_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Redo_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Redo_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Redo", nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Redo_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Redo_Statics::Function_MetaDataParams)},  };
 UFunction* Z_Construct_UFunction_AWhiteboardActor_Redo()
 {
 	static UFunction* ReturnFunction = nullptr;
@@ -2335,9 +2585,9 @@ DEFINE_FUNCTION(AWhiteboardActor::execRedo)
 	P_THIS->Redo();
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function Redo
+// ********** End Class AWhiteboardActor Function Redo *********************************************
 
-// Begin Class AWhiteboardActor Function RemoveInteractingPlayer
+// ********** Begin Class AWhiteboardActor Function RemoveInteractingPlayer ************************
 struct Z_Construct_UFunction_AWhiteboardActor_RemoveInteractingPlayer_Statics
 {
 	struct WhiteboardActor_eventRemoveInteractingPlayer_Parms
@@ -2359,7 +2609,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_RemoveInteractingPlayer_Statics::NewProp_Player,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_RemoveInteractingPlayer_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_RemoveInteractingPlayer_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "RemoveInteractingPlayer", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_RemoveInteractingPlayer_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_RemoveInteractingPlayer_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_RemoveInteractingPlayer_Statics::WhiteboardActor_eventRemoveInteractingPlayer_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_RemoveInteractingPlayer_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_RemoveInteractingPlayer_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_RemoveInteractingPlayer_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "RemoveInteractingPlayer", Z_Construct_UFunction_AWhiteboardActor_RemoveInteractingPlayer_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_RemoveInteractingPlayer_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_RemoveInteractingPlayer_Statics::WhiteboardActor_eventRemoveInteractingPlayer_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_RemoveInteractingPlayer_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_RemoveInteractingPlayer_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_RemoveInteractingPlayer_Statics::WhiteboardActor_eventRemoveInteractingPlayer_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_RemoveInteractingPlayer()
 {
@@ -2378,9 +2628,9 @@ DEFINE_FUNCTION(AWhiteboardActor::execRemoveInteractingPlayer)
 	P_THIS->RemoveInteractingPlayer(Z_Param_Player);
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function RemoveInteractingPlayer
+// ********** End Class AWhiteboardActor Function RemoveInteractingPlayer **************************
 
-// Begin Class AWhiteboardActor Function RequestEndInteraction
+// ********** Begin Class AWhiteboardActor Function RequestEndInteraction **************************
 struct Z_Construct_UFunction_AWhiteboardActor_RequestEndInteraction_Statics
 {
 	struct WhiteboardActor_eventRequestEndInteraction_Parms
@@ -2402,7 +2652,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_RequestEndInteraction_Statics::NewProp_Player,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_RequestEndInteraction_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_RequestEndInteraction_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "RequestEndInteraction", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_RequestEndInteraction_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_RequestEndInteraction_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_RequestEndInteraction_Statics::WhiteboardActor_eventRequestEndInteraction_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_RequestEndInteraction_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_RequestEndInteraction_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_RequestEndInteraction_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "RequestEndInteraction", Z_Construct_UFunction_AWhiteboardActor_RequestEndInteraction_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_RequestEndInteraction_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_RequestEndInteraction_Statics::WhiteboardActor_eventRequestEndInteraction_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_RequestEndInteraction_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_RequestEndInteraction_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_RequestEndInteraction_Statics::WhiteboardActor_eventRequestEndInteraction_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_RequestEndInteraction()
 {
@@ -2421,9 +2671,9 @@ DEFINE_FUNCTION(AWhiteboardActor::execRequestEndInteraction)
 	P_THIS->RequestEndInteraction(Z_Param_Player);
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function RequestEndInteraction
+// ********** End Class AWhiteboardActor Function RequestEndInteraction ****************************
 
-// Begin Class AWhiteboardActor Function RequestInteraction
+// ********** Begin Class AWhiteboardActor Function RequestInteraction *****************************
 struct Z_Construct_UFunction_AWhiteboardActor_RequestInteraction_Statics
 {
 	struct WhiteboardActor_eventRequestInteraction_Parms
@@ -2451,7 +2701,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_RequestInteraction_Statics::NewProp_Player,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_RequestInteraction_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_RequestInteraction_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "RequestInteraction", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_RequestInteraction_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_RequestInteraction_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_RequestInteraction_Statics::WhiteboardActor_eventRequestInteraction_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_RequestInteraction_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_RequestInteraction_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_RequestInteraction_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "RequestInteraction", Z_Construct_UFunction_AWhiteboardActor_RequestInteraction_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_RequestInteraction_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_RequestInteraction_Statics::WhiteboardActor_eventRequestInteraction_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_RequestInteraction_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_RequestInteraction_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_RequestInteraction_Statics::WhiteboardActor_eventRequestInteraction_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_RequestInteraction()
 {
@@ -2470,9 +2720,9 @@ DEFINE_FUNCTION(AWhiteboardActor::execRequestInteraction)
 	P_THIS->RequestInteraction(Z_Param_Player);
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function RequestInteraction
+// ********** End Class AWhiteboardActor Function RequestInteraction *******************************
 
-// Begin Class AWhiteboardActor Function Server_AddText
+// ********** Begin Class AWhiteboardActor Function Server_AddText *********************************
 struct WhiteboardActor_eventServer_AddText_Parms
 {
 	FVector2D CanvasPosition;
@@ -2480,7 +2730,7 @@ struct WhiteboardActor_eventServer_AddText_Parms
 	FLinearColor Color;
 	float Size;
 };
-static const FName NAME_AWhiteboardActor_Server_AddText = FName(TEXT("Server_AddText"));
+static FName NAME_AWhiteboardActor_Server_AddText = FName(TEXT("Server_AddText"));
 void AWhiteboardActor::Server_AddText(FVector2D const& CanvasPosition, const FString& Text, FLinearColor Color, float Size)
 {
 	WhiteboardActor_eventServer_AddText_Parms Parms;
@@ -2522,7 +2772,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_Server_AddText_Statics::NewProp_Size,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_AddText_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Server_AddText_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Server_AddText", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_Server_AddText_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_AddText_Statics::PropPointers), sizeof(WhiteboardActor_eventServer_AddText_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00A20CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_AddText_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Server_AddText_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Server_AddText_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Server_AddText", Z_Construct_UFunction_AWhiteboardActor_Server_AddText_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_AddText_Statics::PropPointers), sizeof(WhiteboardActor_eventServer_AddText_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00A20CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_AddText_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Server_AddText_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(WhiteboardActor_eventServer_AddText_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_Server_AddText()
 {
@@ -2544,10 +2794,10 @@ DEFINE_FUNCTION(AWhiteboardActor::execServer_AddText)
 	P_THIS->Server_AddText_Implementation(Z_Param_CanvasPosition,Z_Param_Text,Z_Param_Color,Z_Param_Size);
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function Server_AddText
+// ********** End Class AWhiteboardActor Function Server_AddText ***********************************
 
-// Begin Class AWhiteboardActor Function Server_ClearWhiteboard
-static const FName NAME_AWhiteboardActor_Server_ClearWhiteboard = FName(TEXT("Server_ClearWhiteboard"));
+// ********** Begin Class AWhiteboardActor Function Server_ClearWhiteboard *************************
+static FName NAME_AWhiteboardActor_Server_ClearWhiteboard = FName(TEXT("Server_ClearWhiteboard"));
 void AWhiteboardActor::Server_ClearWhiteboard()
 {
 	UFunction* Func = FindFunctionChecked(NAME_AWhiteboardActor_Server_ClearWhiteboard);
@@ -2562,7 +2812,7 @@ struct Z_Construct_UFunction_AWhiteboardActor_Server_ClearWhiteboard_Statics
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Server_ClearWhiteboard_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Server_ClearWhiteboard", nullptr, nullptr, nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00220CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_ClearWhiteboard_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Server_ClearWhiteboard_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Server_ClearWhiteboard_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Server_ClearWhiteboard", nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00220CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_ClearWhiteboard_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Server_ClearWhiteboard_Statics::Function_MetaDataParams)},  };
 UFunction* Z_Construct_UFunction_AWhiteboardActor_Server_ClearWhiteboard()
 {
 	static UFunction* ReturnFunction = nullptr;
@@ -2579,14 +2829,14 @@ DEFINE_FUNCTION(AWhiteboardActor::execServer_ClearWhiteboard)
 	P_THIS->Server_ClearWhiteboard_Implementation();
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function Server_ClearWhiteboard
+// ********** End Class AWhiteboardActor Function Server_ClearWhiteboard ***************************
 
-// Begin Class AWhiteboardActor Function Server_ContinueDrawing
+// ********** Begin Class AWhiteboardActor Function Server_ContinueDrawing *************************
 struct WhiteboardActor_eventServer_ContinueDrawing_Parms
 {
 	FVector2D CanvasPosition;
 };
-static const FName NAME_AWhiteboardActor_Server_ContinueDrawing = FName(TEXT("Server_ContinueDrawing"));
+static FName NAME_AWhiteboardActor_Server_ContinueDrawing = FName(TEXT("Server_ContinueDrawing"));
 void AWhiteboardActor::Server_ContinueDrawing(FVector2D const& CanvasPosition)
 {
 	WhiteboardActor_eventServer_ContinueDrawing_Parms Parms;
@@ -2613,7 +2863,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_Server_ContinueDrawing_Statics::NewProp_CanvasPosition,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_ContinueDrawing_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Server_ContinueDrawing_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Server_ContinueDrawing", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_Server_ContinueDrawing_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_ContinueDrawing_Statics::PropPointers), sizeof(WhiteboardActor_eventServer_ContinueDrawing_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00A20CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_ContinueDrawing_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Server_ContinueDrawing_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Server_ContinueDrawing_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Server_ContinueDrawing", Z_Construct_UFunction_AWhiteboardActor_Server_ContinueDrawing_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_ContinueDrawing_Statics::PropPointers), sizeof(WhiteboardActor_eventServer_ContinueDrawing_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00A20CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_ContinueDrawing_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Server_ContinueDrawing_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(WhiteboardActor_eventServer_ContinueDrawing_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_Server_ContinueDrawing()
 {
@@ -2632,9 +2882,9 @@ DEFINE_FUNCTION(AWhiteboardActor::execServer_ContinueDrawing)
 	P_THIS->Server_ContinueDrawing_Implementation(Z_Param_CanvasPosition);
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function Server_ContinueDrawing
+// ********** End Class AWhiteboardActor Function Server_ContinueDrawing ***************************
 
-// Begin Class AWhiteboardActor Function Server_DrawFigure
+// ********** Begin Class AWhiteboardActor Function Server_DrawFigure ******************************
 struct WhiteboardActor_eventServer_DrawFigure_Parms
 {
 	FVector2D CanvasPosition;
@@ -2642,7 +2892,7 @@ struct WhiteboardActor_eventServer_DrawFigure_Parms
 	FLinearColor Color;
 	float Size;
 };
-static const FName NAME_AWhiteboardActor_Server_DrawFigure = FName(TEXT("Server_DrawFigure"));
+static FName NAME_AWhiteboardActor_Server_DrawFigure = FName(TEXT("Server_DrawFigure"));
 void AWhiteboardActor::Server_DrawFigure(FVector2D const& CanvasPosition, int32 SelectedFigureIndex, FLinearColor Color, float Size)
 {
 	WhiteboardActor_eventServer_DrawFigure_Parms Parms;
@@ -2681,7 +2931,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_Server_DrawFigure_Statics::NewProp_Size,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_DrawFigure_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Server_DrawFigure_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Server_DrawFigure", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_Server_DrawFigure_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_DrawFigure_Statics::PropPointers), sizeof(WhiteboardActor_eventServer_DrawFigure_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00A20CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_DrawFigure_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Server_DrawFigure_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Server_DrawFigure_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Server_DrawFigure", Z_Construct_UFunction_AWhiteboardActor_Server_DrawFigure_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_DrawFigure_Statics::PropPointers), sizeof(WhiteboardActor_eventServer_DrawFigure_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00A20CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_DrawFigure_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Server_DrawFigure_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(WhiteboardActor_eventServer_DrawFigure_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_Server_DrawFigure()
 {
@@ -2703,10 +2953,10 @@ DEFINE_FUNCTION(AWhiteboardActor::execServer_DrawFigure)
 	P_THIS->Server_DrawFigure_Implementation(Z_Param_CanvasPosition,Z_Param_SelectedFigureIndex,Z_Param_Color,Z_Param_Size);
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function Server_DrawFigure
+// ********** End Class AWhiteboardActor Function Server_DrawFigure ********************************
 
-// Begin Class AWhiteboardActor Function Server_EndDrawing
-static const FName NAME_AWhiteboardActor_Server_EndDrawing = FName(TEXT("Server_EndDrawing"));
+// ********** Begin Class AWhiteboardActor Function Server_EndDrawing ******************************
+static FName NAME_AWhiteboardActor_Server_EndDrawing = FName(TEXT("Server_EndDrawing"));
 void AWhiteboardActor::Server_EndDrawing()
 {
 	UFunction* Func = FindFunctionChecked(NAME_AWhiteboardActor_Server_EndDrawing);
@@ -2721,7 +2971,7 @@ struct Z_Construct_UFunction_AWhiteboardActor_Server_EndDrawing_Statics
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Server_EndDrawing_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Server_EndDrawing", nullptr, nullptr, nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00220CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_EndDrawing_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Server_EndDrawing_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Server_EndDrawing_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Server_EndDrawing", nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00220CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_EndDrawing_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Server_EndDrawing_Statics::Function_MetaDataParams)},  };
 UFunction* Z_Construct_UFunction_AWhiteboardActor_Server_EndDrawing()
 {
 	static UFunction* ReturnFunction = nullptr;
@@ -2738,10 +2988,10 @@ DEFINE_FUNCTION(AWhiteboardActor::execServer_EndDrawing)
 	P_THIS->Server_EndDrawing_Implementation();
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function Server_EndDrawing
+// ********** End Class AWhiteboardActor Function Server_EndDrawing ********************************
 
-// Begin Class AWhiteboardActor Function Server_Redo
-static const FName NAME_AWhiteboardActor_Server_Redo = FName(TEXT("Server_Redo"));
+// ********** Begin Class AWhiteboardActor Function Server_Redo ************************************
+static FName NAME_AWhiteboardActor_Server_Redo = FName(TEXT("Server_Redo"));
 void AWhiteboardActor::Server_Redo()
 {
 	UFunction* Func = FindFunctionChecked(NAME_AWhiteboardActor_Server_Redo);
@@ -2756,7 +3006,7 @@ struct Z_Construct_UFunction_AWhiteboardActor_Server_Redo_Statics
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Server_Redo_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Server_Redo", nullptr, nullptr, nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00220CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_Redo_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Server_Redo_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Server_Redo_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Server_Redo", nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00220CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_Redo_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Server_Redo_Statics::Function_MetaDataParams)},  };
 UFunction* Z_Construct_UFunction_AWhiteboardActor_Server_Redo()
 {
 	static UFunction* ReturnFunction = nullptr;
@@ -2773,340 +3023,20 @@ DEFINE_FUNCTION(AWhiteboardActor::execServer_Redo)
 	P_THIS->Server_Redo_Implementation();
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function Server_Redo
+// ********** End Class AWhiteboardActor Function Server_Redo **************************************
 
-// Begin Class AWhiteboardActor Function Server_SetBrushSize
-struct WhiteboardActor_eventServer_SetBrushSize_Parms
-{
-	float NewSize;
-};
-static const FName NAME_AWhiteboardActor_Server_SetBrushSize = FName(TEXT("Server_SetBrushSize"));
-void AWhiteboardActor::Server_SetBrushSize(float NewSize)
-{
-	WhiteboardActor_eventServer_SetBrushSize_Parms Parms;
-	Parms.NewSize=NewSize;
-	UFunction* Func = FindFunctionChecked(NAME_AWhiteboardActor_Server_SetBrushSize);
-	ProcessEvent(Func,&Parms);
-}
-struct Z_Construct_UFunction_AWhiteboardActor_Server_SetBrushSize_Statics
-{
-#if WITH_METADATA
-	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
-	};
-#endif // WITH_METADATA
-	static const UECodeGen_Private::FFloatPropertyParams NewProp_NewSize;
-	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-	static const UECodeGen_Private::FFunctionParams FuncParams;
-};
-const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_AWhiteboardActor_Server_SetBrushSize_Statics::NewProp_NewSize = { "NewSize", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventServer_SetBrushSize_Parms, NewSize), METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_Server_SetBrushSize_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_Server_SetBrushSize_Statics::NewProp_NewSize,
-};
-static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_SetBrushSize_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Server_SetBrushSize_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Server_SetBrushSize", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_Server_SetBrushSize_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_SetBrushSize_Statics::PropPointers), sizeof(WhiteboardActor_eventServer_SetBrushSize_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00220CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_SetBrushSize_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Server_SetBrushSize_Statics::Function_MetaDataParams) };
-static_assert(sizeof(WhiteboardActor_eventServer_SetBrushSize_Parms) < MAX_uint16);
-UFunction* Z_Construct_UFunction_AWhiteboardActor_Server_SetBrushSize()
-{
-	static UFunction* ReturnFunction = nullptr;
-	if (!ReturnFunction)
-	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AWhiteboardActor_Server_SetBrushSize_Statics::FuncParams);
-	}
-	return ReturnFunction;
-}
-DEFINE_FUNCTION(AWhiteboardActor::execServer_SetBrushSize)
-{
-	P_GET_PROPERTY(FFloatProperty,Z_Param_NewSize);
-	P_FINISH;
-	P_NATIVE_BEGIN;
-	P_THIS->Server_SetBrushSize_Implementation(Z_Param_NewSize);
-	P_NATIVE_END;
-}
-// End Class AWhiteboardActor Function Server_SetBrushSize
-
-// Begin Class AWhiteboardActor Function Server_SetBrushTexture
-struct WhiteboardActor_eventServer_SetBrushTexture_Parms
-{
-	int32 TextureIndex;
-};
-static const FName NAME_AWhiteboardActor_Server_SetBrushTexture = FName(TEXT("Server_SetBrushTexture"));
-void AWhiteboardActor::Server_SetBrushTexture(int32 TextureIndex)
-{
-	WhiteboardActor_eventServer_SetBrushTexture_Parms Parms;
-	Parms.TextureIndex=TextureIndex;
-	UFunction* Func = FindFunctionChecked(NAME_AWhiteboardActor_Server_SetBrushTexture);
-	ProcessEvent(Func,&Parms);
-}
-struct Z_Construct_UFunction_AWhiteboardActor_Server_SetBrushTexture_Statics
-{
-#if WITH_METADATA
-	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
-	};
-#endif // WITH_METADATA
-	static const UECodeGen_Private::FIntPropertyParams NewProp_TextureIndex;
-	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-	static const UECodeGen_Private::FFunctionParams FuncParams;
-};
-const UECodeGen_Private::FIntPropertyParams Z_Construct_UFunction_AWhiteboardActor_Server_SetBrushTexture_Statics::NewProp_TextureIndex = { "TextureIndex", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventServer_SetBrushTexture_Parms, TextureIndex), METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_Server_SetBrushTexture_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_Server_SetBrushTexture_Statics::NewProp_TextureIndex,
-};
-static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_SetBrushTexture_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Server_SetBrushTexture_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Server_SetBrushTexture", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_Server_SetBrushTexture_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_SetBrushTexture_Statics::PropPointers), sizeof(WhiteboardActor_eventServer_SetBrushTexture_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00220CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_SetBrushTexture_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Server_SetBrushTexture_Statics::Function_MetaDataParams) };
-static_assert(sizeof(WhiteboardActor_eventServer_SetBrushTexture_Parms) < MAX_uint16);
-UFunction* Z_Construct_UFunction_AWhiteboardActor_Server_SetBrushTexture()
-{
-	static UFunction* ReturnFunction = nullptr;
-	if (!ReturnFunction)
-	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AWhiteboardActor_Server_SetBrushTexture_Statics::FuncParams);
-	}
-	return ReturnFunction;
-}
-DEFINE_FUNCTION(AWhiteboardActor::execServer_SetBrushTexture)
-{
-	P_GET_PROPERTY(FIntProperty,Z_Param_TextureIndex);
-	P_FINISH;
-	P_NATIVE_BEGIN;
-	P_THIS->Server_SetBrushTexture_Implementation(Z_Param_TextureIndex);
-	P_NATIVE_END;
-}
-// End Class AWhiteboardActor Function Server_SetBrushTexture
-
-// Begin Class AWhiteboardActor Function Server_SetCurrentColor
-struct WhiteboardActor_eventServer_SetCurrentColor_Parms
-{
-	FLinearColor NewColor;
-};
-static const FName NAME_AWhiteboardActor_Server_SetCurrentColor = FName(TEXT("Server_SetCurrentColor"));
-void AWhiteboardActor::Server_SetCurrentColor(FLinearColor NewColor)
-{
-	WhiteboardActor_eventServer_SetCurrentColor_Parms Parms;
-	Parms.NewColor=NewColor;
-	UFunction* Func = FindFunctionChecked(NAME_AWhiteboardActor_Server_SetCurrentColor);
-	ProcessEvent(Func,&Parms);
-}
-struct Z_Construct_UFunction_AWhiteboardActor_Server_SetCurrentColor_Statics
-{
-#if WITH_METADATA
-	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
-	};
-#endif // WITH_METADATA
-	static const UECodeGen_Private::FStructPropertyParams NewProp_NewColor;
-	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-	static const UECodeGen_Private::FFunctionParams FuncParams;
-};
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_AWhiteboardActor_Server_SetCurrentColor_Statics::NewProp_NewColor = { "NewColor", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventServer_SetCurrentColor_Parms, NewColor), Z_Construct_UScriptStruct_FLinearColor, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_Server_SetCurrentColor_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_Server_SetCurrentColor_Statics::NewProp_NewColor,
-};
-static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_SetCurrentColor_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Server_SetCurrentColor_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Server_SetCurrentColor", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_Server_SetCurrentColor_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_SetCurrentColor_Statics::PropPointers), sizeof(WhiteboardActor_eventServer_SetCurrentColor_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00A20CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_SetCurrentColor_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Server_SetCurrentColor_Statics::Function_MetaDataParams) };
-static_assert(sizeof(WhiteboardActor_eventServer_SetCurrentColor_Parms) < MAX_uint16);
-UFunction* Z_Construct_UFunction_AWhiteboardActor_Server_SetCurrentColor()
-{
-	static UFunction* ReturnFunction = nullptr;
-	if (!ReturnFunction)
-	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AWhiteboardActor_Server_SetCurrentColor_Statics::FuncParams);
-	}
-	return ReturnFunction;
-}
-DEFINE_FUNCTION(AWhiteboardActor::execServer_SetCurrentColor)
-{
-	P_GET_STRUCT(FLinearColor,Z_Param_NewColor);
-	P_FINISH;
-	P_NATIVE_BEGIN;
-	P_THIS->Server_SetCurrentColor_Implementation(Z_Param_NewColor);
-	P_NATIVE_END;
-}
-// End Class AWhiteboardActor Function Server_SetCurrentColor
-
-// Begin Class AWhiteboardActor Function Server_SetCurrentTool
-struct WhiteboardActor_eventServer_SetCurrentTool_Parms
-{
-	EDrawingTool NewTool;
-};
-static const FName NAME_AWhiteboardActor_Server_SetCurrentTool = FName(TEXT("Server_SetCurrentTool"));
-void AWhiteboardActor::Server_SetCurrentTool(EDrawingTool NewTool)
-{
-	WhiteboardActor_eventServer_SetCurrentTool_Parms Parms;
-	Parms.NewTool=NewTool;
-	UFunction* Func = FindFunctionChecked(NAME_AWhiteboardActor_Server_SetCurrentTool);
-	ProcessEvent(Func,&Parms);
-}
-struct Z_Construct_UFunction_AWhiteboardActor_Server_SetCurrentTool_Statics
-{
-#if WITH_METADATA
-	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
-	};
-#endif // WITH_METADATA
-	static const UECodeGen_Private::FBytePropertyParams NewProp_NewTool_Underlying;
-	static const UECodeGen_Private::FEnumPropertyParams NewProp_NewTool;
-	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-	static const UECodeGen_Private::FFunctionParams FuncParams;
-};
-const UECodeGen_Private::FBytePropertyParams Z_Construct_UFunction_AWhiteboardActor_Server_SetCurrentTool_Statics::NewProp_NewTool_Underlying = { "UnderlyingType", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, nullptr, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FEnumPropertyParams Z_Construct_UFunction_AWhiteboardActor_Server_SetCurrentTool_Statics::NewProp_NewTool = { "NewTool", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventServer_SetCurrentTool_Parms, NewTool), Z_Construct_UEnum_AdvancedDrawingBoard_EDrawingTool, METADATA_PARAMS(0, nullptr) }; // 3146191471
-const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_Server_SetCurrentTool_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_Server_SetCurrentTool_Statics::NewProp_NewTool_Underlying,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_Server_SetCurrentTool_Statics::NewProp_NewTool,
-};
-static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_SetCurrentTool_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Server_SetCurrentTool_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Server_SetCurrentTool", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_Server_SetCurrentTool_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_SetCurrentTool_Statics::PropPointers), sizeof(WhiteboardActor_eventServer_SetCurrentTool_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00220CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_SetCurrentTool_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Server_SetCurrentTool_Statics::Function_MetaDataParams) };
-static_assert(sizeof(WhiteboardActor_eventServer_SetCurrentTool_Parms) < MAX_uint16);
-UFunction* Z_Construct_UFunction_AWhiteboardActor_Server_SetCurrentTool()
-{
-	static UFunction* ReturnFunction = nullptr;
-	if (!ReturnFunction)
-	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AWhiteboardActor_Server_SetCurrentTool_Statics::FuncParams);
-	}
-	return ReturnFunction;
-}
-DEFINE_FUNCTION(AWhiteboardActor::execServer_SetCurrentTool)
-{
-	P_GET_ENUM(EDrawingTool,Z_Param_NewTool);
-	P_FINISH;
-	P_NATIVE_BEGIN;
-	P_THIS->Server_SetCurrentTool_Implementation(EDrawingTool(Z_Param_NewTool));
-	P_NATIVE_END;
-}
-// End Class AWhiteboardActor Function Server_SetCurrentTool
-
-// Begin Class AWhiteboardActor Function Server_SetFigureTexture
-struct WhiteboardActor_eventServer_SetFigureTexture_Parms
-{
-	int32 TextureIndex;
-};
-static const FName NAME_AWhiteboardActor_Server_SetFigureTexture = FName(TEXT("Server_SetFigureTexture"));
-void AWhiteboardActor::Server_SetFigureTexture(int32 TextureIndex)
-{
-	WhiteboardActor_eventServer_SetFigureTexture_Parms Parms;
-	Parms.TextureIndex=TextureIndex;
-	UFunction* Func = FindFunctionChecked(NAME_AWhiteboardActor_Server_SetFigureTexture);
-	ProcessEvent(Func,&Parms);
-}
-struct Z_Construct_UFunction_AWhiteboardActor_Server_SetFigureTexture_Statics
-{
-#if WITH_METADATA
-	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
-	};
-#endif // WITH_METADATA
-	static const UECodeGen_Private::FIntPropertyParams NewProp_TextureIndex;
-	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-	static const UECodeGen_Private::FFunctionParams FuncParams;
-};
-const UECodeGen_Private::FIntPropertyParams Z_Construct_UFunction_AWhiteboardActor_Server_SetFigureTexture_Statics::NewProp_TextureIndex = { "TextureIndex", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventServer_SetFigureTexture_Parms, TextureIndex), METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_Server_SetFigureTexture_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_Server_SetFigureTexture_Statics::NewProp_TextureIndex,
-};
-static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_SetFigureTexture_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Server_SetFigureTexture_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Server_SetFigureTexture", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_Server_SetFigureTexture_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_SetFigureTexture_Statics::PropPointers), sizeof(WhiteboardActor_eventServer_SetFigureTexture_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00220CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_SetFigureTexture_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Server_SetFigureTexture_Statics::Function_MetaDataParams) };
-static_assert(sizeof(WhiteboardActor_eventServer_SetFigureTexture_Parms) < MAX_uint16);
-UFunction* Z_Construct_UFunction_AWhiteboardActor_Server_SetFigureTexture()
-{
-	static UFunction* ReturnFunction = nullptr;
-	if (!ReturnFunction)
-	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AWhiteboardActor_Server_SetFigureTexture_Statics::FuncParams);
-	}
-	return ReturnFunction;
-}
-DEFINE_FUNCTION(AWhiteboardActor::execServer_SetFigureTexture)
-{
-	P_GET_PROPERTY(FIntProperty,Z_Param_TextureIndex);
-	P_FINISH;
-	P_NATIVE_BEGIN;
-	P_THIS->Server_SetFigureTexture_Implementation(Z_Param_TextureIndex);
-	P_NATIVE_END;
-}
-// End Class AWhiteboardActor Function Server_SetFigureTexture
-
-// Begin Class AWhiteboardActor Function Server_SetTextString
-struct WhiteboardActor_eventServer_SetTextString_Parms
-{
-	FString NewTextString;
-};
-static const FName NAME_AWhiteboardActor_Server_SetTextString = FName(TEXT("Server_SetTextString"));
-void AWhiteboardActor::Server_SetTextString(const FString& NewTextString)
-{
-	WhiteboardActor_eventServer_SetTextString_Parms Parms;
-	Parms.NewTextString=NewTextString;
-	UFunction* Func = FindFunctionChecked(NAME_AWhiteboardActor_Server_SetTextString);
-	ProcessEvent(Func,&Parms);
-}
-struct Z_Construct_UFunction_AWhiteboardActor_Server_SetTextString_Statics
-{
-#if WITH_METADATA
-	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-#if !UE_BUILD_SHIPPING
-		{ "Comment", "// Server RPC for text string\n" },
-#endif
-		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
-#if !UE_BUILD_SHIPPING
-		{ "ToolTip", "Server RPC for text string" },
-#endif
-	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_NewTextString_MetaData[] = {
-		{ "NativeConst", "" },
-	};
-#endif // WITH_METADATA
-	static const UECodeGen_Private::FStrPropertyParams NewProp_NewTextString;
-	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-	static const UECodeGen_Private::FFunctionParams FuncParams;
-};
-const UECodeGen_Private::FStrPropertyParams Z_Construct_UFunction_AWhiteboardActor_Server_SetTextString_Statics::NewProp_NewTextString = { "NewTextString", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventServer_SetTextString_Parms, NewTextString), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_NewTextString_MetaData), NewProp_NewTextString_MetaData) };
-const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_Server_SetTextString_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_Server_SetTextString_Statics::NewProp_NewTextString,
-};
-static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_SetTextString_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Server_SetTextString_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Server_SetTextString", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_Server_SetTextString_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_SetTextString_Statics::PropPointers), sizeof(WhiteboardActor_eventServer_SetTextString_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00220CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_SetTextString_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Server_SetTextString_Statics::Function_MetaDataParams) };
-static_assert(sizeof(WhiteboardActor_eventServer_SetTextString_Parms) < MAX_uint16);
-UFunction* Z_Construct_UFunction_AWhiteboardActor_Server_SetTextString()
-{
-	static UFunction* ReturnFunction = nullptr;
-	if (!ReturnFunction)
-	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AWhiteboardActor_Server_SetTextString_Statics::FuncParams);
-	}
-	return ReturnFunction;
-}
-DEFINE_FUNCTION(AWhiteboardActor::execServer_SetTextString)
-{
-	P_GET_PROPERTY(FStrProperty,Z_Param_NewTextString);
-	P_FINISH;
-	P_NATIVE_BEGIN;
-	P_THIS->Server_SetTextString_Implementation(Z_Param_NewTextString);
-	P_NATIVE_END;
-}
-// End Class AWhiteboardActor Function Server_SetTextString
-
-// Begin Class AWhiteboardActor Function Server_StartDrawing
+// ********** Begin Class AWhiteboardActor Function Server_StartDrawing ****************************
 struct WhiteboardActor_eventServer_StartDrawing_Parms
 {
+	APawn* DrawingPlayer;
 	FVector2D CanvasPosition;
-	EDrawingTool Tool;
-	FLinearColor Color;
-	float Size;
-	int32 BrushTextureIndex;
-	int32 FigureTextureIndex;
 };
-static const FName NAME_AWhiteboardActor_Server_StartDrawing = FName(TEXT("Server_StartDrawing"));
-void AWhiteboardActor::Server_StartDrawing(FVector2D const& CanvasPosition, EDrawingTool Tool, FLinearColor Color, float Size, int32 BrushTextureIndex, int32 FigureTextureIndex)
+static FName NAME_AWhiteboardActor_Server_StartDrawing = FName(TEXT("Server_StartDrawing"));
+void AWhiteboardActor::Server_StartDrawing(APawn* DrawingPlayer, FVector2D const& CanvasPosition)
 {
 	WhiteboardActor_eventServer_StartDrawing_Parms Parms;
+	Parms.DrawingPlayer=DrawingPlayer;
 	Parms.CanvasPosition=CanvasPosition;
-	Parms.Tool=Tool;
-	Parms.Color=Color;
-	Parms.Size=Size;
-	Parms.BrushTextureIndex=BrushTextureIndex;
-	Parms.FigureTextureIndex=FigureTextureIndex;
 	UFunction* Func = FindFunctionChecked(NAME_AWhiteboardActor_Server_StartDrawing);
 	ProcessEvent(Func,&Parms);
 }
@@ -3126,34 +3056,19 @@ struct Z_Construct_UFunction_AWhiteboardActor_Server_StartDrawing_Statics
 		{ "NativeConst", "" },
 	};
 #endif // WITH_METADATA
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_DrawingPlayer;
 	static const UECodeGen_Private::FStructPropertyParams NewProp_CanvasPosition;
-	static const UECodeGen_Private::FBytePropertyParams NewProp_Tool_Underlying;
-	static const UECodeGen_Private::FEnumPropertyParams NewProp_Tool;
-	static const UECodeGen_Private::FStructPropertyParams NewProp_Color;
-	static const UECodeGen_Private::FFloatPropertyParams NewProp_Size;
-	static const UECodeGen_Private::FIntPropertyParams NewProp_BrushTextureIndex;
-	static const UECodeGen_Private::FIntPropertyParams NewProp_FigureTextureIndex;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AWhiteboardActor_Server_StartDrawing_Statics::NewProp_DrawingPlayer = { "DrawingPlayer", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventServer_StartDrawing_Parms, DrawingPlayer), Z_Construct_UClass_APawn_NoRegister, METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_AWhiteboardActor_Server_StartDrawing_Statics::NewProp_CanvasPosition = { "CanvasPosition", nullptr, (EPropertyFlags)0x0010000008000082, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventServer_StartDrawing_Parms, CanvasPosition), Z_Construct_UScriptStruct_FVector2D, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CanvasPosition_MetaData), NewProp_CanvasPosition_MetaData) };
-const UECodeGen_Private::FBytePropertyParams Z_Construct_UFunction_AWhiteboardActor_Server_StartDrawing_Statics::NewProp_Tool_Underlying = { "UnderlyingType", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, nullptr, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FEnumPropertyParams Z_Construct_UFunction_AWhiteboardActor_Server_StartDrawing_Statics::NewProp_Tool = { "Tool", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventServer_StartDrawing_Parms, Tool), Z_Construct_UEnum_AdvancedDrawingBoard_EDrawingTool, METADATA_PARAMS(0, nullptr) }; // 3146191471
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_AWhiteboardActor_Server_StartDrawing_Statics::NewProp_Color = { "Color", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventServer_StartDrawing_Parms, Color), Z_Construct_UScriptStruct_FLinearColor, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_AWhiteboardActor_Server_StartDrawing_Statics::NewProp_Size = { "Size", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventServer_StartDrawing_Parms, Size), METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FIntPropertyParams Z_Construct_UFunction_AWhiteboardActor_Server_StartDrawing_Statics::NewProp_BrushTextureIndex = { "BrushTextureIndex", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventServer_StartDrawing_Parms, BrushTextureIndex), METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FIntPropertyParams Z_Construct_UFunction_AWhiteboardActor_Server_StartDrawing_Statics::NewProp_FigureTextureIndex = { "FigureTextureIndex", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventServer_StartDrawing_Parms, FigureTextureIndex), METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_Server_StartDrawing_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_Server_StartDrawing_Statics::NewProp_DrawingPlayer,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_Server_StartDrawing_Statics::NewProp_CanvasPosition,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_Server_StartDrawing_Statics::NewProp_Tool_Underlying,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_Server_StartDrawing_Statics::NewProp_Tool,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_Server_StartDrawing_Statics::NewProp_Color,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_Server_StartDrawing_Statics::NewProp_Size,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_Server_StartDrawing_Statics::NewProp_BrushTextureIndex,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_Server_StartDrawing_Statics::NewProp_FigureTextureIndex,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_StartDrawing_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Server_StartDrawing_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Server_StartDrawing", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_Server_StartDrawing_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_StartDrawing_Statics::PropPointers), sizeof(WhiteboardActor_eventServer_StartDrawing_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00A20CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_StartDrawing_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Server_StartDrawing_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Server_StartDrawing_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Server_StartDrawing", Z_Construct_UFunction_AWhiteboardActor_Server_StartDrawing_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_StartDrawing_Statics::PropPointers), sizeof(WhiteboardActor_eventServer_StartDrawing_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00A20CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_StartDrawing_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Server_StartDrawing_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(WhiteboardActor_eventServer_StartDrawing_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_Server_StartDrawing()
 {
@@ -3166,21 +3081,17 @@ UFunction* Z_Construct_UFunction_AWhiteboardActor_Server_StartDrawing()
 }
 DEFINE_FUNCTION(AWhiteboardActor::execServer_StartDrawing)
 {
+	P_GET_OBJECT(APawn,Z_Param_DrawingPlayer);
 	P_GET_STRUCT(FVector2D,Z_Param_CanvasPosition);
-	P_GET_ENUM(EDrawingTool,Z_Param_Tool);
-	P_GET_STRUCT(FLinearColor,Z_Param_Color);
-	P_GET_PROPERTY(FFloatProperty,Z_Param_Size);
-	P_GET_PROPERTY(FIntProperty,Z_Param_BrushTextureIndex);
-	P_GET_PROPERTY(FIntProperty,Z_Param_FigureTextureIndex);
 	P_FINISH;
 	P_NATIVE_BEGIN;
-	P_THIS->Server_StartDrawing_Implementation(Z_Param_CanvasPosition,EDrawingTool(Z_Param_Tool),Z_Param_Color,Z_Param_Size,Z_Param_BrushTextureIndex,Z_Param_FigureTextureIndex);
+	P_THIS->Server_StartDrawing_Implementation(Z_Param_DrawingPlayer,Z_Param_CanvasPosition);
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function Server_StartDrawing
+// ********** End Class AWhiteboardActor Function Server_StartDrawing ******************************
 
-// Begin Class AWhiteboardActor Function Server_Undo
-static const FName NAME_AWhiteboardActor_Server_Undo = FName(TEXT("Server_Undo"));
+// ********** Begin Class AWhiteboardActor Function Server_Undo ************************************
+static FName NAME_AWhiteboardActor_Server_Undo = FName(TEXT("Server_Undo"));
 void AWhiteboardActor::Server_Undo()
 {
 	UFunction* Func = FindFunctionChecked(NAME_AWhiteboardActor_Server_Undo);
@@ -3195,7 +3106,7 @@ struct Z_Construct_UFunction_AWhiteboardActor_Server_Undo_Statics
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Server_Undo_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Server_Undo", nullptr, nullptr, nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00220CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_Undo_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Server_Undo_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Server_Undo_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Server_Undo", nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00220CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Server_Undo_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Server_Undo_Statics::Function_MetaDataParams)},  };
 UFunction* Z_Construct_UFunction_AWhiteboardActor_Server_Undo()
 {
 	static UFunction* ReturnFunction = nullptr;
@@ -3212,285 +3123,309 @@ DEFINE_FUNCTION(AWhiteboardActor::execServer_Undo)
 	P_THIS->Server_Undo_Implementation();
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function Server_Undo
+// ********** End Class AWhiteboardActor Function Server_Undo **************************************
 
-// Begin Class AWhiteboardActor Function SetBrushSize
-struct Z_Construct_UFunction_AWhiteboardActor_SetBrushSize_Statics
+// ********** Begin Class AWhiteboardActor Function SetPlayerBrushSize *****************************
+struct Z_Construct_UFunction_AWhiteboardActor_SetPlayerBrushSize_Statics
 {
-	struct WhiteboardActor_eventSetBrushSize_Parms
+	struct WhiteboardActor_eventSetPlayerBrushSize_Parms
 	{
+		APawn* Player;
 		float NewSize;
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "Whiteboard" },
+		{ "Category", "Whiteboard|Drawing Tools" },
 		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
 	};
 #endif // WITH_METADATA
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_Player;
 	static const UECodeGen_Private::FFloatPropertyParams NewProp_NewSize;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_AWhiteboardActor_SetBrushSize_Statics::NewProp_NewSize = { "NewSize", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventSetBrushSize_Parms, NewSize), METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_SetBrushSize_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_SetBrushSize_Statics::NewProp_NewSize,
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AWhiteboardActor_SetPlayerBrushSize_Statics::NewProp_Player = { "Player", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventSetPlayerBrushSize_Parms, Player), Z_Construct_UClass_APawn_NoRegister, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_AWhiteboardActor_SetPlayerBrushSize_Statics::NewProp_NewSize = { "NewSize", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventSetPlayerBrushSize_Parms, NewSize), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_SetPlayerBrushSize_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_SetPlayerBrushSize_Statics::NewProp_Player,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_SetPlayerBrushSize_Statics::NewProp_NewSize,
 };
-static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SetBrushSize_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_SetBrushSize_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "SetBrushSize", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_SetBrushSize_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SetBrushSize_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_SetBrushSize_Statics::WhiteboardActor_eventSetBrushSize_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SetBrushSize_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_SetBrushSize_Statics::Function_MetaDataParams) };
-static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_SetBrushSize_Statics::WhiteboardActor_eventSetBrushSize_Parms) < MAX_uint16);
-UFunction* Z_Construct_UFunction_AWhiteboardActor_SetBrushSize()
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SetPlayerBrushSize_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_SetPlayerBrushSize_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "SetPlayerBrushSize", Z_Construct_UFunction_AWhiteboardActor_SetPlayerBrushSize_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SetPlayerBrushSize_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_SetPlayerBrushSize_Statics::WhiteboardActor_eventSetPlayerBrushSize_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SetPlayerBrushSize_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_SetPlayerBrushSize_Statics::Function_MetaDataParams)},  };
+static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_SetPlayerBrushSize_Statics::WhiteboardActor_eventSetPlayerBrushSize_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_AWhiteboardActor_SetPlayerBrushSize()
 {
 	static UFunction* ReturnFunction = nullptr;
 	if (!ReturnFunction)
 	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AWhiteboardActor_SetBrushSize_Statics::FuncParams);
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AWhiteboardActor_SetPlayerBrushSize_Statics::FuncParams);
 	}
 	return ReturnFunction;
 }
-DEFINE_FUNCTION(AWhiteboardActor::execSetBrushSize)
+DEFINE_FUNCTION(AWhiteboardActor::execSetPlayerBrushSize)
 {
+	P_GET_OBJECT(APawn,Z_Param_Player);
 	P_GET_PROPERTY(FFloatProperty,Z_Param_NewSize);
 	P_FINISH;
 	P_NATIVE_BEGIN;
-	P_THIS->SetBrushSize(Z_Param_NewSize);
+	P_THIS->SetPlayerBrushSize(Z_Param_Player,Z_Param_NewSize);
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function SetBrushSize
+// ********** End Class AWhiteboardActor Function SetPlayerBrushSize *******************************
 
-// Begin Class AWhiteboardActor Function SetBrushTexture
-struct Z_Construct_UFunction_AWhiteboardActor_SetBrushTexture_Statics
+// ********** Begin Class AWhiteboardActor Function SetPlayerBrushTextureIndex *********************
+struct Z_Construct_UFunction_AWhiteboardActor_SetPlayerBrushTextureIndex_Statics
 {
-	struct WhiteboardActor_eventSetBrushTexture_Parms
+	struct WhiteboardActor_eventSetPlayerBrushTextureIndex_Parms
 	{
+		APawn* Player;
 		int32 TextureIndex;
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "Whiteboard" },
+		{ "Category", "Whiteboard|Drawing Tools" },
 		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
 	};
 #endif // WITH_METADATA
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_Player;
 	static const UECodeGen_Private::FIntPropertyParams NewProp_TextureIndex;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FIntPropertyParams Z_Construct_UFunction_AWhiteboardActor_SetBrushTexture_Statics::NewProp_TextureIndex = { "TextureIndex", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventSetBrushTexture_Parms, TextureIndex), METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_SetBrushTexture_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_SetBrushTexture_Statics::NewProp_TextureIndex,
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AWhiteboardActor_SetPlayerBrushTextureIndex_Statics::NewProp_Player = { "Player", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventSetPlayerBrushTextureIndex_Parms, Player), Z_Construct_UClass_APawn_NoRegister, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FIntPropertyParams Z_Construct_UFunction_AWhiteboardActor_SetPlayerBrushTextureIndex_Statics::NewProp_TextureIndex = { "TextureIndex", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventSetPlayerBrushTextureIndex_Parms, TextureIndex), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_SetPlayerBrushTextureIndex_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_SetPlayerBrushTextureIndex_Statics::NewProp_Player,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_SetPlayerBrushTextureIndex_Statics::NewProp_TextureIndex,
 };
-static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SetBrushTexture_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_SetBrushTexture_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "SetBrushTexture", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_SetBrushTexture_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SetBrushTexture_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_SetBrushTexture_Statics::WhiteboardActor_eventSetBrushTexture_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SetBrushTexture_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_SetBrushTexture_Statics::Function_MetaDataParams) };
-static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_SetBrushTexture_Statics::WhiteboardActor_eventSetBrushTexture_Parms) < MAX_uint16);
-UFunction* Z_Construct_UFunction_AWhiteboardActor_SetBrushTexture()
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SetPlayerBrushTextureIndex_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_SetPlayerBrushTextureIndex_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "SetPlayerBrushTextureIndex", Z_Construct_UFunction_AWhiteboardActor_SetPlayerBrushTextureIndex_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SetPlayerBrushTextureIndex_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_SetPlayerBrushTextureIndex_Statics::WhiteboardActor_eventSetPlayerBrushTextureIndex_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SetPlayerBrushTextureIndex_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_SetPlayerBrushTextureIndex_Statics::Function_MetaDataParams)},  };
+static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_SetPlayerBrushTextureIndex_Statics::WhiteboardActor_eventSetPlayerBrushTextureIndex_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_AWhiteboardActor_SetPlayerBrushTextureIndex()
 {
 	static UFunction* ReturnFunction = nullptr;
 	if (!ReturnFunction)
 	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AWhiteboardActor_SetBrushTexture_Statics::FuncParams);
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AWhiteboardActor_SetPlayerBrushTextureIndex_Statics::FuncParams);
 	}
 	return ReturnFunction;
 }
-DEFINE_FUNCTION(AWhiteboardActor::execSetBrushTexture)
+DEFINE_FUNCTION(AWhiteboardActor::execSetPlayerBrushTextureIndex)
 {
+	P_GET_OBJECT(APawn,Z_Param_Player);
 	P_GET_PROPERTY(FIntProperty,Z_Param_TextureIndex);
 	P_FINISH;
 	P_NATIVE_BEGIN;
-	P_THIS->SetBrushTexture(Z_Param_TextureIndex);
+	P_THIS->SetPlayerBrushTextureIndex(Z_Param_Player,Z_Param_TextureIndex);
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function SetBrushTexture
+// ********** End Class AWhiteboardActor Function SetPlayerBrushTextureIndex ***********************
 
-// Begin Class AWhiteboardActor Function SetCurrentColor
-struct Z_Construct_UFunction_AWhiteboardActor_SetCurrentColor_Statics
+// ********** Begin Class AWhiteboardActor Function SetPlayerColor *********************************
+struct Z_Construct_UFunction_AWhiteboardActor_SetPlayerColor_Statics
 {
-	struct WhiteboardActor_eventSetCurrentColor_Parms
+	struct WhiteboardActor_eventSetPlayerColor_Parms
 	{
+		APawn* Player;
 		FLinearColor NewColor;
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "Whiteboard" },
+		{ "Category", "Whiteboard|Drawing Tools" },
 		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
 	};
 #endif // WITH_METADATA
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_Player;
 	static const UECodeGen_Private::FStructPropertyParams NewProp_NewColor;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_AWhiteboardActor_SetCurrentColor_Statics::NewProp_NewColor = { "NewColor", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventSetCurrentColor_Parms, NewColor), Z_Construct_UScriptStruct_FLinearColor, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_SetCurrentColor_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_SetCurrentColor_Statics::NewProp_NewColor,
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AWhiteboardActor_SetPlayerColor_Statics::NewProp_Player = { "Player", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventSetPlayerColor_Parms, Player), Z_Construct_UClass_APawn_NoRegister, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_AWhiteboardActor_SetPlayerColor_Statics::NewProp_NewColor = { "NewColor", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventSetPlayerColor_Parms, NewColor), Z_Construct_UScriptStruct_FLinearColor, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_SetPlayerColor_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_SetPlayerColor_Statics::NewProp_Player,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_SetPlayerColor_Statics::NewProp_NewColor,
 };
-static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SetCurrentColor_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_SetCurrentColor_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "SetCurrentColor", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_SetCurrentColor_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SetCurrentColor_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_SetCurrentColor_Statics::WhiteboardActor_eventSetCurrentColor_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04820401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SetCurrentColor_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_SetCurrentColor_Statics::Function_MetaDataParams) };
-static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_SetCurrentColor_Statics::WhiteboardActor_eventSetCurrentColor_Parms) < MAX_uint16);
-UFunction* Z_Construct_UFunction_AWhiteboardActor_SetCurrentColor()
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SetPlayerColor_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_SetPlayerColor_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "SetPlayerColor", Z_Construct_UFunction_AWhiteboardActor_SetPlayerColor_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SetPlayerColor_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_SetPlayerColor_Statics::WhiteboardActor_eventSetPlayerColor_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04820401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SetPlayerColor_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_SetPlayerColor_Statics::Function_MetaDataParams)},  };
+static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_SetPlayerColor_Statics::WhiteboardActor_eventSetPlayerColor_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_AWhiteboardActor_SetPlayerColor()
 {
 	static UFunction* ReturnFunction = nullptr;
 	if (!ReturnFunction)
 	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AWhiteboardActor_SetCurrentColor_Statics::FuncParams);
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AWhiteboardActor_SetPlayerColor_Statics::FuncParams);
 	}
 	return ReturnFunction;
 }
-DEFINE_FUNCTION(AWhiteboardActor::execSetCurrentColor)
+DEFINE_FUNCTION(AWhiteboardActor::execSetPlayerColor)
 {
+	P_GET_OBJECT(APawn,Z_Param_Player);
 	P_GET_STRUCT(FLinearColor,Z_Param_NewColor);
 	P_FINISH;
 	P_NATIVE_BEGIN;
-	P_THIS->SetCurrentColor(Z_Param_NewColor);
+	P_THIS->SetPlayerColor(Z_Param_Player,Z_Param_NewColor);
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function SetCurrentColor
+// ********** End Class AWhiteboardActor Function SetPlayerColor ***********************************
 
-// Begin Class AWhiteboardActor Function SetCurrentTool
-struct Z_Construct_UFunction_AWhiteboardActor_SetCurrentTool_Statics
+// ********** Begin Class AWhiteboardActor Function SetPlayerFigureTextureIndex ********************
+struct Z_Construct_UFunction_AWhiteboardActor_SetPlayerFigureTextureIndex_Statics
 {
-	struct WhiteboardActor_eventSetCurrentTool_Parms
+	struct WhiteboardActor_eventSetPlayerFigureTextureIndex_Parms
 	{
-		EDrawingTool NewTool;
-	};
-#if WITH_METADATA
-	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "Whiteboard" },
-#if !UE_BUILD_SHIPPING
-		{ "Comment", "// Blueprint callable functions\n" },
-#endif
-		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
-#if !UE_BUILD_SHIPPING
-		{ "ToolTip", "Blueprint callable functions" },
-#endif
-	};
-#endif // WITH_METADATA
-	static const UECodeGen_Private::FBytePropertyParams NewProp_NewTool_Underlying;
-	static const UECodeGen_Private::FEnumPropertyParams NewProp_NewTool;
-	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-	static const UECodeGen_Private::FFunctionParams FuncParams;
-};
-const UECodeGen_Private::FBytePropertyParams Z_Construct_UFunction_AWhiteboardActor_SetCurrentTool_Statics::NewProp_NewTool_Underlying = { "UnderlyingType", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, nullptr, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FEnumPropertyParams Z_Construct_UFunction_AWhiteboardActor_SetCurrentTool_Statics::NewProp_NewTool = { "NewTool", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventSetCurrentTool_Parms, NewTool), Z_Construct_UEnum_AdvancedDrawingBoard_EDrawingTool, METADATA_PARAMS(0, nullptr) }; // 3146191471
-const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_SetCurrentTool_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_SetCurrentTool_Statics::NewProp_NewTool_Underlying,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_SetCurrentTool_Statics::NewProp_NewTool,
-};
-static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SetCurrentTool_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_SetCurrentTool_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "SetCurrentTool", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_SetCurrentTool_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SetCurrentTool_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_SetCurrentTool_Statics::WhiteboardActor_eventSetCurrentTool_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SetCurrentTool_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_SetCurrentTool_Statics::Function_MetaDataParams) };
-static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_SetCurrentTool_Statics::WhiteboardActor_eventSetCurrentTool_Parms) < MAX_uint16);
-UFunction* Z_Construct_UFunction_AWhiteboardActor_SetCurrentTool()
-{
-	static UFunction* ReturnFunction = nullptr;
-	if (!ReturnFunction)
-	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AWhiteboardActor_SetCurrentTool_Statics::FuncParams);
-	}
-	return ReturnFunction;
-}
-DEFINE_FUNCTION(AWhiteboardActor::execSetCurrentTool)
-{
-	P_GET_ENUM(EDrawingTool,Z_Param_NewTool);
-	P_FINISH;
-	P_NATIVE_BEGIN;
-	P_THIS->SetCurrentTool(EDrawingTool(Z_Param_NewTool));
-	P_NATIVE_END;
-}
-// End Class AWhiteboardActor Function SetCurrentTool
-
-// Begin Class AWhiteboardActor Function SetFigureTexture
-struct Z_Construct_UFunction_AWhiteboardActor_SetFigureTexture_Statics
-{
-	struct WhiteboardActor_eventSetFigureTexture_Parms
-	{
+		APawn* Player;
 		int32 TextureIndex;
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "Whiteboard" },
+		{ "Category", "Whiteboard|Drawing Tools" },
 		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
 	};
 #endif // WITH_METADATA
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_Player;
 	static const UECodeGen_Private::FIntPropertyParams NewProp_TextureIndex;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FIntPropertyParams Z_Construct_UFunction_AWhiteboardActor_SetFigureTexture_Statics::NewProp_TextureIndex = { "TextureIndex", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventSetFigureTexture_Parms, TextureIndex), METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_SetFigureTexture_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_SetFigureTexture_Statics::NewProp_TextureIndex,
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AWhiteboardActor_SetPlayerFigureTextureIndex_Statics::NewProp_Player = { "Player", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventSetPlayerFigureTextureIndex_Parms, Player), Z_Construct_UClass_APawn_NoRegister, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FIntPropertyParams Z_Construct_UFunction_AWhiteboardActor_SetPlayerFigureTextureIndex_Statics::NewProp_TextureIndex = { "TextureIndex", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventSetPlayerFigureTextureIndex_Parms, TextureIndex), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_SetPlayerFigureTextureIndex_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_SetPlayerFigureTextureIndex_Statics::NewProp_Player,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_SetPlayerFigureTextureIndex_Statics::NewProp_TextureIndex,
 };
-static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SetFigureTexture_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_SetFigureTexture_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "SetFigureTexture", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_SetFigureTexture_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SetFigureTexture_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_SetFigureTexture_Statics::WhiteboardActor_eventSetFigureTexture_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SetFigureTexture_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_SetFigureTexture_Statics::Function_MetaDataParams) };
-static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_SetFigureTexture_Statics::WhiteboardActor_eventSetFigureTexture_Parms) < MAX_uint16);
-UFunction* Z_Construct_UFunction_AWhiteboardActor_SetFigureTexture()
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SetPlayerFigureTextureIndex_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_SetPlayerFigureTextureIndex_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "SetPlayerFigureTextureIndex", Z_Construct_UFunction_AWhiteboardActor_SetPlayerFigureTextureIndex_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SetPlayerFigureTextureIndex_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_SetPlayerFigureTextureIndex_Statics::WhiteboardActor_eventSetPlayerFigureTextureIndex_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SetPlayerFigureTextureIndex_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_SetPlayerFigureTextureIndex_Statics::Function_MetaDataParams)},  };
+static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_SetPlayerFigureTextureIndex_Statics::WhiteboardActor_eventSetPlayerFigureTextureIndex_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_AWhiteboardActor_SetPlayerFigureTextureIndex()
 {
 	static UFunction* ReturnFunction = nullptr;
 	if (!ReturnFunction)
 	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AWhiteboardActor_SetFigureTexture_Statics::FuncParams);
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AWhiteboardActor_SetPlayerFigureTextureIndex_Statics::FuncParams);
 	}
 	return ReturnFunction;
 }
-DEFINE_FUNCTION(AWhiteboardActor::execSetFigureTexture)
+DEFINE_FUNCTION(AWhiteboardActor::execSetPlayerFigureTextureIndex)
 {
+	P_GET_OBJECT(APawn,Z_Param_Player);
 	P_GET_PROPERTY(FIntProperty,Z_Param_TextureIndex);
 	P_FINISH;
 	P_NATIVE_BEGIN;
-	P_THIS->SetFigureTexture(Z_Param_TextureIndex);
+	P_THIS->SetPlayerFigureTextureIndex(Z_Param_Player,Z_Param_TextureIndex);
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function SetFigureTexture
+// ********** End Class AWhiteboardActor Function SetPlayerFigureTextureIndex **********************
 
-// Begin Class AWhiteboardActor Function SetTextString
-struct Z_Construct_UFunction_AWhiteboardActor_SetTextString_Statics
+// ********** Begin Class AWhiteboardActor Function SetPlayerTextString ****************************
+struct Z_Construct_UFunction_AWhiteboardActor_SetPlayerTextString_Statics
 {
-	struct WhiteboardActor_eventSetTextString_Parms
+	struct WhiteboardActor_eventSetPlayerTextString_Parms
 	{
+		APawn* Player;
 		FString NewTextString;
 	};
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "Whiteboard" },
-#if !UE_BUILD_SHIPPING
-		{ "Comment", "// NEW: Enhanced text input functions\n" },
-#endif
+		{ "Category", "Whiteboard|Drawing Tools" },
 		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
-#if !UE_BUILD_SHIPPING
-		{ "ToolTip", "NEW: Enhanced text input functions" },
-#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_NewTextString_MetaData[] = {
 		{ "NativeConst", "" },
 	};
 #endif // WITH_METADATA
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_Player;
 	static const UECodeGen_Private::FStrPropertyParams NewProp_NewTextString;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FStrPropertyParams Z_Construct_UFunction_AWhiteboardActor_SetTextString_Statics::NewProp_NewTextString = { "NewTextString", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventSetTextString_Parms, NewTextString), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_NewTextString_MetaData), NewProp_NewTextString_MetaData) };
-const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_SetTextString_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_SetTextString_Statics::NewProp_NewTextString,
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AWhiteboardActor_SetPlayerTextString_Statics::NewProp_Player = { "Player", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventSetPlayerTextString_Parms, Player), Z_Construct_UClass_APawn_NoRegister, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FStrPropertyParams Z_Construct_UFunction_AWhiteboardActor_SetPlayerTextString_Statics::NewProp_NewTextString = { "NewTextString", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventSetPlayerTextString_Parms, NewTextString), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_NewTextString_MetaData), NewProp_NewTextString_MetaData) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_SetPlayerTextString_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_SetPlayerTextString_Statics::NewProp_Player,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_SetPlayerTextString_Statics::NewProp_NewTextString,
 };
-static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SetTextString_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_SetTextString_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "SetTextString", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_SetTextString_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SetTextString_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_SetTextString_Statics::WhiteboardActor_eventSetTextString_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SetTextString_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_SetTextString_Statics::Function_MetaDataParams) };
-static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_SetTextString_Statics::WhiteboardActor_eventSetTextString_Parms) < MAX_uint16);
-UFunction* Z_Construct_UFunction_AWhiteboardActor_SetTextString()
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SetPlayerTextString_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_SetPlayerTextString_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "SetPlayerTextString", Z_Construct_UFunction_AWhiteboardActor_SetPlayerTextString_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SetPlayerTextString_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_SetPlayerTextString_Statics::WhiteboardActor_eventSetPlayerTextString_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SetPlayerTextString_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_SetPlayerTextString_Statics::Function_MetaDataParams)},  };
+static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_SetPlayerTextString_Statics::WhiteboardActor_eventSetPlayerTextString_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_AWhiteboardActor_SetPlayerTextString()
 {
 	static UFunction* ReturnFunction = nullptr;
 	if (!ReturnFunction)
 	{
-		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AWhiteboardActor_SetTextString_Statics::FuncParams);
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AWhiteboardActor_SetPlayerTextString_Statics::FuncParams);
 	}
 	return ReturnFunction;
 }
-DEFINE_FUNCTION(AWhiteboardActor::execSetTextString)
+DEFINE_FUNCTION(AWhiteboardActor::execSetPlayerTextString)
 {
+	P_GET_OBJECT(APawn,Z_Param_Player);
 	P_GET_PROPERTY(FStrProperty,Z_Param_NewTextString);
 	P_FINISH;
 	P_NATIVE_BEGIN;
-	P_THIS->SetTextString(Z_Param_NewTextString);
+	P_THIS->SetPlayerTextString(Z_Param_Player,Z_Param_NewTextString);
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function SetTextString
+// ********** End Class AWhiteboardActor Function SetPlayerTextString ******************************
 
-// Begin Class AWhiteboardActor Function SetupInteractionUI
+// ********** Begin Class AWhiteboardActor Function SetPlayerTool **********************************
+struct Z_Construct_UFunction_AWhiteboardActor_SetPlayerTool_Statics
+{
+	struct WhiteboardActor_eventSetPlayerTool_Parms
+	{
+		APawn* Player;
+		EDrawingTool NewTool;
+	};
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "Category", "Whiteboard|Drawing Tools" },
+#if !UE_BUILD_SHIPPING
+		{ "Comment", "// Player-specific tool setters\n" },
+#endif
+		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
+#if !UE_BUILD_SHIPPING
+		{ "ToolTip", "Player-specific tool setters" },
+#endif
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_Player;
+	static const UECodeGen_Private::FBytePropertyParams NewProp_NewTool_Underlying;
+	static const UECodeGen_Private::FEnumPropertyParams NewProp_NewTool;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AWhiteboardActor_SetPlayerTool_Statics::NewProp_Player = { "Player", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventSetPlayerTool_Parms, Player), Z_Construct_UClass_APawn_NoRegister, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FBytePropertyParams Z_Construct_UFunction_AWhiteboardActor_SetPlayerTool_Statics::NewProp_NewTool_Underlying = { "UnderlyingType", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, nullptr, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FEnumPropertyParams Z_Construct_UFunction_AWhiteboardActor_SetPlayerTool_Statics::NewProp_NewTool = { "NewTool", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventSetPlayerTool_Parms, NewTool), Z_Construct_UEnum_AdvancedDrawingBoard_EDrawingTool, METADATA_PARAMS(0, nullptr) }; // 3146191471
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_SetPlayerTool_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_SetPlayerTool_Statics::NewProp_Player,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_SetPlayerTool_Statics::NewProp_NewTool_Underlying,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_SetPlayerTool_Statics::NewProp_NewTool,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SetPlayerTool_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_SetPlayerTool_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "SetPlayerTool", Z_Construct_UFunction_AWhiteboardActor_SetPlayerTool_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SetPlayerTool_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_SetPlayerTool_Statics::WhiteboardActor_eventSetPlayerTool_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SetPlayerTool_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_SetPlayerTool_Statics::Function_MetaDataParams)},  };
+static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_SetPlayerTool_Statics::WhiteboardActor_eventSetPlayerTool_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_AWhiteboardActor_SetPlayerTool()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AWhiteboardActor_SetPlayerTool_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(AWhiteboardActor::execSetPlayerTool)
+{
+	P_GET_OBJECT(APawn,Z_Param_Player);
+	P_GET_ENUM(EDrawingTool,Z_Param_NewTool);
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	P_THIS->SetPlayerTool(Z_Param_Player,EDrawingTool(Z_Param_NewTool));
+	P_NATIVE_END;
+}
+// ********** End Class AWhiteboardActor Function SetPlayerTool ************************************
+
+// ********** Begin Class AWhiteboardActor Function SetupInteractionUI *****************************
 struct Z_Construct_UFunction_AWhiteboardActor_SetupInteractionUI_Statics
 {
 	struct WhiteboardActor_eventSetupInteractionUI_Parms
@@ -3511,7 +3446,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_SetupInteractionUI_Statics::NewProp_InteractingPlayer,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SetupInteractionUI_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_SetupInteractionUI_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "SetupInteractionUI", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_SetupInteractionUI_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SetupInteractionUI_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_SetupInteractionUI_Statics::WhiteboardActor_eventSetupInteractionUI_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SetupInteractionUI_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_SetupInteractionUI_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_SetupInteractionUI_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "SetupInteractionUI", Z_Construct_UFunction_AWhiteboardActor_SetupInteractionUI_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SetupInteractionUI_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_SetupInteractionUI_Statics::WhiteboardActor_eventSetupInteractionUI_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SetupInteractionUI_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_SetupInteractionUI_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_SetupInteractionUI_Statics::WhiteboardActor_eventSetupInteractionUI_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_SetupInteractionUI()
 {
@@ -3530,13 +3465,14 @@ DEFINE_FUNCTION(AWhiteboardActor::execSetupInteractionUI)
 	P_THIS->SetupInteractionUI(Z_Param_InteractingPlayer);
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function SetupInteractionUI
+// ********** End Class AWhiteboardActor Function SetupInteractionUI *******************************
 
-// Begin Class AWhiteboardActor Function StartDrawing
+// ********** Begin Class AWhiteboardActor Function StartDrawing ***********************************
 struct Z_Construct_UFunction_AWhiteboardActor_StartDrawing_Statics
 {
 	struct WhiteboardActor_eventStartDrawing_Parms
 	{
+		APawn* DrawingPlayer;
 		FVector2D CanvasPosition;
 	};
 #if WITH_METADATA
@@ -3554,16 +3490,19 @@ struct Z_Construct_UFunction_AWhiteboardActor_StartDrawing_Statics
 		{ "NativeConst", "" },
 	};
 #endif // WITH_METADATA
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_DrawingPlayer;
 	static const UECodeGen_Private::FStructPropertyParams NewProp_CanvasPosition;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AWhiteboardActor_StartDrawing_Statics::NewProp_DrawingPlayer = { "DrawingPlayer", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventStartDrawing_Parms, DrawingPlayer), Z_Construct_UClass_APawn_NoRegister, METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_AWhiteboardActor_StartDrawing_Statics::NewProp_CanvasPosition = { "CanvasPosition", nullptr, (EPropertyFlags)0x0010000008000182, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventStartDrawing_Parms, CanvasPosition), Z_Construct_UScriptStruct_FVector2D, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CanvasPosition_MetaData), NewProp_CanvasPosition_MetaData) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_StartDrawing_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_StartDrawing_Statics::NewProp_DrawingPlayer,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_StartDrawing_Statics::NewProp_CanvasPosition,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_StartDrawing_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_StartDrawing_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "StartDrawing", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_StartDrawing_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_StartDrawing_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_StartDrawing_Statics::WhiteboardActor_eventStartDrawing_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04C20401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_StartDrawing_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_StartDrawing_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_StartDrawing_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "StartDrawing", Z_Construct_UFunction_AWhiteboardActor_StartDrawing_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_StartDrawing_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_StartDrawing_Statics::WhiteboardActor_eventStartDrawing_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04C20401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_StartDrawing_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_StartDrawing_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_StartDrawing_Statics::WhiteboardActor_eventStartDrawing_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_StartDrawing()
 {
@@ -3576,15 +3515,16 @@ UFunction* Z_Construct_UFunction_AWhiteboardActor_StartDrawing()
 }
 DEFINE_FUNCTION(AWhiteboardActor::execStartDrawing)
 {
+	P_GET_OBJECT(APawn,Z_Param_DrawingPlayer);
 	P_GET_STRUCT_REF(FVector2D,Z_Param_Out_CanvasPosition);
 	P_FINISH;
 	P_NATIVE_BEGIN;
-	P_THIS->StartDrawing(Z_Param_Out_CanvasPosition);
+	P_THIS->StartDrawing(Z_Param_DrawingPlayer,Z_Param_Out_CanvasPosition);
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function StartDrawing
+// ********** End Class AWhiteboardActor Function StartDrawing *************************************
 
-// Begin Class AWhiteboardActor Function StartInteraction
+// ********** Begin Class AWhiteboardActor Function StartInteraction *******************************
 struct Z_Construct_UFunction_AWhiteboardActor_StartInteraction_Statics
 {
 	struct WhiteboardActor_eventStartInteraction_Parms
@@ -3612,7 +3552,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_StartInteraction_Statics::NewProp_Player,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_StartInteraction_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_StartInteraction_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "StartInteraction", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_StartInteraction_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_StartInteraction_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_StartInteraction_Statics::WhiteboardActor_eventStartInteraction_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_StartInteraction_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_StartInteraction_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_StartInteraction_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "StartInteraction", Z_Construct_UFunction_AWhiteboardActor_StartInteraction_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_StartInteraction_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_StartInteraction_Statics::WhiteboardActor_eventStartInteraction_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_StartInteraction_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_StartInteraction_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_StartInteraction_Statics::WhiteboardActor_eventStartInteraction_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_StartInteraction()
 {
@@ -3631,9 +3571,9 @@ DEFINE_FUNCTION(AWhiteboardActor::execStartInteraction)
 	P_THIS->StartInteraction(Z_Param_Player);
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function StartInteraction
+// ********** End Class AWhiteboardActor Function StartInteraction *********************************
 
-// Begin Class AWhiteboardActor Function SyncWhiteboardState
+// ********** Begin Class AWhiteboardActor Function SyncWhiteboardState ****************************
 struct Z_Construct_UFunction_AWhiteboardActor_SyncWhiteboardState_Statics
 {
 	struct WhiteboardActor_eventSyncWhiteboardState_Parms
@@ -3655,8 +3595,8 @@ struct Z_Construct_UFunction_AWhiteboardActor_SyncWhiteboardState_Statics
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_AWhiteboardActor_SyncWhiteboardState_Statics::NewProp_History_Inner = { "History", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UScriptStruct_FStroke, METADATA_PARAMS(0, nullptr) }; // 3888955549
-const UECodeGen_Private::FArrayPropertyParams Z_Construct_UFunction_AWhiteboardActor_SyncWhiteboardState_Statics::NewProp_History = { "History", nullptr, (EPropertyFlags)0x0010000008000182, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventSyncWhiteboardState_Parms, History), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_History_MetaData), NewProp_History_MetaData) }; // 3888955549
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_AWhiteboardActor_SyncWhiteboardState_Statics::NewProp_History_Inner = { "History", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UScriptStruct_FStroke, METADATA_PARAMS(0, nullptr) }; // 1512218923
+const UECodeGen_Private::FArrayPropertyParams Z_Construct_UFunction_AWhiteboardActor_SyncWhiteboardState_Statics::NewProp_History = { "History", nullptr, (EPropertyFlags)0x0010000008000182, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventSyncWhiteboardState_Parms, History), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_History_MetaData), NewProp_History_MetaData) }; // 1512218923
 const UECodeGen_Private::FIntPropertyParams Z_Construct_UFunction_AWhiteboardActor_SyncWhiteboardState_Statics::NewProp_HistoryIndex = { "HistoryIndex", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventSyncWhiteboardState_Parms, HistoryIndex), METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_SyncWhiteboardState_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_SyncWhiteboardState_Statics::NewProp_History_Inner,
@@ -3664,7 +3604,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_SyncWhiteboardState_Statics::NewProp_HistoryIndex,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SyncWhiteboardState_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_SyncWhiteboardState_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "SyncWhiteboardState", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_SyncWhiteboardState_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SyncWhiteboardState_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_SyncWhiteboardState_Statics::WhiteboardActor_eventSyncWhiteboardState_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00420401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SyncWhiteboardState_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_SyncWhiteboardState_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_SyncWhiteboardState_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "SyncWhiteboardState", Z_Construct_UFunction_AWhiteboardActor_SyncWhiteboardState_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SyncWhiteboardState_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_SyncWhiteboardState_Statics::WhiteboardActor_eventSyncWhiteboardState_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00420401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_SyncWhiteboardState_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_SyncWhiteboardState_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_SyncWhiteboardState_Statics::WhiteboardActor_eventSyncWhiteboardState_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_SyncWhiteboardState()
 {
@@ -3684,20 +3624,20 @@ DEFINE_FUNCTION(AWhiteboardActor::execSyncWhiteboardState)
 	P_THIS->SyncWhiteboardState(Z_Param_Out_History,Z_Param_HistoryIndex);
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function SyncWhiteboardState
+// ********** End Class AWhiteboardActor Function SyncWhiteboardState ******************************
 
-// Begin Class AWhiteboardActor Function Undo
+// ********** Begin Class AWhiteboardActor Function Undo *******************************************
 struct Z_Construct_UFunction_AWhiteboardActor_Undo_Statics
 {
 #if WITH_METADATA
 	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
-		{ "Category", "Whiteboard" },
+		{ "Category", "Whiteboard|Drawing Tools" },
 		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
 	};
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Undo_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Undo", nullptr, nullptr, nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Undo_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Undo_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_Undo_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "Undo", nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_Undo_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_Undo_Statics::Function_MetaDataParams)},  };
 UFunction* Z_Construct_UFunction_AWhiteboardActor_Undo()
 {
 	static UFunction* ReturnFunction = nullptr;
@@ -3714,9 +3654,60 @@ DEFINE_FUNCTION(AWhiteboardActor::execUndo)
 	P_THIS->Undo();
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function Undo
+// ********** End Class AWhiteboardActor Function Undo *********************************************
 
-// Begin Class AWhiteboardActor Function WorldToCanvasPosition
+// ********** Begin Class AWhiteboardActor Function UpdatePlayerDrawingState ***********************
+struct Z_Construct_UFunction_AWhiteboardActor_UpdatePlayerDrawingState_Statics
+{
+	struct WhiteboardActor_eventUpdatePlayerDrawingState_Parms
+	{
+		APawn* Player;
+		FPlayerDrawingState NewState;
+	};
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "Category", "Whiteboard|Drawing Tools" },
+		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_NewState_MetaData[] = {
+		{ "NativeConst", "" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_Player;
+	static const UECodeGen_Private::FStructPropertyParams NewProp_NewState;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AWhiteboardActor_UpdatePlayerDrawingState_Statics::NewProp_Player = { "Player", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventUpdatePlayerDrawingState_Parms, Player), Z_Construct_UClass_APawn_NoRegister, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_AWhiteboardActor_UpdatePlayerDrawingState_Statics::NewProp_NewState = { "NewState", nullptr, (EPropertyFlags)0x0010000008000182, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventUpdatePlayerDrawingState_Parms, NewState), Z_Construct_UScriptStruct_FPlayerDrawingState, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_NewState_MetaData), NewProp_NewState_MetaData) }; // 2209676374
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_UpdatePlayerDrawingState_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_UpdatePlayerDrawingState_Statics::NewProp_Player,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_UpdatePlayerDrawingState_Statics::NewProp_NewState,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_UpdatePlayerDrawingState_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_UpdatePlayerDrawingState_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "UpdatePlayerDrawingState", Z_Construct_UFunction_AWhiteboardActor_UpdatePlayerDrawingState_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_UpdatePlayerDrawingState_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_UpdatePlayerDrawingState_Statics::WhiteboardActor_eventUpdatePlayerDrawingState_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04420401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_UpdatePlayerDrawingState_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_UpdatePlayerDrawingState_Statics::Function_MetaDataParams)},  };
+static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_UpdatePlayerDrawingState_Statics::WhiteboardActor_eventUpdatePlayerDrawingState_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_AWhiteboardActor_UpdatePlayerDrawingState()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AWhiteboardActor_UpdatePlayerDrawingState_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(AWhiteboardActor::execUpdatePlayerDrawingState)
+{
+	P_GET_OBJECT(APawn,Z_Param_Player);
+	P_GET_STRUCT_REF(FPlayerDrawingState,Z_Param_Out_NewState);
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	P_THIS->UpdatePlayerDrawingState(Z_Param_Player,Z_Param_Out_NewState);
+	P_NATIVE_END;
+}
+// ********** End Class AWhiteboardActor Function UpdatePlayerDrawingState *************************
+
+// ********** Begin Class AWhiteboardActor Function WorldToCanvasPosition **************************
 struct Z_Construct_UFunction_AWhiteboardActor_WorldToCanvasPosition_Statics
 {
 	struct WhiteboardActor_eventWorldToCanvasPosition_Parms
@@ -3745,7 +3736,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhite
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_WorldToCanvasPosition_Statics::NewProp_ReturnValue,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_WorldToCanvasPosition_Statics::PropPointers) < 2048);
-const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_WorldToCanvasPosition_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "WorldToCanvasPosition", nullptr, nullptr, Z_Construct_UFunction_AWhiteboardActor_WorldToCanvasPosition_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_WorldToCanvasPosition_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_WorldToCanvasPosition_Statics::WhiteboardActor_eventWorldToCanvasPosition_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x54C20401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_WorldToCanvasPosition_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_WorldToCanvasPosition_Statics::Function_MetaDataParams) };
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardActor_WorldToCanvasPosition_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardActor, nullptr, "WorldToCanvasPosition", Z_Construct_UFunction_AWhiteboardActor_WorldToCanvasPosition_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_WorldToCanvasPosition_Statics::PropPointers), sizeof(Z_Construct_UFunction_AWhiteboardActor_WorldToCanvasPosition_Statics::WhiteboardActor_eventWorldToCanvasPosition_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x54C20401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_WorldToCanvasPosition_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardActor_WorldToCanvasPosition_Statics::Function_MetaDataParams)},  };
 static_assert(sizeof(Z_Construct_UFunction_AWhiteboardActor_WorldToCanvasPosition_Statics::WhiteboardActor_eventWorldToCanvasPosition_Parms) < MAX_uint16);
 UFunction* Z_Construct_UFunction_AWhiteboardActor_WorldToCanvasPosition()
 {
@@ -3764,9 +3755,9 @@ DEFINE_FUNCTION(AWhiteboardActor::execWorldToCanvasPosition)
 	*(FVector2D*)Z_Param__Result=P_THIS->WorldToCanvasPosition(Z_Param_Out_WorldPosition);
 	P_NATIVE_END;
 }
-// End Class AWhiteboardActor Function WorldToCanvasPosition
+// ********** End Class AWhiteboardActor Function WorldToCanvasPosition ****************************
 
-// Begin Class AWhiteboardActor
+// ********** Begin Class AWhiteboardActor *********************************************************
 void AWhiteboardActor::StaticRegisterNativesAWhiteboardActor()
 {
 	UClass* Class = AWhiteboardActor::StaticClass();
@@ -3781,8 +3772,6 @@ void AWhiteboardActor::StaticRegisterNativesAWhiteboardActor()
 		{ "Client_CleanupInteractionUI", &AWhiteboardActor::execClient_CleanupInteractionUI },
 		{ "Client_SetupInteractionUI", &AWhiteboardActor::execClient_SetupInteractionUI },
 		{ "Client_SyncWhiteboardState", &AWhiteboardActor::execClient_SyncWhiteboardState },
-		{ "ClientContinueDrawing", &AWhiteboardActor::execClientContinueDrawing },
-		{ "ClientEndDrawing", &AWhiteboardActor::execClientEndDrawing },
 		{ "ClientStartDrawing", &AWhiteboardActor::execClientStartDrawing },
 		{ "ContinueDrawing", &AWhiteboardActor::execContinueDrawing },
 		{ "DebugNetworkState", &AWhiteboardActor::execDebugNetworkState },
@@ -3792,9 +3781,16 @@ void AWhiteboardActor::StaticRegisterNativesAWhiteboardActor()
 		{ "EndInteractionForPlayer", &AWhiteboardActor::execEndInteractionForPlayer },
 		{ "ExportToPNG", &AWhiteboardActor::execExportToPNG },
 		{ "ExportToSVG", &AWhiteboardActor::execExportToSVG },
+		{ "GetBrushSize", &AWhiteboardActor::execGetBrushSize },
 		{ "GetCanvasHeight", &AWhiteboardActor::execGetCanvasHeight },
 		{ "GetCanvasWidth", &AWhiteboardActor::execGetCanvasWidth },
+		{ "GetCurrentColor", &AWhiteboardActor::execGetCurrentColor },
+		{ "GetCurrentTextString", &AWhiteboardActor::execGetCurrentTextString },
+		{ "GetCurrentTool", &AWhiteboardActor::execGetCurrentTool },
 		{ "GetInteractingPlayerCount", &AWhiteboardActor::execGetInteractingPlayerCount },
+		{ "GetPlayerDrawingState", &AWhiteboardActor::execGetPlayerDrawingState },
+		{ "GetSelectedBrushTextureIndex", &AWhiteboardActor::execGetSelectedBrushTextureIndex },
+		{ "GetSelectedFigureTextureIndex", &AWhiteboardActor::execGetSelectedFigureTextureIndex },
 		{ "GetWhiteboardCamera", &AWhiteboardActor::execGetWhiteboardCamera },
 		{ "GetWhiteboardMesh", &AWhiteboardActor::execGetWhiteboardMesh },
 		{ "IsPlayerInRange", &AWhiteboardActor::execIsPlayerInRange },
@@ -3822,33 +3818,52 @@ void AWhiteboardActor::StaticRegisterNativesAWhiteboardActor()
 		{ "Server_DrawFigure", &AWhiteboardActor::execServer_DrawFigure },
 		{ "Server_EndDrawing", &AWhiteboardActor::execServer_EndDrawing },
 		{ "Server_Redo", &AWhiteboardActor::execServer_Redo },
-		{ "Server_SetBrushSize", &AWhiteboardActor::execServer_SetBrushSize },
-		{ "Server_SetBrushTexture", &AWhiteboardActor::execServer_SetBrushTexture },
-		{ "Server_SetCurrentColor", &AWhiteboardActor::execServer_SetCurrentColor },
-		{ "Server_SetCurrentTool", &AWhiteboardActor::execServer_SetCurrentTool },
-		{ "Server_SetFigureTexture", &AWhiteboardActor::execServer_SetFigureTexture },
-		{ "Server_SetTextString", &AWhiteboardActor::execServer_SetTextString },
 		{ "Server_StartDrawing", &AWhiteboardActor::execServer_StartDrawing },
 		{ "Server_Undo", &AWhiteboardActor::execServer_Undo },
-		{ "SetBrushSize", &AWhiteboardActor::execSetBrushSize },
-		{ "SetBrushTexture", &AWhiteboardActor::execSetBrushTexture },
-		{ "SetCurrentColor", &AWhiteboardActor::execSetCurrentColor },
-		{ "SetCurrentTool", &AWhiteboardActor::execSetCurrentTool },
-		{ "SetFigureTexture", &AWhiteboardActor::execSetFigureTexture },
-		{ "SetTextString", &AWhiteboardActor::execSetTextString },
+		{ "SetPlayerBrushSize", &AWhiteboardActor::execSetPlayerBrushSize },
+		{ "SetPlayerBrushTextureIndex", &AWhiteboardActor::execSetPlayerBrushTextureIndex },
+		{ "SetPlayerColor", &AWhiteboardActor::execSetPlayerColor },
+		{ "SetPlayerFigureTextureIndex", &AWhiteboardActor::execSetPlayerFigureTextureIndex },
+		{ "SetPlayerTextString", &AWhiteboardActor::execSetPlayerTextString },
+		{ "SetPlayerTool", &AWhiteboardActor::execSetPlayerTool },
 		{ "SetupInteractionUI", &AWhiteboardActor::execSetupInteractionUI },
 		{ "StartDrawing", &AWhiteboardActor::execStartDrawing },
 		{ "StartInteraction", &AWhiteboardActor::execStartInteraction },
 		{ "SyncWhiteboardState", &AWhiteboardActor::execSyncWhiteboardState },
 		{ "Undo", &AWhiteboardActor::execUndo },
+		{ "UpdatePlayerDrawingState", &AWhiteboardActor::execUpdatePlayerDrawingState },
 		{ "WorldToCanvasPosition", &AWhiteboardActor::execWorldToCanvasPosition },
 	};
 	FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
 }
-IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(AWhiteboardActor);
+FClassRegistrationInfo Z_Registration_Info_UClass_AWhiteboardActor;
+UClass* AWhiteboardActor::GetPrivateStaticClass()
+{
+	using TClass = AWhiteboardActor;
+	if (!Z_Registration_Info_UClass_AWhiteboardActor.InnerSingleton)
+	{
+		GetPrivateStaticClassBody(
+			StaticPackage(),
+			TEXT("WhiteboardActor"),
+			Z_Registration_Info_UClass_AWhiteboardActor.InnerSingleton,
+			StaticRegisterNativesAWhiteboardActor,
+			sizeof(TClass),
+			alignof(TClass),
+			TClass::StaticClassFlags,
+			TClass::StaticClassCastFlags(),
+			TClass::StaticConfigName(),
+			(UClass::ClassConstructorType)InternalConstructor<TClass>,
+			(UClass::ClassVTableHelperCtorCallerType)InternalVTableHelperCtorCaller<TClass>,
+			UOBJECT_CPPCLASS_STATICFUNCTIONS_FORCLASS(TClass),
+			&TClass::Super::StaticClass,
+			&TClass::WithinClass::StaticClass
+		);
+	}
+	return Z_Registration_Info_UClass_AWhiteboardActor.InnerSingleton;
+}
 UClass* Z_Construct_UClass_AWhiteboardActor_NoRegister()
 {
-	return AWhiteboardActor::StaticClass();
+	return AWhiteboardActor::GetPrivateStaticClass();
 }
 struct Z_Construct_UClass_AWhiteboardActor_Statics
 {
@@ -3878,8 +3893,8 @@ struct Z_Construct_UClass_AWhiteboardActor_Statics
 		{ "EditInline", "true" },
 		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
 	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_DrawingCanvas_MetaData[] = {
-		{ "Category", "Whiteboard" },
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_InitMaterialIndex_MetaData[] = {
+		{ "Category", "Drawing" },
 #if !UE_BUILD_SHIPPING
 		{ "Comment", "// Whiteboard properties\n" },
 #endif
@@ -3887,6 +3902,10 @@ struct Z_Construct_UClass_AWhiteboardActor_Statics
 #if !UE_BUILD_SHIPPING
 		{ "ToolTip", "Whiteboard properties" },
 #endif
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_DrawingCanvas_MetaData[] = {
+		{ "Category", "Whiteboard" },
+		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_CanvasWidth_MetaData[] = {
 		{ "Category", "Whiteboard" },
@@ -3914,53 +3933,36 @@ struct Z_Construct_UClass_AWhiteboardActor_Statics
 		{ "Category", "Whiteboard" },
 		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
 	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_InitMaterialIndex_MetaData[] = {
-		{ "Category", "Drawing" },
-#if !UE_BUILD_SHIPPING
-		{ "Comment", "// Drawing properties\n" },
-#endif
-		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
-#if !UE_BUILD_SHIPPING
-		{ "ToolTip", "Drawing properties" },
-#endif
-	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_CurrentTool_MetaData[] = {
-		{ "Category", "Drawing" },
-		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
-	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_CurrentColor_MetaData[] = {
-		{ "Category", "Drawing" },
-		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
-	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_BrushSize_MetaData[] = {
-		{ "Category", "Drawing" },
-		{ "ClampMax", "100.0" },
-		{ "ClampMin", "1.0" },
-		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
-	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_BrushTextures_MetaData[] = {
 		{ "Category", "Drawing" },
+#if !UE_BUILD_SHIPPING
+		{ "Comment", "// Drawing Properties\n" },
+#endif
 		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
-	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_SelectedBrushTextureIndex_MetaData[] = {
-		{ "Category", "Drawing" },
-		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
+#if !UE_BUILD_SHIPPING
+		{ "ToolTip", "Drawing Properties" },
+#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_FigureTextures_MetaData[] = {
 		{ "Category", "Drawing" },
 		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
 	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_SelectedFigureTextureIndex_MetaData[] = {
-		{ "Category", "Drawing" },
-		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
-	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_StrokeHistory_MetaData[] = {
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_PlayerDrawingStates_MetaData[] = {
 #if !UE_BUILD_SHIPPING
-		{ "Comment", "// Drawing history for undo/redo\n" },
+		{ "Comment", "//////////////// AS PER PLAYER DRAWING TOOLS TRACKING ///////////////\n" },
 #endif
 		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
 #if !UE_BUILD_SHIPPING
-		{ "ToolTip", "Drawing history for undo/redo" },
+		{ "ToolTip", "/ AS PER PLAYER DRAWING TOOLS TRACKING" },
+#endif
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_StrokeHistory_MetaData[] = {
+#if !UE_BUILD_SHIPPING
+		{ "Comment", "/*\n    \n    //ALL Drawing Tools\n    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = \"Whiteboard|Drawing Tools\", ReplicatedUsing = OnRep_CurrentTool)\n    EDrawingTool CurrentTool  = EDrawingTool::Pencil;\n\n    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = \"Whiteboard|Drawing Tools\", ReplicatedUsing = OnRep_CurrentColor)\n    FLinearColor CurrentColor;\n\n    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = \"Whiteboard|Drawing Tools\", ReplicatedUsing = OnRep_BrushSize)\n    float BrushSize;\n    \n    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = \"Whiteboard|Drawing Tools\", ReplicatedUsing = OnRep_BrushTextureIndex)\n    int32 SelectedBrushTextureIndex;\n    \n    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = \"Whiteboard|Drawing Tools\", ReplicatedUsing = OnRep_FigureTextureIndex)\n    int32 SelectedFigureTextureIndex;\n\n    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = \"Whiteboard|Drawing Tools\", ReplicatedUsing = OnRep_TextString)\n    FString CurrentTextString;\n\n    */// Drawing history for undo/redo\n" },
+#endif
+		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
+#if !UE_BUILD_SHIPPING
+		{ "ToolTip", "//ALL Drawing Tools\nUPROPERTY(EditAnywhere, BlueprintReadOnly, Category = \"Whiteboard|Drawing Tools\", ReplicatedUsing = OnRep_CurrentTool)\nEDrawingTool CurrentTool  = EDrawingTool::Pencil;\n\nUPROPERTY(EditAnywhere, BlueprintReadOnly, Category = \"Whiteboard|Drawing Tools\", ReplicatedUsing = OnRep_CurrentColor)\nFLinearColor CurrentColor;\n\nUPROPERTY(EditAnywhere, BlueprintReadOnly, Category = \"Whiteboard|Drawing Tools\", ReplicatedUsing = OnRep_BrushSize)\nfloat BrushSize;\n\nUPROPERTY(EditAnywhere, BlueprintReadOnly, Category = \"Whiteboard|Drawing Tools\", ReplicatedUsing = OnRep_BrushTextureIndex)\nint32 SelectedBrushTextureIndex;\n\nUPROPERTY(EditAnywhere, BlueprintReadOnly, Category = \"Whiteboard|Drawing Tools\", ReplicatedUsing = OnRep_FigureTextureIndex)\nint32 SelectedFigureTextureIndex;\n\nUPROPERTY(EditAnywhere, BlueprintReadOnly, Category = \"Whiteboard|Drawing Tools\", ReplicatedUsing = OnRep_TextString)\nFString CurrentTextString;\n\n// Drawing history for undo/redo" },
 #endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_CurrentHistoryIndex_MetaData[] = {
@@ -3968,15 +3970,6 @@ struct Z_Construct_UClass_AWhiteboardActor_Statics
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_NextStrokeID_MetaData[] = {
 		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
-	};
-	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_CurrentTextString_MetaData[] = {
-#if !UE_BUILD_SHIPPING
-		{ "Comment", "// NEW: Current text string for UI input\n" },
-#endif
-		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
-#if !UE_BUILD_SHIPPING
-		{ "ToolTip", "NEW: Current text string for UI input" },
-#endif
 	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bCanInteract_MetaData[] = {
 		{ "Category", "Interaction" },
@@ -4000,28 +3993,24 @@ struct Z_Construct_UClass_AWhiteboardActor_Statics
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_WhiteboardMesh;
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_InteractionVolume;
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_WhiteboardCamera;
+	static const UECodeGen_Private::FIntPropertyParams NewProp_InitMaterialIndex;
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_DrawingCanvas;
 	static const UECodeGen_Private::FIntPropertyParams NewProp_CanvasWidth;
 	static const UECodeGen_Private::FIntPropertyParams NewProp_CanvasHeight;
 	static const UECodeGen_Private::FFloatPropertyParams NewProp_InteractionDistance;
 	static const UECodeGen_Private::FFloatPropertyParams NewProp_WhiteboardWidth;
 	static const UECodeGen_Private::FFloatPropertyParams NewProp_WhiteboardHeight;
-	static const UECodeGen_Private::FIntPropertyParams NewProp_InitMaterialIndex;
-	static const UECodeGen_Private::FBytePropertyParams NewProp_CurrentTool_Underlying;
-	static const UECodeGen_Private::FEnumPropertyParams NewProp_CurrentTool;
-	static const UECodeGen_Private::FStructPropertyParams NewProp_CurrentColor;
-	static const UECodeGen_Private::FFloatPropertyParams NewProp_BrushSize;
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_BrushTextures_Inner;
 	static const UECodeGen_Private::FArrayPropertyParams NewProp_BrushTextures;
-	static const UECodeGen_Private::FIntPropertyParams NewProp_SelectedBrushTextureIndex;
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_FigureTextures_Inner;
 	static const UECodeGen_Private::FArrayPropertyParams NewProp_FigureTextures;
-	static const UECodeGen_Private::FIntPropertyParams NewProp_SelectedFigureTextureIndex;
+	static const UECodeGen_Private::FStructPropertyParams NewProp_PlayerDrawingStates_ValueProp;
+	static const UECodeGen_Private::FWeakObjectPropertyParams NewProp_PlayerDrawingStates_Key_KeyProp;
+	static const UECodeGen_Private::FMapPropertyParams NewProp_PlayerDrawingStates;
 	static const UECodeGen_Private::FStructPropertyParams NewProp_StrokeHistory_Inner;
 	static const UECodeGen_Private::FArrayPropertyParams NewProp_StrokeHistory;
 	static const UECodeGen_Private::FIntPropertyParams NewProp_CurrentHistoryIndex;
 	static const UECodeGen_Private::FIntPropertyParams NewProp_NextStrokeID;
-	static const UECodeGen_Private::FStrPropertyParams NewProp_CurrentTextString;
 	static void NewProp_bCanInteract_SetBit(void* Obj);
 	static const UECodeGen_Private::FBoolPropertyParams NewProp_bCanInteract;
 	static const UECodeGen_Private::FIntPropertyParams NewProp_MaxInteractingPlayers;
@@ -4030,81 +4019,81 @@ struct Z_Construct_UClass_AWhiteboardActor_Statics
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
-		{ &Z_Construct_UFunction_AWhiteboardActor_AddText, "AddText" }, // 771667788
-		{ &Z_Construct_UFunction_AWhiteboardActor_CanAcceptMorePlayers, "CanAcceptMorePlayers" }, // 2550638384
-		{ &Z_Construct_UFunction_AWhiteboardActor_CanClientDraw, "CanClientDraw" }, // 599207493
-		{ &Z_Construct_UFunction_AWhiteboardActor_CanInteractLocally, "CanInteractLocally" }, // 4149064317
-		{ &Z_Construct_UFunction_AWhiteboardActor_CanPlayerInteract, "CanPlayerInteract" }, // 2609876535
-		{ &Z_Construct_UFunction_AWhiteboardActor_CleanupInteractionUI, "CleanupInteractionUI" }, // 141514254
-		{ &Z_Construct_UFunction_AWhiteboardActor_ClearWhiteboard, "ClearWhiteboard" }, // 3223349268
-		{ &Z_Construct_UFunction_AWhiteboardActor_Client_CleanupInteractionUI, "Client_CleanupInteractionUI" }, // 2415371470
-		{ &Z_Construct_UFunction_AWhiteboardActor_Client_SetupInteractionUI, "Client_SetupInteractionUI" }, // 2280494868
-		{ &Z_Construct_UFunction_AWhiteboardActor_Client_SyncWhiteboardState, "Client_SyncWhiteboardState" }, // 2233283102
-		{ &Z_Construct_UFunction_AWhiteboardActor_ClientContinueDrawing, "ClientContinueDrawing" }, // 802646881
-		{ &Z_Construct_UFunction_AWhiteboardActor_ClientEndDrawing, "ClientEndDrawing" }, // 1730428785
-		{ &Z_Construct_UFunction_AWhiteboardActor_ClientStartDrawing, "ClientStartDrawing" }, // 3569939271
-		{ &Z_Construct_UFunction_AWhiteboardActor_ContinueDrawing, "ContinueDrawing" }, // 1518234361
-		{ &Z_Construct_UFunction_AWhiteboardActor_DebugNetworkState, "DebugNetworkState" }, // 2102661149
-		{ &Z_Construct_UFunction_AWhiteboardActor_DrawFigure, "DrawFigure" }, // 3393667315
-		{ &Z_Construct_UFunction_AWhiteboardActor_EndDrawing, "EndDrawing" }, // 1647312852
-		{ &Z_Construct_UFunction_AWhiteboardActor_EndInteraction, "EndInteraction" }, // 684265355
-		{ &Z_Construct_UFunction_AWhiteboardActor_EndInteractionForPlayer, "EndInteractionForPlayer" }, // 2121935780
-		{ &Z_Construct_UFunction_AWhiteboardActor_ExportToPNG, "ExportToPNG" }, // 808597870
-		{ &Z_Construct_UFunction_AWhiteboardActor_ExportToSVG, "ExportToSVG" }, // 744970138
-		{ &Z_Construct_UFunction_AWhiteboardActor_GetCanvasHeight, "GetCanvasHeight" }, // 1506928188
-		{ &Z_Construct_UFunction_AWhiteboardActor_GetCanvasWidth, "GetCanvasWidth" }, // 4082685385
-		{ &Z_Construct_UFunction_AWhiteboardActor_GetInteractingPlayerCount, "GetInteractingPlayerCount" }, // 782114755
-		{ &Z_Construct_UFunction_AWhiteboardActor_GetWhiteboardCamera, "GetWhiteboardCamera" }, // 768154062
-		{ &Z_Construct_UFunction_AWhiteboardActor_GetWhiteboardMesh, "GetWhiteboardMesh" }, // 3116028159
-		{ &Z_Construct_UFunction_AWhiteboardActor_IsPlayerInRange, "IsPlayerInRange" }, // 3346114167
-		{ &Z_Construct_UFunction_AWhiteboardActor_IsPlayerInteracting, "IsPlayerInteracting" }, // 1943807213
-		{ &Z_Construct_UFunction_AWhiteboardActor_IsShapeTool, "IsShapeTool" }, // 3986839428
-		{ &Z_Construct_UFunction_AWhiteboardActor_Multicast_ClearWhiteboard, "Multicast_ClearWhiteboard" }, // 766522331
-		{ &Z_Construct_UFunction_AWhiteboardActor_Multicast_ContinueDrawing, "Multicast_ContinueDrawing" }, // 1260919252
-		{ &Z_Construct_UFunction_AWhiteboardActor_Multicast_EndDrawing, "Multicast_EndDrawing" }, // 1437080312
-		{ &Z_Construct_UFunction_AWhiteboardActor_Multicast_StartDrawing, "Multicast_StartDrawing" }, // 3391667971
-		{ &Z_Construct_UFunction_AWhiteboardActor_Multicast_SyncWhiteboardState, "Multicast_SyncWhiteboardState" }, // 215549471
-		{ &Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateDrawing, "Multicast_UpdateDrawing" }, // 388826340
-		{ &Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateHistory, "Multicast_UpdateHistory" }, // 3128304718
-		{ &Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateShapePreview, "Multicast_UpdateShapePreview" }, // 3166340464
-		{ &Z_Construct_UFunction_AWhiteboardActor_OnInteractionEnded, "OnInteractionEnded" }, // 2031512639
-		{ &Z_Construct_UFunction_AWhiteboardActor_OnInteractionStarted, "OnInteractionStarted" }, // 732854466
-		{ &Z_Construct_UFunction_AWhiteboardActor_OnPlayerEnteredRange, "OnPlayerEnteredRange" }, // 662559367
-		{ &Z_Construct_UFunction_AWhiteboardActor_OnPlayerExitedRange, "OnPlayerExitedRange" }, // 3224335839
-		{ &Z_Construct_UFunction_AWhiteboardActor_OnRep_InteractingPawns, "OnRep_InteractingPawns" }, // 2186847437
-		{ &Z_Construct_UFunction_AWhiteboardActor_OnRep_StrokeHistory, "OnRep_StrokeHistory" }, // 2823244760
-		{ &Z_Construct_UFunction_AWhiteboardActor_OnTriggerBeginOverlap, "OnTriggerBeginOverlap" }, // 668000641
-		{ &Z_Construct_UFunction_AWhiteboardActor_OnTriggerEndOverlap, "OnTriggerEndOverlap" }, // 1815164165
-		{ &Z_Construct_UFunction_AWhiteboardActor_Redo, "Redo" }, // 3267286095
-		{ &Z_Construct_UFunction_AWhiteboardActor_RemoveInteractingPlayer, "RemoveInteractingPlayer" }, // 3621405594
-		{ &Z_Construct_UFunction_AWhiteboardActor_RequestEndInteraction, "RequestEndInteraction" }, // 2860690381
-		{ &Z_Construct_UFunction_AWhiteboardActor_RequestInteraction, "RequestInteraction" }, // 1792213857
-		{ &Z_Construct_UFunction_AWhiteboardActor_Server_AddText, "Server_AddText" }, // 393925666
-		{ &Z_Construct_UFunction_AWhiteboardActor_Server_ClearWhiteboard, "Server_ClearWhiteboard" }, // 3169542959
-		{ &Z_Construct_UFunction_AWhiteboardActor_Server_ContinueDrawing, "Server_ContinueDrawing" }, // 4043242492
-		{ &Z_Construct_UFunction_AWhiteboardActor_Server_DrawFigure, "Server_DrawFigure" }, // 3947098857
-		{ &Z_Construct_UFunction_AWhiteboardActor_Server_EndDrawing, "Server_EndDrawing" }, // 3506036377
-		{ &Z_Construct_UFunction_AWhiteboardActor_Server_Redo, "Server_Redo" }, // 689811919
-		{ &Z_Construct_UFunction_AWhiteboardActor_Server_SetBrushSize, "Server_SetBrushSize" }, // 4251130739
-		{ &Z_Construct_UFunction_AWhiteboardActor_Server_SetBrushTexture, "Server_SetBrushTexture" }, // 285270800
-		{ &Z_Construct_UFunction_AWhiteboardActor_Server_SetCurrentColor, "Server_SetCurrentColor" }, // 437975255
-		{ &Z_Construct_UFunction_AWhiteboardActor_Server_SetCurrentTool, "Server_SetCurrentTool" }, // 1379925966
-		{ &Z_Construct_UFunction_AWhiteboardActor_Server_SetFigureTexture, "Server_SetFigureTexture" }, // 1682711803
-		{ &Z_Construct_UFunction_AWhiteboardActor_Server_SetTextString, "Server_SetTextString" }, // 2892900183
-		{ &Z_Construct_UFunction_AWhiteboardActor_Server_StartDrawing, "Server_StartDrawing" }, // 3058826651
-		{ &Z_Construct_UFunction_AWhiteboardActor_Server_Undo, "Server_Undo" }, // 4269054054
-		{ &Z_Construct_UFunction_AWhiteboardActor_SetBrushSize, "SetBrushSize" }, // 1861433025
-		{ &Z_Construct_UFunction_AWhiteboardActor_SetBrushTexture, "SetBrushTexture" }, // 2099916682
-		{ &Z_Construct_UFunction_AWhiteboardActor_SetCurrentColor, "SetCurrentColor" }, // 4278438262
-		{ &Z_Construct_UFunction_AWhiteboardActor_SetCurrentTool, "SetCurrentTool" }, // 81348451
-		{ &Z_Construct_UFunction_AWhiteboardActor_SetFigureTexture, "SetFigureTexture" }, // 1677756305
-		{ &Z_Construct_UFunction_AWhiteboardActor_SetTextString, "SetTextString" }, // 1910441740
-		{ &Z_Construct_UFunction_AWhiteboardActor_SetupInteractionUI, "SetupInteractionUI" }, // 880000898
-		{ &Z_Construct_UFunction_AWhiteboardActor_StartDrawing, "StartDrawing" }, // 3646673892
-		{ &Z_Construct_UFunction_AWhiteboardActor_StartInteraction, "StartInteraction" }, // 1729956235
-		{ &Z_Construct_UFunction_AWhiteboardActor_SyncWhiteboardState, "SyncWhiteboardState" }, // 1950217650
-		{ &Z_Construct_UFunction_AWhiteboardActor_Undo, "Undo" }, // 1857735538
-		{ &Z_Construct_UFunction_AWhiteboardActor_WorldToCanvasPosition, "WorldToCanvasPosition" }, // 3591925647
+		{ &Z_Construct_UFunction_AWhiteboardActor_AddText, "AddText" }, // 2101890604
+		{ &Z_Construct_UFunction_AWhiteboardActor_CanAcceptMorePlayers, "CanAcceptMorePlayers" }, // 711054184
+		{ &Z_Construct_UFunction_AWhiteboardActor_CanClientDraw, "CanClientDraw" }, // 235298270
+		{ &Z_Construct_UFunction_AWhiteboardActor_CanInteractLocally, "CanInteractLocally" }, // 2955333244
+		{ &Z_Construct_UFunction_AWhiteboardActor_CanPlayerInteract, "CanPlayerInteract" }, // 25843174
+		{ &Z_Construct_UFunction_AWhiteboardActor_CleanupInteractionUI, "CleanupInteractionUI" }, // 483936319
+		{ &Z_Construct_UFunction_AWhiteboardActor_ClearWhiteboard, "ClearWhiteboard" }, // 1315926580
+		{ &Z_Construct_UFunction_AWhiteboardActor_Client_CleanupInteractionUI, "Client_CleanupInteractionUI" }, // 3218440281
+		{ &Z_Construct_UFunction_AWhiteboardActor_Client_SetupInteractionUI, "Client_SetupInteractionUI" }, // 652768882
+		{ &Z_Construct_UFunction_AWhiteboardActor_Client_SyncWhiteboardState, "Client_SyncWhiteboardState" }, // 418831168
+		{ &Z_Construct_UFunction_AWhiteboardActor_ClientStartDrawing, "ClientStartDrawing" }, // 1586725453
+		{ &Z_Construct_UFunction_AWhiteboardActor_ContinueDrawing, "ContinueDrawing" }, // 3277729493
+		{ &Z_Construct_UFunction_AWhiteboardActor_DebugNetworkState, "DebugNetworkState" }, // 324981643
+		{ &Z_Construct_UFunction_AWhiteboardActor_DrawFigure, "DrawFigure" }, // 1913279271
+		{ &Z_Construct_UFunction_AWhiteboardActor_EndDrawing, "EndDrawing" }, // 3692583563
+		{ &Z_Construct_UFunction_AWhiteboardActor_EndInteraction, "EndInteraction" }, // 3982744336
+		{ &Z_Construct_UFunction_AWhiteboardActor_EndInteractionForPlayer, "EndInteractionForPlayer" }, // 2006991637
+		{ &Z_Construct_UFunction_AWhiteboardActor_ExportToPNG, "ExportToPNG" }, // 1566915720
+		{ &Z_Construct_UFunction_AWhiteboardActor_ExportToSVG, "ExportToSVG" }, // 3057465167
+		{ &Z_Construct_UFunction_AWhiteboardActor_GetBrushSize, "GetBrushSize" }, // 2848556706
+		{ &Z_Construct_UFunction_AWhiteboardActor_GetCanvasHeight, "GetCanvasHeight" }, // 61114837
+		{ &Z_Construct_UFunction_AWhiteboardActor_GetCanvasWidth, "GetCanvasWidth" }, // 2624620493
+		{ &Z_Construct_UFunction_AWhiteboardActor_GetCurrentColor, "GetCurrentColor" }, // 2834176765
+		{ &Z_Construct_UFunction_AWhiteboardActor_GetCurrentTextString, "GetCurrentTextString" }, // 3633356088
+		{ &Z_Construct_UFunction_AWhiteboardActor_GetCurrentTool, "GetCurrentTool" }, // 1865742623
+		{ &Z_Construct_UFunction_AWhiteboardActor_GetInteractingPlayerCount, "GetInteractingPlayerCount" }, // 3321050753
+		{ &Z_Construct_UFunction_AWhiteboardActor_GetPlayerDrawingState, "GetPlayerDrawingState" }, // 3068831458
+		{ &Z_Construct_UFunction_AWhiteboardActor_GetSelectedBrushTextureIndex, "GetSelectedBrushTextureIndex" }, // 3027744681
+		{ &Z_Construct_UFunction_AWhiteboardActor_GetSelectedFigureTextureIndex, "GetSelectedFigureTextureIndex" }, // 1228395029
+		{ &Z_Construct_UFunction_AWhiteboardActor_GetWhiteboardCamera, "GetWhiteboardCamera" }, // 3966439677
+		{ &Z_Construct_UFunction_AWhiteboardActor_GetWhiteboardMesh, "GetWhiteboardMesh" }, // 1725150247
+		{ &Z_Construct_UFunction_AWhiteboardActor_IsPlayerInRange, "IsPlayerInRange" }, // 1936910934
+		{ &Z_Construct_UFunction_AWhiteboardActor_IsPlayerInteracting, "IsPlayerInteracting" }, // 1748126187
+		{ &Z_Construct_UFunction_AWhiteboardActor_IsShapeTool, "IsShapeTool" }, // 2506256348
+		{ &Z_Construct_UFunction_AWhiteboardActor_Multicast_ClearWhiteboard, "Multicast_ClearWhiteboard" }, // 2996873633
+		{ &Z_Construct_UFunction_AWhiteboardActor_Multicast_ContinueDrawing, "Multicast_ContinueDrawing" }, // 927826788
+		{ &Z_Construct_UFunction_AWhiteboardActor_Multicast_EndDrawing, "Multicast_EndDrawing" }, // 2321658474
+		{ &Z_Construct_UFunction_AWhiteboardActor_Multicast_StartDrawing, "Multicast_StartDrawing" }, // 1175965257
+		{ &Z_Construct_UFunction_AWhiteboardActor_Multicast_SyncWhiteboardState, "Multicast_SyncWhiteboardState" }, // 454462975
+		{ &Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateDrawing, "Multicast_UpdateDrawing" }, // 3606773133
+		{ &Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateHistory, "Multicast_UpdateHistory" }, // 3442770116
+		{ &Z_Construct_UFunction_AWhiteboardActor_Multicast_UpdateShapePreview, "Multicast_UpdateShapePreview" }, // 268776795
+		{ &Z_Construct_UFunction_AWhiteboardActor_OnInteractionEnded, "OnInteractionEnded" }, // 1479386912
+		{ &Z_Construct_UFunction_AWhiteboardActor_OnInteractionStarted, "OnInteractionStarted" }, // 3404679221
+		{ &Z_Construct_UFunction_AWhiteboardActor_OnPlayerEnteredRange, "OnPlayerEnteredRange" }, // 2295688453
+		{ &Z_Construct_UFunction_AWhiteboardActor_OnPlayerExitedRange, "OnPlayerExitedRange" }, // 1642070895
+		{ &Z_Construct_UFunction_AWhiteboardActor_OnRep_InteractingPawns, "OnRep_InteractingPawns" }, // 3680754953
+		{ &Z_Construct_UFunction_AWhiteboardActor_OnRep_StrokeHistory, "OnRep_StrokeHistory" }, // 1662485597
+		{ &Z_Construct_UFunction_AWhiteboardActor_OnTriggerBeginOverlap, "OnTriggerBeginOverlap" }, // 2111615363
+		{ &Z_Construct_UFunction_AWhiteboardActor_OnTriggerEndOverlap, "OnTriggerEndOverlap" }, // 1527792465
+		{ &Z_Construct_UFunction_AWhiteboardActor_Redo, "Redo" }, // 320893797
+		{ &Z_Construct_UFunction_AWhiteboardActor_RemoveInteractingPlayer, "RemoveInteractingPlayer" }, // 3889334613
+		{ &Z_Construct_UFunction_AWhiteboardActor_RequestEndInteraction, "RequestEndInteraction" }, // 2824245837
+		{ &Z_Construct_UFunction_AWhiteboardActor_RequestInteraction, "RequestInteraction" }, // 86993721
+		{ &Z_Construct_UFunction_AWhiteboardActor_Server_AddText, "Server_AddText" }, // 3983160574
+		{ &Z_Construct_UFunction_AWhiteboardActor_Server_ClearWhiteboard, "Server_ClearWhiteboard" }, // 3415553987
+		{ &Z_Construct_UFunction_AWhiteboardActor_Server_ContinueDrawing, "Server_ContinueDrawing" }, // 1090244729
+		{ &Z_Construct_UFunction_AWhiteboardActor_Server_DrawFigure, "Server_DrawFigure" }, // 3335043986
+		{ &Z_Construct_UFunction_AWhiteboardActor_Server_EndDrawing, "Server_EndDrawing" }, // 617596329
+		{ &Z_Construct_UFunction_AWhiteboardActor_Server_Redo, "Server_Redo" }, // 1849145248
+		{ &Z_Construct_UFunction_AWhiteboardActor_Server_StartDrawing, "Server_StartDrawing" }, // 4028445276
+		{ &Z_Construct_UFunction_AWhiteboardActor_Server_Undo, "Server_Undo" }, // 327139181
+		{ &Z_Construct_UFunction_AWhiteboardActor_SetPlayerBrushSize, "SetPlayerBrushSize" }, // 666497426
+		{ &Z_Construct_UFunction_AWhiteboardActor_SetPlayerBrushTextureIndex, "SetPlayerBrushTextureIndex" }, // 498704919
+		{ &Z_Construct_UFunction_AWhiteboardActor_SetPlayerColor, "SetPlayerColor" }, // 358506416
+		{ &Z_Construct_UFunction_AWhiteboardActor_SetPlayerFigureTextureIndex, "SetPlayerFigureTextureIndex" }, // 2081430415
+		{ &Z_Construct_UFunction_AWhiteboardActor_SetPlayerTextString, "SetPlayerTextString" }, // 3329864089
+		{ &Z_Construct_UFunction_AWhiteboardActor_SetPlayerTool, "SetPlayerTool" }, // 3592464891
+		{ &Z_Construct_UFunction_AWhiteboardActor_SetupInteractionUI, "SetupInteractionUI" }, // 4001457725
+		{ &Z_Construct_UFunction_AWhiteboardActor_StartDrawing, "StartDrawing" }, // 1460718479
+		{ &Z_Construct_UFunction_AWhiteboardActor_StartInteraction, "StartInteraction" }, // 2393937586
+		{ &Z_Construct_UFunction_AWhiteboardActor_SyncWhiteboardState, "SyncWhiteboardState" }, // 3126546049
+		{ &Z_Construct_UFunction_AWhiteboardActor_Undo, "Undo" }, // 3525181436
+		{ &Z_Construct_UFunction_AWhiteboardActor_UpdatePlayerDrawingState, "UpdatePlayerDrawingState" }, // 3643279487
+		{ &Z_Construct_UFunction_AWhiteboardActor_WorldToCanvasPosition, "WorldToCanvasPosition" }, // 3068999171
 	};
 	static_assert(UE_ARRAY_COUNT(FuncInfo) < 2048);
 	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
@@ -4115,28 +4104,24 @@ struct Z_Construct_UClass_AWhiteboardActor_Statics
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_WhiteboardMesh = { "WhiteboardMesh", nullptr, (EPropertyFlags)0x00100000000a001d, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AWhiteboardActor, WhiteboardMesh), Z_Construct_UClass_UStaticMeshComponent_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_WhiteboardMesh_MetaData), NewProp_WhiteboardMesh_MetaData) };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_InteractionVolume = { "InteractionVolume", nullptr, (EPropertyFlags)0x00100000000a000d, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AWhiteboardActor, InteractionVolume), Z_Construct_UClass_UBoxComponent_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_InteractionVolume_MetaData), NewProp_InteractionVolume_MetaData) };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_WhiteboardCamera = { "WhiteboardCamera", nullptr, (EPropertyFlags)0x00100000000a001d, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AWhiteboardActor, WhiteboardCamera), Z_Construct_UClass_UCameraComponent_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_WhiteboardCamera_MetaData), NewProp_WhiteboardCamera_MetaData) };
+const UECodeGen_Private::FIntPropertyParams Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_InitMaterialIndex = { "InitMaterialIndex", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AWhiteboardActor, InitMaterialIndex), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_InitMaterialIndex_MetaData), NewProp_InitMaterialIndex_MetaData) };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_DrawingCanvas = { "DrawingCanvas", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AWhiteboardActor, DrawingCanvas), Z_Construct_UClass_UTextureRenderTarget2D_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_DrawingCanvas_MetaData), NewProp_DrawingCanvas_MetaData) };
 const UECodeGen_Private::FIntPropertyParams Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_CanvasWidth = { "CanvasWidth", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AWhiteboardActor, CanvasWidth), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CanvasWidth_MetaData), NewProp_CanvasWidth_MetaData) };
 const UECodeGen_Private::FIntPropertyParams Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_CanvasHeight = { "CanvasHeight", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AWhiteboardActor, CanvasHeight), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CanvasHeight_MetaData), NewProp_CanvasHeight_MetaData) };
 const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_InteractionDistance = { "InteractionDistance", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AWhiteboardActor, InteractionDistance), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_InteractionDistance_MetaData), NewProp_InteractionDistance_MetaData) };
 const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_WhiteboardWidth = { "WhiteboardWidth", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AWhiteboardActor, WhiteboardWidth), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_WhiteboardWidth_MetaData), NewProp_WhiteboardWidth_MetaData) };
 const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_WhiteboardHeight = { "WhiteboardHeight", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AWhiteboardActor, WhiteboardHeight), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_WhiteboardHeight_MetaData), NewProp_WhiteboardHeight_MetaData) };
-const UECodeGen_Private::FIntPropertyParams Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_InitMaterialIndex = { "InitMaterialIndex", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AWhiteboardActor, InitMaterialIndex), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_InitMaterialIndex_MetaData), NewProp_InitMaterialIndex_MetaData) };
-const UECodeGen_Private::FBytePropertyParams Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_CurrentTool_Underlying = { "UnderlyingType", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, nullptr, METADATA_PARAMS(0, nullptr) };
-const UECodeGen_Private::FEnumPropertyParams Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_CurrentTool = { "CurrentTool", nullptr, (EPropertyFlags)0x0010000000000025, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AWhiteboardActor, CurrentTool), Z_Construct_UEnum_AdvancedDrawingBoard_EDrawingTool, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CurrentTool_MetaData), NewProp_CurrentTool_MetaData) }; // 3146191471
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_CurrentColor = { "CurrentColor", nullptr, (EPropertyFlags)0x0010000000000025, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AWhiteboardActor, CurrentColor), Z_Construct_UScriptStruct_FLinearColor, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CurrentColor_MetaData), NewProp_CurrentColor_MetaData) };
-const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_BrushSize = { "BrushSize", nullptr, (EPropertyFlags)0x0010000000000025, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AWhiteboardActor, BrushSize), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_BrushSize_MetaData), NewProp_BrushSize_MetaData) };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_BrushTextures_Inner = { "BrushTextures", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UClass_UTexture2D_NoRegister, METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FArrayPropertyParams Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_BrushTextures = { "BrushTextures", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AWhiteboardActor, BrushTextures), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_BrushTextures_MetaData), NewProp_BrushTextures_MetaData) };
-const UECodeGen_Private::FIntPropertyParams Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_SelectedBrushTextureIndex = { "SelectedBrushTextureIndex", nullptr, (EPropertyFlags)0x0010000000000025, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AWhiteboardActor, SelectedBrushTextureIndex), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_SelectedBrushTextureIndex_MetaData), NewProp_SelectedBrushTextureIndex_MetaData) };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_FigureTextures_Inner = { "FigureTextures", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UClass_UTexture2D_NoRegister, METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FArrayPropertyParams Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_FigureTextures = { "FigureTextures", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AWhiteboardActor, FigureTextures), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_FigureTextures_MetaData), NewProp_FigureTextures_MetaData) };
-const UECodeGen_Private::FIntPropertyParams Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_SelectedFigureTextureIndex = { "SelectedFigureTextureIndex", nullptr, (EPropertyFlags)0x0010000000000025, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AWhiteboardActor, SelectedFigureTextureIndex), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_SelectedFigureTextureIndex_MetaData), NewProp_SelectedFigureTextureIndex_MetaData) };
-const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_StrokeHistory_Inner = { "StrokeHistory", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UScriptStruct_FStroke, METADATA_PARAMS(0, nullptr) }; // 3888955549
-const UECodeGen_Private::FArrayPropertyParams Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_StrokeHistory = { "StrokeHistory", nullptr, (EPropertyFlags)0x0010000000000020, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AWhiteboardActor, StrokeHistory), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_StrokeHistory_MetaData), NewProp_StrokeHistory_MetaData) }; // 3888955549
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_PlayerDrawingStates_ValueProp = { "PlayerDrawingStates", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 1, Z_Construct_UScriptStruct_FPlayerDrawingState, METADATA_PARAMS(0, nullptr) }; // 2209676374
+const UECodeGen_Private::FWeakObjectPropertyParams Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_PlayerDrawingStates_Key_KeyProp = { "PlayerDrawingStates_Key", nullptr, (EPropertyFlags)0x0004000000000000, UECodeGen_Private::EPropertyGenFlags::WeakObject, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UClass_APawn_NoRegister, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FMapPropertyParams Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_PlayerDrawingStates = { "PlayerDrawingStates", nullptr, (EPropertyFlags)0x0010000000000000, UECodeGen_Private::EPropertyGenFlags::Map, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AWhiteboardActor, PlayerDrawingStates), EMapPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_PlayerDrawingStates_MetaData), NewProp_PlayerDrawingStates_MetaData) }; // 2209676374
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_StrokeHistory_Inner = { "StrokeHistory", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, Z_Construct_UScriptStruct_FStroke, METADATA_PARAMS(0, nullptr) }; // 1512218923
+const UECodeGen_Private::FArrayPropertyParams Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_StrokeHistory = { "StrokeHistory", nullptr, (EPropertyFlags)0x0010000000000020, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AWhiteboardActor, StrokeHistory), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_StrokeHistory_MetaData), NewProp_StrokeHistory_MetaData) }; // 1512218923
 const UECodeGen_Private::FIntPropertyParams Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_CurrentHistoryIndex = { "CurrentHistoryIndex", nullptr, (EPropertyFlags)0x0010000000000020, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AWhiteboardActor, CurrentHistoryIndex), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CurrentHistoryIndex_MetaData), NewProp_CurrentHistoryIndex_MetaData) };
 const UECodeGen_Private::FIntPropertyParams Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_NextStrokeID = { "NextStrokeID", nullptr, (EPropertyFlags)0x0010000000000020, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AWhiteboardActor, NextStrokeID), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_NextStrokeID_MetaData), NewProp_NextStrokeID_MetaData) };
-const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_CurrentTextString = { "CurrentTextString", nullptr, (EPropertyFlags)0x0010000000000020, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AWhiteboardActor, CurrentTextString), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CurrentTextString_MetaData), NewProp_CurrentTextString_MetaData) };
 void Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_bCanInteract_SetBit(void* Obj)
 {
 	((AWhiteboardActor*)Obj)->bCanInteract = 1;
@@ -4149,28 +4134,24 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_AWhiteboa
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_WhiteboardMesh,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_InteractionVolume,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_WhiteboardCamera,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_InitMaterialIndex,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_DrawingCanvas,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_CanvasWidth,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_CanvasHeight,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_InteractionDistance,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_WhiteboardWidth,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_WhiteboardHeight,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_InitMaterialIndex,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_CurrentTool_Underlying,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_CurrentTool,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_CurrentColor,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_BrushSize,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_BrushTextures_Inner,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_BrushTextures,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_SelectedBrushTextureIndex,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_FigureTextures_Inner,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_FigureTextures,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_SelectedFigureTextureIndex,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_PlayerDrawingStates_ValueProp,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_PlayerDrawingStates_Key_KeyProp,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_PlayerDrawingStates,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_StrokeHistory_Inner,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_StrokeHistory,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_CurrentHistoryIndex,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_NextStrokeID,
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_CurrentTextString,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_bCanInteract,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_MaxInteractingPlayers,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AWhiteboardActor_Statics::NewProp_InteractingPawns_Inner,
@@ -4194,7 +4175,7 @@ const UECodeGen_Private::FClassParams Z_Construct_UClass_AWhiteboardActor_Static
 	UE_ARRAY_COUNT(FuncInfo),
 	UE_ARRAY_COUNT(Z_Construct_UClass_AWhiteboardActor_Statics::PropPointers),
 	0,
-	0x009000A4u,
+	0x009001A4u,
 	METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_AWhiteboardActor_Statics::Class_MetaDataParams), Z_Construct_UClass_AWhiteboardActor_Statics::Class_MetaDataParams)
 };
 UClass* Z_Construct_UClass_AWhiteboardActor()
@@ -4205,51 +4186,38 @@ UClass* Z_Construct_UClass_AWhiteboardActor()
 	}
 	return Z_Registration_Info_UClass_AWhiteboardActor.OuterSingleton;
 }
-template<> ADVANCEDDRAWINGBOARD_API UClass* StaticClass<AWhiteboardActor>()
-{
-	return AWhiteboardActor::StaticClass();
-}
+#if VALIDATE_CLASS_REPS
 void AWhiteboardActor::ValidateGeneratedRepEnums(const TArray<struct FRepRecord>& ClassReps) const
 {
-	static const FName Name_CurrentTool(TEXT("CurrentTool"));
-	static const FName Name_CurrentColor(TEXT("CurrentColor"));
-	static const FName Name_BrushSize(TEXT("BrushSize"));
-	static const FName Name_SelectedBrushTextureIndex(TEXT("SelectedBrushTextureIndex"));
-	static const FName Name_SelectedFigureTextureIndex(TEXT("SelectedFigureTextureIndex"));
-	static const FName Name_StrokeHistory(TEXT("StrokeHistory"));
-	static const FName Name_CurrentHistoryIndex(TEXT("CurrentHistoryIndex"));
-	static const FName Name_NextStrokeID(TEXT("NextStrokeID"));
-	static const FName Name_CurrentTextString(TEXT("CurrentTextString"));
-	static const FName Name_MaxInteractingPlayers(TEXT("MaxInteractingPlayers"));
-	static const FName Name_InteractingPawns(TEXT("InteractingPawns"));
+	static FName Name_StrokeHistory(TEXT("StrokeHistory"));
+	static FName Name_CurrentHistoryIndex(TEXT("CurrentHistoryIndex"));
+	static FName Name_NextStrokeID(TEXT("NextStrokeID"));
+	static FName Name_MaxInteractingPlayers(TEXT("MaxInteractingPlayers"));
+	static FName Name_InteractingPawns(TEXT("InteractingPawns"));
 	const bool bIsValid = true
-		&& Name_CurrentTool == ClassReps[(int32)ENetFields_Private::CurrentTool].Property->GetFName()
-		&& Name_CurrentColor == ClassReps[(int32)ENetFields_Private::CurrentColor].Property->GetFName()
-		&& Name_BrushSize == ClassReps[(int32)ENetFields_Private::BrushSize].Property->GetFName()
-		&& Name_SelectedBrushTextureIndex == ClassReps[(int32)ENetFields_Private::SelectedBrushTextureIndex].Property->GetFName()
-		&& Name_SelectedFigureTextureIndex == ClassReps[(int32)ENetFields_Private::SelectedFigureTextureIndex].Property->GetFName()
 		&& Name_StrokeHistory == ClassReps[(int32)ENetFields_Private::StrokeHistory].Property->GetFName()
 		&& Name_CurrentHistoryIndex == ClassReps[(int32)ENetFields_Private::CurrentHistoryIndex].Property->GetFName()
 		&& Name_NextStrokeID == ClassReps[(int32)ENetFields_Private::NextStrokeID].Property->GetFName()
-		&& Name_CurrentTextString == ClassReps[(int32)ENetFields_Private::CurrentTextString].Property->GetFName()
 		&& Name_MaxInteractingPlayers == ClassReps[(int32)ENetFields_Private::MaxInteractingPlayers].Property->GetFName()
 		&& Name_InteractingPawns == ClassReps[(int32)ENetFields_Private::InteractingPawns].Property->GetFName();
 	checkf(bIsValid, TEXT("UHT Generated Rep Indices do not match runtime populated Rep Indices for properties in AWhiteboardActor"));
 }
+#endif
 DEFINE_VTABLE_PTR_HELPER_CTOR(AWhiteboardActor);
 AWhiteboardActor::~AWhiteboardActor() {}
-// End Class AWhiteboardActor
+// ********** End Class AWhiteboardActor ***********************************************************
 
-// Begin Registration
-struct Z_CompiledInDeferFile_FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h_Statics
+// ********** Begin Registration *******************************************************************
+struct Z_CompiledInDeferFile_FID_SPARKELON_2025_Prototype_2025_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h__Script_AdvancedDrawingBoard_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_AWhiteboardActor, AWhiteboardActor::StaticClass, TEXT("AWhiteboardActor"), &Z_Registration_Info_UClass_AWhiteboardActor, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AWhiteboardActor), 1782990705U) },
+		{ Z_Construct_UClass_AWhiteboardActor, AWhiteboardActor::StaticClass, TEXT("AWhiteboardActor"), &Z_Registration_Info_UClass_AWhiteboardActor, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AWhiteboardActor), 671061506U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h_2019724334(TEXT("/Script/AdvancedDrawingBoard"),
-	Z_CompiledInDeferFile_FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h_Statics::ClassInfo),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_SPARKELON_2025_Prototype_2025_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h__Script_AdvancedDrawingBoard_2047594792(TEXT("/Script/AdvancedDrawingBoard"),
+	Z_CompiledInDeferFile_FID_SPARKELON_2025_Prototype_2025_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h__Script_AdvancedDrawingBoard_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_SPARKELON_2025_Prototype_2025_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h__Script_AdvancedDrawingBoard_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);
-// End Registration
+// ********** End Registration *********************************************************************
+
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

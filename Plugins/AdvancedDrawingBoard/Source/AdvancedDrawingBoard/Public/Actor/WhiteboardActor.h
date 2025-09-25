@@ -34,6 +34,9 @@ public:
     UCameraComponent* WhiteboardCamera;
     
     // Whiteboard properties
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Drawing")
+    int32 InitMaterialIndex = 0;
+    
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Whiteboard")
     UTextureRenderTarget2D* DrawingCanvas;
 
@@ -52,31 +55,87 @@ public:
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Whiteboard")
     float WhiteboardHeight = 100.0f;
-    
-    // Drawing properties
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Drawing")
-    int32 InitMaterialIndex = 0;
-    
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Replicated, Category = "Drawing")
-    EDrawingTool CurrentTool;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Replicated, Category = "Drawing")
-    FLinearColor CurrentColor;
-
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Replicated, Category = "Drawing", meta = (ClampMin = "1.0", ClampMax = "100.0"))
-    float BrushSize;
+    // Drawing Properties
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Drawing")
     TArray<UTexture2D*> BrushTextures;
-
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Replicated, Category = "Drawing")
-    int32 SelectedBrushTextureIndex;
     
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Drawing")
     TArray<UTexture2D*> FigureTextures;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Replicated, Category = "Drawing")
+    //////////////// AS PER PLAYER DRAWING TOOLS TRACKING ///////////////
+    
+    UPROPERTY()
+    TMap<TWeakObjectPtr<APawn>, FPlayerDrawingState> PlayerDrawingStates;
+
+    // Add helper functions
+    UFUNCTION(BlueprintCallable, Category = "Whiteboard|Drawing Tools")
+    FPlayerDrawingState GetPlayerDrawingState(APawn* Player) const;
+
+    UFUNCTION(BlueprintCallable, Category = "Whiteboard|Drawing Tools")
+    void UpdatePlayerDrawingState(APawn* Player, const FPlayerDrawingState& NewState);
+
+    // Update tool getters to be player-specific
+    UFUNCTION(BlueprintCallable,BlueprintPure, Category = "Whiteboard|Drawing Tools")
+    EDrawingTool GetCurrentTool(APawn* Player) const;
+
+    UFUNCTION(BlueprintCallable,BlueprintPure, Category = "Whiteboard|Drawing Tools")
+    FLinearColor GetCurrentColor(APawn* Player) const;
+
+    UFUNCTION(BlueprintCallable,BlueprintPure, Category = "Whiteboard|Drawing Tools")
+    float GetBrushSize(APawn* Player) const;
+
+    UFUNCTION(BlueprintCallable,BlueprintPure, Category = "Whiteboard|Drawing Tools")
+    int32 GetSelectedBrushTextureIndex(APawn* Player) const;
+
+    UFUNCTION(BlueprintCallable,BlueprintPure, Category = "Whiteboard|Drawing Tools")
+    int32 GetSelectedFigureTextureIndex(APawn* Player) const;
+    
+    UFUNCTION(BlueprintCallable,BlueprintPure, Category = "Whiteboard|Drawing Tools")
+    FString GetCurrentTextString(APawn* Player) const;
+
+    // Player-specific tool setters
+    UFUNCTION(BlueprintCallable, Category = "Whiteboard|Drawing Tools")
+    void SetPlayerTool(APawn* Player, EDrawingTool NewTool);
+
+    UFUNCTION(BlueprintCallable, Category = "Whiteboard|Drawing Tools")
+    void SetPlayerColor(APawn* Player, FLinearColor NewColor);
+
+    UFUNCTION(BlueprintCallable, Category = "Whiteboard|Drawing Tools")
+    void SetPlayerBrushSize(APawn* Player, float NewSize);
+
+    UFUNCTION(BlueprintCallable, Category = "Whiteboard|Drawing Tools")
+    void SetPlayerBrushTextureIndex(APawn* Player, int32 TextureIndex);
+
+    UFUNCTION(BlueprintCallable, Category = "Whiteboard|Drawing Tools")
+    void SetPlayerFigureTextureIndex(APawn* Player, int32 TextureIndex);
+
+    UFUNCTION(BlueprintCallable, Category = "Whiteboard|Drawing Tools")
+    void SetPlayerTextString(APawn* Player, const FString& NewTextString);
+    
+    /*
+    
+    //ALL Drawing Tools
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Whiteboard|Drawing Tools", ReplicatedUsing = OnRep_CurrentTool)
+    EDrawingTool CurrentTool  = EDrawingTool::Pencil;
+
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Whiteboard|Drawing Tools", ReplicatedUsing = OnRep_CurrentColor)
+    FLinearColor CurrentColor;
+
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Whiteboard|Drawing Tools", ReplicatedUsing = OnRep_BrushSize)
+    float BrushSize;
+    
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Whiteboard|Drawing Tools", ReplicatedUsing = OnRep_BrushTextureIndex)
+    int32 SelectedBrushTextureIndex;
+    
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Whiteboard|Drawing Tools", ReplicatedUsing = OnRep_FigureTextureIndex)
     int32 SelectedFigureTextureIndex;
+
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Whiteboard|Drawing Tools", ReplicatedUsing = OnRep_TextString)
+    FString CurrentTextString;
+
+    */
     
     // Drawing history for undo/redo
     UPROPERTY(Replicated)
@@ -88,10 +147,7 @@ public:
     UPROPERTY(Replicated)
     int32 NextStrokeID;
 
-    // NEW: Current text string for UI input
-    UPROPERTY(Replicated)
-    FString CurrentTextString;
-
+    
     // Interaction - Multi-player support
     UPROPERTY(BlueprintReadOnly, Category = "Interaction")
     bool bCanInteract;
@@ -102,90 +158,138 @@ public:
     UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_InteractingPawns, Category = "Interaction")
     TArray<class APawn*> InteractingPawns;
 
+    ///////////////////////////// Helper Function To Get All Tools ////////////////////
+    /*
+    UFUNCTION(BlueprintCallable, Category = "Whiteboard|Drawing Tools")
+    EDrawingTool GetCurrentTool() const {return CurrentTool; }
+
+    UFUNCTION(BlueprintCallable, Category = "Whiteboard|Drawing Tools")
+    FLinearColor GetCurrentColor() const {return CurrentColor; }
+
+    UFUNCTION(BlueprintCallable, Category = "Whiteboard|Drawing Tools")
+    float GetBrushSize() const {return BrushSize;}
+
+    UFUNCTION(BlueprintCallable, Category = "Whiteboard|Drawing Tools")
+    int GetSelectedBrushTextureIndex() const {return SelectedBrushTextureIndex;}
+
+    UFUNCTION(BlueprintCallable, Category = "Whiteboard|Drawing Tools")
+    int GetSelectedFigureTextureIndex() const {return SelectedFigureTextureIndex;}
+    
+    UFUNCTION(BlueprintCallable, Category = "Whiteboard|Drawing Tools")
+    FString GetCurrentTextString() const {return CurrentTextString;}
+    */
+
+    
+    ///////////////////////////// WHITEBOARD UTILITIES////////////////////
     // Get Whiteboard Mesh
-    UFUNCTION(BlueprintPure, Category = "Whiteboard")
+    UFUNCTION(BlueprintPure, Category = "Whiteboard|Properties")
     UStaticMeshComponent* GetWhiteboardMesh() const;
 
     // Get Canvas Width
-    UFUNCTION(BlueprintPure, Category = "Whiteboard")
+    UFUNCTION(BlueprintPure, Category = "Whiteboard|Properties")
     int32 GetCanvasWidth() const;
 
     // Get Canvas Height
-    UFUNCTION(BlueprintPure, Category = "Whiteboard")
+    UFUNCTION(BlueprintPure, Category = "Whiteboard|Properties")
     int32 GetCanvasHeight() const;
-    
+
+    /*
     // Blueprint callable functions
-    UFUNCTION(BlueprintCallable, Category = "Whiteboard")
+    UFUNCTION(BlueprintCallable, Category = "Whiteboard|Drawing Tools")
     void SetCurrentTool(EDrawingTool NewTool);
 
-    UFUNCTION(BlueprintCallable, Category = "Whiteboard")
+    UFUNCTION(BlueprintCallable, Server, Reliable,Category = "Whiteboard|Drawing Tools")
+    void Server_SetCurrentTool(EDrawingTool NewTool);
+    
+    UFUNCTION(BlueprintCallable, Category = "Whiteboard|Drawing Tools")
     void SetCurrentColor(FLinearColor NewColor);
-
-    UFUNCTION(BlueprintCallable, Category = "Whiteboard")
+    
+    UFUNCTION(BlueprintCallable, Server, Reliable,Category = "Whiteboard|Drawing Tools")
+    void Server_SetCurrentColor(FLinearColor NewColor);
+    
+    UFUNCTION(BlueprintCallable, Category = "Whiteboard|Drawing Tools")
     void SetBrushSize(float NewSize);
 
-    UFUNCTION(BlueprintCallable, Category = "Whiteboard")
+    UFUNCTION(BlueprintCallable, Server, Reliable,Category = "Whiteboard|Drawing Tools")
+    void Server_SetBrushSize(float NewSize);
+    
+    UFUNCTION(BlueprintCallable, Category = "Whiteboard|Drawing Tools")
     void SetBrushTexture(int32 TextureIndex);
 
-    UFUNCTION(BlueprintCallable, Category = "Whiteboard")
+    UFUNCTION(BlueprintCallable, Server, Reliable,Category = "Whiteboard|Drawing Tools")
+    void Server_SetBrushTexture(int32 TextureIndex);
+    
+    UFUNCTION(BlueprintCallable, Category = "Whiteboard|Drawing Tools")
     void SetFigureTexture(int32 TextureIndex);
 
-    UFUNCTION(BlueprintCallable, Category = "Whiteboard")
-    bool IsPlayerInRange(APlayerController* PlayerController) const;
+    UFUNCTION(BlueprintCallable, Server, Reliable,Category = "Whiteboard|Drawing Tools")
+    void Server_SetFigureTexture(int32 TextureIndex);
     
-    UFUNCTION(BlueprintCallable, Category = "Whiteboard")
+    // NEW: Enhanced text input functions
+    UFUNCTION(BlueprintCallable, Category = "Whiteboard|Drawing Tools")
+    void SetTextString(const FString& NewTextString);
+
+    UFUNCTION(BlueprintCallable, Server, Reliable,Category = "Whiteboard|Drawing Tools")
+    void Server_SetTextString(const FString& NewTextString);
+
+    */
+    
+    UFUNCTION(BlueprintCallable, Category = "Whiteboard|Drawing Tools")
     void ClearWhiteboard();
 
-    UFUNCTION(BlueprintCallable, Category = "Whiteboard")
+    UFUNCTION(BlueprintCallable, Category = "Whiteboard|Drawing Tools")
     void Undo();
 
-    UFUNCTION(BlueprintCallable, Category = "Whiteboard")
+    UFUNCTION(BlueprintCallable, Category = "Whiteboard|Drawing Tools")
     void Redo();
 
-    UFUNCTION(BlueprintCallable, Category = "Whiteboard")
+    UFUNCTION(BlueprintCallable, Category = "Whiteboard|Drawing Tools")
     void ExportToPNG(const FString& FilePath);
 
-    UFUNCTION(BlueprintCallable, Category = "Whiteboard")
+    UFUNCTION(BlueprintCallable, Category = "Whiteboard|Drawing Tools")
     void ExportToSVG(const FString& FilePath);
 
     // Drawing functions
     UFUNCTION(BlueprintCallable, Category = "Whiteboard")
-    void StartDrawing(const FVector2D& CanvasPosition);
+    void StartDrawing(APawn* DrawingPlayer, const FVector2D& CanvasPosition);
 
+    // Server RPC functions for network replication
+    UFUNCTION(Server, Reliable)
+    void Server_StartDrawing(APawn* DrawingPlayer, const FVector2D& CanvasPosition);
+
+    // Multicast functions to update all clients
+    UFUNCTION(NetMulticast, Reliable)
+    void Multicast_StartDrawing(APawn* DrawingPlayer, const FVector2D& CanvasPosition, int32 StrokeID);
+    
     UFUNCTION(BlueprintCallable, Category = "Whiteboard")
     void ContinueDrawing(const FVector2D& CanvasPosition);
+
+    UFUNCTION(Server, Reliable)
+    void Server_ContinueDrawing(const FVector2D& CanvasPosition);
+
+    UFUNCTION(NetMulticast, Reliable)
+    void Multicast_ContinueDrawing(const FVector2D& CanvasPosition, int32 StrokeID);
 
     UFUNCTION(BlueprintCallable, Category = "Whiteboard")
     void EndDrawing();
 
-    // NEW: Enhanced text input functions
-    UFUNCTION(BlueprintCallable, Category = "Whiteboard")
-    void SetTextString(const FString& NewTextString);
+    UFUNCTION(Server, Reliable)
+    void Server_EndDrawing();
+
+    UFUNCTION(NetMulticast, Reliable)
+    void Multicast_EndDrawing(int32 StrokeID);
     
     UFUNCTION(BlueprintCallable, Category = "Whiteboard")
     void AddText(const FVector2D& CanvasPosition, const FString& Text);
 
     UFUNCTION(BlueprintCallable, Category = "Whiteboard")
     void DrawFigure(const FVector2D& CanvasPosition, const int32 SelectedFigureIndex);
-
-    // Server RPC functions for network replication
-    UFUNCTION(Server, Reliable)
-    void Server_StartDrawing(const FVector2D& CanvasPosition, EDrawingTool Tool, FLinearColor Color, float Size, int32 BrushTextureIndex,int32 FigureTextureIndex);
-
-    UFUNCTION(Server, Reliable)
-    void Server_ContinueDrawing(const FVector2D& CanvasPosition);
-
-    UFUNCTION(Server, Reliable)
-    void Server_EndDrawing();
+    
+  
 
     UFUNCTION(Server, Reliable)
     void Server_AddText(const FVector2D& CanvasPosition, const FString& Text, FLinearColor Color, float Size);
-
-    // Server RPC for text string
-    UFUNCTION(Server, Reliable)
-    void Server_SetTextString(const FString& NewTextString);
     
-
     UFUNCTION(Server, Reliable)
     void Server_DrawFigure(const FVector2D& CanvasPosition, int32 SelectedFigureIndex, FLinearColor Color, float Size);
 
@@ -197,32 +301,7 @@ public:
 
     UFUNCTION(Server, Reliable)
     void Server_Redo();
-
-    UFUNCTION(Server, Reliable)
-    void Server_SetCurrentTool(EDrawingTool NewTool);
-
-    UFUNCTION(Server, Reliable)
-    void Server_SetCurrentColor(FLinearColor NewColor);
-
-    UFUNCTION(Server, Reliable)
-    void Server_SetBrushSize(float NewSize);
-
-    UFUNCTION(Server, Reliable)
-    void Server_SetBrushTexture(int32 TextureIndex);
-
-    UFUNCTION(Server, Reliable)
-    void Server_SetFigureTexture(int32 TextureIndex);
-
-    // Multicast functions to update all clients
-    UFUNCTION(NetMulticast, Reliable)
-    void Multicast_StartDrawing(const FVector2D& CanvasPosition, EDrawingTool Tool, FLinearColor Color, float Size, int32 BrushTextureIndex,int32 FigureTextureIndex, int32 StrokeID);
-
-    UFUNCTION(NetMulticast, Reliable)
-    void Multicast_ContinueDrawing(const FVector2D& CanvasPosition, int32 StrokeID);
-
-    UFUNCTION(NetMulticast, Reliable)
-    void Multicast_EndDrawing(int32 StrokeID);
-
+    
     UFUNCTION(NetMulticast, Reliable)
     void Multicast_UpdateDrawing(const FStroke& NewStroke);
 
@@ -259,6 +338,9 @@ public:
     // NEW: Validation function for client-side prediction
     UFUNCTION(BlueprintCallable, Category = "Whiteboard")
     bool CanPlayerInteract(APawn* Player) const;
+
+    UFUNCTION(BlueprintCallable, Category = "Whiteboard")
+    bool IsPlayerInRange(APlayerController* PlayerController) const;
 
     // UI Management - Blueprint Events
     UFUNCTION(BlueprintImplementableEvent, Category = "UI Events")
@@ -312,13 +394,7 @@ public:
     
     UFUNCTION(Client, Reliable)
     void Client_CleanupInteractionUI(APawn* InteractingPlayer);
-
-    UFUNCTION(BlueprintCallable, Category = "Whiteboard")
-    void ClientContinueDrawing(const FVector2D& CanvasPosition);
-
-    UFUNCTION(BlueprintCallable, Category = "Whiteboard")
-    void ClientEndDrawing();
-
+    
     // Add debug functions
     UFUNCTION(BlueprintCallable, Category = "Debug")
     void DebugNetworkState();
@@ -352,8 +428,10 @@ protected:
     void OnRep_StrokeHistory();
 
     UFUNCTION()
-    void OnRep_InteractingPawns();
-    
+    void OnRep_InteractingPawns() const;
+
+
+
 private:
     // Current drawing state
     bool bIsDrawing;
@@ -377,7 +455,6 @@ private:
     void DrawShape(const FStroke& Stroke);
     void DrawShapePreview(const FVector2D& StartPos, const FVector2D& EndPos, EDrawingTool Tool, FLinearColor Color, float Size);
     void ClearShapePreview();
-    void CreatePreviewCanvas();
     
     // Helper functions
     UTexture2D* RenderTargetToTexture2D(UTextureRenderTarget2D* RenderTarget);
@@ -385,5 +462,7 @@ private:
 
     // Network helpers
     void SyncNewClient(APlayerController* NewClient);
-    
+
+    // Internal helper
+    APawn* GetDrawingPlayer() const;
 };

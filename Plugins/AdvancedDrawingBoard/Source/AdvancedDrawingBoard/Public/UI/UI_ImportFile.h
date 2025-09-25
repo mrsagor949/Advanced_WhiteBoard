@@ -1,4 +1,7 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Developer : Masud Raihan Sagor
+// What'sApp Number : +8801964998545
+// Email : www.mrsagor2021@gmail.com
+// Copyright Sparkelon @2025, Inc. All Rights Reserved.
 
 #pragma once
 
@@ -6,9 +9,6 @@
 #include "Blueprint/UserWidget.h"
 #include "UI_ImportFile.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class ADVANCEDDRAWINGBOARD_API UUI_ImportFile : public UUserWidget
 {

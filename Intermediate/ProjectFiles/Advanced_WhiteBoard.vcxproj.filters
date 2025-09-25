@@ -82,42 +82,42 @@
     <Filter Include="Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public">
       <UniqueIdentifier>{B337FFAE-5936-38FD-9CA0-9D393BBDC5F6}</UniqueIdentifier>
     </Filter>
-    <ClCompile Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\AdvancedDrawingBoard.h">
+    <ClInclude Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\AdvancedDrawingBoard.h">
       <Filter>Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public</Filter>
-    </ClCompile>
+    </ClInclude>
     <Filter Include="Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\Actor">
       <UniqueIdentifier>{4CD582C2-5731-31ED-86EE-747AA4FE5F91}</UniqueIdentifier>
     </Filter>
-    <ClCompile Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\Actor\WhiteboardActor.h">
+    <ClInclude Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\Actor\WhiteboardActor.h">
       <Filter>Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\Actor</Filter>
-    </ClCompile>
+    </ClInclude>
     <Filter Include="Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\Components">
       <UniqueIdentifier>{A899AD21-3258-3CDC-976A-B9D076F9F6E5}</UniqueIdentifier>
     </Filter>
-    <ClCompile Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\Components\WhiteboardInteractionComponent.h">
+    <ClInclude Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\Components\WhiteboardInteractionComponent.h">
       <Filter>Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\Components</Filter>
-    </ClCompile>
+    </ClInclude>
     <Filter Include="Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\Controller">
       <UniqueIdentifier>{D93B966A-13C3-3A38-8CC7-11A2A9D7FA27}</UniqueIdentifier>
     </Filter>
-    <ClCompile Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\Controller\AWhiteboard_Player_Controller.h">
+    <ClInclude Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\Controller\AWhiteboard_Player_Controller.h">
       <Filter>Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\Controller</Filter>
-    </ClCompile>
+    </ClInclude>
     <Filter Include="Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\Library">
       <UniqueIdentifier>{D74E8570-6D26-3D4E-A1A1-A19805B6750F}</UniqueIdentifier>
     </Filter>
-    <ClCompile Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\Library\WhiteboardTypes.h">
+    <ClInclude Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\Library\Whiteboard_Types.h">
       <Filter>Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\Library</Filter>
-    </ClCompile>
+    </ClInclude>
     <Filter Include="Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\UI">
       <UniqueIdentifier>{E6A076D2-6222-3A93-BD9C-6B18177FB590}</UniqueIdentifier>
     </Filter>
-    <ClCompile Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\UI\UI_ImportFile.h">
+    <ClInclude Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\UI\UI_ImportFile.h">
       <Filter>Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\UI\WhiteboardUI.h">
+    </ClInclude>
+    <ClInclude Include="..\..\Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\UI\WhiteboardUI.h">
       <Filter>Plugins\AdvancedDrawingBoard\Source\AdvancedDrawingBoard\Public\UI</Filter>
-    </ClCompile>
+    </ClInclude>
     <None Include="..\..\Plugins\AdvancedDrawingBoard\AdvancedDrawingBoard.uplugin">
       <Filter>Plugins\AdvancedDrawingBoard</Filter>
     </None>
@@ -142,8 +142,8 @@
     <ClCompile Include="..\..\Source\Advanced_WhiteBoard\Advanced_WhiteBoard.cpp">
       <Filter>Source\Advanced_WhiteBoard</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Advanced_WhiteBoard\Advanced_WhiteBoard.h">
+    <ClInclude Include="..\..\Source\Advanced_WhiteBoard\Advanced_WhiteBoard.h">
       <Filter>Source\Advanced_WhiteBoard</Filter>
-    </ClCompile>
+    </ClInclude>
   </ItemGroup>
 </Project>

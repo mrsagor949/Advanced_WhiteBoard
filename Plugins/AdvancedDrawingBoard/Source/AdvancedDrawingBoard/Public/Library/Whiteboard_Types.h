@@ -1,4 +1,9 @@
-﻿#pragma once
+﻿// Developer : Masud Raihan Sagor
+// What'sApp Number : +8801964998545
+// Email : www.mrsagor2021@gmail.com
+// Copyright Sparkelon @2025, Inc. All Rights Reserved.
+
+#pragma once
 
 #include "CoreMinimal.h"
 #include "Engine/NetSerialization.h"
@@ -17,7 +22,7 @@ enum class EDrawingTool : uint8
     Rectangle   UMETA(DisplayName = "Rectangle"),
     Circle      UMETA(DisplayName = "Circle"),
     Texture     UMETA(DisplayName = "Texture Brush"),
-    Figure     UMETA(DisplayName = "Figure Brush")
+    Figure      UMETA(DisplayName = "Figure Brush")
 };
 
 // Drawing Tools Struct
@@ -44,7 +49,7 @@ struct ADVANCEDDRAWINGBOARD_API FDrawingPoint
     UPROPERTY()
     int32 StrokeID = 0;
 
-    FDrawingPoint(): Position()
+    FDrawingPoint() : Position(FVector2D::ZeroVector)
     {
     }
 
@@ -54,7 +59,7 @@ struct ADVANCEDDRAWINGBOARD_API FDrawingPoint
     {}
 };
 
-//Drawing Tools Point Struct
+// Drawing Tools Point Struct
 USTRUCT(BlueprintType)
 struct ADVANCEDDRAWINGBOARD_API FStroke
 {
@@ -93,4 +98,35 @@ struct ADVANCEDDRAWINGBOARD_API FStroke
 
     UPROPERTY()
     bool bIsComplete = false;
+};
+
+USTRUCT(BlueprintType)
+struct ADVANCEDDRAWINGBOARD_API FPlayerDrawingState
+{
+    GENERATED_BODY()
+
+    UPROPERTY()
+    APawn* Player = nullptr;
+
+    UPROPERTY()
+    EDrawingTool CurrentTool = EDrawingTool::Pencil;
+
+    UPROPERTY()
+    FLinearColor CurrentColor = FLinearColor::Black;
+
+    UPROPERTY()
+    float BrushSize = 5.0f;
+
+    UPROPERTY()
+    int32 SelectedBrushTextureIndex = 0;
+
+    UPROPERTY()
+    int32 SelectedFigureTextureIndex = 0;
+
+    UPROPERTY()
+    FString CurrentTextString = TEXT("");
+
+    FPlayerDrawingState() {}
+
+    FPlayerDrawingState(APawn* InPlayer) : Player(InPlayer) {}
 };

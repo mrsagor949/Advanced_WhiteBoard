@@ -1,5 +1,9 @@
-﻿// Add this to your PlayerController header file
+﻿// Developer : Masud Raihan Sagor
+// What'sApp Number : +8801964998545
+// Email : www.mrsagor2021@gmail.com
+// Copyright Sparkelon @2025, Inc. All Rights Reserved.
 
+// ReSharper disable CppUEBlueprintImplementableEventNotImplemented
 #pragma once
 
 #include "CoreMinimal.h"
@@ -42,7 +46,7 @@ public:
 
     // Drawing RPCs - Route through PlayerController
     UFUNCTION(Server, Reliable)
-    void Server_WhiteboardStartDrawing(AWhiteboardActor* Whiteboard, const FVector2D& CanvasPosition, EDrawingTool Tool, FLinearColor Color, float Size, int32 BrushTextureIndex, int32 FigureTextureIndex);
+    void Server_WhiteboardStartDrawing(AWhiteboardActor* Whiteboard,APawn* DrawingPawn,const FVector2D& CanvasPosition);
 
     UFUNCTION(Server, Reliable)
     void Server_WhiteboardContinueDrawing(AWhiteboardActor* Whiteboard, const FVector2D& CanvasPosition);
@@ -64,25 +68,7 @@ public:
 
     UFUNCTION(Server, Reliable)
     void Server_WhiteboardRedo(AWhiteboardActor* Whiteboard);
-
-    UFUNCTION(Server, Reliable)
-    void Server_WhiteboardSetCurrentTool(AWhiteboardActor* Whiteboard, EDrawingTool NewTool);
-
-    UFUNCTION(Server, Reliable) 
-    void Server_WhiteboardSetCurrentColor(AWhiteboardActor* Whiteboard, FLinearColor NewColor);
-
-    UFUNCTION(Server, Reliable)
-    void Server_WhiteboardSetBrushSize(AWhiteboardActor* Whiteboard, float NewSize);
-
-    UFUNCTION(Server, Reliable)
-    void Server_WhiteboardSetBrushTexture(AWhiteboardActor* Whiteboard, int32 TextureIndex);
-
-    UFUNCTION(Server, Reliable)
-    void Server_WhiteboardSetFigureTexture(AWhiteboardActor* Whiteboard, int32 TextureIndex);
-
-    UFUNCTION(Server, Reliable)
-    void Server_WhiteboardSetTextString(AWhiteboardActor* Whiteboard, const FString& NewTextString);
-
+    
 private:
     // Helper function to validate whiteboard interaction
     bool ValidateWhiteboardInteraction(AWhiteboardActor* Whiteboard, APawn* InteractingPlayer) const;

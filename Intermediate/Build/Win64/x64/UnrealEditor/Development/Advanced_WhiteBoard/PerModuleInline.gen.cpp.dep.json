@@ -3,10 +3,10 @@
     "Data": {
         "Source": "e:\\sparkelon-2025\\prototype\\2025\\advanced_whiteboard\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\advanced_whiteboard\\permoduleinline.gen.cpp",
         "ProvidedModule": "",
-        "PCH": "d:\\sparkelon\\bonvr\\engine\\ue_5.5.4_source\\engine\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.h.pch",
+        "PCH": "e:\\sparkelon-2025\\prototype\\2025\\advanced_whiteboard\\intermediate\\build\\win64\\x64\\advanced_whiteboardeditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.valexpapi.cpp20.inclorderunreal5_5.h.pch",
         "Includes": [
             "e:\\sparkelon-2025\\prototype\\2025\\advanced_whiteboard\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\advanced_whiteboard\\definitions.advanced_whiteboard.h",
-            "d:\\sparkelon\\bonvr\\engine\\ue_5.5.4_source\\engine\\source\\runtime\\core\\public\\hal\\permoduleinline.inl"
+            "e:\\engine\\ue_5.6\\engine\\source\\runtime\\core\\public\\hal\\permoduleinline.inl"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

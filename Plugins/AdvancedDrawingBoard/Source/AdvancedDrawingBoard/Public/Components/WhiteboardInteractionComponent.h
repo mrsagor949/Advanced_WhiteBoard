@@ -62,7 +62,8 @@ public:
     
     UFUNCTION(BlueprintCallable, Category = "Whiteboard")
     void ContinueDrawing();
-    
+
+    /*
     UFUNCTION(BlueprintCallable, Category = "Whiteboard")
     void SetDrawingTool(EDrawingTool Tool);
 
@@ -71,6 +72,7 @@ public:
 
     UFUNCTION(BlueprintCallable, Category = "Whiteboard")
     void SetBrushSize(float Size);
+    */
     
     UFUNCTION(BlueprintCallable, Category = "Whiteboard")
     void ClearWhiteboard();
@@ -111,6 +113,4 @@ private:
     // Drawing state tracking
     FVector2D LastDrawingPosition = FVector2d::ZeroVector;
     bool bHasValidLastPosition;
-    float DrawingUpdateInterval;
-    float LastDrawingUpdateTime;
 };
