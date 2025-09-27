@@ -23,6 +23,7 @@ class UCameraComponent;
 class UPrimitiveComponent;
 class UStaticMeshComponent;
 enum class EDrawingTool : uint8;
+struct FDrawingData;
 struct FHitResult;
 struct FLinearColor;
 struct FPlayerDrawingState;
@@ -30,10 +31,13 @@ struct FStroke;
 
 // ********** Begin Class AWhiteboardActor *********************************************************
 #define FID_SPARKELON_2025_Prototype_2025_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h_18_RPC_WRAPPERS_NO_PURE_DECLS \
+	virtual void Multicast_DrawStroke_Implementation(FStroke const& Stroke); \
+	virtual void Multicast_HandleDrawing_Implementation(FDrawingData const& DrawingData); \
+	virtual void Server_HandleDrawing_Implementation(FDrawingData const& DrawingData); \
 	virtual void Client_CleanupInteractionUI_Implementation(APawn* InteractingPlayer); \
 	virtual void Client_SetupInteractionUI_Implementation(APawn* InteractingPlayer); \
 	virtual void Client_SyncWhiteboardState_Implementation(TArray<FStroke> const& History, int32 HistoryIndex); \
-	virtual void Multicast_UpdateShapePreview_Implementation(FVector2D const& StartPos, FVector2D const& EndPos, EDrawingTool Tool, FLinearColor Color, float Size, int32 StrokeID); \
+	virtual void Multicast_UpdateShapePreview_Implementation(APawn* DrawingPlayer, FVector2D const& StartPos, FVector2D const& EndPos, EDrawingTool Tool, FLinearColor Color, float Size, int32 StrokeID); \
 	virtual void Multicast_SyncWhiteboardState_Implementation(TArray<FStroke> const& History, int32 HistoryIndex); \
 	virtual void Multicast_UpdateHistory_Implementation(TArray<FStroke> const& NewHistory, int32 NewHistoryIndex); \
 	virtual void Multicast_ClearWhiteboard_Implementation(); \
@@ -43,16 +47,30 @@ struct FStroke;
 	virtual void Server_ClearWhiteboard_Implementation(); \
 	virtual void Server_DrawFigure_Implementation(FVector2D const& CanvasPosition, int32 SelectedFigureIndex, FLinearColor Color, float Size); \
 	virtual void Server_AddText_Implementation(FVector2D const& CanvasPosition, const FString& Text, FLinearColor Color, float Size); \
-	virtual void Multicast_EndDrawing_Implementation(int32 StrokeID); \
-	virtual void Server_EndDrawing_Implementation(); \
-	virtual void Multicast_ContinueDrawing_Implementation(FVector2D const& CanvasPosition, int32 StrokeID); \
-	virtual void Server_ContinueDrawing_Implementation(FVector2D const& CanvasPosition); \
-	virtual void Multicast_StartDrawing_Implementation(APawn* DrawingPlayer, FVector2D const& CanvasPosition, int32 StrokeID); \
-	virtual void Server_StartDrawing_Implementation(APawn* DrawingPlayer, FVector2D const& CanvasPosition); \
+	virtual void Multicast_EndDrawing_Implementation(APawn* DrawingPlayer, FStroke const& CompletedStroke); \
+	virtual void Server_EndDrawing_Implementation(APawn* DrawingPlayer); \
+	virtual void Multicast_ContinueDrawing_Implementation(FDrawingData const& DrawingData); \
+	virtual void Server_ContinueDrawing_Implementation(FDrawingData const& DrawingData); \
+	virtual void Server_HandleEndDrawing_Implementation(APawn* DrawingPlayer); \
+	virtual void Server_HandleContinueDrawing_Implementation(APawn* DrawingPlayer, FVector2D const& CanvasPosition); \
+	virtual void Server_HandleStartDrawing_Implementation(APawn* DrawingPlayer, FVector2D const& CanvasPosition, FPlayerDrawingState const& PlayerState); \
+	virtual void Multicast_StartDrawing_Implementation(FDrawingData const& DrawingData); \
+	virtual void Server_StartDrawing_Implementation(FDrawingData const& DrawingData); \
+	virtual void Multicast_UpdatePlayerToolState_Implementation(APawn* Player, EDrawingTool NewTool); \
+	virtual void Server_SetPlayerTool_Implementation(APawn* Player, EDrawingTool NewTool); \
+	virtual void Multicast_UpdatePlayerDrawingState_Implementation(APawn* Player, FPlayerDrawingState const& NewState); \
+	virtual void Server_UpdatePlayerDrawingState_Implementation(APawn* Player, FPlayerDrawingState const& NewState); \
+	virtual void Multicast_UpdatePlayerTool_Implementation(APawn* Player, EDrawingTool NewTool); \
+	virtual void Server_UpdatePlayerTool_Implementation(APawn* Player, EDrawingTool NewTool); \
+	DECLARE_FUNCTION(execGetCurrentPlayer); \
+	DECLARE_FUNCTION(execMulticast_DrawStroke); \
 	DECLARE_FUNCTION(execOnRep_InteractingPawns); \
+	DECLARE_FUNCTION(execMulticast_HandleDrawing); \
+	DECLARE_FUNCTION(execServer_HandleDrawing); \
 	DECLARE_FUNCTION(execOnRep_StrokeHistory); \
 	DECLARE_FUNCTION(execOnTriggerEndOverlap); \
 	DECLARE_FUNCTION(execOnTriggerBeginOverlap); \
+	DECLARE_FUNCTION(execDebugPlayerToolState); \
 	DECLARE_FUNCTION(execGetWhiteboardCamera); \
 	DECLARE_FUNCTION(execIsShapeTool); \
 	DECLARE_FUNCTION(execWorldToCanvasPosition); \
@@ -87,14 +105,15 @@ struct FStroke;
 	DECLARE_FUNCTION(execServer_ClearWhiteboard); \
 	DECLARE_FUNCTION(execServer_DrawFigure); \
 	DECLARE_FUNCTION(execServer_AddText); \
-	DECLARE_FUNCTION(execDrawFigure); \
-	DECLARE_FUNCTION(execAddText); \
 	DECLARE_FUNCTION(execMulticast_EndDrawing); \
 	DECLARE_FUNCTION(execServer_EndDrawing); \
 	DECLARE_FUNCTION(execEndDrawing); \
 	DECLARE_FUNCTION(execMulticast_ContinueDrawing); \
 	DECLARE_FUNCTION(execServer_ContinueDrawing); \
 	DECLARE_FUNCTION(execContinueDrawing); \
+	DECLARE_FUNCTION(execServer_HandleEndDrawing); \
+	DECLARE_FUNCTION(execServer_HandleContinueDrawing); \
+	DECLARE_FUNCTION(execServer_HandleStartDrawing); \
 	DECLARE_FUNCTION(execMulticast_StartDrawing); \
 	DECLARE_FUNCTION(execServer_StartDrawing); \
 	DECLARE_FUNCTION(execStartDrawing); \
@@ -111,6 +130,8 @@ struct FStroke;
 	DECLARE_FUNCTION(execSetPlayerBrushTextureIndex); \
 	DECLARE_FUNCTION(execSetPlayerBrushSize); \
 	DECLARE_FUNCTION(execSetPlayerColor); \
+	DECLARE_FUNCTION(execMulticast_UpdatePlayerToolState); \
+	DECLARE_FUNCTION(execServer_SetPlayerTool); \
 	DECLARE_FUNCTION(execSetPlayerTool); \
 	DECLARE_FUNCTION(execGetCurrentTextString); \
 	DECLARE_FUNCTION(execGetSelectedFigureTextureIndex); \
@@ -119,7 +140,13 @@ struct FStroke;
 	DECLARE_FUNCTION(execGetCurrentColor); \
 	DECLARE_FUNCTION(execGetCurrentTool); \
 	DECLARE_FUNCTION(execUpdatePlayerDrawingState); \
-	DECLARE_FUNCTION(execGetPlayerDrawingState);
+	DECLARE_FUNCTION(execMulticast_UpdatePlayerDrawingState); \
+	DECLARE_FUNCTION(execServer_UpdatePlayerDrawingState); \
+	DECLARE_FUNCTION(execGetPlayerDrawingState); \
+	DECLARE_FUNCTION(execMulticast_UpdatePlayerTool); \
+	DECLARE_FUNCTION(execServer_UpdatePlayerTool); \
+	DECLARE_FUNCTION(execOnRep_PlayerDrawingStates); \
+	DECLARE_FUNCTION(execOnRep_DrawingCanvas);
 
 
 #define FID_SPARKELON_2025_Prototype_2025_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h_18_CALLBACK_WRAPPERS
@@ -137,7 +164,9 @@ public: \
 	enum class ENetFields_Private : uint16 \
 	{ \
 		NETFIELD_REP_START=(uint16)((int32)Super::ENetFields_Private::NETFIELD_REP_END + (int32)1), \
-		StrokeHistory=NETFIELD_REP_START, \
+		DrawingCanvas=NETFIELD_REP_START, \
+		PlayerDrawingStates, \
+		StrokeHistory, \
 		CurrentHistoryIndex, \
 		NextStrokeID, \
 		MaxInteractingPlayers, \

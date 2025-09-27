@@ -44,15 +44,20 @@ public:
     UFUNCTION(Server, Reliable)
     void Server_EndWhiteboardInteraction(AWhiteboardActor* Whiteboard, APawn* InteractingPlayer);
 
+    // NEW: Player tool state synchronization
+    UFUNCTION(Server, Reliable, WithValidation)
+    void Server_UpdatePlayerToolState(AWhiteboardActor* Whiteboard, EDrawingTool Tool, FLinearColor Color, float Size, int32 BrushTextureIndex, int32 FigureTextureIndex);
+    bool Server_UpdatePlayerToolState_Validate(AWhiteboardActor* Whiteboard, EDrawingTool Tool, FLinearColor Color, float Size, int32 BrushTextureIndex, int32 FigureTextureIndex) { return true; }
+    
     // Drawing RPCs - Route through PlayerController
     UFUNCTION(Server, Reliable)
-    void Server_WhiteboardStartDrawing(AWhiteboardActor* Whiteboard,APawn* DrawingPawn,const FVector2D& CanvasPosition);
+    void Server_WhiteboardStartDrawing(APawn* DrawingPlayer,AWhiteboardActor* Whiteboard);
 
     UFUNCTION(Server, Reliable)
-    void Server_WhiteboardContinueDrawing(AWhiteboardActor* Whiteboard, const FVector2D& CanvasPosition);
+    void Server_WhiteboardContinueDrawing(APawn* DrawingPlayer,AWhiteboardActor* Whiteboard);
 
     UFUNCTION(Server, Reliable)
-    void Server_WhiteboardEndDrawing(AWhiteboardActor* Whiteboard);
+    void Server_WhiteboardEndDrawing(APawn* DrawingPlayer,AWhiteboardActor* Whiteboard);
 
     UFUNCTION(Server, Reliable)
     void Server_WhiteboardAddText(AWhiteboardActor* Whiteboard, const FVector2D& CanvasPosition, const FString& Text, FLinearColor Color, float Size);

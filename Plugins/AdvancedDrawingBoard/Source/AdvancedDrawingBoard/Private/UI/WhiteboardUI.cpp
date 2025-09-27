@@ -9,7 +9,7 @@ void UWhiteboardUI::SetDrawingTool(EDrawingTool Tool)
 {
     if (TargetWhiteboard && OwningPlayer)
     {
-        TargetWhiteboard->SetPlayerTool(OwningPlayer, Tool);
+        TargetWhiteboard->SetPlayerTool(Tool);
         OnToolChanged(Tool);
     }
 }
@@ -104,7 +104,7 @@ EDrawingTool UWhiteboardUI::GetCurrentTool() const
 {
     if (TargetWhiteboard && OwningPlayer)
     {
-        return TargetWhiteboard->GetCurrentTool(OwningPlayer);
+        return TargetWhiteboard->GetCurrentTool();
     }
     return EDrawingTool::Pencil;
 }

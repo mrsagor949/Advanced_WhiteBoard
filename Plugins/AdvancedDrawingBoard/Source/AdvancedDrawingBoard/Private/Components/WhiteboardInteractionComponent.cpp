@@ -75,7 +75,6 @@ void UWhiteboardInteractionComponent::TryToInteract()
     else
     {
         
-        
     // Check if we can interact locally (client-side prediction)
     if (!TargetWhiteboard->CanPlayerInteract(OwnerPawn))
     {

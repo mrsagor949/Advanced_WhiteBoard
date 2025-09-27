@@ -28,8 +28,7 @@ void AWhiteboardController::Server_RequestWhiteboardInteraction_Implementation(A
 // Server End Interaction Function
 void AWhiteboardController::Server_EndWhiteboardInteraction_Implementation(AWhiteboardActor* Whiteboard, APawn* InteractingPlayer)
 {
-     
-
+    
     if (!ValidateWhiteboardInteraction(Whiteboard, InteractingPlayer))
     {
         return;
@@ -42,8 +41,15 @@ void AWhiteboardController::Server_EndWhiteboardInteraction_Implementation(AWhit
 
 
 // Drawing RPC Implementations - Route to Whiteboard
-void AWhiteboardController::Server_WhiteboardStartDrawing_Implementation(AWhiteboardActor* Whiteboard,APawn* DrawingPawn,const FVector2D& CanvasPosition)
+void AWhiteboardController::Server_WhiteboardStartDrawing_Implementation(APawn* DrawingPlayer, AWhiteboardActor* Whiteboard)
 {
+    if (!Whiteboard || !ValidateWhiteboardInteraction(Whiteboard, DrawingPlayer)) return;
+    
+    FPlayerDrawingState State = Whiteboard->GetPlayerDrawingState(DrawingPlayer);
+    FDrawingData DrawingData(FVector2D::ZeroVector, State, DrawingPlayer, 0, true, false);
+    Whiteboard->Server_HandleDrawing_Implementation(DrawingData);
+    
+    /*
     if (!Whiteboard)
     {
         UE_LOG(LogTemp, Error, TEXT("Invalid whiteboard in StartDrawing RPC"));
@@ -56,28 +62,50 @@ void AWhiteboardController::Server_WhiteboardStartDrawing_Implementation(AWhiteb
         UE_LOG(LogTemp, Error, TEXT("Player not interacting with whiteboard"));
         return;
     }
-
+    
     UE_LOG(LogTemp, Warning, TEXT("START SERVER DRAWING"));
     // Call the whiteboard function directly (we're on server now)
-    Whiteboard->Server_StartDrawing_Implementation(DrawingPawn,CanvasPosition);
+   Whiteboard->Server_StartDrawing_Implementation(DrawingData);
+   */
 }
 
-void AWhiteboardController::Server_WhiteboardContinueDrawing_Implementation(AWhiteboardActor* Whiteboard, const FVector2D& CanvasPosition)
+void AWhiteboardController::Server_WhiteboardContinueDrawing_Implementation(APawn* DrawingPlayer,AWhiteboardActor* Whiteboard)
 {
+
+    if (!Whiteboard || !ValidateWhiteboardInteraction(Whiteboard, DrawingPlayer)) return;
+    
+    FPlayerDrawingState State = Whiteboard->GetPlayerDrawingState(DrawingPlayer);
+    FDrawingData DrawingData(FVector2D::ZeroVector, State, DrawingPlayer, 0, false, false);
+    Whiteboard->Server_HandleDrawing_Implementation(DrawingData);
+    /*
     if (!Whiteboard || !Whiteboard->IsPlayerInteracting(GetPawn()))
     {
         return;
     }
-    Whiteboard->Server_ContinueDrawing_Implementation(CanvasPosition);
+
+    Whiteboard->Server_HandleDrawing_Implementation(DrawingData);
+    
+    //Whiteboard->Server_ContinueDrawing_Implementation(DrawingData);
+    */
 }
 
-void AWhiteboardController::Server_WhiteboardEndDrawing_Implementation(AWhiteboardActor* Whiteboard)
+void AWhiteboardController::Server_WhiteboardEndDrawing_Implementation(APawn* DrawingPlayer,AWhiteboardActor* Whiteboard)
 {
+
+    if (!Whiteboard || !ValidateWhiteboardInteraction(Whiteboard, DrawingPlayer)) return;
+    
+    FPlayerDrawingState State = Whiteboard->GetPlayerDrawingState(DrawingPlayer);
+    FDrawingData DrawingData(FVector2D::ZeroVector, State, DrawingPlayer, 0, false, true);
+    Whiteboard->Server_HandleDrawing_Implementation(DrawingData);
+    /*
     if (!Whiteboard || !Whiteboard->IsPlayerInteracting(GetPawn()))
     {
         return;
     }
-    Whiteboard->Server_EndDrawing_Implementation();
+    Whiteboard->Server_HandleDrawing_Implementation(DrawingData);
+    
+    Whiteboard->Server_EndDrawing_Implementation(DrawingPlayer);
+    */
 }
 
 void AWhiteboardController::Server_WhiteboardAddText_Implementation(AWhiteboardActor* Whiteboard, const FVector2D& CanvasPosition, const FString& Text, FLinearColor Color, float Size)
@@ -217,6 +245,22 @@ void AWhiteboardController::RestoreGameInputMode(APawn* InteractingPlayer)
     OriginalInputComponent = nullptr;
     
     OnPlayerLeftInteraction(InteractingPlayer, WhiteboardActor);
+}
+
+void AWhiteboardController::Server_UpdatePlayerToolState_Implementation(AWhiteboardActor* Whiteboard, EDrawingTool Tool,
+    FLinearColor Color, float Size, int32 BrushTextureIndex, int32 FigureTextureIndex)
+{
+    if (!ValidateWhiteboardInteraction(Whiteboard, GetPawn()))
+    {
+        return;
+    }
+
+    // Update server's state for this player
+    if (Whiteboard)
+    {
+        // We'll need to add a method to update per-player state on the server
+       // Whiteboard->UpdateServerPlayerState(GetPawn(), Tool, Color, Size, BrushTextureIndex, FigureTextureIndex);
+    }
 }
 
 void AWhiteboardController::Client_CleanupInteractionUI_Implementation(APawn* InteractingPlayer)
