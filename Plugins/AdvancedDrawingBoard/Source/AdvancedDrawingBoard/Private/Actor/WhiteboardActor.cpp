@@ -52,7 +52,6 @@ AWhiteboardActor::AWhiteboardActor()
     
     // Initialize drawing state
     bIsDrawing = false;
-    bIsDrawingShape = false;
     bCanInteract = false;
     InteractingPawns.Empty();
     PreviewCanvas = nullptr;
@@ -75,12 +74,18 @@ void AWhiteboardActor::BeginPlay()
 	Super::BeginPlay();
     
 
+    // Initialize maps
+    ActiveStrokes.Empty();
+    ClientPredictedStrokes.Empty();
+    PlayerShapeDrawingStates.Empty();
+    LocalPlayerStatesCache.Empty();
+    
     // Bind overlap events
     InteractionVolume->OnComponentBeginOverlap.AddDynamic(this, &AWhiteboardActor::OnTriggerBeginOverlap);
     InteractionVolume->OnComponentEndOverlap.AddDynamic(this, &AWhiteboardActor::OnTriggerEndOverlap);
 
-    // Initialize The Whiteboard
-    InitializeWhiteboard();
+    FTimerHandle InitTimer;
+    GetWorld()->GetTimerManager().SetTimer(InitTimer, this, &AWhiteboardActor::DelayedInitialize, 0.5f, false);
     
 }
 
@@ -88,12 +93,13 @@ void AWhiteboardActor::BeginPlay()
 void AWhiteboardActor::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
     Super::GetLifetimeReplicatedProps(OutLifetimeProps);
-    DOREPLIFETIME_CONDITION_NOTIFY(AWhiteboardActor, PlayerDrawingStates, COND_None, REPNOTIFY_Always)
+    DOREPLIFETIME(AWhiteboardActor, PlayerDrawingStates)
     
     DOREPLIFETIME_CONDITION_NOTIFY(AWhiteboardActor, StrokeHistory, COND_None, REPNOTIFY_Always);
     DOREPLIFETIME(AWhiteboardActor, CurrentHistoryIndex);
     DOREPLIFETIME(AWhiteboardActor, NextStrokeID);
 
+    DOREPLIFETIME(AWhiteboardActor, bIsInitialized);
     DOREPLIFETIME(AWhiteboardActor, DrawingCanvas);
     
     // Replicate interaction state
@@ -102,46 +108,214 @@ void AWhiteboardActor::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
     
 }
 
-void AWhiteboardActor::OnRep_DrawingCanvas()
+/////////////////////////////////////INITIALIZE THE WHITEBOARD /////////////////////////////////
+
+void AWhiteboardActor::InitializeWhiteboard()
 {
-    if (DrawingCanvas)
+    
+    if (!GetWorld())
     {
-        RedrawCanvas();
+        return;
+    }
+
+    
+    // All machines create their own canvases
+    CreateCanvases();
+    
+    // All machines setup material
+    SetupMaterial();
+
+    // Server marks as initialized and tells clients to initialize
+    if (HasAuthority())
+    {
+        bIsInitialized = true;
+        
+        // Tell clients to initialize via multicast
+        Multicast_ForceClientInitialization();
+        
+        // Also redraw all existing strokes so clients get the full canvas state
+        RedrawAllStrokes();
+    }
+    else
+    {
+        Server_RequestCanvasInitialization();
     }
 }
 
-/////////////////////////////////////INITIALIZE THE WHITEBOARD /////////////////////////////////
-void AWhiteboardActor::InitializeWhiteboard()
+// Server Request For Canvas Initialization
+void AWhiteboardActor::Server_RequestCanvasInitialization_Implementation()
 {
-    // Create render target if it doesn't exist
+    // Client is requesting initialization - force all clients to reinitialize
+    if (HasAuthority())
+    {
+        Multicast_ForceClientInitialization();
+    }
+}
+
+
+// Client Initialize Canvas
+void AWhiteboardActor::Client_InitializeCanvases_Implementation()
+{
+    // Force client to initialize
+    ForceClientInitialization();
+}
+
+// Multicast Force Initialization
+void AWhiteboardActor::Multicast_ForceClientInitialization_Implementation()
+{
+    // This runs on ALL CLIENTS when called from server
+    if (!HasAuthority()) // Only execute on clients, not server
+    {
+        ForceClientInitialization();
+    }
+}
+
+// Force Client Initialization
+void AWhiteboardActor::ForceClientInitialization()
+{
+    // Mark as not initialized first
+    bIsInitialized = false;
+    
+    // Clean up existing canvases
+    if (DrawingCanvas)
+    {
+        DrawingCanvas = nullptr;
+    }
+    if (PreviewCanvas)
+    {
+        PreviewCanvas = nullptr;
+    }
+    
+    // Create new canvases
+    CreateCanvases();
+    SetupMaterial();
+    
+    // Mark as initialized
+    bIsInitialized = true;
+    
+    // Redraw all strokes from history to sync with server
+    RedrawAllStrokesFromHistory();
+}
+
+// Create Canvas
+void AWhiteboardActor::CreateCanvases()
+{
+    // Create render targets if they don't exist
     if (!DrawingCanvas)
     {
         DrawingCanvas = UKismetRenderingLibrary::CreateRenderTarget2D(
             GetWorld(), CanvasWidth, CanvasHeight, RTF_RGBA8);
+        
+        if (!DrawingCanvas)
+        {
+            return;
+        }
     }
 
     if (!PreviewCanvas)
     {
         PreviewCanvas = UKismetRenderingLibrary::CreateRenderTarget2D(
             GetWorld(), CanvasWidth, CanvasHeight, RTF_RGBA8);
+            
+        if (!PreviewCanvas)
+        {
+            return;
+        }
     }
     
-    // Clear the canvas
+    // Clear the canvases
     UKismetRenderingLibrary::ClearRenderTarget2D(GetWorld(), DrawingCanvas, FLinearColor::White);
     UKismetRenderingLibrary::ClearRenderTarget2D(GetWorld(), PreviewCanvas, FLinearColor::Transparent);
-    
-    // Create dynamic material instance and set the render target
-    if (WhiteboardMesh->GetStaticMesh())
+}
+
+// Setup Material
+void AWhiteboardActor::SetupMaterial()
+{
+    if (WhiteboardMesh && WhiteboardMesh->GetStaticMesh())
     {
         if (UMaterialInterface* WhiteboardMaterial = WhiteboardMesh->GetMaterial(InitMaterialIndex))
         {
             UMaterialInstanceDynamic* DynamicMaterial = UMaterialInstanceDynamic::Create(WhiteboardMaterial, this);
-            DynamicMaterial->SetTextureParameterValue(TEXT("DrawingTexture"), DrawingCanvas);
-            DynamicMaterial->SetTextureParameterValue(TEXT("PreviewTexture"), PreviewCanvas);
-            DynamicMaterial->SetScalarParameterValue(TEXT("PreviewAlpha"), 1.0f);
-            
-            WhiteboardMesh->SetMaterial(InitMaterialIndex, DynamicMaterial); 
+            if (DynamicMaterial)
+            {
+                DynamicMaterial->SetTextureParameterValue(TEXT("DrawingTexture"), DrawingCanvas);
+                DynamicMaterial->SetTextureParameterValue(TEXT("PreviewTexture"), PreviewCanvas);
+                DynamicMaterial->SetScalarParameterValue(TEXT("PreviewAlpha"), 1.0f);
+                
+                WhiteboardMesh->SetMaterial(InitMaterialIndex, DynamicMaterial);
+                UE_LOG(LogWDS, Warning, TEXT("SetupMaterial: Material setup complete for role %d"), (int32)GetLocalRole());
+            }
         }
+        else
+        {
+            UE_LOG(LogWDS, Error, TEXT("SetupMaterial: Whiteboard material is null!"));
+        }
+    }
+    else
+    {
+        UE_LOG(LogWDS, Error, TEXT("SetupMaterial: WhiteboardMesh or its static mesh is null!"));
+    }
+}
+
+// Redraw All Stockes From History
+void AWhiteboardActor::RedrawAllStrokesFromHistory()
+{
+    if (!HasAuthority()) // Only clients need to redraw from history
+    {
+        // Clear canvas first
+        if (DrawingCanvas)
+        {
+            UKismetRenderingLibrary::ClearRenderTarget2D(GetWorld(), DrawingCanvas, FLinearColor::White);
+        }
+        
+        // Redraw all strokes in history
+        for (const FStroke& Stroke : StrokeHistory)
+        {
+            DrawStroke(Stroke);
+        }
+    }
+}
+
+// Redraw All Stocks
+void AWhiteboardActor::RedrawAllStrokes()
+{
+    if (HasAuthority()) // Only server should call this
+    {
+        // Clear canvas first
+        if (DrawingCanvas)
+        {
+            UKismetRenderingLibrary::ClearRenderTarget2D(GetWorld(), DrawingCanvas, FLinearColor::White);
+        }
+        
+        // Redraw all strokes in history
+        for (const FStroke& Stroke : StrokeHistory)
+        {
+            DrawStroke(Stroke);
+        }
+    }
+}
+
+// Check And Repair Initialization
+void AWhiteboardActor::CheckAndRepairInitialization()
+{
+    if (!bIsInitialized || !DrawingCanvas || !PreviewCanvas)
+    {
+        InitializeWhiteboard();
+    }
+}
+
+// Delay Start Initialization
+void AWhiteboardActor::DelayedInitialize()
+{
+    InitializeWhiteboard();
+}
+
+// On Rep Drawing Canvas Redraw 
+void AWhiteboardActor::OnRep_DrawingCanvas()
+{
+    if (DrawingCanvas)
+    {
+        RedrawCanvas();
     }
 }
 
@@ -152,119 +326,80 @@ bool AWhiteboardActor::IsShapeTool(const EDrawingTool Tool)
     return Tool == EDrawingTool::Line || Tool == EDrawingTool::Rectangle || Tool == EDrawingTool::Circle;
 }
 
+
 void AWhiteboardActor::OnRep_PlayerDrawingStates()
 {
-    // Update local cache when replicated data changes
+    UE_LOG(LogWDS, Warning, TEXT("OnRep_PlayerDrawingStates: Replicated data updated with %d entries"), 
+           PlayerDrawingStates.Num());
+    
+    // Clear and rebuild all caches
+   // CurrentPlayerStates.Empty();
+    LocalPlayerStatesCache.Empty();
+    
     for (const FReplicatedPlayerDrawingState& ReplicatedState : PlayerDrawingStates)
     {
-        if (ReplicatedState.Player)
+        if (ReplicatedState.Player && IsValid(ReplicatedState.Player))
         {
-            LocalPlayerStatesCache.Add(ReplicatedState.Player, ReplicatedState.DrawingState);
+            FPlayerDrawingState ValidatedState = ReplicatedState.DrawingState;
+            ValidatedState.ValidateAndClamp();
+            ValidatedState.Player = ReplicatedState.Player;
+            
+           // CurrentPlayerStates.Add(ReplicatedState.Player, ValidatedState);
+            LocalPlayerStatesCache.Add(ReplicatedState.Player, ValidatedState);
+
+            UE_LOG(LogWDS, Warning, TEXT("  Player %s: Tool=%d, Color=%s, BrushSize=%.1f"), 
+                   *ReplicatedState.Player->GetName(), 
+                   (int32)ValidatedState.CurrentTool,
+                   *ValidatedState.CurrentColor.ToString(),
+                   ValidatedState.BrushSize);
+        }
+        else
+        {
+            UE_LOG(LogWDS, Warning, TEXT("  Invalid player entry in replicated states"));
         }
     }
-    
-    UE_LOG(LogWDS, Warning, TEXT("OnRep_PlayerDrawingStates: Updated %d player states"), PlayerDrawingStates.Num());
 }
 
-void AWhiteboardActor::Server_UpdatePlayerTool_Implementation(APawn* Player, EDrawingTool NewTool)
-{
-    if (!Player || !HasAuthority()) 
-    {
-        UE_LOG(LogWDS, Error, TEXT("Server_UpdatePlayerTool: Invalid player or not authority"));
-        return;
-    }
-    
-    UE_LOG(LogWDS, Warning, TEXT("Server_UpdatePlayerTool: Received from client for player %s, tool %d"), 
-           *Player->GetName(), (int32)NewTool);
-    
-    // Update server state
-    FPlayerDrawingState ServerState = GetPlayerDrawingState(Player);
-    ServerState.CurrentTool = NewTool;
-    ServerState.ValidateAndClamp();
-    UpdatePlayerDrawingState(Player, ServerState);
-    
-    // Multicast to all clients
-    Multicast_UpdatePlayerTool(Player, NewTool);
-}
-
-void AWhiteboardActor::Multicast_UpdatePlayerTool_Implementation(APawn* Player, EDrawingTool NewTool)
-{
-    if (!Player) 
-    {
-        UE_LOG(LogWDS, Error, TEXT("Multicast_UpdatePlayerTool: Invalid player"));
-        return;
-    }
-    
-    // Don't process if this is the autonomous proxy (already handled locally)
-    if (GetLocalRole() == ROLE_AutonomousProxy && Player == GetCurrentPlayer())
-    {
-        UE_LOG(LogWDS, Warning, TEXT("Multicast_UpdatePlayerTool: Skipping for autonomous proxy"));
-        return;
-    }
-    
-    // Update the client state
-    FPlayerDrawingState ClientState = GetPlayerDrawingState(Player);
-    ClientState.CurrentTool = NewTool;
-    ClientState.ValidateAndClamp();
-    UpdatePlayerDrawingState(Player, ClientState);
-    
-    // Verify synchronization
-    FPlayerDrawingState VerifyState = GetPlayerDrawingState(Player);
-    UE_LOG(LogWDS, Warning, TEXT("Tool update verified: %d"), (int32)VerifyState.CurrentTool);
-}
-
-//////////////////////////////////// GET PLAYER STATE /////////////////////////////////
-///
+/////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////// UPDATE DRAWING TOOLS //////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+// Get Player Drawing State
 FPlayerDrawingState AWhiteboardActor::GetPlayerDrawingState(APawn* Player) const
 {
-    if (!Player)
+    if (!Player || !IsValid(Player))
     {
         return FPlayerDrawingState();
     }
     
-    // Check local cache first for performance
-    if (const FPlayerDrawingState* CachedState = LocalPlayerStatesCache.Find(Player))
+    // 1. Check local cache first
+    if (LocalPlayerStatesCache.Contains(Player))
     {
-        return *CachedState;
+        return LocalPlayerStatesCache[Player];
     }
     
-    // Check replicated array
+    // 2. Check replicated array
     for (const FReplicatedPlayerDrawingState& ReplicatedState : PlayerDrawingStates)
     {
-        if (ReplicatedState.Player == Player)
+        if (ReplicatedState.Player == Player && IsValid(ReplicatedState.Player))
         {
-            // Update local cache
-            const_cast<AWhiteboardActor*>(this)->LocalPlayerStatesCache.Add(Player, ReplicatedState.DrawingState);
             return ReplicatedState.DrawingState;
         }
     }
     
-    // Create and cache default state
-    FPlayerDrawingState DefaultState(Player);
-    const_cast<AWhiteboardActor*>(this)->LocalPlayerStatesCache.Add(Player, DefaultState);
-    return DefaultState;
+    // 3. Return default state (don't cache in const function)
+    FPlayerDrawingState DefaultState;
+    DefaultState.Player = Player;
+    DefaultState.CurrentTool = EDrawingTool::Pencil;
+    DefaultState.CurrentColor = FLinearColor::Black;
+    DefaultState.BrushSize = 5.0f;
+    DefaultState.SelectedBrushTextureIndex = 0;
+    DefaultState.SelectedFigureTextureIndex = 0;
+    DefaultState.CurrentTextString = FString();
     
+    return DefaultState;
 }
 
-
-void AWhiteboardActor::Server_UpdatePlayerDrawingState_Implementation(APawn* Player,
-    const FPlayerDrawingState& NewState)
-{
-    // Server validates and broadcasts
-   // PlayerDrawingStates.FindOrAdd(Player, NewState);
-    Multicast_UpdatePlayerDrawingState(Player, NewState);
-}
-
-void AWhiteboardActor::Multicast_UpdatePlayerDrawingState_Implementation(APawn* Player,
-    const FPlayerDrawingState& NewState)
-{
-    if (!HasAuthority()) // Only update on clients
-        {
-      //  PlayerDrawingStates.FindOrAdd(Player, NewState);
-        }
-}
-
-// Update Player Drawing State
+///// Update Player Drawing State
 void AWhiteboardActor::UpdatePlayerDrawingState(APawn* Player, const FPlayerDrawingState& NewState)
 {
     if (!Player) return;
@@ -292,16 +427,194 @@ void AWhiteboardActor::UpdatePlayerDrawingState(APawn* Player, const FPlayerDraw
     LocalPlayerStatesCache.Add(Player, NewState);
 }
 
+/// Server Update Drawing Tools
+void AWhiteboardActor::Server_UpdatePlayerDrawingState_Implementation(APawn* Player,
+    const FPlayerDrawingState& NewState)
+{
+    if (!Player || !HasAuthority()) 
+    {
+        UE_LOG(LogWDS, Error, TEXT("Server_UpdatePlayerDrawingState: Invalid player or no authority"));
+        return;
+    }
+    
+    UE_LOG(LogWDS, Warning, TEXT("Server_UpdatePlayerDrawingState: Received from player %s"), *Player->GetName());
+    
+    // Server validates and updates the state
+    FPlayerDrawingState ValidatedState = NewState;
+    ValidatedState.ValidateAndClamp();
+    ValidatedState.Player = Player; // Ensure player reference is maintained
+    
+    UpdatePlayerDrawingState(Player, ValidatedState);
+    
+    // Multicast the update to all clients to ensure synchronization
+    Multicast_UpdatePlayerToolState(Player, ValidatedState);
+}
+
+// ADD THIS NEW FUNCTION: Multicast tool state updates
+void AWhiteboardActor::Multicast_UpdatePlayerToolState_Implementation(APawn* Player, const FPlayerDrawingState& NewState)
+{
+    if (!Player) return;
+    
+    // Skip if this is the server (already handled)
+    if (HasAuthority())
+    {
+        return;
+    }
+    
+    UE_LOG(LogWDS, Warning, TEXT("Multicast_UpdatePlayerToolState: Player %s, Tool: %d, Color: %s"), 
+           *Player->GetName(), 
+           (int32)NewState.CurrentTool,
+           *NewState.CurrentColor.ToString());
+    
+    // Update local state for this client
+    UpdatePlayerDrawingState(Player, NewState);
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////// SET DRAWING TOOLS //////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+// Set Player Tools 
+void AWhiteboardActor::SetPlayerTool(EDrawingTool NewTool)
+{
+    APawn* DrawingPlayer = GetDrawingPlayer();
+    
+    if (!DrawingPlayer) 
+    {
+        UE_LOG(LogWDS, Warning, TEXT("SetPlayerTool: No valid drawing player"));
+        return;
+    }
+    
+    FPlayerDrawingState State = GetPlayerDrawingState(DrawingPlayer);
+    State.CurrentTool = NewTool;
+    
+    UE_LOG(LogWDS, Warning, TEXT("SetPlayerTool: Setting tool to %d for player %s"), 
+           (int32)NewTool, *DrawingPlayer->GetName());
+    
+    // Update locally first for responsiveness
+    UpdatePlayerDrawingState(DrawingPlayer, State);
+    
+    // Send to server regardless of role - server will validate and multicast
+    Server_UpdatePlayerDrawingState(DrawingPlayer, State);
+    
+    DebugPlayerToolState(DrawingPlayer);
+}
+
+// Set Player Current Drawing Color
+void AWhiteboardActor::SetPlayerColor(APawn* Player, FLinearColor NewColor)
+{
+    APawn* DrawingPlayer = GetDrawingPlayer();
+    
+    if (!DrawingPlayer) 
+    {
+        UE_LOG(LogWDS, Warning, TEXT("SetPlayerColor: No valid drawing player"));
+        return;
+    }
+    
+    FPlayerDrawingState State = GetPlayerDrawingState(DrawingPlayer);
+    State.CurrentColor = NewColor;
+    
+    UE_LOG(LogWDS, Warning, TEXT("SetPlayerColor: Setting color to %s for player %s"), 
+           *NewColor.ToString(), *DrawingPlayer->GetName());
+    
+    // Update locally first for responsiveness
+    UpdatePlayerDrawingState(DrawingPlayer, State);
+    
+    // Send to server regardless of role
+    Server_UpdatePlayerDrawingState(DrawingPlayer, State);
+    
+    DebugPlayerToolState(DrawingPlayer);
+}
+
+// Set Player Current Brush Size
+void AWhiteboardActor::SetPlayerBrushSize(APawn* Player, float NewSize)
+{
+    APawn* DrawingPlayer = GetDrawingPlayer();
+    
+    if (!DrawingPlayer) 
+    {
+        UE_LOG(LogWDS, Warning, TEXT("SetPlayerBrushSize: No valid drawing player"));
+        return;
+    }
+    
+    FPlayerDrawingState State = GetPlayerDrawingState(DrawingPlayer);
+    State.BrushSize = FMath::Clamp(NewSize, 1.0f, 100.0f);
+    
+    UE_LOG(LogWDS, Warning, TEXT("SetPlayerBrushSize: Setting brush size to %.1f for player %s"), 
+           State.BrushSize, *DrawingPlayer->GetName());
+    
+    // Update locally first for responsiveness
+    UpdatePlayerDrawingState(DrawingPlayer, State);
+    
+    // Send to server regardless of role
+    Server_UpdatePlayerDrawingState(DrawingPlayer, State);
+    
+    DebugPlayerToolState(DrawingPlayer);
+}
+
+// Set Player Current Selected Brush Texture
+void AWhiteboardActor::SetPlayerBrushTextureIndex(APawn* Player, int32 TextureIndex)
+{
+    APawn* DrawingPlayer = GetDrawingPlayer();
+    if (!DrawingPlayer) return;
+    
+    FPlayerDrawingState State = GetPlayerDrawingState(DrawingPlayer);
+    State.SelectedBrushTextureIndex = FMath::Clamp(TextureIndex, 0, BrushTextures.Num() - 1);
+    
+    UpdatePlayerDrawingState(DrawingPlayer, State);
+    Server_UpdatePlayerDrawingState(DrawingPlayer, State);
+    DebugPlayerToolState(DrawingPlayer);
+}
+
+// Set Player Current Selected Figure Texture
+void AWhiteboardActor::SetPlayerFigureTextureIndex(APawn* Player, int32 TextureIndex)
+{
+    APawn* DrawingPlayer = GetDrawingPlayer();
+    if (!DrawingPlayer) return;
+    
+    FPlayerDrawingState State = GetPlayerDrawingState(DrawingPlayer);
+    State.SelectedFigureTextureIndex = FMath::Clamp(TextureIndex, 0, FigureTextures.Num() - 1);
+    
+    UpdatePlayerDrawingState(DrawingPlayer, State);
+    Server_UpdatePlayerDrawingState(DrawingPlayer, State);
+    DebugPlayerToolState(DrawingPlayer);
+}
+
+// Set Player Current Text String
+void AWhiteboardActor::SetPlayerTextString(APawn* Player, const FString& NewTextString)
+{
+    APawn* DrawingPlayer = GetDrawingPlayer();
+    
+    if (!DrawingPlayer) return;
+    
+    FPlayerDrawingState State = GetPlayerDrawingState(DrawingPlayer);
+    State.CurrentTextString = NewTextString;
+    
+    // Update locally first for responsiveness
+    UpdatePlayerDrawingState(DrawingPlayer, State);
+    
+    // If we're a client, tell the server about our change
+    if (GetLocalRole() == ROLE_AutonomousProxy)
+    {
+        Server_UpdatePlayerDrawingState(DrawingPlayer, State);
+    }
+    DebugPlayerToolState(DrawingPlayer);
+}
+
 
 // Get Player Current Drawing Tools
 EDrawingTool AWhiteboardActor::GetCurrentTool() const
 {
-    APawn* Player = GetCurrentPlayer();
+    APawn* Player = GetDrawingPlayer();
     if (!Player) return EDrawingTool::Pencil;
     
     return GetPlayerDrawingState(Player).CurrentTool;
 }
 
+/////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////// GET DRAWING TOOLS //////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 // Get Player Current Drawing Color
 FLinearColor AWhiteboardActor::GetCurrentColor(APawn* Player) const
@@ -338,194 +651,20 @@ FString AWhiteboardActor::GetCurrentTextString(APawn* Player) const
     return GetPlayerDrawingState(Player).CurrentTextString;
 }
 
-/////////// SET PLAYER DRAWING TOOL ///////////////////////////////////////
-void AWhiteboardActor::SetPlayerTool(EDrawingTool NewTool)
-{
-    
-    APawn* Player = GetCurrentPlayer();
-    
-    if (!Player) 
-    {
-        UE_LOG(LogWDS, Error, TEXT("SetPlayerTool: No valid player found"));
-        return;
-    }
-    
-    // Update local state immediately for responsiveness
-    FPlayerDrawingState CurrentState = GetPlayerDrawingState(Player);
-    CurrentState.CurrentTool = NewTool;
-    CurrentState.ValidateAndClamp();
-    
-    // Update local cache immediately
-    LocalPlayerStatesCache.Add(Player, CurrentState);
-    UpdatePlayerDrawingState(Player, CurrentState);
-    
-    // Network replication based on role
-    if (GetLocalRole() == ROLE_AutonomousProxy) 
-    {
-        // Client controlling this pawn - send to server
-        UE_LOG(LogWDS, Warning, TEXT("Client sending tool change to server"));
-        Server_UpdatePlayerTool(Player, NewTool);
-    }
-    else if (GetLocalRole() == ROLE_Authority) 
-    {
-        // Server - multicast to all clients
-        UE_LOG(LogWDS, Warning, TEXT("Server multicasting tool change"));
-        Multicast_UpdatePlayerTool(Player, NewTool);
-    }
-    
-    DebugPlayerToolState(Player);
-}
-
-
-// Server Set New Tool - FIXED IMPLEMENTATION
-void AWhiteboardActor::Server_SetPlayerTool_Implementation(APawn* Player, EDrawingTool NewTool)
-{
-    if (!Player) return;
-    
-    UE_LOG(LogWDS, Warning, TEXT("Server_SetPlayerTool: Received from client for player %s, tool %d"), 
-           *Player->GetName(), (int32)NewTool);
-    
-    // Update server state
-    FPlayerDrawingState ServerState = GetPlayerDrawingState(Player);
-    ServerState.CurrentTool = NewTool;
-    UpdatePlayerDrawingState(Player, ServerState);
-    
-    // Multicast to all clients
-    Multicast_UpdatePlayerToolState(Player, NewTool);
-}
-
-
-void AWhiteboardActor::Multicast_UpdatePlayerToolState_Implementation(APawn* Player, EDrawingTool NewTool)
-{
-    if (!Player) return;
-    
-    // Don't process if this is the server (already handled)
-    if (GetLocalRole() == ROLE_Authority) return;
-    
-    UE_LOG(LogWDS, Warning, TEXT("Multicast_UpdatePlayerToolState: Updating player %s tool to %d"), 
-           *Player->GetName(), (int32)NewTool);
-    
-    // Update the client state
-    FPlayerDrawingState ClientState = GetPlayerDrawingState(Player);
-    ClientState.CurrentTool = NewTool;
-    UpdatePlayerDrawingState(Player, ClientState);
-    
-    // Verify synchronization
-    FPlayerDrawingState VerifyState = GetPlayerDrawingState(Player);
-    UE_LOG(LogWDS, Warning, TEXT("Tool update verified: %d"), (int32)VerifyState.CurrentTool);
-}
-
-
-
-// Set Player Current Drawing Color
-void AWhiteboardActor::SetPlayerColor(APawn* Player, FLinearColor NewColor)
-{
-    if (!Player) return;
-    
-    FPlayerDrawingState State = GetPlayerDrawingState(Player);
-    State.CurrentColor = NewColor;
-    UpdatePlayerDrawingState(Player, State);
-    
-    if (GetLocalRole() < ROLE_Authority)
-    {
-        Server_UpdatePlayerDrawingState(Player, State);
-    }
-    else
-    {
-        Multicast_UpdatePlayerDrawingState(Player, State);
-    }
-
-}
-
-// Set Player Current Brush Size
-void AWhiteboardActor::SetPlayerBrushSize(APawn* Player, float NewSize)
-{
-    if (!Player) return;
-    
-    FPlayerDrawingState State = GetPlayerDrawingState(Player);
-    State.BrushSize = FMath::Clamp(NewSize, 1.0f, 100.0f);
-    UpdatePlayerDrawingState(Player, State);
-    
-    if (GetLocalRole() < ROLE_Authority)
-    {
-        Server_UpdatePlayerDrawingState(Player, State);
-    }
-    else
-    {
-        Multicast_UpdatePlayerDrawingState(Player, State);
-    }
-  
-}
-
-// Set Player Current Selected Brush Texture
-void AWhiteboardActor::SetPlayerBrushTextureIndex(APawn* Player, int32 TextureIndex)
-{
-    if (!Player) return;
-    
-    FPlayerDrawingState State = GetPlayerDrawingState(Player);
-    State.SelectedBrushTextureIndex = TextureIndex;
-    UpdatePlayerDrawingState(Player, State);
-    
-    if (GetLocalRole() < ROLE_Authority)
-    {
-        Server_UpdatePlayerDrawingState(Player, State);
-    }
-    else
-    {
-        Multicast_UpdatePlayerDrawingState(Player, State);
-    }
-    
-
-}
-
-// Set Player Current Selected Figure Texture
-void AWhiteboardActor::SetPlayerFigureTextureIndex(APawn* Player, int32 TextureIndex)
-{
-    if (!Player) return;
-    
-    FPlayerDrawingState State = GetPlayerDrawingState(Player);
-    State.SelectedFigureTextureIndex = TextureIndex;
-    UpdatePlayerDrawingState(Player, State);
-    
-    if (GetLocalRole() < ROLE_Authority)
-    {
-        Server_UpdatePlayerDrawingState(Player, State);
-    }
-    else
-    {
-        Multicast_UpdatePlayerDrawingState(Player, State);
-    }
-   
-}
-
-// Set Player Current Text String
-void AWhiteboardActor::SetPlayerTextString(APawn* Player, const FString& NewTextString)
-{
-    if (!Player) return;
-    
-    FPlayerDrawingState State = GetPlayerDrawingState(Player);
-    State.CurrentTextString = NewTextString;
-    UpdatePlayerDrawingState(Player, State);
-    
-    if (GetLocalRole() < ROLE_Authority)
-    {
-        Server_UpdatePlayerDrawingState(Player, State);
-    }
-    else
-    {
-        Multicast_UpdatePlayerDrawingState(Player, State);
-    }
-}
 
 // Internal helper to get current drawing player
 APawn* AWhiteboardActor::GetDrawingPlayer() const
 {
-    // Try to find the local player pawn
+    // More robust player detection
     if (UWorld* World = GetWorld())
     {
         if (APlayerController* PC = World->GetFirstPlayerController())
         {
-            return PC->GetPawn();
+            APawn* LocalPawn = PC->GetPawn();
+            if (LocalPawn && IsPlayerInteracting(LocalPawn))
+            {
+                return LocalPawn;
+            }
         }
     }
     return nullptr;
@@ -535,34 +674,6 @@ void AWhiteboardActor::OnRep_StrokeHistory()
 {
     // Redraw canvas when stroke history is replicated
     RedrawCanvas();
-}
-
-void AWhiteboardActor::Server_HandleDrawing_Implementation(const FDrawingData& DrawingData)
-{
-    if (!HasAuthority() || !DrawingData.DrawingPlayer) return;
-    
-    UE_LOG(LogWDS, Warning, TEXT("Server_HandleDrawing: Received from client %s"), 
-           *DrawingData.DrawingPlayer->GetName());
-    
-   
-}
-
-void AWhiteboardActor::Multicast_HandleDrawing_Implementation(const FDrawingData& DrawingData)
-{
-    // Only clients should process this
-    if (GetLocalRole() == ROLE_Authority) return;
-    
-    UE_LOG(LogWDS, Warning, TEXT("Multicast_HandleDrawing: Received for player %s"), 
-           DrawingData.DrawingPlayer ? *DrawingData.DrawingPlayer->GetName() : TEXT("None"));
-    
-    // Skip if this is our own drawing (we already predicted it)
-    if (DrawingData.DrawingPlayer && DrawingData.DrawingPlayer->IsLocallyControlled()) 
-    {
-        UE_LOG(LogWDS, Warning, TEXT("Skipping multicast for local player prediction"));
-        return;
-    }
-    
-  
 }
 
 void AWhiteboardActor::Multicast_DrawStroke_Implementation(const FStroke& Stroke)
@@ -583,7 +694,7 @@ void AWhiteboardActor::Multicast_DrawStroke_Implementation(const FStroke& Stroke
         if (!bStrokeExists)
         {
             // Draw the stroke on client
-            DrawStrokeInternal(Stroke);
+           // DrawStrokeInternal(Stroke);
             
             // Add to client's history
             if (CurrentHistoryIndex < StrokeHistory.Num() - 1)
@@ -596,186 +707,6 @@ void AWhiteboardActor::Multicast_DrawStroke_Implementation(const FStroke& Stroke
         }
     }
 }
-
-APawn* AWhiteboardActor::GetCurrentPlayer() const
-{
-    if (UWorld* World = GetWorld())
-    {
-        // First try to get the locally controlled pawn
-        if (APlayerController* PC = World->GetFirstPlayerController())
-        {
-            APawn* LocalPawn = PC->GetPawn();
-            if (LocalPawn && IsPlayerInteracting(LocalPawn))
-            {
-                return LocalPawn;
-            }
-        }
-        
-        // If no local interacting pawn, try to find any interacting pawn
-        for (APawn* InteractingPawn : InteractingPawns)
-        {
-            if (InteractingPawn && InteractingPawn->IsPlayerControlled())
-            {
-                return InteractingPawn;
-            }
-        }
-    }
-    
-    return nullptr;
-}
-
-/*
-// Set Current Tools
-void AWhiteboardActor::SetCurrentTool(EDrawingTool NewTool)
-{
-    if (CurrentTool != NewTool)
-    {
-        const EDrawingTool Prev = CurrentTool;
-        CurrentTool = NewTool;
-        OnCurrentToolsChanged(Prev);
-
-        if (GetLocalRole() == ROLE_AutonomousProxy)
-        {
-            Server_SetCurrentTool(NewTool);
-        }
-    }
-} 
-
-// Set Server Current Tools
-void AWhiteboardActor::Server_SetCurrentTool_Implementation(EDrawingTool NewTool)
-{
-    SetCurrentTool(NewTool);
-}
-
-// Set Current Color
-void AWhiteboardActor::SetCurrentColor(FLinearColor NewColor)
-{
-    if (CurrentColor != NewColor)
-    {
-        const FLinearColor Prev = NewColor;
-        CurrentColor = NewColor;
-        OnCurrentToolsChanged(Prev);
-
-        if (GetLocalRole() == ROLE_AutonomousProxy)
-        {
-            Server_SetCurrentColor(NewColor);
-        }
-    }
-}
-
-// Server Set Current Color
-void AWhiteboardActor::Server_SetCurrentColor_Implementation(FLinearColor NewColor)
-{
-    SetCurrentColor(NewColor);
-}
-
-// Set Brush Size
-void AWhiteboardActor::SetBrushSize(float NewSize)
-{
-   float ClampedSize = FMath::Clamp(NewSize, 1.0f, 100.0f);
-    
-    if (HasAuthority())
-    {
-       
-    }
-    else
-    {
-        BrushSize = ClampedSize;
-        Server_SetBrushSize_Implementation(ClampedSize);
-    }
-}
-
-// Server Set Brush Size
-void AWhiteboardActor::Server_SetBrushSize_Implementation(float NewSize)
-{
-    if (!HasAuthority())
-    {
-        return;
-    }
-    
-
-}
-
-
-// Set Brush Textures
-void AWhiteboardActor::SetBrushTexture(int32 TextureIndex)
-{
-    if (BrushTextures.IsValidIndex(TextureIndex))
-    {
-        if (HasAuthority())
-        {
-     
-        }
-        else
-        {
-            SelectedBrushTextureIndex = TextureIndex;
-            Server_SetBrushTexture(TextureIndex);
-        }
-    }
-}
-
-// Server Set Brush Texture Index
-void AWhiteboardActor::Server_SetBrushTexture_Implementation(int32 TextureIndex)
-{
-    if (!HasAuthority())
-    {
-        return;
-    }
-    
-    
-}
-
-
-// Set Figure Textures Index
-void AWhiteboardActor::SetFigureTexture(int32 TextureIndex)
-{
-    if (FigureTextures.IsValidIndex(TextureIndex))
-    {
-        if (HasAuthority())
-        {
-            
-        }
-        else
-        {
-            SelectedFigureTextureIndex = TextureIndex;
-            Server_SetFigureTexture(TextureIndex);
-        }
-    }
-}
-
-void AWhiteboardActor::Server_SetFigureTexture_Implementation(int32 TextureIndex)
-{
-    if (!HasAuthority())
-    {
-        return;
-    }
-    
-    
-}
-
-void AWhiteboardActor::SetTextString(const FString& NewTextString)
-{
-        if (HasAuthority())
-        {
-           
-        }
-        else
-        {
-            CurrentTextString = NewTextString;
-            Server_SetTextString(NewTextString);
-        }
-}
-
-void AWhiteboardActor::Server_SetTextString_Implementation(const FString& NewTextString)
-{
-    if (!HasAuthority())
-    {
-        return;
-    }
-    
-}
-
-*/
 
 void AWhiteboardActor::ClearWhiteboard()
 {
@@ -868,669 +799,614 @@ void AWhiteboardActor::ExportToSVG(const FString& FilePath)
     GenerateSVGFromStrokes(FullPath);
 }
 
-/////////////////////////////////////////////START DRAWING////////////////////////
 
-// START DRAWING
-void AWhiteboardActor::StartDrawing(APawn* DrawingPlayer, const FVector2D& CanvasPosition)
+///////////////////////////////////// START DRAWING ////////////////////////
+
+void AWhiteboardActor::PlayerStartDrawing(const FVector2D& CanvasPosition)
 {
-    // If player not found Return
-    if (!DrawingPlayer)
+ APawn* DrawingPlayer = GetDrawingPlayer();
+    
+    if (!DrawingPlayer || !CanClientDraw())
     {
+        UE_LOG(LogWDS, Error, TEXT("PlayerStartDrawing: No valid player or cannot draw"));
         return;
     }
 
-    // If Still Drawing End the Drawing
-    if (bIsDrawing)
-    {
-        EndDrawing();
-    }
+    UE_LOG(LogWDS, Warning, TEXT("PlayerStartDrawing: LocalRole=%d, Player=%s"), 
+           (int32)GetLocalRole(), *DrawingPlayer->GetName());
 
-    bIsDrawing = true;
-
-    // Current Drawing Tools
+    // Get current player state
     FPlayerDrawingState PlayerState = GetPlayerDrawingState(DrawingPlayer);
 
-    UE_LOG(LogWDS, Warning, TEXT("StartDrawing: Player %s using tool %d (Role: %s)"), 
-           *DrawingPlayer->GetName(), (int32)PlayerState.CurrentTool,
-          (GetLocalRole() == ROLE_Authority) ? TEXT("Server") : TEXT("Client"));
-
-    // Create new stroke with the provided player state (not fetching again)
-    CurrentStroke = FStroke();
-    CurrentStroke.StrokeID = NextStrokeID++;
-    CurrentStroke.Tool = PlayerState.CurrentTool;  // Use provided state
-    CurrentStroke.Color = PlayerState.CurrentColor; // Use provided state
-    CurrentStroke.Size = PlayerState.BrushSize;    // Use provided state
-    CurrentStroke.TextContent = PlayerState.CurrentTextString;
-    CurrentStroke.StartPosition = CanvasPosition;
-    CurrentStroke.EndPosition = CanvasPosition;
-    CurrentStroke.bIsComplete = false;
-    CurrentStroke.DrawingPlayer = DrawingPlayer;
-    
-    // Set textures if available from provided state
-    if (BrushTextures.IsValidIndex(PlayerState.SelectedBrushTextureIndex))
-    {
-        CurrentStroke.BrushTexture = BrushTextures[PlayerState.SelectedBrushTextureIndex];
-    }
-    
-    if (FigureTextures.IsValidIndex(PlayerState.SelectedFigureTextureIndex))
-    {
-        CurrentStroke.FigureTexture = FigureTextures[PlayerState.SelectedFigureTextureIndex];
-    }
-    
-    // Add initial point using provided state
-    FDrawingPoint Point(CanvasPosition, 1.0f, PlayerState.CurrentColor, PlayerState.BrushSize, 
-                       PlayerState.CurrentTool, CurrentStroke.StrokeID);
-    CurrentStroke.Points.Add(Point);
-
-    // Handle different tool types using provided state
+    // Handle immediate tools (text, texture, figure)
     if (PlayerState.CurrentTool == EDrawingTool::Text)
     {
-        // Handle text drawing...
-        bIsDrawing = false; 
-        return;
-    }
-    else if (IsShapeTool(PlayerState.CurrentTool))
-    {
-        bIsDrawingShape = true;
-        // For shape tools, we'll draw on end
-    }
-    else
-    {
-        // For brush tools, draw immediately
-        DrawStroke(CurrentStroke);
-    }
-    
-    
-    /*
-    // Always use the drawing player's specific state
-    FPlayerDrawingState PlayerState = GetPlayerDrawingState(DrawingPlayer);
-    
-    UE_LOG(LogWDS, Warning, TEXT("StartDrawing: Player %s using tool %d (Role: %s)"), 
-           *DrawingPlayer->GetName(), (int32)PlayerState.CurrentTool,
-          (GetLocalRole() == ROLE_Authority) ? TEXT("Server") : TEXT("Client"));
-    
-    if (GetLocalRole() == ROLE_Authority)
-    {
-        // SERVER: Use the drawing player's current state
-        Server_HandleStartDrawing(DrawingPlayer, CanvasPosition, PlayerState);
-    }
-    else
-    {
-        // CLIENT: Send current state to server with proper player context
-        UE_LOG(LogWDS, Warning, TEXT("CLIENT: StartDrawing with tool: %d - Sending to server"), 
-               (int32)PlayerState.CurrentTool);
-
-        // Send the CLIENT'S current state to server using the new RPC
-        FDrawingData DrawingData(CanvasPosition, PlayerState, DrawingPlayer);
-        
-        if (AWhiteboardController* WBController = Cast<AWhiteboardController>(DrawingPlayer->GetController()))
-        {
-            WBController->Server_WhiteboardStartDrawing(DrawingPlayer,this);
-        }
-    }
-    */
-}
-
-// SERVER START DRAWING
-void AWhiteboardActor::Server_StartDrawing_Implementation(const FDrawingData& DrawingData)
-{
-    if (!DrawingData.DrawingPlayer || !HasAuthority()) return;
-    
-    // Use the tool state sent by the client
-    Server_HandleStartDrawing(DrawingData.DrawingPlayer, DrawingData.CanvasPosition, DrawingData.ToolState);
-}
-
-// MULTICAST START DRAWING
-void AWhiteboardActor::Multicast_StartDrawing_Implementation(const FDrawingData& DrawingData)
-{
-    if (!DrawingData.DrawingPlayer) 
-    {
-        UE_LOG(LogWDS, Error, TEXT("Multicast_StartDrawingWithState: Invalid player"));
+        // AddText(CanvasPosition, PlayerState.CurrentTextString);
         return;
     }
     
-    // Don't process on server (already handled)
-    if (GetLocalRole() == ROLE_Authority) 
+    if (PlayerState.CurrentTool == EDrawingTool::Texture || PlayerState.CurrentTool == EDrawingTool::Figure)
     {
+        int32 TextureIndex = (PlayerState.CurrentTool == EDrawingTool::Texture) 
+            ? PlayerState.SelectedBrushTextureIndex 
+            : PlayerState.SelectedFigureTextureIndex;
+        DrawFigure(CanvasPosition, TextureIndex);
         return;
     }
-    
-    UE_LOG(LogWDS, Warning, TEXT("MULTICAST: StartDrawingWithState for player %s, tool %d"), 
-           *DrawingData.DrawingPlayer->GetName(), (int32)DrawingData.ToolState.CurrentTool);
-    
-    // Update client state with the received state
-    UpdatePlayerDrawingState(DrawingData.DrawingPlayer, DrawingData.ToolState);
-    
-    // Handle the drawing locally
-    Server_HandleStartDrawing(DrawingData.DrawingPlayer, DrawingData.CanvasPosition, DrawingData.ToolState);
 
-    /*
-    if (!DrawingPlayer) return;
-    
-    // Don't process on server (already handled)
-    if (GetLocalRole() == ROLE_Authority) return;
-    
-    UE_LOG(LogWDS, Warning, TEXT("MULTICAST: StartDrawing for player %s, stroke %d"), 
-           *DrawingPlayer->GetName(), StrokeID);
-    
-    // Get the drawing player's state on this client
-    FPlayerDrawingState PlayerState = GetPlayerDrawingState(DrawingPlayer);
-    
-    // Only handle if this is relevant to us (either we're the drawing player or we need to display)
-    if (DrawingPlayer == GetCurrentPlayer() || GetLocalRole() == ROLE_SimulatedProxy)
+    // Client prediction for drawing tools
+    if (GetLocalRole() != ROLE_Authority)
     {
-        PendingStrokes.Empty();
+        UE_LOG(LogWDS, Warning, TEXT("Client prediction: Starting drawing for player %s"), *DrawingPlayer->GetName());
         
-        bIsDrawing = true;
-        
-        CurrentStroke = FStroke();
-        CurrentStroke.StrokeID = StrokeID;
-        CurrentStroke.Tool = PlayerState.CurrentTool;
-        CurrentStroke.Color = PlayerState.CurrentColor;
-        CurrentStroke.Size = PlayerState.BrushSize;
-        CurrentStroke.StartPosition = CanvasPosition;
-        CurrentStroke.EndPosition = CanvasPosition;
-        CurrentStroke.DrawingPlayer = DrawingPlayer;
-        
+        FStroke PredictedStroke;
+        PredictedStroke.StrokeID = -1; // Temporary ID for prediction
+        PredictedStroke.DrawingPlayer = DrawingPlayer;
+        PredictedStroke.Tool = PlayerState.CurrentTool;
+        PredictedStroke.Color = PlayerState.CurrentColor;
+        PredictedStroke.Size = PlayerState.BrushSize;
+        PredictedStroke.StartPosition = CanvasPosition;
+        PredictedStroke.EndPosition = CanvasPosition;
+        PredictedStroke.bIsComplete = false;
+
+        // Set textures
         if (BrushTextures.IsValidIndex(PlayerState.SelectedBrushTextureIndex))
         {
-            CurrentStroke.BrushTexture = BrushTextures[PlayerState.SelectedBrushTextureIndex];
+            PredictedStroke.BrushTexture = BrushTextures[PlayerState.SelectedBrushTextureIndex];
         }
-        
         if (FigureTextures.IsValidIndex(PlayerState.SelectedFigureTextureIndex))
         {
-            CurrentStroke.FigureTexture = FigureTextures[PlayerState.SelectedFigureTextureIndex];
+            PredictedStroke.FigureTexture = FigureTextures[PlayerState.SelectedFigureTextureIndex];
         }
         
-        FDrawingPoint Point(CanvasPosition, 1.0f, PlayerState.CurrentColor, PlayerState.BrushSize, 
-                           PlayerState.CurrentTool, StrokeID);
-        CurrentStroke.Points.Add(Point);
-        
-        if (IsShapeTool(PlayerState.CurrentTool))
+        // Add first point
+        FDrawingPoint Point(CanvasPosition, 1.0f, PlayerState.CurrentColor, 
+                           PlayerState.BrushSize, PlayerState.CurrentTool, -1);
+        PredictedStroke.Points.Add(Point);
+
+        // Store in client prediction
+        ClientPredictedStrokes.Add(DrawingPlayer, PredictedStroke);
+
+        // Draw immediately for client prediction
+        if (!IsShapeTool(PlayerState.CurrentTool))
         {
-            bIsDrawingShape = true;
+            DrawStroke(PredictedStroke);
+        }
+    }
+
+    
+    // Send to server
+   // Server_StartDrawing(DrawingPlayer, CanvasPosition);
+
+    
+    
+    // Client sends its current parameters to server
+    if (APlayerController* PC = GetWorld()->GetFirstPlayerController())
+    {
+        if (AWhiteboardController* WBController = Cast<AWhiteboardController>(PC))
+        {
+            WBController->Server_WhiteboardStartDrawing(DrawingPlayer,this, CanvasPosition);
+        }
+    }
+  
+    
+    // Send to server - PASS THE PLAYER EXPLICITLY
+    //Server_StartDrawing(DrawingPlayer, CanvasPosition);
+    
+}
+
+void AWhiteboardActor::Server_StartDrawing_Implementation(APawn* DrawingPlayer, const FVector2D& CanvasPosition)
+{
+   if (!DrawingPlayer || !HasAuthority())
+    {
+        UE_LOG(LogWDS, Error, TEXT("Server_StartDrawing: Invalid player or no authority"));
+        return;
+    }
+
+    UE_LOG(LogWDS, Warning, TEXT("Server_StartDrawing: Received from player %s"), *DrawingPlayer->GetName());
+
+    FPlayerDrawingState PlayerState = GetPlayerDrawingState(DrawingPlayer);
+
+    // Create new stroke
+    FStroke NewStroke;
+    NewStroke.StrokeID = NextStrokeID++;
+    NewStroke.DrawingPlayer = DrawingPlayer;
+    NewStroke.Tool = PlayerState.CurrentTool;
+    NewStroke.Color = PlayerState.CurrentColor;
+    NewStroke.Size = PlayerState.BrushSize;
+    NewStroke.StartPosition = CanvasPosition;
+    NewStroke.EndPosition = CanvasPosition;
+    NewStroke.bIsComplete = false;
+
+    // Set textures
+    if (BrushTextures.IsValidIndex(PlayerState.SelectedBrushTextureIndex))
+    {
+        NewStroke.BrushTexture = BrushTextures[PlayerState.SelectedBrushTextureIndex];
+    }
+    if (FigureTextures.IsValidIndex(PlayerState.SelectedFigureTextureIndex))
+    {
+        NewStroke.FigureTexture = FigureTextures[PlayerState.SelectedFigureTextureIndex];
+    }
+    
+    // Add first point
+    FDrawingPoint Point(CanvasPosition, 1.0f, PlayerState.CurrentColor, 
+                       PlayerState.BrushSize, PlayerState.CurrentTool, NewStroke.StrokeID);
+    NewStroke.Points.Add(Point);
+
+    // Store current stroke for this player
+    ActiveStrokes.Add(DrawingPlayer, NewStroke);
+
+    // Set shape drawing state
+    bool bIsShape = IsShapeTool(PlayerState.CurrentTool);
+    PlayerShapeDrawingStates.Add(DrawingPlayer, bIsShape);
+
+    if (!bIsShape)
+    {
+        // Draw first point for freehand tools
+        DrawStroke(NewStroke);
+        
+        // Add to history immediately for freehand tools
+        if (CurrentHistoryIndex < StrokeHistory.Num() - 1)
+        {
+            StrokeHistory.RemoveAt(CurrentHistoryIndex + 1, StrokeHistory.Num() - CurrentHistoryIndex - 1);
+        }
+        StrokeHistory.Add(NewStroke);
+        CurrentHistoryIndex = StrokeHistory.Num() - 1;
+    }
+
+    // Multicast to all clients
+    Multicast_StartDrawing(DrawingPlayer, CanvasPosition, NewStroke.StrokeID);
+}
+
+void AWhiteboardActor::Multicast_StartDrawing_Implementation(APawn* DrawingPlayer, const FVector2D& CanvasPosition, int32 StrokeID)
+{
+    // Skip if this is the server (already handled)
+    if (HasAuthority()) 
+    {
+        return;
+    }
+
+    UE_LOG(LogWDS, Warning, TEXT("Multicast_StartDrawing: Received for player %s, StrokeID: %d"), 
+           *DrawingPlayer->GetName(), StrokeID);
+
+    // Clear any client prediction for this player
+    ClientPredictedStrokes.Remove(DrawingPlayer);
+
+    FPlayerDrawingState PlayerState = GetPlayerDrawingState(DrawingPlayer);
+
+    // Create stroke from server data
+    FStroke ClientStroke;
+    ClientStroke.StrokeID = StrokeID;
+    ClientStroke.DrawingPlayer = DrawingPlayer;
+    ClientStroke.Tool = PlayerState.CurrentTool;
+    ClientStroke.Color = PlayerState.CurrentColor;
+    ClientStroke.Size = PlayerState.BrushSize;
+    ClientStroke.StartPosition = CanvasPosition;
+    ClientStroke.EndPosition = CanvasPosition;
+    ClientStroke.bIsComplete = false;
+
+    // Set textures
+    if (BrushTextures.IsValidIndex(PlayerState.SelectedBrushTextureIndex))
+    {
+        ClientStroke.BrushTexture = BrushTextures[PlayerState.SelectedBrushTextureIndex];
+    }
+    if (FigureTextures.IsValidIndex(PlayerState.SelectedFigureTextureIndex))
+    {
+        ClientStroke.FigureTexture = FigureTextures[PlayerState.SelectedFigureTextureIndex];
+    }
+    
+    // Add first point
+    FDrawingPoint Point(CanvasPosition, 1.0f, PlayerState.CurrentColor, 
+                       PlayerState.BrushSize, PlayerState.CurrentTool, StrokeID);
+    ClientStroke.Points.Add(Point);
+
+    // Store current stroke
+    ActiveStrokes.Add(DrawingPlayer, ClientStroke);
+
+    bool bIsShape = IsShapeTool(PlayerState.CurrentTool);
+    PlayerShapeDrawingStates.Add(DrawingPlayer, bIsShape);
+
+    if (!bIsShape)
+    {
+        DrawStroke(ClientStroke);
+    }
+}
+
+///////////////////////////////////////////// UPDATE DRAWING ////////////////////////
+
+void AWhiteboardActor::PlayerUpdateDrawing(const FVector2D& CanvasPosition)
+{
+    APawn* DrawingPlayer = GetDrawingPlayer();
+    
+    if (!DrawingPlayer || !CanClientDraw())
+    {
+        UE_LOG(LogWDS, Warning, TEXT("PlayerUpdateDrawing: Invalid player or cannot draw"));
+        return;
+    }
+
+    UE_LOG(LogWDS, VeryVerbose, TEXT("PlayerUpdateDrawing: Player %s at position %s"), 
+           *DrawingPlayer->GetName(), *CanvasPosition.ToString());
+
+    // Client prediction - draw immediately for responsiveness
+    if (GetLocalRole() != ROLE_Authority)
+    {
+        FStroke* PredictedStroke = ClientPredictedStrokes.Find(DrawingPlayer);
+        if (PredictedStroke)
+        {
+            FDrawingPoint NewPoint(CanvasPosition, 1.0f, PredictedStroke->Color, 
+                                 PredictedStroke->Size, PredictedStroke->Tool, PredictedStroke->StrokeID);
+            PredictedStroke->Points.Add(NewPoint);
+            PredictedStroke->EndPosition = CanvasPosition;
+
+            // Draw the new segment
+            if (PredictedStroke->Points.Num() >= 2)
+            {
+                DrawStroke(*PredictedStroke);
+            }
+            
+            UE_LOG(LogWDS, VeryVerbose, TEXT("Client prediction: Updated stroke with %d points"), 
+                   PredictedStroke->Points.Num());
         }
         else
         {
-            DrawStroke(CurrentStroke);
+            UE_LOG(LogWDS, Warning, TEXT("No predicted stroke found for player %s"), *DrawingPlayer->GetName());
         }
     }
-    */
+
+    if (APlayerController* PC = GetWorld()->GetFirstPlayerController())
+    {
+        if (AWhiteboardController* WBController = Cast<AWhiteboardController>(PC))
+        {
+            WBController->Server_WhiteboardUpdateDrawing(DrawingPlayer,this, CanvasPosition);
+        }
+    }
+    
+    // Send to server
+   // Server_UpdateDrawing(DrawingPlayer, CanvasPosition);
 }
 
-//SERVER HANDLE START DRAWING
-void AWhiteboardActor::Server_HandleStartDrawing_Implementation(APawn* DrawingPlayer, const FVector2D& CanvasPosition,
-    const FPlayerDrawingState& PlayerState)
+void AWhiteboardActor::Server_UpdateDrawing_Implementation(APawn* DrawingPlayer, const FVector2D& CanvasPosition)
 {
-     if (!HasAuthority()) return;
-    
-    UE_LOG(LogWDS, Warning, TEXT("SERVER: HandleStartDrawing with tool: %d"), (int32)PlayerState.CurrentTool);
-    
-    if (bIsDrawing)
+   if (!DrawingPlayer || !HasAuthority())
     {
-        EndDrawing();
-    }
-    
-    bIsDrawing = true;
-    
-    // Create new stroke with the provided player state (not fetching again)
-    CurrentStroke = FStroke();
-    CurrentStroke.StrokeID = NextStrokeID++;
-    CurrentStroke.Tool = PlayerState.CurrentTool;  // Use provided state
-    CurrentStroke.Color = PlayerState.CurrentColor; // Use provided state
-    CurrentStroke.Size = PlayerState.BrushSize;    // Use provided state
-    CurrentStroke.StartPosition = CanvasPosition;
-    CurrentStroke.EndPosition = CanvasPosition;
-    CurrentStroke.bIsComplete = false;
-    CurrentStroke.DrawingPlayer = DrawingPlayer;
-    
-    // Set textures if available from provided state
-    if (BrushTextures.IsValidIndex(PlayerState.SelectedBrushTextureIndex))
-    {
-        CurrentStroke.BrushTexture = BrushTextures[PlayerState.SelectedBrushTextureIndex];
-    }
-    
-    if (FigureTextures.IsValidIndex(PlayerState.SelectedFigureTextureIndex))
-    {
-        CurrentStroke.FigureTexture = FigureTextures[PlayerState.SelectedFigureTextureIndex];
-    }
-    
-    // Add initial point using provided state
-    FDrawingPoint Point(CanvasPosition, 1.0f, PlayerState.CurrentColor, PlayerState.BrushSize, 
-                       PlayerState.CurrentTool, CurrentStroke.StrokeID);
-    CurrentStroke.Points.Add(Point);
-
-    // Handle different tool types using provided state
-    if (PlayerState.CurrentTool == EDrawingTool::Text)
-    {
-        // Handle text drawing...
-        bIsDrawing = false; 
+        UE_LOG(LogWDS, Error, TEXT("Server_UpdateDrawing: Invalid player or no authority"));
         return;
     }
-    else if (IsShapeTool(PlayerState.CurrentTool))
-    {
-        bIsDrawingShape = true;
-        // For shape tools, we'll draw on end
-    }
-    else
-    {
-        // For brush tools, draw immediately
-        DrawStroke(CurrentStroke);
-    }
-    
-    // Create drawing data for multicast
-    FDrawingData DrawingData(CanvasPosition, PlayerState, DrawingPlayer);
-    Multicast_StartDrawing(DrawingData);
-}
 
-
-/////////////////////////////////////////////CONTINUE DRAWING////////////////////////
-
-// Continue Drawing
-void AWhiteboardActor::ContinueDrawing(const FVector2D& CanvasPosition)
-{
-    APawn* DrawingPlayer = GetCurrentPlayer();
-    
     FPlayerDrawingState PlayerState = GetPlayerDrawingState(DrawingPlayer);
-    CurrentStroke.EndPosition = CanvasPosition;
+    FStroke* CurrentStroke = ActiveStrokes.Find(DrawingPlayer);
+
+    if (!CurrentStroke)
+    {
+        // If no current stroke exists, create one (recovery mechanism)
+        UE_LOG(LogWDS, Warning, TEXT("Server_UpdateDrawing: No current stroke for player %s, creating new one"), 
+               *DrawingPlayer->GetName());
+        
+        FStroke NewStroke;
+        NewStroke.StrokeID = NextStrokeID++;
+        NewStroke.DrawingPlayer = DrawingPlayer;
+        NewStroke.Tool = PlayerState.CurrentTool;
+        NewStroke.Color = PlayerState.CurrentColor;
+        NewStroke.Size = PlayerState.BrushSize;
+        NewStroke.StartPosition = CanvasPosition;
+        NewStroke.EndPosition = CanvasPosition;
+        NewStroke.bIsComplete = false;
+
+        // Set textures
+        if (BrushTextures.IsValidIndex(PlayerState.SelectedBrushTextureIndex))
+        {
+            NewStroke.BrushTexture = BrushTextures[PlayerState.SelectedBrushTextureIndex];
+        }
+        if (FigureTextures.IsValidIndex(PlayerState.SelectedFigureTextureIndex))
+        {
+            NewStroke.FigureTexture = FigureTextures[PlayerState.SelectedFigureTextureIndex];
+        }
+        
+        FDrawingPoint Point(CanvasPosition, 1.0f, PlayerState.CurrentColor, 
+                           PlayerState.BrushSize, PlayerState.CurrentTool, NewStroke.StrokeID);
+        NewStroke.Points.Add(Point);
+
+        ActiveStrokes.Add(DrawingPlayer, NewStroke);
+        CurrentStroke = ActiveStrokes.Find(DrawingPlayer);
+        
+        // Set shape state
+        bool bIsShape = IsShapeTool(PlayerState.CurrentTool);
+        PlayerShapeDrawingStates.Add(DrawingPlayer, bIsShape);
+        
+        UE_LOG(LogWDS, Warning, TEXT("Created new stroke %d for player %s"), NewStroke.StrokeID, *DrawingPlayer->GetName());
+    }
+
+    if (!CurrentStroke)
+    {
+        UE_LOG(LogWDS, Error, TEXT("Server_UpdateDrawing: Failed to create stroke for player %s"), *DrawingPlayer->GetName());
+        return;
+    }
+
+    CurrentStroke->EndPosition = CanvasPosition;
+
+    bool* IsDrawingShapePtr = PlayerShapeDrawingStates.Find(DrawingPlayer);
+    bool bIsDrawingShape = IsDrawingShapePtr ? *IsDrawingShapePtr : false;
     
-    if (IsShapeTool(PlayerState.CurrentTool))
+    if (bIsDrawingShape)
     {
         // For shape tools, update preview
-        if (bIsDrawingShape)
-        {
-            ClearShapePreview();
-            DrawShapePreview(CurrentStroke.StartPosition, CurrentStroke.EndPosition, 
-                           PlayerState.CurrentTool, PlayerState.CurrentColor, PlayerState.BrushSize);
-            
-            /* Multicast_UpdateShapePreview(DrawingPlayer, CurrentStroke.StartPosition, CurrentStroke.EndPosition, 
-                                        PlayerState.CurrentTool, PlayerState.CurrentColor, 
-                                        PlayerState.BrushSize, CurrentStroke.StrokeID);
-                                        */
-        }
-    }
-    else
-    {
-        // For brush tools, continue drawing
-        FDrawingPoint Point(CanvasPosition, 1.0f, PlayerState.CurrentColor, 
-                           PlayerState.BrushSize, PlayerState.CurrentTool, CurrentStroke.StrokeID);
-        CurrentStroke.Points.Add(Point);
-        
-        if (CurrentStroke.Points.Num() >= 2)
-        {
-            DrawStroke(CurrentStroke);
-        }
-    }
-
-    /*
-    APawn* DrawingPlayer = GetCurrentPlayer();
-    if (!DrawingPlayer) return;
-    
-    FPlayerDrawingState PlayerState = GetPlayerDrawingState(DrawingPlayer);
-    FDrawingData DrawingData(CanvasPosition, PlayerState, DrawingPlayer);
-    
-    if (GetLocalRole() == ROLE_Authority)
-    {
-        Server_HandleContinueDrawing(DrawingPlayer, CanvasPosition);
-    }
-    else
-    {
-        if (AWhiteboardController* WBController = Cast<AWhiteboardController>(DrawingPlayer->GetController()))
-        {
-            WBController->Server_WhiteboardContinueDrawing(DrawingPlayer,this);
-        }
-    }
-    */
-}
-
-// Server Continue Drawing
-void AWhiteboardActor::Server_ContinueDrawing_Implementation(const FDrawingData& DrawingData)
-{
-    if (!DrawingData.DrawingPlayer || !HasAuthority()) return;
-    
-    // Update server state with client's state
-    UpdatePlayerDrawingState(DrawingData.DrawingPlayer, DrawingData.ToolState);
-    
-    Server_HandleContinueDrawing(DrawingData.DrawingPlayer, DrawingData.CanvasPosition);
-}
-
-
-// Server-side continue drawing handling
-void AWhiteboardActor::Server_HandleContinueDrawing_Implementation(APawn* DrawingPlayer, const FVector2D& CanvasPosition)
-{
-    if (!HasAuthority() || !bIsDrawing || !DrawingPlayer) return;
-    
-    FPlayerDrawingState PlayerState = GetPlayerDrawingState(DrawingPlayer);
-    CurrentStroke.EndPosition = CanvasPosition;
-    
-    if (IsShapeTool(PlayerState.CurrentTool))
-    {
-        // For shape tools, update preview
-        if (bIsDrawingShape)
-        {
-            ClearShapePreview();
-            DrawShapePreview(CurrentStroke.StartPosition, CurrentStroke.EndPosition, 
-                           PlayerState.CurrentTool, PlayerState.CurrentColor, PlayerState.BrushSize);
-            
-           /* Multicast_UpdateShapePreview(DrawingPlayer, CurrentStroke.StartPosition, CurrentStroke.EndPosition, 
-                                       PlayerState.CurrentTool, PlayerState.CurrentColor, 
-                                       PlayerState.BrushSize, CurrentStroke.StrokeID);
-                                       */
-        }
-    }
-    else
-    {
-        // For brush tools, continue drawing
-        FDrawingPoint Point(CanvasPosition, 1.0f, PlayerState.CurrentColor, 
-                           PlayerState.BrushSize, PlayerState.CurrentTool, CurrentStroke.StrokeID);
-        CurrentStroke.Points.Add(Point);
-        
-        if (CurrentStroke.Points.Num() >= 2)
-        {
-            DrawStroke(CurrentStroke);
-        }
-    }
-
-    FDrawingData DrawingData(CanvasPosition, PlayerState, DrawingPlayer);
-    Multicast_ContinueDrawing(DrawingData);
-}
-
-
-
-// Multicast Continue Drawing
-void AWhiteboardActor::Multicast_ContinueDrawing_Implementation(const FDrawingData& DrawingData)
-{
-    if (!DrawingData.DrawingPlayer) return;
-    
-    if (!HasAuthority() && bIsDrawing && CurrentStroke.DrawingPlayer == DrawingData.DrawingPlayer)
-    {
-        // Update client state
-        UpdatePlayerDrawingState(DrawingData.DrawingPlayer, DrawingData.ToolState);
-        
-        FPlayerDrawingState PlayerState = GetPlayerDrawingState(DrawingData.DrawingPlayer);
-        CurrentStroke.EndPosition = DrawingData.CanvasPosition;
-        
-        if (!IsShapeTool(PlayerState.CurrentTool))
-        {
-            FDrawingPoint Point(DrawingData.CanvasPosition, 1.0f, PlayerState.CurrentColor, 
-                               PlayerState.BrushSize, PlayerState.CurrentTool, CurrentStroke.StrokeID);
-            CurrentStroke.Points.Add(Point);
-            
-            if (CurrentStroke.Points.Num() >= 2)
-            {
-                DrawStroke(CurrentStroke);
-            }
-        }
-    }
-}
-
-/////////////////////////////////////////////END DRAWING////////////////////////
-///
-void AWhiteboardActor::EndDrawing()
-{
-    APawn* DrawingPlayer = GetCurrentPlayer();
-    if (!DrawingPlayer) return;
-    
-    if (GetLocalRole() == ROLE_Authority)
-    {
-        Server_HandleEndDrawing(DrawingPlayer);
-    }
-    else
-    {
-        if (AWhiteboardController* WBController = Cast<AWhiteboardController>(DrawingPlayer->GetController()))
-        {
-            WBController->Server_WhiteboardEndDrawing(DrawingPlayer, this); 
-        }
-        
-       // Server_EndDrawing(DrawingPlayer);
-    }
-}
-
-
-// Server End Drawing
-void AWhiteboardActor::Server_EndDrawing_Implementation(APawn* DrawingPlayer)
-{
-    if (!DrawingPlayer || !HasAuthority()) return;
-    
-    Server_HandleEndDrawing(DrawingPlayer);
-}
-
-
-void AWhiteboardActor::Server_HandleEndDrawing_Implementation(APawn* DrawingPlayer)
-{
-    if (!HasAuthority() || !bIsDrawing || !DrawingPlayer) return;
-    
-    FPlayerDrawingState PlayerState = GetPlayerDrawingState(DrawingPlayer);
-    
-    bIsDrawing = false;
-    
-    if (IsShapeTool(PlayerState.CurrentTool) && bIsDrawingShape)
-    {
-        // For shape tools, finalize the shape
-        bIsDrawingShape = false;
-        CurrentStroke.bIsComplete = true;
-        
-        // Clear preview
         ClearShapePreview();
-        
-        // Add end point for shapes
-        if (CurrentStroke.Points.Num() == 1)
-        {
-            FDrawingPoint EndPoint(CurrentStroke.EndPosition, 1.0f, PlayerState.CurrentColor, 
-                                  PlayerState.BrushSize, PlayerState.CurrentTool, CurrentStroke.StrokeID);
-            CurrentStroke.Points.Add(EndPoint);
-        }
-        
-        // Draw the final shape
-        DrawStroke(CurrentStroke); // This will now replicate properly
+        DrawShapePreview(CurrentStroke->StartPosition, CanvasPosition, 
+                        PlayerState.CurrentTool, PlayerState.CurrentColor, 
+                        PlayerState.BrushSize);
     }
     else
     {
-        // For freehand tools, ensure the stroke is drawn
-        DrawStroke(CurrentStroke);
-    }
-    
-    // Add stroke to history on server
-    if (CurrentHistoryIndex < StrokeHistory.Num() - 1)
-    {
-        StrokeHistory.RemoveAt(CurrentHistoryIndex + 1, StrokeHistory.Num() - CurrentHistoryIndex - 1);
-    }
-    
-    StrokeHistory.Add(CurrentStroke);
-    CurrentHistoryIndex = StrokeHistory.Num() - 1;
-    
-    // Notify all clients with the complete stroke
-    Multicast_EndDrawing(DrawingPlayer, CurrentStroke);
-    
-    // Clear current stroke
-    CurrentStroke = FStroke();
-}
+        // Add point for freehand drawing
+        FDrawingPoint Point(CanvasPosition, 1.0f, PlayerState.CurrentColor, 
+                           PlayerState.BrushSize, PlayerState.CurrentTool, CurrentStroke->StrokeID);
+        CurrentStroke->Points.Add(Point);
 
-
-// Multicast End Drawing RPC Implementations
-void AWhiteboardActor::Multicast_EndDrawing_Implementation(APawn* DrawingPlayer, const FStroke& CompletedStroke)
-{
-    if (!HasAuthority())
-    {
-        // Only process on clients
-        if (bIsDrawing && CurrentStroke.StrokeID == CompletedStroke.StrokeID)
+        // Draw if we have at least 2 points
+        if (CurrentStroke->Points.Num() >= 2)
         {
-            FPlayerDrawingState PlayerState = GetPlayerDrawingState(DrawingPlayer);
+            DrawStroke(*CurrentStroke);
             
-            bIsDrawing = false;
-            
-            if (IsShapeTool(PlayerState.CurrentTool) && bIsDrawingShape)
-            {
-                bIsDrawingShape = false;
-                ClearShapePreview();
-            }
-            
-            // Use the completed stroke from server
+            // Update history for freehand tools (continuous drawing)
             if (CurrentHistoryIndex < StrokeHistory.Num() - 1)
             {
                 StrokeHistory.RemoveAt(CurrentHistoryIndex + 1, StrokeHistory.Num() - CurrentHistoryIndex - 1);
             }
             
-            StrokeHistory.Add(CompletedStroke);
+            // Replace the last stroke in history with updated version
+            if (StrokeHistory.Num() > 0 && StrokeHistory.Last().StrokeID == CurrentStroke->StrokeID)
+            {
+                StrokeHistory.Last() = *CurrentStroke;
+            }
+            else
+            {
+                StrokeHistory.Add(*CurrentStroke);
+            }
             CurrentHistoryIndex = StrokeHistory.Num() - 1;
-            
-            // Draw the completed stroke
-            DrawStrokeInternal(CompletedStroke);
-            
-            CurrentStroke = FStroke();
         }
     }
+
+    // Multicast to all clients
+    Multicast_UpdateDrawing(DrawingPlayer, CanvasPosition, CurrentStroke->StrokeID);
+    
+    UE_LOG(LogWDS, VeryVerbose, TEXT("Server_UpdateDrawing: Stroke %d now has %d points"), 
+           CurrentStroke->StrokeID, CurrentStroke->Points.Num());
 }
 
-
-
-// NEW: Shape preview functions
-void AWhiteboardActor::DrawShapePreview(const FVector2D& StartPos, const FVector2D& EndPos, EDrawingTool Tool, FLinearColor Color, float Size)
+void AWhiteboardActor::Multicast_UpdateDrawing_Implementation(APawn* DrawingPlayer, const FVector2D& CanvasPosition, int32 StrokeID)
 {
-    if (!PreviewCanvas)
+    // Skip if this is the server
+    if (HasAuthority())
     {
         return;
     }
 
-    // Clear previous preview
-    UKismetRenderingLibrary::ClearRenderTarget2D(GetWorld(), PreviewCanvas, FLinearColor::Transparent);
-    
-    UCanvas* Canvas = nullptr;
-    FVector2D CanvasSize;
-    FDrawToRenderTargetContext Context;
-    UKismetRenderingLibrary::BeginDrawCanvasToRenderTarget(GetWorld(), PreviewCanvas, Canvas, CanvasSize, Context);
-    
-    if (Canvas)
-    {
-        switch (Tool)
-        {
-            case EDrawingTool::Line:
-                Canvas->K2_DrawLine(StartPos, EndPos, Size, Color);
-                break;
-                
-            case EDrawingTool::Rectangle:
-                {
-                    float Left = FMath::Min(StartPos.X, EndPos.X);
-                    float Top = FMath::Min(StartPos.Y, EndPos.Y);
-                    float Right = FMath::Max(StartPos.X, EndPos.X);
-                    float Bottom = FMath::Max(StartPos.Y, EndPos.Y);
-                    
-                    Canvas->K2_DrawLine(FVector2D(Left, Top), FVector2D(Right, Top), Size, Color);
-                    Canvas->K2_DrawLine(FVector2D(Right, Top), FVector2D(Right, Bottom), Size, Color);
-                    Canvas->K2_DrawLine(FVector2D(Right, Bottom), FVector2D(Left, Bottom), Size, Color);
-                    Canvas->K2_DrawLine(FVector2D(Left, Bottom), FVector2D(Left, Top), Size, Color);
-                }
-                break;
-                
-            case EDrawingTool::Circle:
-                {
-                    float CenterX = (StartPos.X + EndPos.X) / 2.0f;
-                    float CenterY = (StartPos.Y + EndPos.Y) / 2.0f;
-                    float Radius = FVector2D::Distance(StartPos, EndPos) / 2.0f;
-                    
-                    int32 NumSegments = 32;
-                    TArray<FVector2D> Points;
-                    
-                    for (int32 i = 0; i <= NumSegments; i++)
-                    {
-                        float Angle = 2.0f * PI * i / NumSegments;
-                        float X = CenterX + Radius * FMath::Cos(Angle);
-                        float Y = CenterY + Radius * FMath::Sin(Angle);
-                        Points.Add(FVector2D(X, Y));
-                    }
-                    
-                    for (int32 i = 0; i < Points.Num() - 1; i++)
-                    {
-                        Canvas->K2_DrawLine(Points[i], Points[i + 1], Size, Color);
-                    }
-                }
-                break;
-        }
-    }
-    
-    UKismetRenderingLibrary::EndDrawCanvasToRenderTarget(GetWorld(), Context);
-    
-    // Update the material to show the preview
-    UpdateCanvasMaterial();
-}
+    UE_LOG(LogWDS, VeryVerbose, TEXT("Multicast_UpdateDrawing: Player %s, StrokeID: %d, Position: %s"), 
+           *DrawingPlayer->GetName(), StrokeID, *CanvasPosition.ToString());
 
+    FPlayerDrawingState PlayerState = GetPlayerDrawingState(DrawingPlayer);
+    FStroke* CurrentStroke = ActiveStrokes.Find(DrawingPlayer);
 
-void AWhiteboardActor::ClearShapePreview()
-{
-    if (PreviewCanvas)
+    if (!CurrentStroke || CurrentStroke->StrokeID != StrokeID)
     {
-        UKismetRenderingLibrary::ClearRenderTarget2D(GetWorld(), PreviewCanvas, FLinearColor::Transparent);
-    }
-}
-/*
-void AWhiteboardActor::DrawShape(const FStroke& Stroke)
-{
-    if (Stroke.Points.Num() < 2)
-    {
-        return;
-    }
-    
-    UCanvas* Canvas = nullptr;
-    FVector2D CanvasSize;
-    FDrawToRenderTargetContext Context;
-    UKismetRenderingLibrary::BeginDrawCanvasToRenderTarget(GetWorld(), DrawingCanvas, Canvas, CanvasSize, Context);
-    
-    if (Canvas)
-    {
-        FVector2D StartPos = Stroke.Points[0].Position;
-        FVector2D EndPos = Stroke.Points[Stroke.Points.Num() - 1].Position;
+        UE_LOG(LogWDS, Warning, TEXT("Multicast_UpdateDrawing: Stroke mismatch for player %s, creating new stroke"), 
+               *DrawingPlayer->GetName());
         
-        switch (Stroke.Tool)
+        // Create new stroke if mismatch
+        FStroke NewStroke;
+        NewStroke.StrokeID = StrokeID;
+        NewStroke.DrawingPlayer = DrawingPlayer;
+        NewStroke.Tool = PlayerState.CurrentTool;
+        NewStroke.Color = PlayerState.CurrentColor;
+        NewStroke.Size = PlayerState.BrushSize;
+        NewStroke.StartPosition = CanvasPosition;
+        NewStroke.EndPosition = CanvasPosition;
+        NewStroke.bIsComplete = false;
+
+        // Set textures
+        if (BrushTextures.IsValidIndex(PlayerState.SelectedBrushTextureIndex))
         {
-            case EDrawingTool::Line:
-                Canvas->K2_DrawLine(StartPos, EndPos, Stroke.Size, Stroke.Color);
-                break;
-                
-            case EDrawingTool::Rectangle:
-                {
-                    float Left = FMath::Min(StartPos.X, EndPos.X);
-                    float Top = FMath::Min(StartPos.Y, EndPos.Y);
-                    float Right = FMath::Max(StartPos.X, EndPos.X);
-                    float Bottom = FMath::Max(StartPos.Y, EndPos.Y);
-                    
-                    Canvas->K2_DrawLine(FVector2D(Left, Top), FVector2D(Right, Top), Stroke.Size, Stroke.Color);
-                    Canvas->K2_DrawLine(FVector2D(Right, Top), FVector2D(Right, Bottom), Stroke.Size, Stroke.Color);
-                    Canvas->K2_DrawLine(FVector2D(Right, Bottom), FVector2D(Left, Bottom), Stroke.Size, Stroke.Color);
-                    Canvas->K2_DrawLine(FVector2D(Left, Bottom), FVector2D(Left, Top), Stroke.Size, Stroke.Color);
-                }
-                break;
-                
-            case EDrawingTool::Circle:
-                {
-                    float CenterX = (StartPos.X + EndPos.X) / 2.0f;
-                    float CenterY = (StartPos.Y + EndPos.Y) / 2.0f;
-                    float Radius = FVector2D::Distance(StartPos, EndPos) / 2.0f;
-                    
-                    int32 NumSegments = 32;
-                    TArray<FVector2D> Points;
-                    
-                    for (int32 i = 0; i <= NumSegments; i++)
-                    {
-                        float Angle = 2.0f * PI * i / NumSegments;
-                        float X = CenterX + Radius * FMath::Cos(Angle);
-                        float Y = CenterY + Radius * FMath::Sin(Angle);
-                        Points.Add(FVector2D(X, Y));
-                    }
-                    
-                    for (int32 i = 0; i < Points.Num() - 1; i++)
-                    {
-                        Canvas->K2_DrawLine(Points[i], Points[i + 1], Stroke.Size, Stroke.Color);
-                    }
-                }
-                break;
+            NewStroke.BrushTexture = BrushTextures[PlayerState.SelectedBrushTextureIndex];
+        }
+        if (FigureTextures.IsValidIndex(PlayerState.SelectedFigureTextureIndex))
+        {
+            NewStroke.FigureTexture = FigureTextures[PlayerState.SelectedFigureTextureIndex];
+        }
+        
+        FDrawingPoint Point(CanvasPosition, 1.0f, PlayerState.CurrentColor, 
+                           PlayerState.BrushSize, PlayerState.CurrentTool, StrokeID);
+        NewStroke.Points.Add(Point);
+
+        ActiveStrokes.Add(DrawingPlayer, NewStroke);
+        CurrentStroke = ActiveStrokes.Find(DrawingPlayer);
+    }
+
+    if (!CurrentStroke)
+    {
+        UE_LOG(LogWDS, Error, TEXT("Multicast_UpdateDrawing: Failed to create stroke for player %s"), *DrawingPlayer->GetName());
+        return;
+    }
+
+    CurrentStroke->EndPosition = CanvasPosition;
+
+    bool* IsDrawingShapePtr = PlayerShapeDrawingStates.Find(DrawingPlayer);
+    bool bIsDrawingShape = IsDrawingShapePtr ? *IsDrawingShapePtr : false;
+    
+    if (bIsDrawingShape)
+    {
+        // Update shape preview
+        ClearShapePreview();
+        DrawShapePreview(CurrentStroke->StartPosition, CanvasPosition, 
+                        PlayerState.CurrentTool, PlayerState.CurrentColor, 
+                        PlayerState.BrushSize);
+    }
+    else
+    {
+        // Add point for freehand drawing
+        FDrawingPoint Point(CanvasPosition, 1.0f, PlayerState.CurrentColor, 
+                           PlayerState.BrushSize, PlayerState.CurrentTool, StrokeID);
+        CurrentStroke->Points.Add(Point);
+
+        // Draw if we have at least 2 points
+        if (CurrentStroke->Points.Num() >= 2)
+        {
+            DrawStroke(*CurrentStroke);
         }
     }
     
-    UKismetRenderingLibrary::EndDrawCanvasToRenderTarget(GetWorld(), Context);
-    UpdateCanvasMaterial();
+    UE_LOG(LogWDS, VeryVerbose, TEXT("Multicast_UpdateDrawing: Stroke %d now has %d points"), 
+           CurrentStroke->StrokeID, CurrentStroke->Points.Num());
+}
+
+///////////////////////////////////////////// END DRAWING ////////////////////////
+
+void AWhiteboardActor::PlayerEndDrawing()
+{
+    APawn* DrawingPlayer = GetDrawingPlayer();
+    
+    if (!DrawingPlayer)
+    {
+        UE_LOG(LogWDS, Warning, TEXT("PlayerEndDrawing: No valid player"));
+        return;
+    }
+
+    UE_LOG(LogWDS, Warning, TEXT("PlayerEndDrawing: Player %s"), *DrawingPlayer->GetName());
+
+    // Clear client prediction
+    if (GetLocalRole() != ROLE_Authority)
+    {
+        FStroke* PredictedStroke = ClientPredictedStrokes.Find(DrawingPlayer);
+        if (PredictedStroke)
+        {
+            UE_LOG(LogWDS, Warning, TEXT("Clearing predicted stroke with %d points"), PredictedStroke->Points.Num());
+        }
+        ClientPredictedStrokes.Remove(DrawingPlayer);
+        ClearShapePreview();
+    }
+
+    if (APlayerController* PC = GetWorld()->GetFirstPlayerController())
+    {
+        if (AWhiteboardController* WBController = Cast<AWhiteboardController>(PC))
+        {
+            WBController->Server_WhiteboardEndDrawing(DrawingPlayer,this);
+        }
+    }
+    
+    // Send to server
+//    Server_EndDrawing(DrawingPlayer);
+}
+
+void AWhiteboardActor::Server_EndDrawing_Implementation(APawn* DrawingPlayer)
+{
+   if (!DrawingPlayer || !HasAuthority())
+    {
+        UE_LOG(LogWDS, Error, TEXT("Server_EndDrawing: Invalid player or no authority"));
+        return;
+    }
+
+    UE_LOG(LogWDS, Warning, TEXT("Server_EndDrawing: Player %s"), *DrawingPlayer->GetName());
+
+    FStroke* CurrentStroke = ActiveStrokes.Find(DrawingPlayer);
+    
+    if (!CurrentStroke)
+    {
+        UE_LOG(LogWDS, Warning, TEXT("Server_EndDrawing: No current stroke for player %s"), *DrawingPlayer->GetName());
+        return;
+    }
+
+    FPlayerDrawingState PlayerState = GetPlayerDrawingState(DrawingPlayer);
+
+    // Finalize the stroke
+    CurrentStroke->bIsComplete = true;
+
+    bool* IsDrawingShapePtr = PlayerShapeDrawingStates.Find(DrawingPlayer);
+    bool bIsDrawingShape = IsDrawingShapePtr ? *IsDrawingShapePtr : false;
+    
+    if (bIsDrawingShape)
+    {
+        // Finalize shape - add end point
+        ClearShapePreview();
+        
+        if (CurrentStroke->Points.Num() == 1)
+        {
+            FDrawingPoint EndPoint(CurrentStroke->EndPosition, 1.0f, PlayerState.CurrentColor, 
+                                  PlayerState.BrushSize, PlayerState.CurrentTool, CurrentStroke->StrokeID);
+            CurrentStroke->Points.Add(EndPoint);
+        }
+        
+        // Draw the final shape
+        DrawStroke(*CurrentStroke);
+    }
+
+    // Add to history (for shapes or to finalize freehand)
+    if (CurrentHistoryIndex < StrokeHistory.Num() - 1)
+    {
+        StrokeHistory.RemoveAt(CurrentHistoryIndex + 1, StrokeHistory.Num() - CurrentHistoryIndex - 1);
+    }
+
+    // Replace existing stroke or add new one
+    bool bFound = false;
+    for (int32 i = 0; i < StrokeHistory.Num(); i++)
+    {
+        if (StrokeHistory[i].StrokeID == CurrentStroke->StrokeID)
+        {
+            StrokeHistory[i] = *CurrentStroke;
+            bFound = true;
+            break;
+        }
+    }
+    
+    if (!bFound)
+    {
+        StrokeHistory.Add(*CurrentStroke);
+    }
+    
+    CurrentHistoryIndex = StrokeHistory.Num() - 1;
+
+    UE_LOG(LogWDS, Warning, TEXT("Server_EndDrawing: Completed stroke %d for player %s with %d points, history index: %d"), 
+           CurrentStroke->StrokeID, *DrawingPlayer->GetName(), CurrentStroke->Points.Num(), CurrentHistoryIndex);
+
+    // Multicast to all clients
+    Multicast_EndDrawing(DrawingPlayer, *CurrentStroke);
+
+    // Clean up
+    ActiveStrokes.Remove(DrawingPlayer);
+    PlayerShapeDrawingStates.Remove(DrawingPlayer);
+}
+
+void AWhiteboardActor::Multicast_EndDrawing_Implementation(APawn* DrawingPlayer, const FStroke& CompletedStroke)
+{
+    // Skip if this is the server
+    if (HasAuthority())
+    {
+        return;
+    }
+
+    UE_LOG(LogWDS, Warning, TEXT("Multicast_EndDrawing: Received stroke %d for player %s"), 
+           CompletedStroke.StrokeID, *DrawingPlayer->GetName());
+
+    // Remove from current strokes
+    CurrentStrokes.Remove(DrawingPlayer);
+    PlayerDrawingShapes.Remove(DrawingPlayer);
+    //ClearShapePreview(DrawingPlayer);
+
+    // Add to history
+    if (CurrentHistoryIndex < StrokeHistory.Num() - 1)
+    {
+        StrokeHistory.RemoveAt(CurrentHistoryIndex + 1, StrokeHistory.Num() - CurrentHistoryIndex - 1);
+    }
+
+    StrokeHistory.Add(CompletedStroke);
+    CurrentHistoryIndex = StrokeHistory.Num() - 1;
+
+    // Draw the completed stroke
+    DrawStroke(CompletedStroke);
 }
 
 
+
+
+/*
 void AWhiteboardActor::AddText(const FVector2D& CanvasPosition, const FString& Text)
 {
     /*
@@ -1580,21 +1456,29 @@ void AWhiteboardActor::AddText(const FVector2D& CanvasPosition, const FString& T
     }  
 }
 
+*/
 
+/////////////////////////////////////////////////////// DRAW FIGURE //////////////////////////////////////////
+
+// Draw Figure
 void AWhiteboardActor::DrawFigure(const FVector2D& CanvasPosition, const int32 SelectedFigureIndex)
 {
-    /*
+    APawn* DrawingPlayer = GetDrawingPlayer();
+    
+    // Get The Current Player State
+    FPlayerDrawingState PlayerState = GetPlayerDrawingState(DrawingPlayer);
+    
     if (HasAuthority())
     {
         // Create a new stroke for figure
         FStroke FigureStroke;
         FigureStroke.StrokeID = NextStrokeID++;
         FigureStroke.Tool = EDrawingTool::Figure;
-        FigureStroke.Color = CurrentColor;
-        FigureStroke.Size = BrushSize;
+        FigureStroke.Color = PlayerState.CurrentColor;
+        FigureStroke.Size = PlayerState.BrushSize;
         FigureStroke.FigureTexture = FigureTextures[SelectedFigureIndex];
         
-        FDrawingPoint Point(CanvasPosition, 1.0f, CurrentColor, BrushSize, EDrawingTool::Figure, FigureStroke.StrokeID);
+        FDrawingPoint Point(CanvasPosition, 1.0f, PlayerState.CurrentColor, PlayerState.BrushSize, EDrawingTool::Figure, FigureStroke.StrokeID);
         FigureStroke.Points.Add(Point);
         
         // Draw figure on canvas
@@ -1610,7 +1494,7 @@ void AWhiteboardActor::DrawFigure(const FVector2D& CanvasPosition, const int32 S
         CurrentHistoryIndex = StrokeHistory.Num() - 1;
         
         // Notify all clients
-        Multicast_UpdateDrawing(FigureStroke);
+        Multicast_UpdateDrawingCanvas(FigureStroke);
     }
     else
     {
@@ -1619,34 +1503,35 @@ void AWhiteboardActor::DrawFigure(const FVector2D& CanvasPosition, const int32 S
         {
             if (AWhiteboardController* YourPC = Cast<AWhiteboardController>(PC))
             {
-                YourPC->Server_WhiteboardDrawFigure(this, CanvasPosition, SelectedFigureIndex, CurrentColor, BrushSize);
+                YourPC->Server_WhiteboardDrawFigure(this, CanvasPosition, PlayerState);
             }
         }
     }  
 }
 
-*/
+// Server Draw Figure
+void AWhiteboardActor::Server_DrawFigure_Implementation(const FVector2D& CanvasPosition, const FPlayerDrawingState& PlayerToolState)
+{
+   // Upddate
+  //  CurrentColor = Color;
+ //   BrushSize = FMath::Clamp(Size, 1.0f, 100.0f);
+   // DrawFigure(CanvasPosition, SelectedFigureIndex);
+    
+}
 
 
+/*
 void AWhiteboardActor::Server_AddText_Implementation(const FVector2D& CanvasPosition, const FString& Text, FLinearColor Color, float Size)
 {
-    /*
+
     CurrentColor = Color;
     BrushSize = FMath::Clamp(Size, 1.0f, 100.0f);
     AddText(CanvasPosition, Text);
-    */
+
   
 }
 
-void AWhiteboardActor::Server_DrawFigure_Implementation(const FVector2D& CanvasPosition, int32 SelectedFigureIndex, FLinearColor Color, float Size)
-{
-    /*
-    CurrentColor = Color;
-    BrushSize = FMath::Clamp(Size, 1.0f, 100.0f);
-    DrawFigure(CanvasPosition, SelectedFigureIndex);
-    */
-}
-
+*/
 
 void AWhiteboardActor::Server_ClearWhiteboard_Implementation()
 {
@@ -1664,7 +1549,7 @@ void AWhiteboardActor::Server_Redo_Implementation()
 }
 
 
-void AWhiteboardActor::Multicast_UpdateDrawing_Implementation(const FStroke& NewStroke)
+void AWhiteboardActor::Multicast_UpdateDrawingCanvas_Implementation(const FStroke& NewStroke)
 {
     if (!HasAuthority())
     {
@@ -1718,11 +1603,11 @@ void AWhiteboardActor::Multicast_UpdateShapePreview_Implementation(APawn* Drawin
     if (!HasAuthority())
     {
         // Only update preview if this is our current stroke
-        if (bIsDrawing && CurrentStroke.StrokeID == StrokeID)
-        {
-            ClearShapePreview();
-            DrawShapePreview(StartPos, EndPos, Tool, Color, Size);
-        }
+     //   if (bIsDrawing && CurrentStroke.StrokeID == StrokeID)
+    //    {
+     //       ClearShapePreview();
+    //        DrawShapePreview(StartPos, EndPos, Tool, Color, Size);
+     //   }
     }
 }
 
@@ -1788,7 +1673,7 @@ void AWhiteboardActor::ClientContinueDrawing(const FVector2D& CanvasPosition)
     }
     
     // Send to server
-    ContinueDrawing(CanvasPosition);
+    UpdateDrawing(CanvasPosition);
 }
 */
 
@@ -1843,38 +1728,67 @@ FVector2D AWhiteboardActor::WorldToCanvasPosition(const FVector& WorldPosition) 
     return FVector2D(U * CanvasWidth, V * CanvasHeight);
 }
 
-//////////////////////////////////////// DRAWING STOCK ///////////////////////////////////////
 
+
+//////////////////////////////////////// DRAWING STOCK ////////////////////////
+
+// Draw Stock
 void AWhiteboardActor::DrawStroke(const FStroke& Stroke)
 {
+    // Robust initialization check
+    if (!bIsInitialized || !DrawingCanvas || !GetWorld())
+    {
+        UE_LOG(LogWDS, Warning, TEXT("DrawStroke: Whiteboard not initialized, attempting recovery"));
+        CheckAndRepairInitialization();
+        
+        if (!bIsInitialized || !DrawingCanvas)
+        {
+            UE_LOG(LogWDS, Error, TEXT("DrawStroke: Recovery failed"));
+            return;
+        }
+    }
 
     if (Stroke.Points.Num() == 0)
     {
+        UE_LOG(LogWDS, Warning, TEXT("DrawStroke: Stroke has no points!"));
         return;
     }
+
+    UE_LOG(LogWDS, Verbose, TEXT("DrawStroke: Drawing stroke %d with %d points, tool: %d"), 
+           Stroke.StrokeID, Stroke.Points.Num(), (int32)Stroke.Tool);
     
-    // Only draw on the server, or if we're a client and this is a new stroke
-    if (HasAuthority())
+    // Handle different tool types
+    if (IsShapeTool(Stroke.Tool) && Stroke.bIsComplete)
     {
-        // Server draws and replicates
-        DrawStrokeInternal(Stroke);
-        
-        // Notify all clients about the new stroke
-        Multicast_DrawStroke(Stroke);
+        DrawShape(Stroke);
     }
     else
     {
-        // Client draws locally for prediction, but server will be the authority
-        DrawStrokeInternal(Stroke);
+        switch (Stroke.Tool)
+        {
+        case EDrawingTool::Text:
+            DrawTextStroke(Stroke);
+            break;
+        case EDrawingTool::Figure:
+            DrawFigureStroke(Stroke);
+            break;
+        default:  
+            DrawFreehandStroke(Stroke);
+            break;
+        }
     }
+
+    // Update material
+    UpdateCanvasMaterial();
     
     /*
+    // If Stock Doesn't Have Any Point Return
     if (Stroke.Points.Num() == 0)
     {
         return;
     }
     
-    // Handle shape tools
+    // Handle Shape Tool
     if (IsShapeTool(Stroke.Tool) && Stroke.bIsComplete)
     {
         DrawShape(Stroke);
@@ -1884,6 +1798,7 @@ void AWhiteboardActor::DrawStroke(const FStroke& Stroke)
     // Handle other tools (brush, pencil, eraser, text, texture)
     switch (Stroke.Tool)
     {
+        // Draw Text 
         case EDrawingTool::Text:
             if (!Stroke.TextContent.IsEmpty() && Stroke.Points.Num() > 0)
             {
@@ -1907,7 +1822,8 @@ void AWhiteboardActor::DrawStroke(const FStroke& Stroke)
                 UKismetRenderingLibrary::EndDrawCanvasToRenderTarget(GetWorld(), Context);
             }
             break;
-        
+
+        // Draw Figure
         case EDrawingTool::Figure:
             if (Stroke.FigureTexture && Stroke.Points.Num() > 0)
             {
@@ -1931,8 +1847,9 @@ void AWhiteboardActor::DrawStroke(const FStroke& Stroke)
                 UKismetRenderingLibrary::EndDrawCanvasToRenderTarget(GetWorld(), Context);
             }
             break;
-                
-        default:  // Brush, Pencil, Eraser, Texture
+
+        // Default Pencil, Brush, Eraser
+        default:  
             if (Stroke.Points.Num() >= 1)
             {
                 UCanvas* Canvas = nullptr;
@@ -1999,118 +1916,106 @@ void AWhiteboardActor::DrawStroke(const FStroke& Stroke)
             break;
     }
     
-    // Update material
-    UpdateCanvasMaterial();
+  
     */
 }
 
-void AWhiteboardActor::DrawStrokeInternal(const FStroke& Stroke)
+
+////////////////////////////// DRAWING SHAPE AND PREVIEW ///////////////////////
+
+// Draw Shape
+void AWhiteboardActor::DrawShape(const FStroke& Stroke)
 {
-    if (!DrawingCanvas) return;
-    
-    // Handle shape tools
-    if (IsShapeTool(Stroke.Tool) && Stroke.bIsComplete)
+   if (Stroke.Points.Num() < 2)
     {
-        DrawShapeInternal(Stroke);
         return;
     }
+
+    UCanvas* Canvas = nullptr;
+    FVector2D CanvasSize;
+    FDrawToRenderTargetContext Context;
     
-    // Handle other tools (brush, pencil, eraser, text, texture)
+    if (!BeginCanvasDraw(Canvas, CanvasSize, Context, DrawingCanvas))
+    {
+        return;
+    }
+
+    FVector2D StartPos = Stroke.Points[0].Position;
+    FVector2D EndPos = Stroke.Points[Stroke.Points.Num() - 1].Position;
+    FLinearColor DrawColor = Stroke.Color;
+    float LineThickness = Stroke.Size;
+
     switch (Stroke.Tool)
     {
-    case EDrawingTool::Text:
-        if (!Stroke.TextContent.IsEmpty() && Stroke.Points.Num() > 0)
-        {
-            DrawTextInternal(Stroke);
-        }
-        break;
-        
-    case EDrawingTool::Figure:
-        if (Stroke.FigureTexture && Stroke.Points.Num() > 0)
-        {
-            DrawFigureInternal(Stroke);
-        }
-        break;
+        case EDrawingTool::Line:
+            Canvas->K2_DrawLine(StartPos, EndPos, LineThickness, DrawColor);
+            break;
+            
+        case EDrawingTool::Rectangle:
+            {
+                FVector2D RectMin = FVector2D(FMath::Min(StartPos.X, EndPos.X), FMath::Min(StartPos.Y, EndPos.Y));
+                FVector2D RectMax = FVector2D(FMath::Max(StartPos.X, EndPos.X), FMath::Max(StartPos.Y, EndPos.Y));
+                FVector2D RectSize = RectMax - RectMin;
                 
-    default:  // Brush, Pencil, Eraser, Texture
-        if (Stroke.Points.Num() >= 1)
-        {
-            DrawFreehandInternal(Stroke);
-        }
-        break;
+                // Draw rectangle outline
+                Canvas->K2_DrawLine(FVector2D(RectMin.X, RectMin.Y), FVector2D(RectMax.X, RectMin.Y), LineThickness, DrawColor);
+                Canvas->K2_DrawLine(FVector2D(RectMax.X, RectMin.Y), FVector2D(RectMax.X, RectMax.Y), LineThickness, DrawColor);
+                Canvas->K2_DrawLine(FVector2D(RectMax.X, RectMax.Y), FVector2D(RectMin.X, RectMax.Y), LineThickness, DrawColor);
+                Canvas->K2_DrawLine(FVector2D(RectMin.X, RectMax.Y), FVector2D(RectMin.X, RectMin.Y), LineThickness, DrawColor);
+            }
+            break;
+            
+        case EDrawingTool::Circle:
+            {
+                float Radius = FVector2D::Distance(StartPos, EndPos);
+                int32 Segments = 32;
+                
+                for (int32 i = 0; i < Segments; i++)
+                {
+                    float Angle1 = (float)i / Segments * 2 * PI;
+                    float Angle2 = (float)(i + 1) / Segments * 2 * PI;
+                    
+                    FVector2D Point1 = StartPos + FVector2D(FMath::Cos(Angle1) * Radius, FMath::Sin(Angle1) * Radius);
+                    FVector2D Point2 = StartPos + FVector2D(FMath::Cos(Angle2) * Radius, FMath::Sin(Angle2) * Radius);
+                    
+                    Canvas->K2_DrawLine(Point1, Point2, LineThickness, DrawColor);
+                }
+            }
+            break;
     }
     
-    // Update material to show changes
+    EndCanvasDraw(Context);
+
+    // Update Canvas Material
     UpdateCanvasMaterial();
 }
 
-void AWhiteboardActor::DrawTextInternal(const FStroke& Stroke)
+// Draw Preview Shape
+void AWhiteboardActor::DrawShapePreview(const FVector2D& StartPos, const FVector2D& EndPos, EDrawingTool Tool, FLinearColor Color, float Size)
 {
-    UCanvas* Canvas = nullptr;
-    FVector2D CanvasSize;
-    FDrawToRenderTargetContext Context;
-    UKismetRenderingLibrary::BeginDrawCanvasToRenderTarget(GetWorld(), DrawingCanvas, Canvas, CanvasSize, Context);
-    
-    if (Canvas)
-    {
-        UFont* Font = GEngine->GetSmallFont();
-        float TextScale = Stroke.Size / 10.0f;
-        
-        Canvas->K2_DrawText(Font, FText::FromString(Stroke.TextContent).ToString(), 
-            Stroke.Points[0].Position, FVector2D(TextScale, TextScale), 
-            Stroke.Color, 1.0f, FLinearColor::Black, 
-            FVector2D::ZeroVector, true, true, true, 
-            FLinearColor(0, 0, 0, 0));
-    }
-    
-    UKismetRenderingLibrary::EndDrawCanvasToRenderTarget(GetWorld(), Context);
-}
-
-void AWhiteboardActor::DrawFigureInternal(const FStroke& Stroke)
-{
-    UCanvas* Canvas = nullptr;
-    FVector2D CanvasSize;
-    FDrawToRenderTargetContext Context;
-    UKismetRenderingLibrary::BeginDrawCanvasToRenderTarget(GetWorld(), DrawingCanvas, Canvas, CanvasSize, Context);
-        
-    if (Canvas)
-    {
-        Canvas->K2_DrawTexture(
-            Stroke.FigureTexture,
-            Stroke.Points[0].Position - FVector2D(Stroke.Size / 2, Stroke.Size / 2),
-            FVector2D(Stroke.Size * 5, Stroke.Size * 5),
-            FVector2D::ZeroVector,
-            FVector2D::UnitVector,
-            Stroke.Color
-        );
-    }
-        
-    UKismetRenderingLibrary::EndDrawCanvasToRenderTarget(GetWorld(), Context);
-}
-
-void AWhiteboardActor::DrawShapeInternal(const FStroke& Stroke)
-{
-    if (Stroke.Points.Num() < 2 || !DrawingCanvas)
+    if (!PreviewCanvas)
     {
         return;
     }
+
+    // Clear previous preview
+    UKismetRenderingLibrary::ClearRenderTarget2D(GetWorld(), PreviewCanvas, FLinearColor::Transparent);
     
     UCanvas* Canvas = nullptr;
     FVector2D CanvasSize;
     FDrawToRenderTargetContext Context;
-    UKismetRenderingLibrary::BeginDrawCanvasToRenderTarget(GetWorld(), DrawingCanvas, Canvas, CanvasSize, Context);
+    UKismetRenderingLibrary::BeginDrawCanvasToRenderTarget(GetWorld(), PreviewCanvas, Canvas, CanvasSize, Context);
     
     if (Canvas)
     {
-        FVector2D StartPos = Stroke.Points[0].Position;
-        FVector2D EndPos = Stroke.Points[Stroke.Points.Num() - 1].Position;
-        
-        switch (Stroke.Tool)
+        switch (Tool)
         {
+            // Draw Line Preview
             case EDrawingTool::Line:
-                Canvas->K2_DrawLine(StartPos, EndPos, Stroke.Size, Stroke.Color);
+                Canvas->K2_DrawLine(StartPos, EndPos, Size, Color);
                 break;
-                
+
+            // Draw Rectangle Preview
             case EDrawingTool::Rectangle:
                 {
                     float Left = FMath::Min(StartPos.X, EndPos.X);
@@ -2118,14 +2023,14 @@ void AWhiteboardActor::DrawShapeInternal(const FStroke& Stroke)
                     float Right = FMath::Max(StartPos.X, EndPos.X);
                     float Bottom = FMath::Max(StartPos.Y, EndPos.Y);
                     
-                    // Draw rectangle outline
-                    Canvas->K2_DrawLine(FVector2D(Left, Top), FVector2D(Right, Top), Stroke.Size, Stroke.Color);
-                    Canvas->K2_DrawLine(FVector2D(Right, Top), FVector2D(Right, Bottom), Stroke.Size, Stroke.Color);
-                    Canvas->K2_DrawLine(FVector2D(Right, Bottom), FVector2D(Left, Bottom), Stroke.Size, Stroke.Color);
-                    Canvas->K2_DrawLine(FVector2D(Left, Bottom), FVector2D(Left, Top), Stroke.Size, Stroke.Color);
+                    Canvas->K2_DrawLine(FVector2D(Left, Top), FVector2D(Right, Top), Size, Color);
+                    Canvas->K2_DrawLine(FVector2D(Right, Top), FVector2D(Right, Bottom), Size, Color);
+                    Canvas->K2_DrawLine(FVector2D(Right, Bottom), FVector2D(Left, Bottom), Size, Color);
+                    Canvas->K2_DrawLine(FVector2D(Left, Bottom), FVector2D(Left, Top), Size, Color);
                 }
                 break;
-                
+
+            // Draw Circle Preview
             case EDrawingTool::Circle:
                 {
                     float CenterX = (StartPos.X + EndPos.X) / 2.0f;
@@ -2145,272 +2050,32 @@ void AWhiteboardActor::DrawShapeInternal(const FStroke& Stroke)
                     
                     for (int32 i = 0; i < Points.Num() - 1; i++)
                     {
-                        Canvas->K2_DrawLine(Points[i], Points[i + 1], Stroke.Size, Stroke.Color);
+                        Canvas->K2_DrawLine(Points[i], Points[i + 1], Size, Color);
                     }
                 }
                 break;
-                
-            default:
-                // Not a shape tool, use freehand drawing
-                DrawFreehandInternal(Stroke);
-                break;
+        default:  Canvas->K2_DrawLine(StartPos, EndPos, Size, Color);
+            break;
         }
     }
     
     UKismetRenderingLibrary::EndDrawCanvasToRenderTarget(GetWorld(), Context);
+    
+    // Update The Material To Show Preview Figure
+    UpdateCanvasMaterial();
 }
 
-void AWhiteboardActor::DrawFreehandInternal(const FStroke& Stroke)
+// Clear Shape Preview
+void AWhiteboardActor::ClearShapePreview()
 {
-    UCanvas* Canvas = nullptr;
-    FVector2D CanvasSize;
-    FDrawToRenderTargetContext Context;
-    UKismetRenderingLibrary::BeginDrawCanvasToRenderTarget(GetWorld(), DrawingCanvas, Canvas, CanvasSize, Context);
-    
-    if (Canvas)
+    if (PreviewCanvas)
     {
-        if (Stroke.Points.Num() == 1)
-        {
-            // Single point - draw a dot
-            const FDrawingPoint& Point = Stroke.Points[0];
-            FLinearColor DrawColor = (Stroke.Tool == EDrawingTool::Eraser) ? FLinearColor::White : Stroke.Color;
-            
-            Canvas->K2_DrawLine(Point.Position, Point.Position, Stroke.Size, DrawColor);
-        }
-        else
-        {
-            // Multiple points - draw lines between them
-            for (int32 i = 0; i < Stroke.Points.Num() - 1; i++)
-            {
-                const FDrawingPoint& Point1 = Stroke.Points[i];
-                const FDrawingPoint& Point2 = Stroke.Points[i + 1];
-                
-                if (Stroke.Tool == EDrawingTool::Texture && Stroke.BrushTexture)
-                {
-                    // Draw textured line
-                    float Distance = FVector2D::Distance(Point1.Position, Point2.Position);
-                    FVector2D Direction = (Point2.Position - Point1.Position).GetSafeNormal();
-                    
-                    for (float t = 0; t < Distance; t += Stroke.Size * 0.5f)
-                    {
-                        FVector2D Pos = Point1.Position + Direction * t;
-                        
-                        Canvas->K2_DrawTexture(
-                            Stroke.BrushTexture,
-                            Pos - FVector2D(Stroke.Size / 2, Stroke.Size / 2),
-                            FVector2D(Stroke.Size, Stroke.Size),
-                            FVector2D::ZeroVector,
-                            FVector2D::UnitVector,
-                            Stroke.Color
-                        );
-                    }
-                }
-                else
-                {
-                    // Draw line
-                    FLinearColor LineColor = (Stroke.Tool == EDrawingTool::Eraser) ? FLinearColor::White : Stroke.Color;
-                    
-                    Canvas->K2_DrawLine(
-                        Point1.Position,
-                        Point2.Position,
-                        Stroke.Size,
-                        LineColor
-                    );
-                }
-            }
-        }
-    }
-    
-    UKismetRenderingLibrary::EndDrawCanvasToRenderTarget(GetWorld(), Context);
-}
-
-/*
-void AWhiteboardActor::ProcessDrawing(const FDrawingData& DrawingData)
-{
-    if (!HasAuthority() || !DrawingData.DrawingPlayer) return;
-    
-    UE_LOG(LogWDS, Warning, TEXT("ProcessDrawing: Player %s, Start: %d, End: %d"), 
-           *DrawingData.DrawingPlayer->GetName(), DrawingData.bIsStarting, DrawingData.bIsEnding);
-
-    // Update player state with what client sent
-    UpdatePlayerDrawingState(DrawingData.DrawingPlayer, DrawingData.ToolState);
-
-    if (DrawingData.bIsStarting)
-    {
-        // Start new stroke
-        if (bIsDrawing)
-        {
-            // End current stroke first
-            FDrawingData EndData = DrawingData;
-            EndData.bIsStarting = false;
-            EndData.bIsEnding = true;
-            ProcessDrawing(EndData);
-        }
-        
-        bIsDrawing = true;
-        CurrentStroke = FStroke();
-        CurrentStroke.StrokeID = DrawingData.StrokeID > 0 ? DrawingData.StrokeID : NextStrokeID++;
-        CurrentStroke.Tool = DrawingData.ToolState.CurrentTool;
-        CurrentStroke.Color = DrawingData.ToolState.CurrentColor;
-        CurrentStroke.Size = DrawingData.ToolState.BrushSize;
-        CurrentStroke.StartPosition = DrawingData.CanvasPosition;
-        CurrentStroke.EndPosition = DrawingData.CanvasPosition;
-        CurrentStroke.bIsComplete = false;
-        CurrentStroke.DrawingPlayer = DrawingData.DrawingPlayer;
-        
-        // Set textures
-        if (BrushTextures.IsValidIndex(DrawingData.ToolState.SelectedBrushTextureIndex))
-            CurrentStroke.BrushTexture = BrushTextures[DrawingData.ToolState.SelectedBrushTextureIndex];
-        if (FigureTextures.IsValidIndex(DrawingData.ToolState.SelectedFigureTextureIndex))
-            CurrentStroke.FigureTexture = FigureTextures[DrawingData.ToolState.SelectedFigureTextureIndex];
-        
-        // Add first point
-        FDrawingPoint Point(DrawingData.CanvasPosition, 1.0f, DrawingData.ToolState.CurrentColor, 
-                           DrawingData.ToolState.BrushSize, DrawingData.ToolState.CurrentTool, CurrentStroke.StrokeID);
-        CurrentStroke.Points.Add(Point);
-        
-        // Draw immediately
-        DrawStrokeInternal(CurrentStroke);
-    }
-    else if (DrawingData.bIsEnding)
-    {
-        // End current stroke
-        bIsDrawing = false;
-        CurrentStroke.bIsComplete = true;
-        CurrentStroke.EndPosition = DrawingData.CanvasPosition;
-        
-        // For shapes, ensure we have end point
-        if (IsShapeTool(CurrentStroke.Tool) && bIsDrawingShape)
-        {
-            bIsDrawingShape = false;
-            ClearShapePreview();
-            
-            if (CurrentStroke.Points.Num() == 1)
-            {
-                FDrawingPoint EndPoint(DrawingData.CanvasPosition, 1.0f, DrawingData.ToolState.CurrentColor, 
-                                      DrawingData.ToolState.BrushSize, DrawingData.ToolState.CurrentTool, CurrentStroke.StrokeID);
-                CurrentStroke.Points.Add(EndPoint);
-            }
-        }
-        
-        // Add to history
-        if (CurrentHistoryIndex < StrokeHistory.Num() - 1)
-        {
-            StrokeHistory.RemoveAt(CurrentHistoryIndex + 1, StrokeHistory.Num() - CurrentHistoryIndex - 1);
-        }
-        StrokeHistory.Add(CurrentStroke);
-        CurrentHistoryIndex = StrokeHistory.Num() - 1;
-        
-        // Draw final stroke
-        DrawStrokeInternal(CurrentStroke);
-    }
-    else
-    {
-        // Continue drawing
-        if (!bIsDrawing) return;
-        
-        CurrentStroke.EndPosition = DrawingData.CanvasPosition;
-        
-        if (IsShapeTool(CurrentStroke.Tool))
-        {
-            // Shape preview
-            if (bIsDrawingShape)
-            {
-                ClearShapePreview();
-                DrawShapePreview(CurrentStroke.StartPosition, CurrentStroke.EndPosition, 
-                               CurrentStroke.Tool, CurrentStroke.Color, CurrentStroke.Size);
-            }
-        }
-        else
-        {
-            // Add point for freehand
-            FDrawingPoint Point(DrawingData.CanvasPosition, 1.0f, DrawingData.ToolState.CurrentColor, 
-                               DrawingData.ToolState.BrushSize, DrawingData.ToolState.CurrentTool, CurrentStroke.StrokeID);
-            CurrentStroke.Points.Add(Point);
-            
-            // Draw new segment
-            if (CurrentStroke.Points.Num() >= 2)
-            {
-                DrawStrokeInternal(CurrentStroke);
-            }
-        }
-    }
-    
-    // REPLICATE TO ALL CLIENTS
-    Multicast_HandleDrawing(DrawingData);
-}
-
-void AWhiteboardActor::HandleDrawingLocally(const FDrawingData& DrawingData)
-{
-    if (GetLocalRole() == ROLE_Authority) return;
-    
-    UE_LOG(LogWDS, Warning, TEXT("HandleDrawingLocally: Player %s, Start: %d, End: %d"), 
-           DrawingData.DrawingPlayer ? *DrawingData.DrawingPlayer->GetName() : TEXT("None"), 
-           DrawingData.bIsStarting, DrawingData.bIsEnding);
-
-    // Update local player state
-    UpdatePlayerDrawingState(DrawingData.DrawingPlayer, DrawingData.ToolState);
-
-    if (DrawingData.bIsStarting)
-    {
-        bIsDrawing = true;
-        CurrentStroke = FStroke();
-        CurrentStroke.StrokeID = DrawingData.StrokeID > 0 ? DrawingData.StrokeID : -1; // -1 for prediction
-        CurrentStroke.Tool = DrawingData.ToolState.CurrentTool;
-        CurrentStroke.Color = DrawingData.ToolState.CurrentColor;
-        CurrentStroke.Size = DrawingData.ToolState.BrushSize;
-        CurrentStroke.StartPosition = DrawingData.CanvasPosition;
-        CurrentStroke.EndPosition = DrawingData.CanvasPosition;
-        CurrentStroke.bIsComplete = false;
-        CurrentStroke.DrawingPlayer = DrawingData.DrawingPlayer;
-        
-        FDrawingPoint Point(DrawingData.CanvasPosition, 1.0f, DrawingData.ToolState.CurrentColor, 
-                           DrawingData.ToolState.BrushSize, DrawingData.ToolState.CurrentTool, CurrentStroke.StrokeID);
-        CurrentStroke.Points.Add(Point);
-        
-        DrawStrokeInternal(CurrentStroke);
-    }
-    else if (DrawingData.bIsEnding)
-    {
-        bIsDrawing = false;
-        CurrentStroke.bIsComplete = true;
-        CurrentStroke.EndPosition = DrawingData.CanvasPosition;
-        
-        // For local player prediction, add to history temporarily
-        if (DrawingData.DrawingPlayer && DrawingData.DrawingPlayer->IsLocallyControlled())
-        {
-            if (CurrentHistoryIndex < StrokeHistory.Num() - 1)
-            {
-                StrokeHistory.RemoveAt(CurrentHistoryIndex + 1, StrokeHistory.Num() - CurrentHistoryIndex - 1);
-            }
-            StrokeHistory.Add(CurrentStroke);
-            CurrentHistoryIndex = StrokeHistory.Num() - 1;
-        }
-        
-        DrawStrokeInternal(CurrentStroke);
-        CurrentStroke = FStroke();
-    }
-    else
-    {
-        if (!bIsDrawing) return;
-        
-        CurrentStroke.EndPosition = DrawingData.CanvasPosition;
-        
-        if (!IsShapeTool(CurrentStroke.Tool))
-        {
-            FDrawingPoint Point(DrawingData.CanvasPosition, 1.0f, DrawingData.ToolState.CurrentColor, 
-                               DrawingData.ToolState.BrushSize, DrawingData.ToolState.CurrentTool, CurrentStroke.StrokeID);
-            CurrentStroke.Points.Add(Point);
-            
-            if (CurrentStroke.Points.Num() >= 2)
-            {
-                DrawStrokeInternal(CurrentStroke);
-            }
-        }
+        UKismetRenderingLibrary::ClearRenderTarget2D(GetWorld(), PreviewCanvas, FLinearColor::Transparent);
     }
 }
 
-*/
+////////////////////////////// DRAWING FIGURE ///////////////////////
+
 
 void AWhiteboardActor::SyncNewClient(APlayerController* NewClient)
 {
@@ -2426,7 +2091,8 @@ void AWhiteboardActor::SyncNewClient(APlayerController* NewClient)
     }
 }
 
-//////////////////////////////////////// Intaraction ///////////////////////////////////////
+
+//////////////////////////////////////// Interaction ///////////////////////////////////////
 
 // NEW: Request interaction through PlayerController
 void AWhiteboardActor::RequestInteraction(APawn* Player)
@@ -2654,30 +2320,26 @@ bool AWhiteboardActor::CanInteractLocally(APawn* Player) const
     return bInRange && bCanAcceptPlayer;
 }
 
-void AWhiteboardActor::OnRep_InteractingPawns() const
+void AWhiteboardActor::OnRep_InteractingPawns()
 {
-    // Handle interaction state changes on clients
-    UE_LOG(LogWDS, Warning, TEXT("OnRep_InteractingPawns - %d players interacting"), InteractingPawns.Num());
+    UE_LOG(LogWDS, Warning, TEXT("OnRep_InteractingPawns: %d players interacting"), InteractingPawns.Num());
+    
+    // Update local interaction state
+    APawn* LocalPlayer = GetDrawingPlayer();
+    if (LocalPlayer)
+    {
+        bCanInteract = InteractingPawns.Contains(LocalPlayer);
+    }
 }
 
 // Check If The Client Can Draw
 bool AWhiteboardActor::CanClientDraw() const
 {
-    if (GetLocalRole() == ROLE_Authority)
-    {
-        return true;
-    }
+    APawn* LocalPlayer = GetDrawingPlayer();
+    if (!LocalPlayer) return false;
     
-    // Check if local player is in the interacting players list
-    if (APlayerController* PC = GetWorld()->GetFirstPlayerController())
-    {
-        if (APawn* LocalPawn = PC->GetPawn())
-        {
-            return bCanInteract && InteractingPawns.Contains(LocalPawn);
-        }
-    }
-    
-    return false;
+    // Client can draw if they're interacting and whiteboard is initialized
+    return bIsInitialized && DrawingCanvas && IsPlayerInteracting(LocalPlayer);
 }   
 
 void AWhiteboardActor::RemoveInteractingPlayer(APawn* Player)
@@ -2738,7 +2400,6 @@ void AWhiteboardActor::OnTriggerEndOverlap(UPrimitiveComponent* OverlappedCompon
 }
 
 
-
 void AWhiteboardActor::SetupInteractionUI(APawn* InteractingPlayer)
 {
     // Only apply to the local player
@@ -2787,7 +2448,8 @@ void AWhiteboardActor::Client_CleanupInteractionUI_Implementation(APawn* Interac
 }
 
 
-//////////////////////////////////////// HELPER FUNCTIONS /////////////////////////////////////
+
+/////////////////////////// DRAWING CANVAS ///////////////////////////////////
 
 // Re-Draw Canvas
 void AWhiteboardActor::RedrawCanvas()
@@ -2802,14 +2464,12 @@ void AWhiteboardActor::RedrawCanvas()
     {
         if (StrokeHistory.IsValidIndex(i))
         {
-            DrawStrokeInternal(StrokeHistory[i]);
+            DrawStroke(StrokeHistory[i]);
         }
     }
     
     // Update material
     UpdateCanvasMaterial();
-    
-    UE_LOG(LogWDS, Warning, TEXT("RedrawCanvas: Redrew %d strokes"), CurrentHistoryIndex + 1);
 }
 
 // Update Canvas Materials
@@ -2892,7 +2552,6 @@ UTexture2D* AWhiteboardActor::RenderTargetToTexture2D(UTextureRenderTarget2D* Re
     
     return Texture;
 }
-
 
 // Generate SVG From Stocks
 void AWhiteboardActor::GenerateSVGFromStrokes(const FString& FilePath)
@@ -3039,4 +2698,184 @@ void AWhiteboardActor::DebugPlayerToolState(APawn* Player)
    // UE_LOG(LogWDS, Warning, TEXT("Current Color: %s"), *State.CurrentColor.ToString());
    // UE_LOG(LogWDS, Warning, TEXT("Brush Size: %f"), State.BrushSize);
     UE_LOG(LogWDS, Warning, TEXT("=============================="));
+}
+
+bool AWhiteboardActor::BeginCanvasDraw(UCanvas*& OutCanvas, FVector2D& OutCanvasSize,
+                                       FDrawToRenderTargetContext& OutContext, UTextureRenderTarget2D* RenderTarget)
+{
+    if (!RenderTarget)
+    {
+        return false;
+    }
+
+    if (!GetWorld())
+    {
+        return false;
+    }
+
+    UKismetRenderingLibrary::BeginDrawCanvasToRenderTarget(GetWorld(), RenderTarget, OutCanvas, OutCanvasSize, OutContext);
+    
+    if (!OutCanvas)
+    {
+        return false;
+    }
+
+    return true;
+}
+
+void AWhiteboardActor::EndCanvasDraw(const FDrawToRenderTargetContext& Context)
+{
+    if (GetWorld())
+    {
+        UKismetRenderingLibrary::EndDrawCanvasToRenderTarget(GetWorld(), Context);
+    }
+}
+
+void AWhiteboardActor::DrawTextStroke(const FStroke& Stroke)
+{
+    if (Stroke.TextContent.IsEmpty() || Stroke.Points.Num() == 0)
+    {
+        return;
+    }
+
+    UCanvas* Canvas = nullptr;
+    FVector2D CanvasSize;
+    FDrawToRenderTargetContext Context;
+    
+    if (!BeginCanvasDraw(Canvas, CanvasSize, Context, DrawingCanvas))
+    {
+        return;
+    }
+
+    UFont* Font = GEngine->GetSmallFont();
+    float TextScale = FMath::Max(Stroke.Size / 10.0f, 0.5f);
+    
+    Canvas->K2_DrawText(
+        Font, 
+        Stroke.TextContent,
+        Stroke.Points[0].Position, 
+        FVector2D(TextScale, TextScale), 
+        Stroke.Color, 
+        1.0f, 
+        FLinearColor::Black, 
+        FVector2D::ZeroVector, 
+        true, true, true, 
+        FLinearColor(0, 0, 0, 0)
+    );
+    
+    EndCanvasDraw(Context);
+}
+
+void AWhiteboardActor::DrawFigureStroke(const FStroke& Stroke)
+{
+    if (!Stroke.FigureTexture || Stroke.Points.Num() == 0)
+    {
+        return;
+    }
+
+    UCanvas* Canvas = nullptr;
+    FVector2D CanvasSize;
+    FDrawToRenderTargetContext Context;
+    
+    if (!BeginCanvasDraw(Canvas, CanvasSize, Context, DrawingCanvas))
+    {
+        return;
+    }
+
+    FVector2D DrawPosition = Stroke.Points[0].Position - FVector2D(Stroke.Size / 2, Stroke.Size / 2);
+    FVector2D DrawSize = FVector2D(Stroke.Size * 5, Stroke.Size * 5);
+    
+    Canvas->K2_DrawTexture(
+        Stroke.FigureTexture,
+        DrawPosition,
+        DrawSize,
+        FVector2D::ZeroVector,
+        FVector2D::UnitVector,
+        Stroke.Color
+    );
+    
+    EndCanvasDraw(Context);
+}
+
+void AWhiteboardActor::DrawFreehandStroke(const FStroke& Stroke)
+{
+    if (Stroke.Points.Num() == 0)
+    {
+        return;
+    }
+
+    UCanvas* Canvas = nullptr;
+    FVector2D CanvasSize;
+    FDrawToRenderTargetContext Context;
+    
+    if (!BeginCanvasDraw(Canvas, CanvasSize, Context, DrawingCanvas))
+    {
+        return;
+    }
+
+    if (Stroke.Points.Num() == 1)
+    {
+        // Single point - draw a dot
+        const FDrawingPoint& Point = Stroke.Points[0];
+        FLinearColor DrawColor = (Stroke.Tool == EDrawingTool::Eraser) ? FLinearColor::White : Stroke.Color;
+        
+        Canvas->K2_DrawLine(Point.Position, Point.Position, Stroke.Size, DrawColor);
+    }
+    else
+    {
+        // Multiple points - draw lines between them
+        for (int32 i = 0; i < Stroke.Points.Num() - 1; i++)
+        {
+            const FDrawingPoint& Point1 = Stroke.Points[i];
+            const FDrawingPoint& Point2 = Stroke.Points[i + 1];
+            
+            if (Stroke.Tool == EDrawingTool::Texture && Stroke.BrushTexture)
+            {
+                // Draw textured line
+                DrawTexturedLine(Canvas, Point1, Point2, Stroke);
+            }
+            else
+            {
+                // Draw solid line
+                FLinearColor LineColor = (Stroke.Tool == EDrawingTool::Eraser) ? FLinearColor::White : Stroke.Color;
+                
+                Canvas->K2_DrawLine(
+                    Point1.Position,
+                    Point2.Position,
+                    Stroke.Size,
+                    LineColor
+                );
+            }
+        }
+    }
+    
+    EndCanvasDraw(Context);
+}
+
+void AWhiteboardActor::DrawTexturedLine(UCanvas* Canvas, const FDrawingPoint& Point1, const FDrawingPoint& Point2,
+    const FStroke& Stroke)
+{
+    if (!Canvas || !Stroke.BrushTexture)
+    {
+        return;
+    }
+
+    float Distance = FVector2D::Distance(Point1.Position, Point2.Position);
+    FVector2D Direction = (Point2.Position - Point1.Position).GetSafeNormal();
+    float StepSize = FMath::Max(Stroke.Size * 0.5f, 1.0f);
+    
+    for (float t = 0; t < Distance; t += StepSize)
+    {
+        FVector2D Pos = Point1.Position + Direction * t;
+        
+        Canvas->K2_DrawTexture(
+            Stroke.BrushTexture,
+            Pos - FVector2D(Stroke.Size / 2, Stroke.Size / 2),
+            FVector2D(Stroke.Size, Stroke.Size),
+            FVector2D::ZeroVector,
+            FVector2D::UnitVector,
+            Stroke.Color
+        );
+    }
+    
 }

@@ -1,8 +1,13 @@
 {
 	"RemapUnityFiles": 
 	{
-		"Module.AdvancedDrawingBoard.cpp.obj": [
+		"Module.AdvancedDrawingBoard.1.cpp.obj": [
+			"AdvancedDrawingBoard.init.gen.cpp.obj",
+			"AWhiteboard_Player_Controller.gen.cpp.obj",
 			"UI_ImportFile.gen.cpp.obj",
+			"WhiteboardActor.gen.cpp.obj"
+		],
+		"Module.AdvancedDrawingBoard.2.cpp.obj": [
 			"WhiteboardInteractionComponent.gen.cpp.obj",
 			"WhiteboardUI.gen.cpp.obj",
 			"Whiteboard_Types.gen.cpp.obj",
@@ -10,9 +15,6 @@
 			"AdvancedDrawingBoard.cpp.obj",
 			"UI_ImportFile.cpp.obj",
 			"WhiteboardUI.cpp.obj",
-			"AdvancedDrawingBoard.init.gen.cpp.obj",
-			"AWhiteboard_Player_Controller.gen.cpp.obj",
-			"WhiteboardActor.gen.cpp.obj",
 			"WhiteboardActor.cpp.obj",
 			"WhiteboardInteractionComponent.cpp.obj",
 			"AWhiteboard_Player_Controller.cpp.obj"

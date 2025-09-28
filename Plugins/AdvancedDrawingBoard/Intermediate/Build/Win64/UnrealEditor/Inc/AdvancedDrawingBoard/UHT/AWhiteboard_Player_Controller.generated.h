@@ -20,17 +20,18 @@ class APawn;
 class AWhiteboardActor;
 enum class EDrawingTool : uint8;
 struct FLinearColor;
+struct FPlayerDrawingState;
 
 // ********** Begin Class AWhiteboardController ****************************************************
 #define FID_SPARKELON_2025_Prototype_2025_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Controller_AWhiteboard_Player_Controller_h_19_RPC_WRAPPERS_NO_PURE_DECLS \
 	virtual void Server_WhiteboardRedo_Implementation(AWhiteboardActor* Whiteboard); \
 	virtual void Server_WhiteboardUndo_Implementation(AWhiteboardActor* Whiteboard); \
 	virtual void Server_WhiteboardClearWhiteboard_Implementation(AWhiteboardActor* Whiteboard); \
-	virtual void Server_WhiteboardDrawFigure_Implementation(AWhiteboardActor* Whiteboard, FVector2D const& CanvasPosition, int32 SelectedFigureIndex, FLinearColor Color, float Size); \
+	virtual void Server_WhiteboardDrawFigure_Implementation(AWhiteboardActor* Whiteboard, FVector2D const& CanvasPosition, FPlayerDrawingState const& PlayerToolState); \
 	virtual void Server_WhiteboardAddText_Implementation(AWhiteboardActor* Whiteboard, FVector2D const& CanvasPosition, const FString& Text, FLinearColor Color, float Size); \
 	virtual void Server_WhiteboardEndDrawing_Implementation(APawn* DrawingPlayer, AWhiteboardActor* Whiteboard); \
-	virtual void Server_WhiteboardContinueDrawing_Implementation(APawn* DrawingPlayer, AWhiteboardActor* Whiteboard); \
-	virtual void Server_WhiteboardStartDrawing_Implementation(APawn* DrawingPlayer, AWhiteboardActor* Whiteboard); \
+	virtual void Server_WhiteboardUpdateDrawing_Implementation(APawn* DrawingPlayer, AWhiteboardActor* Whiteboard, FVector2D const& CanvasPosition); \
+	virtual void Server_WhiteboardStartDrawing_Implementation(APawn* DrawingPlayer, AWhiteboardActor* Whiteboard, FVector2D const& CanvasPosition); \
 	virtual void Server_UpdatePlayerToolState_Implementation(AWhiteboardActor* Whiteboard, EDrawingTool Tool, FLinearColor Color, float Size, int32 BrushTextureIndex, int32 FigureTextureIndex); \
 	virtual void Server_EndWhiteboardInteraction_Implementation(AWhiteboardActor* Whiteboard, APawn* InteractingPlayer); \
 	virtual void Server_RequestWhiteboardInteraction_Implementation(AWhiteboardActor* Whiteboard, APawn* InteractingPlayer); \
@@ -41,7 +42,7 @@ struct FLinearColor;
 	DECLARE_FUNCTION(execServer_WhiteboardDrawFigure); \
 	DECLARE_FUNCTION(execServer_WhiteboardAddText); \
 	DECLARE_FUNCTION(execServer_WhiteboardEndDrawing); \
-	DECLARE_FUNCTION(execServer_WhiteboardContinueDrawing); \
+	DECLARE_FUNCTION(execServer_WhiteboardUpdateDrawing); \
 	DECLARE_FUNCTION(execServer_WhiteboardStartDrawing); \
 	DECLARE_FUNCTION(execServer_UpdatePlayerToolState); \
 	DECLARE_FUNCTION(execServer_EndWhiteboardInteraction); \

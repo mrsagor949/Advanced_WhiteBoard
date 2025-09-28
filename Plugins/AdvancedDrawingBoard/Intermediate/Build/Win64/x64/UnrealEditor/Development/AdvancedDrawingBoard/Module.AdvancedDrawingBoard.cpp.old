@@ -6,4 +6,3 @@
 #include "E:/SPARKELON-2025/Prototype/2025/Advanced_WhiteBoard/Plugins/AdvancedDrawingBoard/Intermediate/Build/Win64/x64/UnrealEditor/Development/AdvancedDrawingBoard/PerModuleInline.gen.cpp"
 #include "E:/SPARKELON-2025/Prototype/2025/Advanced_WhiteBoard/Plugins/AdvancedDrawingBoard/Source/AdvancedDrawingBoard/Private/AdvancedDrawingBoard.cpp"
 #include "E:/SPARKELON-2025/Prototype/2025/Advanced_WhiteBoard/Plugins/AdvancedDrawingBoard/Source/AdvancedDrawingBoard/Private/UI/UI_ImportFile.cpp"
-#include "E:/SPARKELON-2025/Prototype/2025/Advanced_WhiteBoard/Plugins/AdvancedDrawingBoard/Source/AdvancedDrawingBoard/Private/UI/WhiteboardUI.cpp"

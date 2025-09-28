@@ -112,7 +112,7 @@ void UWhiteboardInteractionComponent::StartDrawingInput()
         LastDrawingPosition = CanvasPosition;
         // Use the client-specific drawing function
         
-        TargetWhiteboard->StartDrawing(OwnerPawn, CanvasPosition);
+        TargetWhiteboard->PlayerStartDrawing(CanvasPosition);
     }
     
 }
@@ -131,7 +131,7 @@ void UWhiteboardInteractionComponent::ContinueDrawing()
         // Only continue drawing if the position has changed significantly
         if (!bHasValidLastPosition || FVector2D::Distance(LastDrawingPosition, CanvasPosition) > 2.0f)
         {
-            TargetWhiteboard->ContinueDrawing(CanvasPosition);
+            TargetWhiteboard->PlayerUpdateDrawing(CanvasPosition);
             LastDrawingPosition = CanvasPosition;
             bHasValidLastPosition = true;
         }
@@ -149,7 +149,7 @@ void UWhiteboardInteractionComponent::StopDrawingInput()
         bHasValidLastPosition = false;
         
         // Use the client-specific drawing function
-        TargetWhiteboard->EndDrawing();
+        TargetWhiteboard->PlayerEndDrawing();
     }
 }
 
