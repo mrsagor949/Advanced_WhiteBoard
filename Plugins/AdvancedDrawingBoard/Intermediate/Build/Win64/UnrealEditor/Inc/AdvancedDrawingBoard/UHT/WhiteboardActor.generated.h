@@ -45,10 +45,10 @@ struct FStroke;
 	virtual void Server_DrawFigure_Implementation(FVector2D const& CanvasPosition, FPlayerDrawingState const& PlayerToolState); \
 	virtual void Multicast_EndDrawing_Implementation(APawn* DrawingPlayer, FStroke const& CompletedStroke); \
 	virtual void Server_EndDrawing_Implementation(APawn* DrawingPlayer); \
-	virtual void Multicast_UpdateDrawing_Implementation(APawn* DrawingPlayer, FVector2D const& CanvasPosition, int32 StrokeID); \
-	virtual void Server_UpdateDrawing_Implementation(APawn* DrawingPlayer, FVector2D const& CanvasPosition); \
-	virtual void Multicast_StartDrawing_Implementation(APawn* DrawingPlayer, FVector2D const& CanvasPosition, int32 StrokeID); \
-	virtual void Server_StartDrawing_Implementation(APawn* DrawingPlayer, FVector2D const& CanvasPosition); \
+	virtual void Multicast_UpdateDrawing_Implementation(APawn* DrawingPlayer, FVector2D const& CanvasPosition, int32 StrokeID, EDrawingTool Tool, FLinearColor Color, float BrushSize); \
+	virtual void Server_UpdateDrawing_Implementation(APawn* DrawingPlayer, FVector2D const& CanvasPosition, EDrawingTool Tool, FLinearColor Color, float BrushSize); \
+	virtual void Multicast_StartDrawing_Implementation(APawn* DrawingPlayer, FVector2D const& CanvasPosition, int32 StrokeID, EDrawingTool Tool, FLinearColor Color, float BrushSize, int32 BrushTextureIndex, int32 FigureTextureIndex); \
+	virtual void Server_StartDrawing_Implementation(APawn* DrawingPlayer, FVector2D const& CanvasPosition, EDrawingTool Tool, FLinearColor Color, float BrushSize, int32 BrushTextureIndex, int32 FigureTextureIndex); \
 	virtual void Multicast_UpdatePlayerToolState_Implementation(APawn* Player, FPlayerDrawingState const& NewState); \
 	virtual void Server_UpdatePlayerDrawingState_Implementation(APawn* Player, FPlayerDrawingState const& NewState); \
 	virtual void Multicast_ForceClientInitialization_Implementation(); \

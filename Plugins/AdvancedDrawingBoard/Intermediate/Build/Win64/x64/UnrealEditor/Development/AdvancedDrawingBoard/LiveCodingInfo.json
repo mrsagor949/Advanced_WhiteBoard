@@ -13,10 +13,10 @@
 			"Whiteboard_Types.gen.cpp.obj",
 			"PerModuleInline.gen.cpp.obj",
 			"AdvancedDrawingBoard.cpp.obj",
+			"WhiteboardInteractionComponent.cpp.obj",
 			"UI_ImportFile.cpp.obj",
 			"WhiteboardUI.cpp.obj",
 			"WhiteboardActor.cpp.obj",
-			"WhiteboardInteractionComponent.cpp.obj",
 			"AWhiteboard_Player_Controller.cpp.obj"
 		]
 	}

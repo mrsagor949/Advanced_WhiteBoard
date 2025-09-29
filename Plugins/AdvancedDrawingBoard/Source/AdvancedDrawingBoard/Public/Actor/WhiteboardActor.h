@@ -213,11 +213,15 @@ public:
     
     // Server RPC functions for network replication
     UFUNCTION(Server, Reliable)
-    void Server_StartDrawing(APawn* DrawingPlayer,const FVector2D& CanvasPosition);
+    void Server_StartDrawing(APawn* DrawingPlayer, const FVector2D& CanvasPosition, 
+                        EDrawingTool Tool, FLinearColor Color, float BrushSize, 
+                        int32 BrushTextureIndex, int32 FigureTextureIndex);
     
     // Multicast functions to update all clients
     UFUNCTION(NetMulticast, Reliable)
-    void Multicast_StartDrawing(APawn* DrawingPlayer,const FVector2D& CanvasPosition, int32 StrokeID);
+    void Multicast_StartDrawing(APawn* DrawingPlayer, const FVector2D& CanvasPosition, 
+                           int32 StrokeID, EDrawingTool Tool, FLinearColor Color, 
+                           float BrushSize, int32 BrushTextureIndex, int32 FigureTextureIndex);
 
     
     ///////////////////////////////// UPDATE DRAWING ////////////////////////////////////
@@ -226,10 +230,12 @@ public:
     void PlayerUpdateDrawing(const FVector2D& CanvasPosition);
     
     UFUNCTION(Server, Reliable)
-    void Server_UpdateDrawing(APawn* DrawingPlayer,const FVector2D& CanvasPosition);
+    void Server_UpdateDrawing(APawn* DrawingPlayer, const FVector2D& CanvasPosition, 
+                         EDrawingTool Tool, FLinearColor Color, float BrushSize);
 
     UFUNCTION(NetMulticast, Reliable)
-    void Multicast_UpdateDrawing(APawn* DrawingPlayer,const FVector2D& CanvasPosition, int32 StrokeID);
+    void Multicast_UpdateDrawing(APawn* DrawingPlayer, const FVector2D& CanvasPosition, 
+                            int32 StrokeID, EDrawingTool Tool, FLinearColor Color, float BrushSize);
 
     
     ///////////////////////////////// END DRAWING ////////////////////////////////////

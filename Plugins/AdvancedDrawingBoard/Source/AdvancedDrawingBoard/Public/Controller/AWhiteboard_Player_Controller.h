@@ -51,10 +51,15 @@ public:
     
     // Drawing RPCs - Route through PlayerController
     UFUNCTION(Server, Reliable)
-    void Server_WhiteboardStartDrawing(APawn* DrawingPlayer, AWhiteboardActor* Whiteboard, const FVector2D& CanvasPosition);
-
+    void Server_WhiteboardStartDrawing(APawn* DrawingPlayer, AWhiteboardActor* Whiteboard, 
+                                      const FVector2D& CanvasPosition, EDrawingTool Tool, 
+                                      FLinearColor Color, float BrushSize, int32 BrushTextureIndex, 
+                                      int32 FigureTextureIndex);
+    
     UFUNCTION(Server, Reliable)
-    void Server_WhiteboardUpdateDrawing(APawn* DrawingPlayer, AWhiteboardActor* Whiteboard, const FVector2D& CanvasPosition);
+    void Server_WhiteboardUpdateDrawing(APawn* DrawingPlayer, AWhiteboardActor* Whiteboard, 
+                                   const FVector2D& CanvasPosition, EDrawingTool Tool, 
+                                   FLinearColor Color, float BrushSize);
 
     UFUNCTION(Server, Reliable)
     void Server_WhiteboardEndDrawing(APawn* DrawingPlayer,AWhiteboardActor* Whiteboard);

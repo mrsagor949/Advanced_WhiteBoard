@@ -30,8 +30,8 @@ struct FPlayerDrawingState;
 	virtual void Server_WhiteboardDrawFigure_Implementation(AWhiteboardActor* Whiteboard, FVector2D const& CanvasPosition, FPlayerDrawingState const& PlayerToolState); \
 	virtual void Server_WhiteboardAddText_Implementation(AWhiteboardActor* Whiteboard, FVector2D const& CanvasPosition, const FString& Text, FLinearColor Color, float Size); \
 	virtual void Server_WhiteboardEndDrawing_Implementation(APawn* DrawingPlayer, AWhiteboardActor* Whiteboard); \
-	virtual void Server_WhiteboardUpdateDrawing_Implementation(APawn* DrawingPlayer, AWhiteboardActor* Whiteboard, FVector2D const& CanvasPosition); \
-	virtual void Server_WhiteboardStartDrawing_Implementation(APawn* DrawingPlayer, AWhiteboardActor* Whiteboard, FVector2D const& CanvasPosition); \
+	virtual void Server_WhiteboardUpdateDrawing_Implementation(APawn* DrawingPlayer, AWhiteboardActor* Whiteboard, FVector2D const& CanvasPosition, EDrawingTool Tool, FLinearColor Color, float BrushSize); \
+	virtual void Server_WhiteboardStartDrawing_Implementation(APawn* DrawingPlayer, AWhiteboardActor* Whiteboard, FVector2D const& CanvasPosition, EDrawingTool Tool, FLinearColor Color, float BrushSize, int32 BrushTextureIndex, int32 FigureTextureIndex); \
 	virtual void Server_UpdatePlayerToolState_Implementation(AWhiteboardActor* Whiteboard, EDrawingTool Tool, FLinearColor Color, float Size, int32 BrushTextureIndex, int32 FigureTextureIndex); \
 	virtual void Server_EndWhiteboardInteraction_Implementation(AWhiteboardActor* Whiteboard, APawn* InteractingPlayer); \
 	virtual void Server_RequestWhiteboardInteraction_Implementation(AWhiteboardActor* Whiteboard, APawn* InteractingPlayer); \

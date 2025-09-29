@@ -7,6 +7,7 @@
 #include "E:/SPARKELON-2025/Prototype/2025/Advanced_WhiteBoard/Plugins/AdvancedDrawingBoard/Intermediate/Build/Win64/UnrealEditor/Inc/AdvancedDrawingBoard/UHT/WhiteboardUI.gen.cpp"
 #include "E:/SPARKELON-2025/Prototype/2025/Advanced_WhiteBoard/Plugins/AdvancedDrawingBoard/Intermediate/Build/Win64/UnrealEditor/Inc/AdvancedDrawingBoard/UHT/Whiteboard_Types.gen.cpp"
 #include "E:/SPARKELON-2025/Prototype/2025/Advanced_WhiteBoard/Plugins/AdvancedDrawingBoard/Intermediate/Build/Win64/x64/UnrealEditor/Development/AdvancedDrawingBoard/PerModuleInline.gen.cpp"
+#include "E:/SPARKELON-2025/Prototype/2025/Advanced_WhiteBoard/Plugins/AdvancedDrawingBoard/Source/AdvancedDrawingBoard/Private/Actor/WhiteboardActor.cpp"
 #include "E:/SPARKELON-2025/Prototype/2025/Advanced_WhiteBoard/Plugins/AdvancedDrawingBoard/Source/AdvancedDrawingBoard/Private/AdvancedDrawingBoard.cpp"
 #include "E:/SPARKELON-2025/Prototype/2025/Advanced_WhiteBoard/Plugins/AdvancedDrawingBoard/Source/AdvancedDrawingBoard/Private/Components/WhiteboardInteractionComponent.cpp"
 #include "E:/SPARKELON-2025/Prototype/2025/Advanced_WhiteBoard/Plugins/AdvancedDrawingBoard/Source/AdvancedDrawingBoard/Private/Controller/AWhiteboard_Player_Controller.cpp"

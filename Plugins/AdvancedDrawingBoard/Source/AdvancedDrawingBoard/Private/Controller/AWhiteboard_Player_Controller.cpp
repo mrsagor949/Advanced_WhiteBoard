@@ -41,24 +41,31 @@ void AWhiteboardController::Server_EndWhiteboardInteraction_Implementation(AWhit
 
 
 // SERVER START DRAWING FROM PC
-void AWhiteboardController::Server_WhiteboardStartDrawing_Implementation(APawn* DrawingPlayer, AWhiteboardActor* Whiteboard, const FVector2D& CanvasPosition)
+void AWhiteboardController::Server_WhiteboardStartDrawing_Implementation(APawn* DrawingPlayer, AWhiteboardActor* Whiteboard, 
+                                      const FVector2D& CanvasPosition, EDrawingTool Tool, 
+                                      FLinearColor Color, float BrushSize, int32 BrushTextureIndex, 
+                                      int32 FigureTextureIndex)
 {
     if (Whiteboard)
     {
-        Whiteboard->Server_StartDrawing(DrawingPlayer, CanvasPosition);
+        Whiteboard->Server_StartDrawing(DrawingPlayer, CanvasPosition,Tool,Color,BrushSize,BrushTextureIndex,FigureTextureIndex);
     }
 }
 
+
 // SERVER UPDATE DRAWING FROM PC
-void AWhiteboardController::Server_WhiteboardUpdateDrawing_Implementation(APawn* DrawingPlayer, AWhiteboardActor* Whiteboard, const FVector2D& CanvasPosition)
+void AWhiteboardController::Server_WhiteboardUpdateDrawing_Implementation(APawn* DrawingPlayer, AWhiteboardActor* Whiteboard, 
+                                   const FVector2D& CanvasPosition, EDrawingTool Tool, 
+                                   FLinearColor Color, float BrushSize)
 {
 
     if (Whiteboard)
     {
-        Whiteboard->Server_UpdateDrawing(DrawingPlayer, CanvasPosition);
+        Whiteboard->Server_UpdateDrawing(DrawingPlayer, CanvasPosition,Tool,Color,BrushSize);
     }
     
 }
+
 
 void AWhiteboardController::Server_WhiteboardEndDrawing_Implementation(APawn* DrawingPlayer, AWhiteboardActor* Whiteboard)
 {
