@@ -22,6 +22,7 @@ class APlayerController;
 class UCameraComponent;
 class UPrimitiveComponent;
 class UStaticMeshComponent;
+class UTexture2D;
 enum class EDrawingTool : uint8;
 struct FHitResult;
 struct FLinearColor;
@@ -34,7 +35,6 @@ struct FStroke;
 	virtual void Client_CleanupInteractionUI_Implementation(APawn* InteractingPlayer); \
 	virtual void Client_SetupInteractionUI_Implementation(APawn* InteractingPlayer); \
 	virtual void Client_SyncWhiteboardState_Implementation(TArray<FStroke> const& History, int32 HistoryIndex); \
-	virtual void Multicast_UpdateShapePreview_Implementation(APawn* DrawingPlayer, FVector2D const& StartPos, FVector2D const& EndPos, EDrawingTool Tool, FLinearColor Color, float Size, int32 StrokeID); \
 	virtual void Multicast_SyncWhiteboardState_Implementation(TArray<FStroke> const& History, int32 HistoryIndex); \
 	virtual void Multicast_UpdateHistory_Implementation(TArray<FStroke> const& NewHistory, int32 NewHistoryIndex); \
 	virtual void Multicast_ClearWhiteboard_Implementation(); \
@@ -42,7 +42,8 @@ struct FStroke;
 	virtual void Server_Redo_Implementation(); \
 	virtual void Server_Undo_Implementation(); \
 	virtual void Server_ClearWhiteboard_Implementation(); \
-	virtual void Server_DrawFigure_Implementation(FVector2D const& CanvasPosition, FPlayerDrawingState const& PlayerToolState); \
+	virtual void Multicast_DrawCompletedStroke_Implementation(FStroke const& CompletedStroke); \
+	virtual void Server_DrawImmediateStroke_Implementation(APawn* DrawingPlayer, FStroke const& ImmediateStroke); \
 	virtual void Multicast_EndDrawing_Implementation(APawn* DrawingPlayer, FStroke const& CompletedStroke); \
 	virtual void Server_EndDrawing_Implementation(APawn* DrawingPlayer); \
 	virtual void Multicast_UpdateDrawing_Implementation(APawn* DrawingPlayer, FVector2D const& CanvasPosition, int32 StrokeID, EDrawingTool Tool, FLinearColor Color, float BrushSize); \
@@ -54,6 +55,8 @@ struct FStroke;
 	virtual void Multicast_ForceClientInitialization_Implementation(); \
 	virtual void Server_RequestCanvasInitialization_Implementation(); \
 	virtual void Client_InitializeCanvases_Implementation(); \
+	DECLARE_FUNCTION(execGetCenteredCanvasPosition); \
+	DECLARE_FUNCTION(execCalculateDrawingCenterOffset); \
 	DECLARE_FUNCTION(execMulticast_DrawStroke); \
 	DECLARE_FUNCTION(execOnRep_InteractingPawns); \
 	DECLARE_FUNCTION(execOnRep_StrokeHistory); \
@@ -84,7 +87,6 @@ struct FStroke;
 	DECLARE_FUNCTION(execEndInteractionForPlayer); \
 	DECLARE_FUNCTION(execEndInteraction); \
 	DECLARE_FUNCTION(execStartInteraction); \
-	DECLARE_FUNCTION(execMulticast_UpdateShapePreview); \
 	DECLARE_FUNCTION(execMulticast_SyncWhiteboardState); \
 	DECLARE_FUNCTION(execMulticast_UpdateHistory); \
 	DECLARE_FUNCTION(execMulticast_ClearWhiteboard); \
@@ -92,8 +94,9 @@ struct FStroke;
 	DECLARE_FUNCTION(execServer_Redo); \
 	DECLARE_FUNCTION(execServer_Undo); \
 	DECLARE_FUNCTION(execServer_ClearWhiteboard); \
-	DECLARE_FUNCTION(execServer_DrawFigure); \
-	DECLARE_FUNCTION(execDrawFigure); \
+	DECLARE_FUNCTION(execMulticast_DrawCompletedStroke); \
+	DECLARE_FUNCTION(execServer_DrawImmediateStroke); \
+	DECLARE_FUNCTION(execCreateAndCompleteStroke); \
 	DECLARE_FUNCTION(execMulticast_EndDrawing); \
 	DECLARE_FUNCTION(execServer_EndDrawing); \
 	DECLARE_FUNCTION(execPlayerEndDrawing); \

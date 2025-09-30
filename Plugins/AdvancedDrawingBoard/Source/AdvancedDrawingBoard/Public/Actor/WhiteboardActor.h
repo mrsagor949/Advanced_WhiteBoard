@@ -33,6 +33,7 @@ public:
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
     UCameraComponent* WhiteboardCamera;
+    
     //////////////////////////////////////////////////////////////////////////////
     //////////////////////////// Initialize Whiteboard ///////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
@@ -255,18 +256,13 @@ public:
   //  void AddText(const FVector2D& CanvasPosition, const FString& Text);
 
     UFUNCTION(BlueprintCallable, Category = "Whiteboard")
-    void DrawFigure(const FVector2D& CanvasPosition, const int32 SelectedFigureIndex);
-    
-
-    /*
-
-    UFUNCTION(Server, Reliable)
-    void Server_AddText(const FVector2D& CanvasPosition, const FString& Text, FLinearColor Color, float Size);
-
-    */
+    void CreateAndCompleteStroke(APawn* DrawingPlayer, const FVector2D& CanvasPosition, const FPlayerDrawingState& PlayerState);
     
     UFUNCTION(Server, Reliable)
-    void Server_DrawFigure(const FVector2D& CanvasPosition, const FPlayerDrawingState& PlayerToolState);
+    void Server_DrawImmediateStroke(APawn* DrawingPlayer, const FStroke& ImmediateStroke);
+
+    UFUNCTION(NetMulticast, Reliable)
+    void Multicast_DrawCompletedStroke(const FStroke& CompletedStroke);
 
     UFUNCTION(Server, Reliable)
     void Server_ClearWhiteboard();
@@ -288,11 +284,7 @@ public:
 
     UFUNCTION(NetMulticast, Reliable)
     void Multicast_SyncWhiteboardState(const TArray<FStroke>& History, int32 HistoryIndex);
-
-    // NEW: Shape preview functions
-    UFUNCTION(NetMulticast, Reliable)
-    void Multicast_UpdateShapePreview(APawn* DrawingPlayer, const FVector2D& StartPos, const FVector2D& EndPos, EDrawingTool Tool, FLinearColor Color, float Size, int32 StrokeID);
-
+    
     // FIXED: Interaction Functions - Updated for new networking approach
     UFUNCTION(BlueprintCallable, Category = "Whiteboard")
     void StartInteraction(APawn* Player);
@@ -487,4 +479,10 @@ private:
 
     // Internal helper
     APawn* GetDrawingPlayer() const;
+
+    UFUNCTION()
+    FVector2D CalculateDrawingCenterOffset(EDrawingTool Tool, float BrushSize, UTexture2D* BrushTexture, UTexture2D* FigureTexture);
+
+    UFUNCTION()
+    FVector2D GetCenteredCanvasPosition(const FVector2D& RawCanvasPosition, EDrawingTool Tool, float BrushSize, UTexture2D* BrushTexture, UTexture2D* FigureTexture);
 };

@@ -64,6 +64,10 @@ public:
     UFUNCTION(Server, Reliable)
     void Server_WhiteboardEndDrawing(APawn* DrawingPlayer,AWhiteboardActor* Whiteboard);
 
+    // Add to AWhiteboardController class declaration  
+    UFUNCTION(Server, Reliable)
+    void Server_WhiteboardDrawImmediateStroke(APawn* DrawingPlayer, AWhiteboardActor* Whiteboard, const FStroke& ImmediateStroke);
+    
     UFUNCTION(Server, Reliable)
     void Server_WhiteboardAddText(AWhiteboardActor* Whiteboard, const FVector2D& CanvasPosition, const FString& Text, FLinearColor Color, float Size);
 

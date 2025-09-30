@@ -109,7 +109,6 @@ void AWhiteboardActor::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 }
 
 /////////////////////////////////////INITIALIZE THE WHITEBOARD /////////////////////////////////
-
 void AWhiteboardActor::InitializeWhiteboard()
 {
     
@@ -151,7 +150,6 @@ void AWhiteboardActor::Server_RequestCanvasInitialization_Implementation()
         Multicast_ForceClientInitialization();
     }
 }
-
 
 // Client Initialize Canvas
 void AWhiteboardActor::Client_InitializeCanvases_Implementation()
@@ -319,13 +317,11 @@ void AWhiteboardActor::OnRep_DrawingCanvas()
     }
 }
 
-
 //////////////////////////////////// IS SHAPE TOOL /////////////////////////////////
 bool AWhiteboardActor::IsShapeTool(const EDrawingTool Tool)
 {
     return Tool == EDrawingTool::Line || Tool == EDrawingTool::Rectangle || Tool == EDrawingTool::Circle;
 }
-
 
 void AWhiteboardActor::OnRep_PlayerDrawingStates()
 {
@@ -470,7 +466,6 @@ void AWhiteboardActor::Multicast_UpdatePlayerToolState_Implementation(APawn* Pla
     UpdatePlayerDrawingState(Player, NewState);
 }
 
-
 /////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////// SET DRAWING TOOLS //////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -602,7 +597,6 @@ void AWhiteboardActor::SetPlayerTextString(APawn* Player, const FString& NewText
     DebugPlayerToolState(DrawingPlayer);
 }
 
-
 // Get Player Current Drawing Tools
 EDrawingTool AWhiteboardActor::GetCurrentTool() const
 {
@@ -669,6 +663,82 @@ APawn* AWhiteboardActor::GetDrawingPlayer() const
     }
     return nullptr;
 }
+
+FVector2D AWhiteboardActor::CalculateDrawingCenterOffset(EDrawingTool Tool, float BrushSize, UTexture2D* BrushTexture,
+    UTexture2D* FigureTexture)
+{
+     FVector2D CenterOffset = FVector2D::ZeroVector;
+    
+    switch (Tool)
+    {
+    case EDrawingTool::Pencil:
+    case EDrawingTool::Brush:
+    case EDrawingTool::Eraser:
+    case EDrawingTool::Line:
+    case EDrawingTool::Rectangle:
+    case EDrawingTool::Circle:
+        // For basic tools, center based on brush size
+        // These tools typically draw from center by default
+        CenterOffset = FVector2D(0.0f, 0.0f);
+        break;
+        
+    case EDrawingTool::Texture:
+        if (BrushTexture)
+        {
+            // Center the texture based on its dimensions and brush size
+            FVector2D TextureSize = FVector2D(BrushTexture->GetSizeX(), BrushTexture->GetSizeY());
+            FVector2D ScaledSize = TextureSize * (BrushSize / 100.0f); // Adjust scale as needed
+            CenterOffset = -ScaledSize * 0.5f; // Offset to center
+        }
+        else
+        {
+            // Fallback: center based on brush size
+            CenterOffset = FVector2D(-BrushSize * 0.5f, -BrushSize * 0.5f);
+        }
+        break;
+        
+    case EDrawingTool::Figure:
+        if (FigureTexture)
+        {
+            // Center the figure based on its dimensions and brush size
+            FVector2D FigureSize = FVector2D(FigureTexture->GetSizeX(), FigureTexture->GetSizeY());
+            FVector2D ScaledSize = FigureSize * (BrushSize / 100.0f); // Adjust scale as needed
+            CenterOffset = -ScaledSize * 0.5f; // Offset to center
+        }
+        else
+        {
+            // Fallback: center based on brush size
+            CenterOffset = FVector2D(-BrushSize * 0.5f, -BrushSize * 0.5f);
+        }
+        break;
+        
+    case EDrawingTool::Text:
+        {
+            // For text, estimate center based on brush size (font size)
+            // You might want to adjust this based on your text rendering system
+            float TextHeight = BrushSize * 2.0f; // Estimate text height
+            float TextWidth = BrushSize * 0.6f; // Estimate average character width
+            
+            // Center the text (adjust these values based on your text alignment)
+            CenterOffset = FVector2D(-TextWidth * 0.5f, -TextHeight * 0.5f);
+        }
+        break;
+        
+    default:
+        CenterOffset = FVector2D::ZeroVector;
+        break;
+    }
+    
+    return CenterOffset;
+}
+
+FVector2D AWhiteboardActor::GetCenteredCanvasPosition(const FVector2D& RawCanvasPosition, EDrawingTool Tool,
+    float BrushSize, UTexture2D* BrushTexture, UTexture2D* FigureTexture)
+{
+    FVector2D CenterOffset = CalculateDrawingCenterOffset(Tool, BrushSize, BrushTexture, FigureTexture);
+    return RawCanvasPosition + CenterOffset;
+}
+
 
 void AWhiteboardActor::OnRep_StrokeHistory()
 {
@@ -799,12 +869,10 @@ void AWhiteboardActor::ExportToSVG(const FString& FilePath)
     GenerateSVGFromStrokes(FullPath);
 }
 
-
 ///////////////////////////////////// START DRAWING ////////////////////////
-
 void AWhiteboardActor::PlayerStartDrawing(const FVector2D& CanvasPosition)
 {
-    APawn* DrawingPlayer = GetDrawingPlayer();
+   APawn* DrawingPlayer = GetDrawingPlayer();
     
     if (!DrawingPlayer || !CanClientDraw())
     {
@@ -814,20 +882,21 @@ void AWhiteboardActor::PlayerStartDrawing(const FVector2D& CanvasPosition)
 
     FPlayerDrawingState PlayerState = GetPlayerDrawingState(DrawingPlayer);
 
-    // Handle immediate tools (text, texture, figure) - keep existing code
-    if (PlayerState.CurrentTool == EDrawingTool::Text)
-    {
-        // AddText(CanvasPosition, PlayerState.CurrentTextString);
-        return;
-    }
+    // Calculate centered position for the current tool
+    FVector2D CenteredPosition = GetCenteredCanvasPosition(
+        CanvasPosition, 
+        PlayerState.CurrentTool, 
+        PlayerState.BrushSize,
+        BrushTextures.IsValidIndex(PlayerState.SelectedBrushTextureIndex) ? BrushTextures[PlayerState.SelectedBrushTextureIndex] : nullptr,
+        FigureTextures.IsValidIndex(PlayerState.SelectedFigureTextureIndex) ? FigureTextures[PlayerState.SelectedFigureTextureIndex] : nullptr
+    );
     
-    if (PlayerState.CurrentTool == EDrawingTool::Texture || PlayerState.CurrentTool == EDrawingTool::Figure)
+    if (PlayerState.CurrentTool == EDrawingTool::Text || 
+        PlayerState.CurrentTool == EDrawingTool::Texture || 
+        PlayerState.CurrentTool == EDrawingTool::Figure)
     {
-        int32 TextureIndex = (PlayerState.CurrentTool == EDrawingTool::Texture) 
-            ? PlayerState.SelectedBrushTextureIndex 
-            : PlayerState.SelectedFigureTextureIndex;
-        DrawFigure(CanvasPosition, TextureIndex);
-        return;
+        CreateAndCompleteStroke(DrawingPlayer, CenteredPosition, PlayerState);
+        return; 
     }
 
     // Client prediction - keep existing code
@@ -864,12 +933,20 @@ void AWhiteboardActor::PlayerStartDrawing(const FVector2D& CanvasPosition)
         ClientPredictedStrokes.Add(DrawingPlayer, PredictedStroke);
 
         // Draw immediately for client prediction
-        if (!IsShapeTool(PlayerState.CurrentTool))
+        bool bIsShape = IsShapeTool(PlayerState.CurrentTool);
+        if (!bIsShape)
         {
             DrawStroke(PredictedStroke);
         }
+        else
+        {
+            // For shape tools, draw initial preview
+            DrawShapePreview(CanvasPosition, CanvasPosition, PlayerState.CurrentTool, 
+                           PlayerState.CurrentColor, PlayerState.BrushSize);
+        }
     }
 
+    
     // Send to server WITH CURRENT PARAMETERS
     if (APlayerController* PC = GetWorld()->GetFirstPlayerController())
     {
@@ -882,9 +959,6 @@ void AWhiteboardActor::PlayerStartDrawing(const FVector2D& CanvasPosition)
                                                        PlayerState.SelectedFigureTextureIndex);
         }
     }
-    
-    // Send to server - PASS THE PLAYER EXPLICITLY
-    //Server_StartDrawing(DrawingPlayer, CanvasPosition);
     
 }
 
@@ -1034,25 +1108,72 @@ void AWhiteboardActor::PlayerUpdateDrawing(const FVector2D& CanvasPosition)
 
     FPlayerDrawingState PlayerState = GetPlayerDrawingState(DrawingPlayer);
 
-    // Client prediction - keep existing code
+    // CRITICAL: Skip update for immediate tools
+    if (PlayerState.CurrentTool == EDrawingTool::Text || 
+        PlayerState.CurrentTool == EDrawingTool::Texture || 
+        PlayerState.CurrentTool == EDrawingTool::Figure)
+    {
+        UE_LOG(LogWDS, VeryVerbose, TEXT("PlayerUpdateDrawing: Skipping update for immediate tool %d"), (int32)PlayerState.CurrentTool);
+        return; // Don't process updates for immediate tools
+    }
+    
+    // Client prediction - including shape preview
     if (GetLocalRole() != ROLE_Authority)
     {
         FStroke* PredictedStroke = ClientPredictedStrokes.Find(DrawingPlayer);
         if (PredictedStroke)
         {
-            FDrawingPoint NewPoint(CanvasPosition, 1.0f, PredictedStroke->Color, 
-                                 PredictedStroke->Size, PredictedStroke->Tool, PredictedStroke->StrokeID);
-            PredictedStroke->Points.Add(NewPoint);
-            PredictedStroke->EndPosition = CanvasPosition;
-
-            // Draw the new segment
-            if (PredictedStroke->Points.Num() >= 2)
+            // Handle shape tools differently
+            bool bIsShape = IsShapeTool(PlayerState.CurrentTool);
+            
+            if (bIsShape)
             {
-                DrawStroke(*PredictedStroke);
+                // For shape tools, update preview
+                ClearShapePreview();
+                DrawShapePreview(PredictedStroke->StartPosition, CanvasPosition, 
+                               PlayerState.CurrentTool, PlayerState.CurrentColor, 
+                               PlayerState.BrushSize);
+            }
+            else
+            {
+                // For freehand tools, add points normally
+                FDrawingPoint NewPoint(CanvasPosition, 1.0f, PredictedStroke->Color, 
+                                     PredictedStroke->Size, PredictedStroke->Tool, PredictedStroke->StrokeID);
+                PredictedStroke->Points.Add(NewPoint);
+                PredictedStroke->EndPosition = CanvasPosition;
+
+                // Draw the new segment
+                if (PredictedStroke->Points.Num() >= 2)
+                {
+                    DrawStroke(*PredictedStroke);
+                }
             }
             
-            UE_LOG(LogWDS, VeryVerbose, TEXT("Client prediction: Updated stroke with %d points"), 
-                   PredictedStroke->Points.Num());
+            UE_LOG(LogWDS, VeryVerbose, TEXT("Client prediction: Updated stroke with %d points, isShape: %d"), 
+                   PredictedStroke->Points.Num(), bIsShape);
+        }
+        else if (IsShapeTool(PlayerState.CurrentTool))
+        {
+            // If no predicted stroke but we're using a shape tool, create one for preview
+            PreviewStroke.StrokeID = -1;
+            PreviewStroke.DrawingPlayer = DrawingPlayer;
+            PreviewStroke.Tool = PlayerState.CurrentTool;
+            PreviewStroke.Color = PlayerState.CurrentColor;
+            PreviewStroke.Size = PlayerState.BrushSize;
+            PreviewStroke.StartPosition = CanvasPosition;
+            PreviewStroke.EndPosition = CanvasPosition;
+            PreviewStroke.bIsComplete = false;
+
+            // Add first point
+            FDrawingPoint Point(CanvasPosition, 1.0f, PlayerState.CurrentColor, 
+                               PlayerState.BrushSize, PlayerState.CurrentTool, -1);
+            PreviewStroke.Points.Add(Point);
+
+            ClientPredictedStrokes.Add(DrawingPlayer, PreviewStroke);
+            
+            // Draw initial preview (just a point)
+            DrawShapePreview(CanvasPosition, CanvasPosition, PlayerState.CurrentTool, 
+                           PlayerState.CurrentColor, PlayerState.BrushSize);
         }
     }
 
@@ -1067,8 +1188,6 @@ void AWhiteboardActor::PlayerUpdateDrawing(const FVector2D& CanvasPosition)
         }
     }
     
-    // Send to server
-   // Server_UpdateDrawing(DrawingPlayer, CanvasPosition);
 }
 
 void AWhiteboardActor::Server_UpdateDrawing_Implementation(APawn* DrawingPlayer, const FVector2D& CanvasPosition, 
@@ -1142,8 +1261,8 @@ void AWhiteboardActor::Server_UpdateDrawing_Implementation(APawn* DrawingPlayer,
     
     if (bIsDrawingShape)
     {
-        ClearShapePreview();
-        DrawShapePreview(CurrentStroke->StartPosition, CanvasPosition, Tool, Color, BrushSize);
+       // ClearShapePreview();
+      //  DrawShapePreview(CurrentStroke->StartPosition, CanvasPosition, Tool, Color, BrushSize);
     }
     else
     {
@@ -1238,11 +1357,12 @@ void AWhiteboardActor::Multicast_UpdateDrawing_Implementation(APawn* DrawingPlay
 
     bool* IsDrawingShapePtr = PlayerShapeDrawingStates.Find(DrawingPlayer);
     bool bIsDrawingShape = IsDrawingShapePtr ? *IsDrawingShapePtr : false;
+
     
     if (bIsDrawingShape)
     {
-        ClearShapePreview();
-        DrawShapePreview(CurrentStroke->StartPosition, CanvasPosition, Tool, Color, BrushSize);
+      //  ClearShapePreview();
+      //  DrawShapePreview(CurrentStroke->StartPosition, CanvasPosition, Tool, Color, BrushSize);
     }
     else
     {
@@ -1255,6 +1375,7 @@ void AWhiteboardActor::Multicast_UpdateDrawing_Implementation(APawn* DrawingPlay
         }
     }
 }
+
 
 ///////////////////////////////////////////// END DRAWING ////////////////////////
 
@@ -1270,7 +1391,17 @@ void AWhiteboardActor::PlayerEndDrawing()
 
     UE_LOG(LogWDS, Warning, TEXT("PlayerEndDrawing: Player %s"), *DrawingPlayer->GetName());
 
-    // Clear client prediction
+    FPlayerDrawingState PlayerState = GetPlayerDrawingState(DrawingPlayer);
+    
+    if (PlayerState.CurrentTool == EDrawingTool::Text || 
+        PlayerState.CurrentTool == EDrawingTool::Texture || 
+        PlayerState.CurrentTool == EDrawingTool::Figure)
+    {
+        UE_LOG(LogWDS, VeryVerbose, TEXT("PlayerEndDrawing: Skipping end for immediate tool %d"), (int32)PlayerState.CurrentTool);
+        return; // Don't process end for immediate tools
+    }
+    
+    // Clear client prediction and shape preview
     if (GetLocalRole() != ROLE_Authority)
     {
         FStroke* PredictedStroke = ClientPredictedStrokes.Find(DrawingPlayer);
@@ -1279,14 +1410,14 @@ void AWhiteboardActor::PlayerEndDrawing()
             UE_LOG(LogWDS, Warning, TEXT("Clearing predicted stroke with %d points"), PredictedStroke->Points.Num());
         }
         ClientPredictedStrokes.Remove(DrawingPlayer);
-        ClearShapePreview();
+        ClearShapePreview(); 
     }
 
     if (APlayerController* PC = GetWorld()->GetFirstPlayerController())
     {
         if (AWhiteboardController* WBController = Cast<AWhiteboardController>(PC))
         {
-            WBController->Server_WhiteboardEndDrawing(DrawingPlayer,this);
+            WBController->Server_WhiteboardEndDrawing(DrawingPlayer, this);
         }
     }
     
@@ -1401,9 +1532,6 @@ void AWhiteboardActor::Multicast_EndDrawing_Implementation(APawn* DrawingPlayer,
     DrawStroke(CompletedStroke);
 }
 
-
-
-
 /*
 void AWhiteboardActor::AddText(const FVector2D& CanvasPosition, const FString& Text)
 {
@@ -1459,77 +1587,155 @@ void AWhiteboardActor::AddText(const FVector2D& CanvasPosition, const FString& T
 /////////////////////////////////////////////////////// DRAW FIGURE //////////////////////////////////////////
 
 // Draw Figure
-void AWhiteboardActor::DrawFigure(const FVector2D& CanvasPosition, const int32 SelectedFigureIndex)
+void AWhiteboardActor::CreateAndCompleteStroke(APawn* DrawingPlayer, const FVector2D& CanvasPosition, const FPlayerDrawingState& PlayerState)
 {
-    APawn* DrawingPlayer = GetDrawingPlayer();
-    
-    // Get The Current Player State
-    FPlayerDrawingState PlayerState = GetPlayerDrawingState(DrawingPlayer);
-    
-    if (HasAuthority())
+     // Create a completed stroke for immediate tools
+    FStroke ImmediateStroke;
+    ImmediateStroke.StrokeID = (GetLocalRole() == ROLE_Authority) ? NextStrokeID++ : -1;
+    ImmediateStroke.DrawingPlayer = DrawingPlayer;
+    ImmediateStroke.Tool = PlayerState.CurrentTool;
+    ImmediateStroke.Color = PlayerState.CurrentColor;
+    ImmediateStroke.Size = PlayerState.BrushSize;
+    ImmediateStroke.StartPosition = CanvasPosition;
+    ImmediateStroke.EndPosition = CanvasPosition;
+    ImmediateStroke.bIsComplete = true; // Mark as complete immediately
+
+    if (PlayerState.CurrentTextString != "")
     {
-        // Create a new stroke for figure
-        FStroke FigureStroke;
-        FigureStroke.StrokeID = NextStrokeID++;
-        FigureStroke.Tool = EDrawingTool::Figure;
-        FigureStroke.Color = PlayerState.CurrentColor;
-        FigureStroke.Size = PlayerState.BrushSize;
-        FigureStroke.FigureTexture = FigureTextures[SelectedFigureIndex];
-        
-        FDrawingPoint Point(CanvasPosition, 1.0f, PlayerState.CurrentColor, PlayerState.BrushSize, EDrawingTool::Figure, FigureStroke.StrokeID);
-        FigureStroke.Points.Add(Point);
-        
-        // Draw figure on canvas
-        DrawStroke(FigureStroke);
-        
-        // Add to history
+        ImmediateStroke.TextContent = PlayerState.CurrentTextString;
+    }
+    
+    // Set appropriate textures
+    if (PlayerState.CurrentTool == EDrawingTool::Texture)
+    {
+        if (BrushTextures.IsValidIndex(PlayerState.SelectedBrushTextureIndex))
+        {
+            ImmediateStroke.BrushTexture = BrushTextures[PlayerState.SelectedBrushTextureIndex];
+        }
+    }
+    else if (PlayerState.CurrentTool == EDrawingTool::Figure)
+    {
+        if (FigureTextures.IsValidIndex(PlayerState.SelectedFigureTextureIndex))
+        {
+            ImmediateStroke.FigureTexture = FigureTextures[PlayerState.SelectedFigureTextureIndex];
+        }
+    }
+
+    // Add the single point
+    FDrawingPoint Point(CanvasPosition, 1.0f, PlayerState.CurrentColor, 
+                       PlayerState.BrushSize, PlayerState.CurrentTool, ImmediateStroke.StrokeID);
+    ImmediateStroke.Points.Add(Point);
+
+    // Handle based on authority
+    if (GetLocalRole() == ROLE_Authority)
+    {
+        // Server: Add to history and draw
         if (CurrentHistoryIndex < StrokeHistory.Num() - 1)
         {
             StrokeHistory.RemoveAt(CurrentHistoryIndex + 1, StrokeHistory.Num() - CurrentHistoryIndex - 1);
         }
-        
-        StrokeHistory.Add(FigureStroke);
+        StrokeHistory.Add(ImmediateStroke);
         CurrentHistoryIndex = StrokeHistory.Num() - 1;
+
+        DrawStroke(ImmediateStroke);
         
-        // Notify all clients
-        Multicast_UpdateDrawingCanvas(FigureStroke);
+        // Multicast to all clients
+        Multicast_DrawCompletedStroke(ImmediateStroke);
     }
     else
     {
-        // Send to server
+        // Client: Predict locally and send to server
+        DrawStroke(ImmediateStroke);
+        
+        // Send to server to replicate to other clients
         if (APlayerController* PC = GetWorld()->GetFirstPlayerController())
         {
-            if (AWhiteboardController* YourPC = Cast<AWhiteboardController>(PC))
+            if (AWhiteboardController* WBController = Cast<AWhiteboardController>(PC))
             {
-                YourPC->Server_WhiteboardDrawFigure(this, CanvasPosition, PlayerState);
+                WBController->Server_WhiteboardDrawImmediateStroke(DrawingPlayer, this, ImmediateStroke);
             }
         }
-    }  
+    }
+}
+// Server Draw Figure
+void AWhiteboardActor::Server_DrawImmediateStroke_Implementation(APawn* DrawingPlayer, const FStroke& ImmediateStroke)
+{
+    if (!DrawingPlayer || !HasAuthority())
+    {
+        UE_LOG(LogWDS, Error, TEXT("Server_DrawImmediateStroke: Invalid player or no authority"));
+        return;
+    }
+
+    // Create a server version with proper ID
+    FStroke ServerStroke = ImmediateStroke;
+    ServerStroke.StrokeID = NextStrokeID++;
+    ServerStroke.DrawingPlayer = DrawingPlayer;
+
+    // Add to history
+    if (CurrentHistoryIndex < StrokeHistory.Num() - 1)
+    {
+        StrokeHistory.RemoveAt(CurrentHistoryIndex + 1, StrokeHistory.Num() - CurrentHistoryIndex - 1);
+    }
+    StrokeHistory.Add(ServerStroke);
+    CurrentHistoryIndex = StrokeHistory.Num() - 1;
+
+    // Draw locally
+    DrawStroke(ServerStroke);
+
+    // Multicast to all clients
+    Multicast_DrawCompletedStroke(ServerStroke);
 }
 
-// Server Draw Figure
-void AWhiteboardActor::Server_DrawFigure_Implementation(const FVector2D& CanvasPosition, const FPlayerDrawingState& PlayerToolState)
+
+void AWhiteboardActor::Multicast_DrawCompletedStroke_Implementation(const FStroke& CompletedStroke)
 {
-   // Upddate
-  //  CurrentColor = Color;
- //   BrushSize = FMath::Clamp(Size, 1.0f, 100.0f);
-   // DrawFigure(CanvasPosition, SelectedFigureIndex);
+    if (HasAuthority())
+    {
+        return; // Server already handled this
+    }
+
+    UE_LOG(LogWDS, Warning, TEXT("Multicast_DrawCompletedStroke: Received completed stroke %d for player %s, tool: %d"), 
+           CompletedStroke.StrokeID, 
+           CompletedStroke.DrawingPlayer ? *CompletedStroke.DrawingPlayer->GetName() : TEXT("None"),
+           (int32)CompletedStroke.Tool);
+
+    // Clear any client prediction for this player
+    if (CompletedStroke.DrawingPlayer)
+    {
+        ClientPredictedStrokes.Remove(CompletedStroke.DrawingPlayer);
+    }
+
+    // Check if this stroke already exists in history
+    bool bStrokeExists = false;
+    for (int32 i = 0; i < StrokeHistory.Num(); i++)
+    {
+        if (StrokeHistory[i].StrokeID == CompletedStroke.StrokeID)
+        {
+            StrokeHistory[i] = CompletedStroke;
+            bStrokeExists = true;
+            break;
+        }
+    }
+
+    // If not exists, add to history
+    if (!bStrokeExists)
+    {
+        if (CurrentHistoryIndex < StrokeHistory.Num() - 1)
+        {
+            StrokeHistory.RemoveAt(CurrentHistoryIndex + 1, StrokeHistory.Num() - CurrentHistoryIndex - 1);
+        }
+        StrokeHistory.Add(CompletedStroke);
+        CurrentHistoryIndex = StrokeHistory.Num() - 1;
+    }
+
+    // Draw the completed stroke
+    DrawStroke(CompletedStroke);
+
+    UE_LOG(LogWDS, Warning, TEXT("Multicast_DrawCompletedStroke: Successfully drew stroke %d with %d points"), 
+           CompletedStroke.StrokeID, CompletedStroke.Points.Num());
     
 }
 
-
-/*
-void AWhiteboardActor::Server_AddText_Implementation(const FVector2D& CanvasPosition, const FString& Text, FLinearColor Color, float Size)
-{
-
-    CurrentColor = Color;
-    BrushSize = FMath::Clamp(Size, 1.0f, 100.0f);
-    AddText(CanvasPosition, Text);
-
-  
-}
-
-*/
 
 void AWhiteboardActor::Server_ClearWhiteboard_Implementation()
 {
@@ -1545,7 +1751,6 @@ void AWhiteboardActor::Server_Redo_Implementation()
 {
     Redo();
 }
-
 
 void AWhiteboardActor::Multicast_UpdateDrawingCanvas_Implementation(const FStroke& NewStroke)
 {
@@ -1596,19 +1801,6 @@ void AWhiteboardActor::Multicast_SyncWhiteboardState_Implementation(const TArray
     }
 }
 
-void AWhiteboardActor::Multicast_UpdateShapePreview_Implementation(APawn* DrawingPlayer, const FVector2D& StartPos, const FVector2D& EndPos, EDrawingTool Tool, FLinearColor Color, float Size, int32 StrokeID)
-{
-    if (!HasAuthority())
-    {
-        // Only update preview if this is our current stroke
-     //   if (bIsDrawing && CurrentStroke.StrokeID == StrokeID)
-    //    {
-     //       ClearShapePreview();
-    //        DrawShapePreview(StartPos, EndPos, Tool, Color, Size);
-     //   }
-    }
-}
-
 void AWhiteboardActor::Client_SyncWhiteboardState_Implementation(const TArray<FStroke>& History, int32 HistoryIndex)
 {
     SyncWhiteboardState(History,HistoryIndex);
@@ -1620,8 +1812,6 @@ void AWhiteboardActor::SyncWhiteboardState(const TArray<FStroke>& History, int32
     CurrentHistoryIndex = HistoryIndex;
     RedrawCanvas();
 }
-
-
 
 void AWhiteboardActor::ClientStartDrawing(const FVector2D& CanvasPosition)
 {
@@ -1651,7 +1841,6 @@ void AWhiteboardActor::ClientStartDrawing(const FVector2D& CanvasPosition)
     StartDrawing(CanvasPosition);
     */
 }
-
 
 /*
 void AWhiteboardActor::ClientContinueDrawing(const FVector2D& CanvasPosition)
@@ -1726,14 +1915,12 @@ FVector2D AWhiteboardActor::WorldToCanvasPosition(const FVector& WorldPosition) 
     return FVector2D(U * CanvasWidth, V * CanvasHeight);
 }
 
-
-
 //////////////////////////////////////// DRAWING STOCK ////////////////////////
 
 // Draw Stock
 void AWhiteboardActor::DrawStroke(const FStroke& Stroke)
 {
-    // Robust initialization check
+    // initialization check
     if (!bIsInitialized || !DrawingCanvas || !GetWorld())
     {
         UE_LOG(LogWDS, Warning, TEXT("DrawStroke: Whiteboard not initialized, attempting recovery"));
@@ -1751,7 +1938,6 @@ void AWhiteboardActor::DrawStroke(const FStroke& Stroke)
         UE_LOG(LogWDS, Warning, TEXT("DrawStroke: Stroke has no points!"));
         return;
     }
-
     UE_LOG(LogWDS, Verbose, TEXT("DrawStroke: Drawing stroke %d with %d points, tool: %d"), 
            Stroke.StrokeID, Stroke.Points.Num(), (int32)Stroke.Tool);
     
@@ -1770,6 +1956,9 @@ void AWhiteboardActor::DrawStroke(const FStroke& Stroke)
         case EDrawingTool::Figure:
             DrawFigureStroke(Stroke);
             break;
+        case EDrawingTool::Texture:
+            DrawFigureStroke(Stroke);
+            break;
         default:  
             DrawFreehandStroke(Stroke);
             break;
@@ -1778,146 +1967,7 @@ void AWhiteboardActor::DrawStroke(const FStroke& Stroke)
 
     // Update material
     UpdateCanvasMaterial();
-    
-    /*
-    // If Stock Doesn't Have Any Point Return
-    if (Stroke.Points.Num() == 0)
-    {
-        return;
-    }
-    
-    // Handle Shape Tool
-    if (IsShapeTool(Stroke.Tool) && Stroke.bIsComplete)
-    {
-        DrawShape(Stroke);
-        return;
-    }
-    
-    // Handle other tools (brush, pencil, eraser, text, texture)
-    switch (Stroke.Tool)
-    {
-        // Draw Text 
-        case EDrawingTool::Text:
-            if (!Stroke.TextContent.IsEmpty() && Stroke.Points.Num() > 0)
-            {
-                UCanvas* Canvas = nullptr;
-                FVector2D CanvasSize;
-                FDrawToRenderTargetContext Context;
-                UKismetRenderingLibrary::BeginDrawCanvasToRenderTarget(GetWorld(), DrawingCanvas, Canvas, CanvasSize, Context);
-                
-                if (Canvas)
-                {
-                    UFont* Font = GEngine->GetSmallFont();
-                    float TextScale = Stroke.Size / 10.0f;
-                    
-                    Canvas->K2_DrawText(Font, FText::FromString(Stroke.TextContent).ToString(), 
-                        Stroke.Points[0].Position, FVector2D(TextScale, TextScale), 
-                        Stroke.Color, 1.0f, FLinearColor::Black, 
-                        FVector2D::ZeroVector, true, true, true, 
-                        FLinearColor(0, 0, 0, 0));
-                }
-                
-                UKismetRenderingLibrary::EndDrawCanvasToRenderTarget(GetWorld(), Context);
-            }
-            break;
-
-        // Draw Figure
-        case EDrawingTool::Figure:
-            if (Stroke.FigureTexture && Stroke.Points.Num() > 0)
-            {
-                UCanvas* Canvas = nullptr;
-                FVector2D CanvasSize;
-                FDrawToRenderTargetContext Context;
-                UKismetRenderingLibrary::BeginDrawCanvasToRenderTarget(GetWorld(), DrawingCanvas, Canvas, CanvasSize, Context);
-                    
-                if (Canvas)
-                {
-                    Canvas->K2_DrawTexture(
-                        Stroke.FigureTexture,
-                        Stroke.Points[0].Position - FVector2D(Stroke.Size / 2, Stroke.Size / 2),
-                        FVector2D(Stroke.Size * 5, Stroke.Size * 5),
-                        FVector2D::ZeroVector,
-                        FVector2D::UnitVector,
-                        Stroke.Color
-                    );
-                }
-                    
-                UKismetRenderingLibrary::EndDrawCanvasToRenderTarget(GetWorld(), Context);
-            }
-            break;
-
-        // Default Pencil, Brush, Eraser
-        default:  
-            if (Stroke.Points.Num() >= 1)
-            {
-                UCanvas* Canvas = nullptr;
-                FVector2D CanvasSize;
-                FDrawToRenderTargetContext Context;
-                UKismetRenderingLibrary::BeginDrawCanvasToRenderTarget(GetWorld(), DrawingCanvas, Canvas, CanvasSize, Context);
-                
-                if (Canvas)
-                {
-                    if (Stroke.Points.Num() == 1)
-                    {
-                        // Single point - draw a dot
-                        const FDrawingPoint& Point = Stroke.Points[0];
-                        FLinearColor DrawColor = (Stroke.Tool == EDrawingTool::Eraser) ? FLinearColor::White : Stroke.Color;
-                        
-                        Canvas->K2_DrawLine(Point.Position, Point.Position, Stroke.Size, DrawColor);
-                    }
-                    else
-                    {
-                        // Multiple points - draw lines between them
-                        for (int32 i = 0; i < Stroke.Points.Num() - 1; i++)
-                        {
-                            const FDrawingPoint& Point1 = Stroke.Points[i];
-                            const FDrawingPoint& Point2 = Stroke.Points[i + 1];
-                            
-                            if (Stroke.Tool == EDrawingTool::Texture && Stroke.BrushTexture)
-                            {
-                                // Draw textured line
-                                float Distance = FVector2D::Distance(Point1.Position, Point2.Position);
-                                FVector2D Direction = (Point2.Position - Point1.Position).GetSafeNormal();
-                                
-                                for (float t = 0; t < Distance; t += Stroke.Size * 0.5f)
-                                {
-                                    FVector2D Pos = Point1.Position + Direction * t;
-                                    
-                                    Canvas->K2_DrawTexture(
-                                        Stroke.BrushTexture,
-                                        Pos - FVector2D(Stroke.Size / 2, Stroke.Size / 2),
-                                        FVector2D(Stroke.Size, Stroke.Size),
-                                        FVector2D::ZeroVector,
-                                        FVector2D::UnitVector,
-                                        Stroke.Color
-                                    );
-                                }
-                            }
-                            else
-                            {
-                                // Draw line
-                                FLinearColor LineColor = (Stroke.Tool == EDrawingTool::Eraser) ? FLinearColor::White : Stroke.Color;
-                                
-                                Canvas->K2_DrawLine(
-                                    Point1.Position,
-                                    Point2.Position,
-                                    Stroke.Size,
-                                    LineColor
-                                );
-                            }
-                        }
-                    }
-                }
-                
-                UKismetRenderingLibrary::EndDrawCanvasToRenderTarget(GetWorld(), Context);
-            }
-            break;
-    }
-    
-  
-    */
 }
-
 
 ////////////////////////////// DRAWING SHAPE AND PREVIEW ///////////////////////
 
@@ -1943,44 +1993,55 @@ void AWhiteboardActor::DrawShape(const FStroke& Stroke)
     FLinearColor DrawColor = Stroke.Color;
     float LineThickness = Stroke.Size;
 
-    switch (Stroke.Tool)
-    {
-        case EDrawingTool::Line:
-            Canvas->K2_DrawLine(StartPos, EndPos, LineThickness, DrawColor);
-            break;
-            
-        case EDrawingTool::Rectangle:
-            {
-                FVector2D RectMin = FVector2D(FMath::Min(StartPos.X, EndPos.X), FMath::Min(StartPos.Y, EndPos.Y));
-                FVector2D RectMax = FVector2D(FMath::Max(StartPos.X, EndPos.X), FMath::Max(StartPos.Y, EndPos.Y));
-                FVector2D RectSize = RectMax - RectMin;
-                
-                // Draw rectangle outline
-                Canvas->K2_DrawLine(FVector2D(RectMin.X, RectMin.Y), FVector2D(RectMax.X, RectMin.Y), LineThickness, DrawColor);
-                Canvas->K2_DrawLine(FVector2D(RectMax.X, RectMin.Y), FVector2D(RectMax.X, RectMax.Y), LineThickness, DrawColor);
-                Canvas->K2_DrawLine(FVector2D(RectMax.X, RectMax.Y), FVector2D(RectMin.X, RectMax.Y), LineThickness, DrawColor);
-                Canvas->K2_DrawLine(FVector2D(RectMin.X, RectMax.Y), FVector2D(RectMin.X, RectMin.Y), LineThickness, DrawColor);
-            }
-            break;
-            
-        case EDrawingTool::Circle:
-            {
-                float Radius = FVector2D::Distance(StartPos, EndPos);
-                int32 Segments = 32;
-                
-                for (int32 i = 0; i < Segments; i++)
+   switch (Stroke.Tool)
+        {
+            // Draw Line Preview
+            case EDrawingTool::Line:
+                Canvas->K2_DrawLine(StartPos, EndPos, LineThickness, DrawColor);
+                break;
+
+            // Draw Rectangle Preview
+            case EDrawingTool::Rectangle:
                 {
-                    float Angle1 = (float)i / Segments * 2 * PI;
-                    float Angle2 = (float)(i + 1) / Segments * 2 * PI;
+                    float Left = FMath::Min(StartPos.X, EndPos.X);
+                    float Top = FMath::Min(StartPos.Y, EndPos.Y);
+                    float Right = FMath::Max(StartPos.X, EndPos.X);
+                    float Bottom = FMath::Max(StartPos.Y, EndPos.Y);
                     
-                    FVector2D Point1 = StartPos + FVector2D(FMath::Cos(Angle1) * Radius, FMath::Sin(Angle1) * Radius);
-                    FVector2D Point2 = StartPos + FVector2D(FMath::Cos(Angle2) * Radius, FMath::Sin(Angle2) * Radius);
-                    
-                    Canvas->K2_DrawLine(Point1, Point2, LineThickness, DrawColor);
+                    Canvas->K2_DrawLine(FVector2D(Left, Top), FVector2D(Right, Top), LineThickness, DrawColor);
+                    Canvas->K2_DrawLine(FVector2D(Right, Top), FVector2D(Right, Bottom), LineThickness, DrawColor);
+                    Canvas->K2_DrawLine(FVector2D(Right, Bottom), FVector2D(Left, Bottom), LineThickness, DrawColor);
+                    Canvas->K2_DrawLine(FVector2D(Left, Bottom), FVector2D(Left, Top), LineThickness, DrawColor);
                 }
-            }
+                break;
+
+            // Draw Circle Preview
+            case EDrawingTool::Circle:
+                {
+                    float CenterX = (StartPos.X + EndPos.X) / 2.0f;
+                    float CenterY = (StartPos.Y + EndPos.Y) / 2.0f;
+                    float Radius = FVector2D::Distance(StartPos, EndPos) / 2.0f;
+                    
+                    int32 NumSegments = 32;
+                    TArray<FVector2D> Points;
+                    
+                    for (int32 i = 0; i <= NumSegments; i++)
+                    {
+                        float Angle = 2.0f * PI * i / NumSegments;
+                        float X = CenterX + Radius * FMath::Cos(Angle);
+                        float Y = CenterY + Radius * FMath::Sin(Angle);
+                        Points.Add(FVector2D(X, Y));
+                    }
+                    
+                    for (int32 i = 0; i < Points.Num() - 1; i++)
+                    {
+                        Canvas->K2_DrawLine(Points[i], Points[i + 1], LineThickness, DrawColor);
+                    }
+                }
+                break;
+        default:  Canvas->K2_DrawLine(StartPos, EndPos, LineThickness, DrawColor);
             break;
-    }
+        }
     
     EndCanvasDraw(Context);
 
@@ -2074,7 +2135,6 @@ void AWhiteboardActor::ClearShapePreview()
 
 ////////////////////////////// DRAWING FIGURE ///////////////////////
 
-
 void AWhiteboardActor::SyncNewClient(APlayerController* NewClient)
 {
     if (!NewClient || !HasAuthority())
@@ -2088,7 +2148,6 @@ void AWhiteboardActor::SyncNewClient(APlayerController* NewClient)
         Client_SyncWhiteboardState(StrokeHistory, CurrentHistoryIndex);
     }
 }
-
 
 //////////////////////////////////////// Interaction ///////////////////////////////////////
 
@@ -2123,7 +2182,6 @@ void AWhiteboardActor::RequestInteraction(APawn* Player)
     }
 }
 
-
 // NEW: Request end interaction through PlayerController
 void AWhiteboardActor::RequestEndInteraction(APawn* Player)
 {
@@ -2150,7 +2208,6 @@ void AWhiteboardActor::RequestEndInteraction(APawn* Player)
         }
     }
 }
-
 
 // NEW: Validation function for client-side prediction
 bool AWhiteboardActor::CanPlayerInteract(APawn* Player) const
@@ -2397,7 +2454,6 @@ void AWhiteboardActor::OnTriggerEndOverlap(UPrimitiveComponent* OverlappedCompon
     }
 }
 
-
 void AWhiteboardActor::SetupInteractionUI(APawn* InteractingPlayer)
 {
     // Only apply to the local player
@@ -2414,7 +2470,6 @@ void AWhiteboardActor::SetupInteractionUI(APawn* InteractingPlayer)
         
     }
 }
-
 
 void AWhiteboardActor::CleanupInteractionUI(APawn* InteractingPlayer)
 {
@@ -2433,19 +2488,15 @@ void AWhiteboardActor::CleanupInteractionUI(APawn* InteractingPlayer)
     
 }
 
-
 void AWhiteboardActor::Client_SetupInteractionUI_Implementation(APawn* InteractingPlayer)
 {
     SetupInteractionUI(InteractingPlayer);
 }
 
-
 void AWhiteboardActor::Client_CleanupInteractionUI_Implementation(APawn* InteractingPlayer)
 {
     CleanupInteractionUI(InteractingPlayer);
 }
-
-
 
 /////////////////////////// DRAWING CANVAS ///////////////////////////////////
 
@@ -2551,153 +2602,6 @@ UTexture2D* AWhiteboardActor::RenderTargetToTexture2D(UTextureRenderTarget2D* Re
     return Texture;
 }
 
-// Generate SVG From Stocks
-void AWhiteboardActor::GenerateSVGFromStrokes(const FString& FilePath)
-{
-    FString SVGContent = TEXT("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n");
-    SVGContent += FString::Printf(TEXT("<svg width=\"%d\" height=\"%d\" xmlns=\"http://www.w3.org/2000/svg\">\n"), 
-                                 CanvasWidth, CanvasHeight);
-    
-    // Add background
-    SVGContent += FString::Printf(TEXT("<rect width=\"%d\" height=\"%d\" fill=\"white\"/>\n"), 
-                                 CanvasWidth, CanvasHeight);
-    
-    // Process each stroke
-    for (int32 i = 0; i <= CurrentHistoryIndex; i++)
-    {
-        if (!StrokeHistory.IsValidIndex(i))
-        {
-            continue;
-        }
-        
-        const FStroke& Stroke = StrokeHistory[i];
-        
-        if (Stroke.Points.Num() == 0)
-        {
-            continue;
-        }
-        
-        FString ColorStr = FString::Printf(TEXT("rgb(%d,%d,%d)"), 
-                                          FMath::RoundToInt(Stroke.Color.R * 255), 
-                                          FMath::RoundToInt(Stroke.Color.G * 255), 
-                                          FMath::RoundToInt(Stroke.Color.B * 255));
-        
-        switch (Stroke.Tool)
-        {
-            case EDrawingTool::Text:
-                if (!Stroke.TextContent.IsEmpty() && Stroke.Points.Num() > 0)
-                {
-                    SVGContent += FString::Printf(TEXT("<text x=\"%f\" y=\"%f\" font-size=\"%f\" fill=\"%s\">%s</text>\n"),
-                                                 Stroke.Points[0].Position.X,
-                                                 Stroke.Points[0].Position.Y,
-                                                 Stroke.Size,
-                                                 *ColorStr,
-                                                 *Stroke.TextContent);
-                }
-                break;
-                
-            case EDrawingTool::Line:
-                if (Stroke.Points.Num() >= 2)
-                {
-                    SVGContent += FString::Printf(TEXT("<line x1=\"%f\" y1=\"%f\" x2=\"%f\" y2=\"%f\" stroke=\"%s\" stroke-width=\"%f\"/>\n"),
-                                                 Stroke.Points[0].Position.X,
-                                                 Stroke.Points[0].Position.Y,
-                                                 Stroke.Points[Stroke.Points.Num() - 1].Position.X,
-                                                 Stroke.Points[Stroke.Points.Num() - 1].Position.Y,
-                                                 *ColorStr,
-                                                 Stroke.Size);
-                }
-                break;
-                
-            case EDrawingTool::Rectangle:
-                if (Stroke.Points.Num() >= 2)
-                {
-                    float Left = FMath::Min(Stroke.Points[0].Position.X, Stroke.Points[Stroke.Points.Num() - 1].Position.X);
-                    float Top = FMath::Min(Stroke.Points[0].Position.Y, Stroke.Points[Stroke.Points.Num() - 1].Position.Y);
-                    float Width = FMath::Abs(Stroke.Points[Stroke.Points.Num() - 1].Position.X - Stroke.Points[0].Position.X);
-                    float Height = FMath::Abs(Stroke.Points[Stroke.Points.Num() - 1].Position.Y - Stroke.Points[0].Position.Y);
-                    
-                    SVGContent += FString::Printf(TEXT("<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" stroke=\"%s\" stroke-width=\"%f\" fill=\"none\"/>\n"),
-                                                 Left, Top, Width, Height, *ColorStr, Stroke.Size);
-                }
-                break;
-                
-            case EDrawingTool::Circle:
-                if (Stroke.Points.Num() >= 2)
-                {
-                    float CenterX = (Stroke.Points[0].Position.X + Stroke.Points[Stroke.Points.Num() - 1].Position.X) / 2.0f;
-                    float CenterY = (Stroke.Points[0].Position.Y + Stroke.Points[Stroke.Points.Num() - 1].Position.Y) / 2.0f;
-                    float Radius = FVector2D::Distance(Stroke.Points[0].Position, Stroke.Points[Stroke.Points.Num() - 1].Position) / 2.0f;
-                    
-                    SVGContent += FString::Printf(TEXT("<circle cx=\"%f\" cy=\"%f\" r=\"%f\" stroke=\"%s\" stroke-width=\"%f\" fill=\"none\"/>\n"),
-                                                 CenterX, CenterY, Radius, *ColorStr, Stroke.Size);
-                }
-                break;
-                
-            default:  // Brush, Pencil, Eraser
-                if (Stroke.Points.Num() >= 2)
-                {
-                    // Create path
-                    FString PathData = FString::Printf(TEXT("M %f %f "), Stroke.Points[0].Position.X, Stroke.Points[0].Position.Y);
-                    
-                    for (int32 j = 1; j < Stroke.Points.Num(); j++)
-                    {
-                        PathData += FString::Printf(TEXT("L %f %f "), Stroke.Points[j].Position.X, Stroke.Points[j].Position.Y);
-                    }
-                    
-                    FString StrokeColorStr = (Stroke.Tool == EDrawingTool::Eraser) ? TEXT("white") : ColorStr;
-                    
-                    SVGContent += FString::Printf(TEXT("<path d=\"%s\" stroke=\"%s\" stroke-width=\"%f\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>\n"),
-                                                 *PathData, *StrokeColorStr, Stroke.Size);
-                }
-                break;
-        }
-    }
-    
-    SVGContent += TEXT("</svg>");
-    
-    // Save to file
-    FFileHelper::SaveStringToFile(SVGContent, *FilePath);
-    UE_LOG(LogTemp, Display, TEXT("Successfully exported whiteboard to SVG: %s"), *FilePath);
-}
-
-
-//////////////////////////////////////// DEBUGGING ///////////////////////////////////////
-
-void AWhiteboardActor::DebugNetworkState()
-{
-    FString RoleString;
-    switch(GetLocalRole())
-    {
-    case ROLE_None: RoleString = TEXT("None"); break;
-    case ROLE_SimulatedProxy: RoleString = TEXT("SimulatedProxy"); break;
-    case ROLE_AutonomousProxy: RoleString = TEXT("AutonomousProxy"); break;
-    case ROLE_Authority: RoleString = TEXT("Authority"); break;
-    }
-    
-    UE_LOG(LogTemp, Warning, TEXT("Whiteboard Debug - Role: %s, CanInteract: %s, InteractingPlayers: %d, Owner: %s"), 
-           *RoleString, 
-           bCanInteract ? TEXT("True") : TEXT("False"),
-           InteractingPawns.Num(),
-           GetOwner() ? *GetOwner()->GetName() : TEXT("None"));
-}
-
-// Debug Player Tools States
-void AWhiteboardActor::DebugPlayerToolState(APawn* Player)
-{
-    if (!Player) return;
-    
-    FPlayerDrawingState State = GetPlayerDrawingState(Player);
-    
-    UE_LOG(LogWDS, Warning, TEXT("=== Player Tool State Debug ==="));
-    UE_LOG(LogWDS, Warning, TEXT("Player: %s"), *Player->GetName());
-    UE_LOG(LogWDS, Warning, TEXT("Role: %s"), (GetLocalRole() == ROLE_Authority) ? TEXT("Server") : TEXT("Client"));
-    UE_LOG(LogWDS, Warning, TEXT("Current Tool: %d"), (int32)State.CurrentTool);
-   // UE_LOG(LogWDS, Warning, TEXT("Current Color: %s"), *State.CurrentColor.ToString());
-   // UE_LOG(LogWDS, Warning, TEXT("Brush Size: %f"), State.BrushSize);
-    UE_LOG(LogWDS, Warning, TEXT("=============================="));
-}
-
 bool AWhiteboardActor::BeginCanvasDraw(UCanvas*& OutCanvas, FVector2D& OutCanvasSize,
                                        FDrawToRenderTargetContext& OutContext, UTextureRenderTarget2D* RenderTarget)
 {
@@ -2720,7 +2624,6 @@ bool AWhiteboardActor::BeginCanvasDraw(UCanvas*& OutCanvas, FVector2D& OutCanvas
 
     return true;
 }
-
 void AWhiteboardActor::EndCanvasDraw(const FDrawToRenderTargetContext& Context)
 {
     if (GetWorld())
@@ -2876,4 +2779,153 @@ void AWhiteboardActor::DrawTexturedLine(UCanvas* Canvas, const FDrawingPoint& Po
         );
     }
     
+}
+
+
+//////////////////////////////////////// UTILITIES ///////////////////////////////////////
+
+// Generate SVG From Stocks
+void AWhiteboardActor::GenerateSVGFromStrokes(const FString& FilePath)
+{
+    FString SVGContent = TEXT("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n");
+    SVGContent += FString::Printf(TEXT("<svg width=\"%d\" height=\"%d\" xmlns=\"http://www.w3.org/2000/svg\">\n"), 
+                                 CanvasWidth, CanvasHeight);
+    
+    // Add background
+    SVGContent += FString::Printf(TEXT("<rect width=\"%d\" height=\"%d\" fill=\"white\"/>\n"), 
+                                 CanvasWidth, CanvasHeight);
+    
+    // Process each stroke
+    for (int32 i = 0; i <= CurrentHistoryIndex; i++)
+    {
+        if (!StrokeHistory.IsValidIndex(i))
+        {
+            continue;
+        }
+        
+        const FStroke& Stroke = StrokeHistory[i];
+        
+        if (Stroke.Points.Num() == 0)
+        {
+            continue;
+        }
+        
+        FString ColorStr = FString::Printf(TEXT("rgb(%d,%d,%d)"), 
+                                          FMath::RoundToInt(Stroke.Color.R * 255), 
+                                          FMath::RoundToInt(Stroke.Color.G * 255), 
+                                          FMath::RoundToInt(Stroke.Color.B * 255));
+        
+        switch (Stroke.Tool)
+        {
+            case EDrawingTool::Text:
+                if (!Stroke.TextContent.IsEmpty() && Stroke.Points.Num() > 0)
+                {
+                    SVGContent += FString::Printf(TEXT("<text x=\"%f\" y=\"%f\" font-size=\"%f\" fill=\"%s\">%s</text>\n"),
+                                                 Stroke.Points[0].Position.X,
+                                                 Stroke.Points[0].Position.Y,
+                                                 Stroke.Size,
+                                                 *ColorStr,
+                                                 *Stroke.TextContent);
+                }
+                break;
+                
+            case EDrawingTool::Line:
+                if (Stroke.Points.Num() >= 2)
+                {
+                    SVGContent += FString::Printf(TEXT("<line x1=\"%f\" y1=\"%f\" x2=\"%f\" y2=\"%f\" stroke=\"%s\" stroke-width=\"%f\"/>\n"),
+                                                 Stroke.Points[0].Position.X,
+                                                 Stroke.Points[0].Position.Y,
+                                                 Stroke.Points[Stroke.Points.Num() - 1].Position.X,
+                                                 Stroke.Points[Stroke.Points.Num() - 1].Position.Y,
+                                                 *ColorStr,
+                                                 Stroke.Size);
+                }
+                break;
+                
+            case EDrawingTool::Rectangle:
+                if (Stroke.Points.Num() >= 2)
+                {
+                    float Left = FMath::Min(Stroke.Points[0].Position.X, Stroke.Points[Stroke.Points.Num() - 1].Position.X);
+                    float Top = FMath::Min(Stroke.Points[0].Position.Y, Stroke.Points[Stroke.Points.Num() - 1].Position.Y);
+                    float Width = FMath::Abs(Stroke.Points[Stroke.Points.Num() - 1].Position.X - Stroke.Points[0].Position.X);
+                    float Height = FMath::Abs(Stroke.Points[Stroke.Points.Num() - 1].Position.Y - Stroke.Points[0].Position.Y);
+                    
+                    SVGContent += FString::Printf(TEXT("<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" stroke=\"%s\" stroke-width=\"%f\" fill=\"none\"/>\n"),
+                                                 Left, Top, Width, Height, *ColorStr, Stroke.Size);
+                }
+                break;
+                
+            case EDrawingTool::Circle:
+                if (Stroke.Points.Num() >= 2)
+                {
+                    float CenterX = (Stroke.Points[0].Position.X + Stroke.Points[Stroke.Points.Num() - 1].Position.X) / 2.0f;
+                    float CenterY = (Stroke.Points[0].Position.Y + Stroke.Points[Stroke.Points.Num() - 1].Position.Y) / 2.0f;
+                    float Radius = FVector2D::Distance(Stroke.Points[0].Position, Stroke.Points[Stroke.Points.Num() - 1].Position) / 2.0f;
+                    
+                    SVGContent += FString::Printf(TEXT("<circle cx=\"%f\" cy=\"%f\" r=\"%f\" stroke=\"%s\" stroke-width=\"%f\" fill=\"none\"/>\n"),
+                                                 CenterX, CenterY, Radius, *ColorStr, Stroke.Size);
+                }
+                break;
+                
+            default:  // Brush, Pencil, Eraser
+                if (Stroke.Points.Num() >= 2)
+                {
+                    // Create path
+                    FString PathData = FString::Printf(TEXT("M %f %f "), Stroke.Points[0].Position.X, Stroke.Points[0].Position.Y);
+                    
+                    for (int32 j = 1; j < Stroke.Points.Num(); j++)
+                    {
+                        PathData += FString::Printf(TEXT("L %f %f "), Stroke.Points[j].Position.X, Stroke.Points[j].Position.Y);
+                    }
+                    
+                    FString StrokeColorStr = (Stroke.Tool == EDrawingTool::Eraser) ? TEXT("white") : ColorStr;
+                    
+                    SVGContent += FString::Printf(TEXT("<path d=\"%s\" stroke=\"%s\" stroke-width=\"%f\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>\n"),
+                                                 *PathData, *StrokeColorStr, Stroke.Size);
+                }
+                break;
+        }
+    }
+    
+    SVGContent += TEXT("</svg>");
+    
+    // Save to file
+    FFileHelper::SaveStringToFile(SVGContent, *FilePath);
+    UE_LOG(LogTemp, Display, TEXT("Successfully exported whiteboard to SVG: %s"), *FilePath);
+}
+
+//////////////////////////////////////// DEBUGGING ///////////////////////////////////////
+
+void AWhiteboardActor::DebugNetworkState()
+{
+    FString RoleString;
+    switch(GetLocalRole())
+    {
+    case ROLE_None: RoleString = TEXT("None"); break;
+    case ROLE_SimulatedProxy: RoleString = TEXT("SimulatedProxy"); break;
+    case ROLE_AutonomousProxy: RoleString = TEXT("AutonomousProxy"); break;
+    case ROLE_Authority: RoleString = TEXT("Authority"); break;
+    }
+    
+    UE_LOG(LogTemp, Warning, TEXT("Whiteboard Debug - Role: %s, CanInteract: %s, InteractingPlayers: %d, Owner: %s"), 
+           *RoleString, 
+           bCanInteract ? TEXT("True") : TEXT("False"),
+           InteractingPawns.Num(),
+           GetOwner() ? *GetOwner()->GetName() : TEXT("None"));
+}
+
+// Debug Player Tools States
+void AWhiteboardActor::DebugPlayerToolState(APawn* Player)
+{
+    if (!Player) return;
+    
+    FPlayerDrawingState State = GetPlayerDrawingState(Player);
+    
+    UE_LOG(LogWDS, Warning, TEXT("=== Player Tool State Debug ==="));
+    UE_LOG(LogWDS, Warning, TEXT("Player: %s"), *Player->GetName());
+    UE_LOG(LogWDS, Warning, TEXT("Role: %s"), (GetLocalRole() == ROLE_Authority) ? TEXT("Server") : TEXT("Client"));
+    UE_LOG(LogWDS, Warning, TEXT("Current Tool: %d"), (int32)State.CurrentTool);
+    // UE_LOG(LogWDS, Warning, TEXT("Current Color: %s"), *State.CurrentColor.ToString());
+    // UE_LOG(LogWDS, Warning, TEXT("Brush Size: %f"), State.BrushSize);
+    UE_LOG(LogWDS, Warning, TEXT("=============================="));
 }

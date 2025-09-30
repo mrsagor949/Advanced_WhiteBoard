@@ -241,6 +241,15 @@ void AWhiteboardController::Client_CleanupInteractionUI_Implementation(APawn* In
     RestoreGameInputMode(InteractingPlayer);
 }
 
+void AWhiteboardController::Server_WhiteboardDrawImmediateStroke_Implementation(APawn* DrawingPlayer,
+    AWhiteboardActor* Whiteboard, const FStroke& ImmediateStroke)
+{
+    if (Whiteboard && DrawingPlayer)
+    {
+        Whiteboard->Server_DrawImmediateStroke(DrawingPlayer, ImmediateStroke);
+    }
+}
+
 bool AWhiteboardController::ValidateWhiteboardInteraction(AWhiteboardActor* Whiteboard, APawn* InteractingPlayer) const
 {
     if (!Whiteboard || !InteractingPlayer)

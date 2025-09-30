@@ -19,6 +19,7 @@ ADVANCEDDRAWINGBOARD_API UClass* Z_Construct_UClass_AWhiteboardController();
 ADVANCEDDRAWINGBOARD_API UClass* Z_Construct_UClass_AWhiteboardController_NoRegister();
 ADVANCEDDRAWINGBOARD_API UEnum* Z_Construct_UEnum_AdvancedDrawingBoard_EDrawingTool();
 ADVANCEDDRAWINGBOARD_API UScriptStruct* Z_Construct_UScriptStruct_FPlayerDrawingState();
+ADVANCEDDRAWINGBOARD_API UScriptStruct* Z_Construct_UScriptStruct_FStroke();
 COREUOBJECT_API UScriptStruct* Z_Construct_UScriptStruct_FLinearColor();
 COREUOBJECT_API UScriptStruct* Z_Construct_UScriptStruct_FVector2D();
 ENGINE_API UClass* Z_Construct_UClass_APawn_NoRegister();
@@ -631,6 +632,77 @@ DEFINE_FUNCTION(AWhiteboardController::execServer_WhiteboardDrawFigure)
 }
 // ********** End Class AWhiteboardController Function Server_WhiteboardDrawFigure *****************
 
+// ********** Begin Class AWhiteboardController Function Server_WhiteboardDrawImmediateStroke ******
+struct WhiteboardController_eventServer_WhiteboardDrawImmediateStroke_Parms
+{
+	APawn* DrawingPlayer;
+	AWhiteboardActor* Whiteboard;
+	FStroke ImmediateStroke;
+};
+static FName NAME_AWhiteboardController_Server_WhiteboardDrawImmediateStroke = FName(TEXT("Server_WhiteboardDrawImmediateStroke"));
+void AWhiteboardController::Server_WhiteboardDrawImmediateStroke(APawn* DrawingPlayer, AWhiteboardActor* Whiteboard, FStroke const& ImmediateStroke)
+{
+	WhiteboardController_eventServer_WhiteboardDrawImmediateStroke_Parms Parms;
+	Parms.DrawingPlayer=DrawingPlayer;
+	Parms.Whiteboard=Whiteboard;
+	Parms.ImmediateStroke=ImmediateStroke;
+	UFunction* Func = FindFunctionChecked(NAME_AWhiteboardController_Server_WhiteboardDrawImmediateStroke);
+	ProcessEvent(Func,&Parms);
+}
+struct Z_Construct_UFunction_AWhiteboardController_Server_WhiteboardDrawImmediateStroke_Statics
+{
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+#if !UE_BUILD_SHIPPING
+		{ "Comment", "// Add to AWhiteboardController class declaration  \n" },
+#endif
+		{ "ModuleRelativePath", "Public/Controller/AWhiteboard_Player_Controller.h" },
+#if !UE_BUILD_SHIPPING
+		{ "ToolTip", "Add to AWhiteboardController class declaration" },
+#endif
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_ImmediateStroke_MetaData[] = {
+		{ "NativeConst", "" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_DrawingPlayer;
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_Whiteboard;
+	static const UECodeGen_Private::FStructPropertyParams NewProp_ImmediateStroke;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AWhiteboardController_Server_WhiteboardDrawImmediateStroke_Statics::NewProp_DrawingPlayer = { "DrawingPlayer", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardController_eventServer_WhiteboardDrawImmediateStroke_Parms, DrawingPlayer), Z_Construct_UClass_APawn_NoRegister, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AWhiteboardController_Server_WhiteboardDrawImmediateStroke_Statics::NewProp_Whiteboard = { "Whiteboard", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardController_eventServer_WhiteboardDrawImmediateStroke_Parms, Whiteboard), Z_Construct_UClass_AWhiteboardActor_NoRegister, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_AWhiteboardController_Server_WhiteboardDrawImmediateStroke_Statics::NewProp_ImmediateStroke = { "ImmediateStroke", nullptr, (EPropertyFlags)0x0010000008000082, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardController_eventServer_WhiteboardDrawImmediateStroke_Parms, ImmediateStroke), Z_Construct_UScriptStruct_FStroke, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_ImmediateStroke_MetaData), NewProp_ImmediateStroke_MetaData) }; // 2672491957
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardController_Server_WhiteboardDrawImmediateStroke_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardController_Server_WhiteboardDrawImmediateStroke_Statics::NewProp_DrawingPlayer,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardController_Server_WhiteboardDrawImmediateStroke_Statics::NewProp_Whiteboard,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardController_Server_WhiteboardDrawImmediateStroke_Statics::NewProp_ImmediateStroke,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardController_Server_WhiteboardDrawImmediateStroke_Statics::PropPointers) < 2048);
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AWhiteboardController_Server_WhiteboardDrawImmediateStroke_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_AWhiteboardController, nullptr, "Server_WhiteboardDrawImmediateStroke", Z_Construct_UFunction_AWhiteboardController_Server_WhiteboardDrawImmediateStroke_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardController_Server_WhiteboardDrawImmediateStroke_Statics::PropPointers), sizeof(WhiteboardController_eventServer_WhiteboardDrawImmediateStroke_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00220CC0, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardController_Server_WhiteboardDrawImmediateStroke_Statics::Function_MetaDataParams), Z_Construct_UFunction_AWhiteboardController_Server_WhiteboardDrawImmediateStroke_Statics::Function_MetaDataParams)},  };
+static_assert(sizeof(WhiteboardController_eventServer_WhiteboardDrawImmediateStroke_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_AWhiteboardController_Server_WhiteboardDrawImmediateStroke()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AWhiteboardController_Server_WhiteboardDrawImmediateStroke_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(AWhiteboardController::execServer_WhiteboardDrawImmediateStroke)
+{
+	P_GET_OBJECT(APawn,Z_Param_DrawingPlayer);
+	P_GET_OBJECT(AWhiteboardActor,Z_Param_Whiteboard);
+	P_GET_STRUCT(FStroke,Z_Param_ImmediateStroke);
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	P_THIS->Server_WhiteboardDrawImmediateStroke_Implementation(Z_Param_DrawingPlayer,Z_Param_Whiteboard,Z_Param_ImmediateStroke);
+	P_NATIVE_END;
+}
+// ********** End Class AWhiteboardController Function Server_WhiteboardDrawImmediateStroke ********
+
 // ********** Begin Class AWhiteboardController Function Server_WhiteboardEndDrawing ***************
 struct WhiteboardController_eventServer_WhiteboardEndDrawing_Parms
 {
@@ -1038,6 +1110,7 @@ void AWhiteboardController::StaticRegisterNativesAWhiteboardController()
 		{ "Server_WhiteboardAddText", &AWhiteboardController::execServer_WhiteboardAddText },
 		{ "Server_WhiteboardClearWhiteboard", &AWhiteboardController::execServer_WhiteboardClearWhiteboard },
 		{ "Server_WhiteboardDrawFigure", &AWhiteboardController::execServer_WhiteboardDrawFigure },
+		{ "Server_WhiteboardDrawImmediateStroke", &AWhiteboardController::execServer_WhiteboardDrawImmediateStroke },
 		{ "Server_WhiteboardEndDrawing", &AWhiteboardController::execServer_WhiteboardEndDrawing },
 		{ "Server_WhiteboardRedo", &AWhiteboardController::execServer_WhiteboardRedo },
 		{ "Server_WhiteboardStartDrawing", &AWhiteboardController::execServer_WhiteboardStartDrawing },
@@ -1103,6 +1176,7 @@ struct Z_Construct_UClass_AWhiteboardController_Statics
 		{ &Z_Construct_UFunction_AWhiteboardController_Server_WhiteboardAddText, "Server_WhiteboardAddText" }, // 3188761246
 		{ &Z_Construct_UFunction_AWhiteboardController_Server_WhiteboardClearWhiteboard, "Server_WhiteboardClearWhiteboard" }, // 3301629198
 		{ &Z_Construct_UFunction_AWhiteboardController_Server_WhiteboardDrawFigure, "Server_WhiteboardDrawFigure" }, // 501409669
+		{ &Z_Construct_UFunction_AWhiteboardController_Server_WhiteboardDrawImmediateStroke, "Server_WhiteboardDrawImmediateStroke" }, // 3449102331
 		{ &Z_Construct_UFunction_AWhiteboardController_Server_WhiteboardEndDrawing, "Server_WhiteboardEndDrawing" }, // 1953619872
 		{ &Z_Construct_UFunction_AWhiteboardController_Server_WhiteboardRedo, "Server_WhiteboardRedo" }, // 393793492
 		{ &Z_Construct_UFunction_AWhiteboardController_Server_WhiteboardStartDrawing, "Server_WhiteboardStartDrawing" }, // 2478151911
@@ -1158,10 +1232,10 @@ AWhiteboardController::~AWhiteboardController() {}
 struct Z_CompiledInDeferFile_FID_SPARKELON_2025_Prototype_2025_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Controller_AWhiteboard_Player_Controller_h__Script_AdvancedDrawingBoard_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_AWhiteboardController, AWhiteboardController::StaticClass, TEXT("AWhiteboardController"), &Z_Registration_Info_UClass_AWhiteboardController, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AWhiteboardController), 476238601U) },
+		{ Z_Construct_UClass_AWhiteboardController, AWhiteboardController::StaticClass, TEXT("AWhiteboardController"), &Z_Registration_Info_UClass_AWhiteboardController, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AWhiteboardController), 2377223704U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_SPARKELON_2025_Prototype_2025_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Controller_AWhiteboard_Player_Controller_h__Script_AdvancedDrawingBoard_747312060(TEXT("/Script/AdvancedDrawingBoard"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_SPARKELON_2025_Prototype_2025_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Controller_AWhiteboard_Player_Controller_h__Script_AdvancedDrawingBoard_311312138(TEXT("/Script/AdvancedDrawingBoard"),
 	Z_CompiledInDeferFile_FID_SPARKELON_2025_Prototype_2025_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Controller_AWhiteboard_Player_Controller_h__Script_AdvancedDrawingBoard_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_SPARKELON_2025_Prototype_2025_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Controller_AWhiteboard_Player_Controller_h__Script_AdvancedDrawingBoard_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

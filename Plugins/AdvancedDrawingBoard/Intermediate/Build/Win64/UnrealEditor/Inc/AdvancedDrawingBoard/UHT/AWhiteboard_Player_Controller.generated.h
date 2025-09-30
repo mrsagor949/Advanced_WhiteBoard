@@ -21,6 +21,7 @@ class AWhiteboardActor;
 enum class EDrawingTool : uint8;
 struct FLinearColor;
 struct FPlayerDrawingState;
+struct FStroke;
 
 // ********** Begin Class AWhiteboardController ****************************************************
 #define FID_SPARKELON_2025_Prototype_2025_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Controller_AWhiteboard_Player_Controller_h_19_RPC_WRAPPERS_NO_PURE_DECLS \
@@ -29,6 +30,7 @@ struct FPlayerDrawingState;
 	virtual void Server_WhiteboardClearWhiteboard_Implementation(AWhiteboardActor* Whiteboard); \
 	virtual void Server_WhiteboardDrawFigure_Implementation(AWhiteboardActor* Whiteboard, FVector2D const& CanvasPosition, FPlayerDrawingState const& PlayerToolState); \
 	virtual void Server_WhiteboardAddText_Implementation(AWhiteboardActor* Whiteboard, FVector2D const& CanvasPosition, const FString& Text, FLinearColor Color, float Size); \
+	virtual void Server_WhiteboardDrawImmediateStroke_Implementation(APawn* DrawingPlayer, AWhiteboardActor* Whiteboard, FStroke const& ImmediateStroke); \
 	virtual void Server_WhiteboardEndDrawing_Implementation(APawn* DrawingPlayer, AWhiteboardActor* Whiteboard); \
 	virtual void Server_WhiteboardUpdateDrawing_Implementation(APawn* DrawingPlayer, AWhiteboardActor* Whiteboard, FVector2D const& CanvasPosition, EDrawingTool Tool, FLinearColor Color, float BrushSize); \
 	virtual void Server_WhiteboardStartDrawing_Implementation(APawn* DrawingPlayer, AWhiteboardActor* Whiteboard, FVector2D const& CanvasPosition, EDrawingTool Tool, FLinearColor Color, float BrushSize, int32 BrushTextureIndex, int32 FigureTextureIndex); \
@@ -41,6 +43,7 @@ struct FPlayerDrawingState;
 	DECLARE_FUNCTION(execServer_WhiteboardClearWhiteboard); \
 	DECLARE_FUNCTION(execServer_WhiteboardDrawFigure); \
 	DECLARE_FUNCTION(execServer_WhiteboardAddText); \
+	DECLARE_FUNCTION(execServer_WhiteboardDrawImmediateStroke); \
 	DECLARE_FUNCTION(execServer_WhiteboardEndDrawing); \
 	DECLARE_FUNCTION(execServer_WhiteboardUpdateDrawing); \
 	DECLARE_FUNCTION(execServer_WhiteboardStartDrawing); \
