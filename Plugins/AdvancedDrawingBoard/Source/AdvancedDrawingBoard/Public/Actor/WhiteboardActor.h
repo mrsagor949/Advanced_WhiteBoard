@@ -423,7 +423,8 @@ protected:
 
 
 private:
-
+    void InitializeDefaultPlayerState(APawn* Player);
+    
     UPROPERTY()
     TMap<APawn*, FStroke> ClientPredictedStrokes;
     

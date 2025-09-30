@@ -72,8 +72,8 @@ void AWhiteboardActor::OnConstruction(const FTransform& Transform)
 void AWhiteboardActor::BeginPlay()
 {
 	Super::BeginPlay();
-    
 
+    
     // Initialize maps
     ActiveStrokes.Empty();
     ClientPredictedStrokes.Empty();
@@ -84,6 +84,7 @@ void AWhiteboardActor::BeginPlay()
     InteractionVolume->OnComponentBeginOverlap.AddDynamic(this, &AWhiteboardActor::OnTriggerBeginOverlap);
     InteractionVolume->OnComponentEndOverlap.AddDynamic(this, &AWhiteboardActor::OnTriggerEndOverlap);
 
+    
     FTimerHandle InitTimer;
     GetWorld()->GetTimerManager().SetTimer(InitTimer, this, &AWhiteboardActor::DelayedInitialize, 0.5f, false);
     
@@ -305,6 +306,12 @@ void AWhiteboardActor::CheckAndRepairInitialization()
 // Delay Start Initialization
 void AWhiteboardActor::DelayedInitialize()
 {
+    // Initialize default state for local player if available
+    if (APawn* LocalPlayer = GetDrawingPlayer())
+    {
+        InitializeDefaultPlayerState(LocalPlayer);
+    }
+    
     InitializeWhiteboard();
 }
 
@@ -1983,10 +1990,7 @@ void AWhiteboardActor::DrawShape(const FStroke& Stroke)
     FVector2D CanvasSize;
     FDrawToRenderTargetContext Context;
     
-    if (!BeginCanvasDraw(Canvas, CanvasSize, Context, DrawingCanvas))
-    {
-        return;
-    }
+    UKismetRenderingLibrary::BeginDrawCanvasToRenderTarget(GetWorld(), DrawingCanvas, Canvas, CanvasSize, Context);
 
     FVector2D StartPos = Stroke.Points[0].Position;
     FVector2D EndPos = Stroke.Points[Stroke.Points.Num() - 1].Position;
@@ -2043,7 +2047,7 @@ void AWhiteboardActor::DrawShape(const FStroke& Stroke)
             break;
         }
     
-    EndCanvasDraw(Context);
+    UKismetRenderingLibrary::EndDrawCanvasToRenderTarget(GetWorld(), Context);
 
     // Update Canvas Material
     UpdateCanvasMaterial();
@@ -2387,6 +2391,40 @@ void AWhiteboardActor::OnRep_InteractingPawns()
     }
 }
 
+void AWhiteboardActor::InitializeDefaultPlayerState(APawn* Player)
+{
+    if (!Player || !IsValid(Player))
+    {
+        UE_LOG(LogWDS, Warning, TEXT("InitializeDefaultPlayerState: Invalid player"));
+        return;
+    }
+    
+    FPlayerDrawingState DefaultState;
+    DefaultState.Player = Player;
+    DefaultState.CurrentTool = EDrawingTool::Pencil;
+    DefaultState.CurrentColor = FLinearColor::Black;
+    DefaultState.BrushSize = 10.0f;
+    DefaultState.SelectedBrushTextureIndex = 0;
+    DefaultState.SelectedFigureTextureIndex = 0;
+    DefaultState.CurrentTextString = FString();
+    
+    // Validate the state
+    DefaultState.ValidateAndClamp();
+    
+    UE_LOG(LogWDS, Warning, TEXT("InitializeDefaultPlayerState: Setting default state for player %s"), 
+           *Player->GetName());
+    
+    // Update both local cache and replicated state
+    UpdatePlayerDrawingState(Player, DefaultState);
+    
+    // If we have authority, also update on server and multicast to clients
+    if (HasAuthority())
+    {
+        Server_UpdatePlayerDrawingState(Player, DefaultState);
+    }
+}
+
+
 // Check If The Client Can Draw
 bool AWhiteboardActor::CanClientDraw() const
 {
@@ -2632,6 +2670,7 @@ void AWhiteboardActor::EndCanvasDraw(const FDrawToRenderTargetContext& Context)
     }
 }
 
+
 void AWhiteboardActor::DrawTextStroke(const FStroke& Stroke)
 {
     if (Stroke.TextContent.IsEmpty() || Stroke.Points.Num() == 0)
@@ -2643,10 +2682,7 @@ void AWhiteboardActor::DrawTextStroke(const FStroke& Stroke)
     FVector2D CanvasSize;
     FDrawToRenderTargetContext Context;
     
-    if (!BeginCanvasDraw(Canvas, CanvasSize, Context, DrawingCanvas))
-    {
-        return;
-    }
+    UKismetRenderingLibrary::BeginDrawCanvasToRenderTarget(GetWorld(), DrawingCanvas, Canvas, CanvasSize, Context);
 
     UFont* Font = GEngine->GetSmallFont();
     float TextScale = FMath::Max(Stroke.Size / 10.0f, 0.5f);
@@ -2664,7 +2700,7 @@ void AWhiteboardActor::DrawTextStroke(const FStroke& Stroke)
         FLinearColor(0, 0, 0, 0)
     );
     
-    EndCanvasDraw(Context);
+    UKismetRenderingLibrary::EndDrawCanvasToRenderTarget(GetWorld(), Context);
 }
 
 void AWhiteboardActor::DrawFigureStroke(const FStroke& Stroke)
@@ -2678,10 +2714,7 @@ void AWhiteboardActor::DrawFigureStroke(const FStroke& Stroke)
     FVector2D CanvasSize;
     FDrawToRenderTargetContext Context;
     
-    if (!BeginCanvasDraw(Canvas, CanvasSize, Context, DrawingCanvas))
-    {
-        return;
-    }
+    UKismetRenderingLibrary::BeginDrawCanvasToRenderTarget(GetWorld(), DrawingCanvas, Canvas, CanvasSize, Context);
 
     FVector2D DrawPosition = Stroke.Points[0].Position - FVector2D(Stroke.Size / 2, Stroke.Size / 2);
     FVector2D DrawSize = FVector2D(Stroke.Size * 5, Stroke.Size * 5);
@@ -2695,7 +2728,7 @@ void AWhiteboardActor::DrawFigureStroke(const FStroke& Stroke)
         Stroke.Color
     );
     
-    EndCanvasDraw(Context);
+    UKismetRenderingLibrary::EndDrawCanvasToRenderTarget(GetWorld(), Context);
 }
 
 void AWhiteboardActor::DrawFreehandStroke(const FStroke& Stroke)
@@ -2709,10 +2742,7 @@ void AWhiteboardActor::DrawFreehandStroke(const FStroke& Stroke)
     FVector2D CanvasSize;
     FDrawToRenderTargetContext Context;
     
-    if (!BeginCanvasDraw(Canvas, CanvasSize, Context, DrawingCanvas))
-    {
-        return;
-    }
+    UKismetRenderingLibrary::BeginDrawCanvasToRenderTarget(GetWorld(), DrawingCanvas, Canvas, CanvasSize, Context);
 
     if (Stroke.Points.Num() == 1)
     {
@@ -2750,7 +2780,7 @@ void AWhiteboardActor::DrawFreehandStroke(const FStroke& Stroke)
         }
     }
     
-    EndCanvasDraw(Context);
+    UKismetRenderingLibrary::EndDrawCanvasToRenderTarget(GetWorld(), Context);
 }
 
 void AWhiteboardActor::DrawTexturedLine(UCanvas* Canvas, const FDrawingPoint& Point1, const FDrawingPoint& Point2,

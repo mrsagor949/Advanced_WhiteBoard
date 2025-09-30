@@ -107,7 +107,7 @@ struct FStroke
         : StrokeID(0)
           , Tool(EDrawingTool::Pencil)
           , Color(FLinearColor::Black)
-          , Size(5.0f)
+          , Size(10.0f)
           , StartPosition(FVector2D::ZeroVector)
           , EndPosition(FVector2D::ZeroVector)
           , bIsComplete(false)
@@ -134,7 +134,7 @@ struct ADVANCEDDRAWINGBOARD_API FPlayerDrawingState
     FLinearColor CurrentColor = FLinearColor::Black;
 
     UPROPERTY()
-    float BrushSize = 5.0f;
+    float BrushSize = 10.0f;
 
     UPROPERTY()
     int32 SelectedBrushTextureIndex = 0;
@@ -147,7 +147,7 @@ struct ADVANCEDDRAWINGBOARD_API FPlayerDrawingState
 
     void ValidateAndClamp()
     {
-        BrushSize = FMath::Clamp(BrushSize, 1.0f, 50.0f);
+        BrushSize = FMath::Clamp(BrushSize, 1.0f, 100.0f);
         SelectedBrushTextureIndex = FMath::Max(0, SelectedBrushTextureIndex);
         SelectedFigureTextureIndex = FMath::Max(0, SelectedFigureTextureIndex);
         CurrentColor.A = FMath::Clamp(CurrentColor.A, 0.0f, 1.0f);
@@ -157,7 +157,7 @@ struct ADVANCEDDRAWINGBOARD_API FPlayerDrawingState
     {
         CurrentTool = EDrawingTool::Pencil;
         CurrentColor = FLinearColor::Black;
-        BrushSize = 5.0f;
+        BrushSize = 10.0f;
         SelectedBrushTextureIndex = 0;
         SelectedFigureTextureIndex = 0;
         CurrentTextString = TEXT("");
@@ -250,7 +250,7 @@ struct ADVANCEDDRAWINGBOARD_API FPlayerToolUpdate
     FLinearColor NewColor = FLinearColor::Black;
 
     UPROPERTY()
-    float NewBrushSize = 5.0f;
+    float NewBrushSize = 10.0f;
 
     UPROPERTY()
     int32 NewBrushTextureIndex = 0;
