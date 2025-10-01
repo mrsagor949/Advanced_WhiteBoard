@@ -618,15 +618,18 @@ EDrawingTool AWhiteboardActor::GetCurrentTool() const
 ////////////////////////////////////////////////////////////////////////////////
 
 // Get Player Current Drawing Color
-FLinearColor AWhiteboardActor::GetCurrentColor(APawn* Player) const
+FLinearColor AWhiteboardActor::GetCurrentColor() const
 {
+    APawn* Player = GetDrawingPlayer();
     if (!Player) return FLinearColor::Black;
+    
     return GetPlayerDrawingState(Player).CurrentColor;
 }
 
 // Get Player Current Drawing Brush Size
-float AWhiteboardActor::GetBrushSize(APawn* Player) const
+float AWhiteboardActor::GetBrushSize() const
 {
+    APawn* Player = GetDrawingPlayer();
     if (!Player) return 5.0f;
     return GetPlayerDrawingState(Player).BrushSize;
 }
@@ -1268,8 +1271,8 @@ void AWhiteboardActor::Server_UpdateDrawing_Implementation(APawn* DrawingPlayer,
     
     if (bIsDrawingShape)
     {
-       // ClearShapePreview();
-      //  DrawShapePreview(CurrentStroke->StartPosition, CanvasPosition, Tool, Color, BrushSize);
+       ClearShapePreview();
+       DrawShapePreview(CurrentStroke->StartPosition, CanvasPosition, Tool, Color, BrushSize);
     }
     else
     {
@@ -2074,8 +2077,8 @@ void AWhiteboardActor::DrawShapePreview(const FVector2D& StartPos, const FVector
         switch (Tool)
         {
             // Draw Line Preview
-            case EDrawingTool::Line:
-                Canvas->K2_DrawLine(StartPos, EndPos, Size, Color);
+        case EDrawingTool::Line:
+                Canvas->K2_DrawLine(StartPos, EndPos, Size, FLinearColor::Red);
                 break;
 
             // Draw Rectangle Preview
@@ -2086,10 +2089,10 @@ void AWhiteboardActor::DrawShapePreview(const FVector2D& StartPos, const FVector
                     float Right = FMath::Max(StartPos.X, EndPos.X);
                     float Bottom = FMath::Max(StartPos.Y, EndPos.Y);
                     
-                    Canvas->K2_DrawLine(FVector2D(Left, Top), FVector2D(Right, Top), Size, Color);
-                    Canvas->K2_DrawLine(FVector2D(Right, Top), FVector2D(Right, Bottom), Size, Color);
-                    Canvas->K2_DrawLine(FVector2D(Right, Bottom), FVector2D(Left, Bottom), Size, Color);
-                    Canvas->K2_DrawLine(FVector2D(Left, Bottom), FVector2D(Left, Top), Size, Color);
+                    Canvas->K2_DrawLine(FVector2D(Left, Top), FVector2D(Right, Top), Size, FLinearColor::Red);
+                    Canvas->K2_DrawLine(FVector2D(Right, Top), FVector2D(Right, Bottom), Size, FLinearColor::Red);
+                    Canvas->K2_DrawLine(FVector2D(Right, Bottom), FVector2D(Left, Bottom), Size, FLinearColor::Red);
+                    Canvas->K2_DrawLine(FVector2D(Left, Bottom), FVector2D(Left, Top), Size, FLinearColor::Red);
                 }
                 break;
 
@@ -2113,11 +2116,11 @@ void AWhiteboardActor::DrawShapePreview(const FVector2D& StartPos, const FVector
                     
                     for (int32 i = 0; i < Points.Num() - 1; i++)
                     {
-                        Canvas->K2_DrawLine(Points[i], Points[i + 1], Size, Color);
+                        Canvas->K2_DrawLine(Points[i], Points[i + 1], Size, FLinearColor::Red);
                     }
                 }
                 break;
-        default:  Canvas->K2_DrawLine(StartPos, EndPos, Size, Color);
+        default:  Canvas->K2_DrawLine(StartPos, EndPos, Size, FLinearColor::Red);
             break;
         }
     }

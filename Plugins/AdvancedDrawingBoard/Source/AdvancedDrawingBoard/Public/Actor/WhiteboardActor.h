@@ -111,10 +111,10 @@ public:
     EDrawingTool GetCurrentTool() const;
 
     UFUNCTION(BlueprintCallable,BlueprintPure, Category = "Whiteboard|Drawing Tools")
-    FLinearColor GetCurrentColor(APawn* Player) const;
+    FLinearColor GetCurrentColor() const;
 
     UFUNCTION(BlueprintCallable,BlueprintPure, Category = "Whiteboard|Drawing Tools")
-    float GetBrushSize(APawn* Player) const;
+    float GetBrushSize() const;
 
     UFUNCTION(BlueprintCallable,BlueprintPure, Category = "Whiteboard|Drawing Tools")
     int32 GetSelectedBrushTextureIndex(APawn* Player) const;

@@ -113,7 +113,7 @@ FLinearColor UWhiteboardUI::GetCurrentColor() const
 {
     if (TargetWhiteboard && OwningPlayer)
     {
-        return TargetWhiteboard->GetCurrentColor(OwningPlayer);
+        return TargetWhiteboard->GetCurrentColor();
     }
     return FLinearColor::Black;
 }
@@ -122,7 +122,7 @@ float UWhiteboardUI::GetBrushSize() const
 {
     if (TargetWhiteboard && OwningPlayer)
     {
-        return TargetWhiteboard->GetBrushSize(OwningPlayer);
+        return TargetWhiteboard->GetBrushSize();
     }
     return 5.0f;
 }

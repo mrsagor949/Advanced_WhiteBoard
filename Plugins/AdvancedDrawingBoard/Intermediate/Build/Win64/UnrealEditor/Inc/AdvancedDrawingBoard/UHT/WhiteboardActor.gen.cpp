@@ -970,7 +970,6 @@ struct Z_Construct_UFunction_AWhiteboardActor_GetBrushSize_Statics
 {
 	struct WhiteboardActor_eventGetBrushSize_Parms
 	{
-		APawn* Player;
 		float ReturnValue;
 	};
 #if WITH_METADATA
@@ -979,15 +978,12 @@ struct Z_Construct_UFunction_AWhiteboardActor_GetBrushSize_Statics
 		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
 	};
 #endif // WITH_METADATA
-	static const UECodeGen_Private::FObjectPropertyParams NewProp_Player;
 	static const UECodeGen_Private::FFloatPropertyParams NewProp_ReturnValue;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AWhiteboardActor_GetBrushSize_Statics::NewProp_Player = { "Player", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventGetBrushSize_Parms, Player), Z_Construct_UClass_APawn_NoRegister, METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_AWhiteboardActor_GetBrushSize_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventGetBrushSize_Parms, ReturnValue), METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_GetBrushSize_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_GetBrushSize_Statics::NewProp_Player,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_GetBrushSize_Statics::NewProp_ReturnValue,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetBrushSize_Statics::PropPointers) < 2048);
@@ -1004,10 +1000,9 @@ UFunction* Z_Construct_UFunction_AWhiteboardActor_GetBrushSize()
 }
 DEFINE_FUNCTION(AWhiteboardActor::execGetBrushSize)
 {
-	P_GET_OBJECT(APawn,Z_Param_Player);
 	P_FINISH;
 	P_NATIVE_BEGIN;
-	*(float*)Z_Param__Result=P_THIS->GetBrushSize(Z_Param_Player);
+	*(float*)Z_Param__Result=P_THIS->GetBrushSize();
 	P_NATIVE_END;
 }
 // ********** End Class AWhiteboardActor Function GetBrushSize *************************************
@@ -1185,7 +1180,6 @@ struct Z_Construct_UFunction_AWhiteboardActor_GetCurrentColor_Statics
 {
 	struct WhiteboardActor_eventGetCurrentColor_Parms
 	{
-		APawn* Player;
 		FLinearColor ReturnValue;
 	};
 #if WITH_METADATA
@@ -1194,15 +1188,12 @@ struct Z_Construct_UFunction_AWhiteboardActor_GetCurrentColor_Statics
 		{ "ModuleRelativePath", "Public/Actor/WhiteboardActor.h" },
 	};
 #endif // WITH_METADATA
-	static const UECodeGen_Private::FObjectPropertyParams NewProp_Player;
 	static const UECodeGen_Private::FStructPropertyParams NewProp_ReturnValue;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static const UECodeGen_Private::FFunctionParams FuncParams;
 };
-const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AWhiteboardActor_GetCurrentColor_Statics::NewProp_Player = { "Player", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventGetCurrentColor_Parms, Player), Z_Construct_UClass_APawn_NoRegister, METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_AWhiteboardActor_GetCurrentColor_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(WhiteboardActor_eventGetCurrentColor_Parms, ReturnValue), Z_Construct_UScriptStruct_FLinearColor, METADATA_PARAMS(0, nullptr) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWhiteboardActor_GetCurrentColor_Statics::PropPointers[] = {
-	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_GetCurrentColor_Statics::NewProp_Player,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWhiteboardActor_GetCurrentColor_Statics::NewProp_ReturnValue,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_AWhiteboardActor_GetCurrentColor_Statics::PropPointers) < 2048);
@@ -1219,10 +1210,9 @@ UFunction* Z_Construct_UFunction_AWhiteboardActor_GetCurrentColor()
 }
 DEFINE_FUNCTION(AWhiteboardActor::execGetCurrentColor)
 {
-	P_GET_OBJECT(APawn,Z_Param_Player);
 	P_FINISH;
 	P_NATIVE_BEGIN;
-	*(FLinearColor*)Z_Param__Result=P_THIS->GetCurrentColor(Z_Param_Player);
+	*(FLinearColor*)Z_Param__Result=P_THIS->GetCurrentColor();
 	P_NATIVE_END;
 }
 // ********** End Class AWhiteboardActor Function GetCurrentColor **********************************
@@ -4644,11 +4634,11 @@ struct Z_Construct_UClass_AWhiteboardActor_Statics
 		{ &Z_Construct_UFunction_AWhiteboardActor_EndInteractionForPlayer, "EndInteractionForPlayer" }, // 2006991637
 		{ &Z_Construct_UFunction_AWhiteboardActor_ExportToPNG, "ExportToPNG" }, // 1566915720
 		{ &Z_Construct_UFunction_AWhiteboardActor_ExportToSVG, "ExportToSVG" }, // 3057465167
-		{ &Z_Construct_UFunction_AWhiteboardActor_GetBrushSize, "GetBrushSize" }, // 2848556706
+		{ &Z_Construct_UFunction_AWhiteboardActor_GetBrushSize, "GetBrushSize" }, // 111458939
 		{ &Z_Construct_UFunction_AWhiteboardActor_GetCanvasHeight, "GetCanvasHeight" }, // 61114837
 		{ &Z_Construct_UFunction_AWhiteboardActor_GetCanvasWidth, "GetCanvasWidth" }, // 2624620493
 		{ &Z_Construct_UFunction_AWhiteboardActor_GetCenteredCanvasPosition, "GetCenteredCanvasPosition" }, // 2263275735
-		{ &Z_Construct_UFunction_AWhiteboardActor_GetCurrentColor, "GetCurrentColor" }, // 2834176765
+		{ &Z_Construct_UFunction_AWhiteboardActor_GetCurrentColor, "GetCurrentColor" }, // 2137480808
 		{ &Z_Construct_UFunction_AWhiteboardActor_GetCurrentTextString, "GetCurrentTextString" }, // 3633356088
 		{ &Z_Construct_UFunction_AWhiteboardActor_GetCurrentTool, "GetCurrentTool" }, // 637741996
 		{ &Z_Construct_UFunction_AWhiteboardActor_GetInteractingPlayerCount, "GetInteractingPlayerCount" }, // 3321050753
@@ -4873,10 +4863,10 @@ AWhiteboardActor::~AWhiteboardActor() {}
 struct Z_CompiledInDeferFile_FID_SPARKELON_2025_Prototype_2025_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h__Script_AdvancedDrawingBoard_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_AWhiteboardActor, AWhiteboardActor::StaticClass, TEXT("AWhiteboardActor"), &Z_Registration_Info_UClass_AWhiteboardActor, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AWhiteboardActor), 1979099U) },
+		{ Z_Construct_UClass_AWhiteboardActor, AWhiteboardActor::StaticClass, TEXT("AWhiteboardActor"), &Z_Registration_Info_UClass_AWhiteboardActor, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AWhiteboardActor), 2467356739U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_SPARKELON_2025_Prototype_2025_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h__Script_AdvancedDrawingBoard_467255895(TEXT("/Script/AdvancedDrawingBoard"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_SPARKELON_2025_Prototype_2025_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h__Script_AdvancedDrawingBoard_841502457(TEXT("/Script/AdvancedDrawingBoard"),
 	Z_CompiledInDeferFile_FID_SPARKELON_2025_Prototype_2025_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h__Script_AdvancedDrawingBoard_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_SPARKELON_2025_Prototype_2025_Advanced_WhiteBoard_Plugins_AdvancedDrawingBoard_Source_AdvancedDrawingBoard_Public_Actor_WhiteboardActor_h__Script_AdvancedDrawingBoard_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);
